@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController with StateMixin<LoginReponse> {
-  var isPasswordHidden = true.obs;
+  final isPasswordHidden = true.obs;
   late TextEditingController myControllerEmail;
   late TextEditingController myControllerPassword;
 
