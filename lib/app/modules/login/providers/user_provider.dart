@@ -1,4 +1,4 @@
-import 'package:drainit_flutter/app/modules/login/user_model.dart';
+import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:get/get.dart';
 
 class UserProvider extends GetConnect {

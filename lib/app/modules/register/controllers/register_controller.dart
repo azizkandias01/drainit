@@ -117,6 +117,11 @@ class RegisterController extends GetxController with StateMixin<String> {
 
   @override
   void onClose() {
+    super.onClose();
+  }
+
+  @override
+  void dispose() {
     myControllerPasswordConfirm.dispose();
     myControllerEmail.dispose();
     myControllerPassword.dispose();
@@ -124,5 +129,6 @@ class RegisterController extends GetxController with StateMixin<String> {
     myControllerName.dispose();
     myControllerPhoneNumber.dispose();
     myControllerAddress.dispose();
+    super.dispose();
   }
 }

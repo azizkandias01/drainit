@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:drainit_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:drainit_flutter/app/modules/home/views/home_view.dart';
 import 'package:drainit_flutter/app/modules/login/bindings/login_binding.dart';
-import 'package:drainit_flutter/app/modules/login/models/login_view.dart';
+import 'package:drainit_flutter/app/modules/login/views/login_view.dart';
 import 'package:drainit_flutter/app/modules/profile/bindings/profile_binding.dart';
 import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
 import 'package:drainit_flutter/app/modules/register/bindings/register_binding.dart';
 import 'package:drainit_flutter/app/modules/register/views/register_view.dart';
+import 'package:drainit_flutter/app/modules/splashscreen/bindings/splashscreen_binding.dart';
+import 'package:drainit_flutter/app/modules/splashscreen/views/splashscreen_view.dart';
 
 part 'app_routes.dart';
 
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASHSCREEN,
+      page: () => SplashscreenView(),
+      binding: SplashscreenBinding(),
     ),
   ];
 }

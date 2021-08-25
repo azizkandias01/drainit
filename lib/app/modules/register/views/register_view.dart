@@ -17,10 +17,11 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
           width: Get.width,
-          height: Get.height * 1,
+          height: Get.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -47,25 +48,48 @@ class RegisterView extends GetView<RegisterController> {
                               )
                             ],
                           )
-                        : Column(
-                            children: [
-                              ClipOval(
-                                child: Image.file(
-                                  File(controller.cropImagePath.value),
-                                  width: Get.width * .4,
-                                  height: Get.width * .4,
+                        : Container(
+                            width: Get.width * .4,
+                            height: Get.width * .4,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                ClipOval(
+                                  child: Image.file(
+                                    File(controller.cropImagePath.value),
+                                    width: Get.width * .4,
+                                    height: Get.width * .4,
+                                  ),
                                 ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  controller.getImage(ImageSource.gallery);
-                                },
-                                child: Text("Ubah foto"),
-                              ),
-                            ],
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: GestureDetector(
+                                    onTap: () => controller
+                                        .getImage(ImageSource.gallery),
+                                    child: Container(
+                                      height: Get.width * .1,
+                                      width: Get.width * .1,
+                                      decoration: BoxDecoration(
+                                        color: primary,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        heightFactor: 10,
+                                        widthFactor: 10,
+                                        child: Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                   ),
-                  SizedBox(height: Get.height * 0.03),
+                  SizedBox(height: Get.height * 0.01),
                   RoundedInputField(
                     hintText: "Nama Lengkap",
                     textEditingController: controller.myControllerName,
@@ -127,7 +151,7 @@ class RegisterView extends GetView<RegisterController> {
                       return Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: Center(
                               child: Text(
                                 err!,

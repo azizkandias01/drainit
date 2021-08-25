@@ -1,5 +1,5 @@
 import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
-import 'package:drainit_flutter/app/modules/login/user_model.dart';
+import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
