@@ -20,6 +20,8 @@ dependencies:
   image_picker: 0.8.3+2
   image_cropper: 1.4.1
   flare_splash_screen: ^4.0.0
+  material_floating_search_bar: 0.3.4
+  flutter_screenutil: 5.0.0+2
   flutter: 
     sdk: flutter
 
@@ -29,8 +31,13 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
+  fonts:
+    - family: Klasik
+      fonts:
+        - asset: assets/fonts/Klasik-Regular.otf
   assets: 
     - assets/lottie/
     - assets/svg/
+    - assets/image/
   uses-material-design: true
 

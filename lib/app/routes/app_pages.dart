@@ -1,15 +1,29 @@
 import 'package:get/get.dart';
 
+import 'package:drainit_flutter/app/modules/edit_password/bindings/edit_password_binding.dart';
+import 'package:drainit_flutter/app/modules/edit_password/views/edit_password_view.dart';
+import 'package:drainit_flutter/app/modules/edit_profile/bindings/edit_profile_binding.dart';
+import 'package:drainit_flutter/app/modules/edit_profile/views/edit_profile_view.dart';
+import 'package:drainit_flutter/app/modules/forgot_password/bindings/forgot_password_binding.dart';
+import 'package:drainit_flutter/app/modules/forgot_password/views/forgot_password_view.dart';
 import 'package:drainit_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:drainit_flutter/app/modules/home/views/home_view.dart';
+import 'package:drainit_flutter/app/modules/introduction/bindings/introduction_binding.dart';
+import 'package:drainit_flutter/app/modules/introduction/views/introduction_view.dart';
 import 'package:drainit_flutter/app/modules/login/bindings/login_binding.dart';
 import 'package:drainit_flutter/app/modules/login/views/login_view.dart';
 import 'package:drainit_flutter/app/modules/profile/bindings/profile_binding.dart';
 import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
 import 'package:drainit_flutter/app/modules/register/bindings/register_binding.dart';
 import 'package:drainit_flutter/app/modules/register/views/register_view.dart';
+import 'package:drainit_flutter/app/modules/register_next/bindings/register_next_binding.dart';
+import 'package:drainit_flutter/app/modules/register_next/views/register_next_view.dart';
+import 'package:drainit_flutter/app/modules/searchmap/bindings/searchmap_binding.dart';
+import 'package:drainit_flutter/app/modules/searchmap/views/searchmap_view.dart';
 import 'package:drainit_flutter/app/modules/splashscreen/bindings/splashscreen_binding.dart';
 import 'package:drainit_flutter/app/modules/splashscreen/views/splashscreen_view.dart';
+import 'package:drainit_flutter/app/modules/timeline/bindings/timeline_binding.dart';
+import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
 
 part 'app_routes.dart';
 
@@ -43,6 +57,41 @@ class AppPages {
       name: _Paths.SPLASHSCREEN,
       page: () => SplashscreenView(),
       binding: SplashscreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCHMAP,
+      page: () => SearchmapView(),
+      binding: SearchmapBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER_NEXT,
+      page: () => RegisterNextView(),
+      binding: RegisterNextBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PROFILE,
+      page: () => EditProfileView(),
+      binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PASSWORD,
+      page: () => EditPasswordView(),
+      binding: EditPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.INTRODUCTION,
+      page: () => IntroductionView(),
+      binding: IntroductionBinding(),
+    ),
+    GetPage(
+      name: _Paths.TIMELINE,
+      page: () => TimelineView(),
+      binding: TimelineBinding(),
     ),
   ];
 }

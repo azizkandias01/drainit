@@ -11,6 +11,7 @@ class RoundedInputField extends StatelessWidget {
   final double? width;
   final double? height;
   final double? textSize;
+  final Color? backgroundColor;
   const RoundedInputField({
     Key? key,
     this.hintText,
@@ -21,23 +22,22 @@ class RoundedInputField extends StatelessWidget {
     this.height,
     this.width,
     this.textSize,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       roundedCorner: this.roundedCorner!,
+      backgroundColor: this.backgroundColor,
       height: height,
       width: width,
       child: TextField(
         onChanged: onChanged,
-        cursorColor: primary,
+        cursorColor: kBackgroundInput,
         controller: this.textEditingController,
         decoration: InputDecoration(
-          icon: Icon(
-            icon,
-            color: primary,
-          ),
+          contentPadding: EdgeInsets.only(left: 20),
           hintText: hintText,
           hintStyle: TextStyle(fontSize: textSize ?? 13),
           border: InputBorder.none,

@@ -10,6 +10,10 @@ const textColorSecondary = Color(0xFF838383);
 const textPrimary = Color(0xFF55585C);
 const textColorHint = Color(0xFFA1A1A1);
 const unselectedHistory = Color(0xFFEFEFEF);
+const kTextPurple = Color(0xFF573353);
+const kBackgroundInput = Color(0xFFFFF6ED);
+const kIconColor = Color(0xFFFC9D45);
+const kColorGrey = Color(0xFF9E9E9E);
 
 const green = Color(0xFF5EA884);
 const grey = Color(0xFFEBEFF0);

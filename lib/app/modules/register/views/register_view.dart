@@ -6,6 +6,8 @@ import 'package:drainit_flutter/app/components/rounded_input_field.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,178 +18,169 @@ import '../controllers/register_controller.dart';
 class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Container(
-          width: Get.width,
-          height: Get.height,
+    return ScreenUtilInit(
+      designSize: Size(414, 896),
+      builder: () => Scaffold(
+        backgroundColor: kBackgroundInput,
+        resizeToAvoidBottomInset: false,
+        body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Column(
                 children: [
+                  SizedBox(
+                    height: 48.h,
+                  ),
                   Container(
-                    height: Get.height * .15,
-                    color: primary,
-                  ),
-                  SizedBox(height: Get.height * 0.03),
-                  Obx(
-                    () => controller.cropImagePath.value == ''
-                        ? Column(
-                            children: [
-                              Text(
-                                'Select image from camera/galley',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  controller.getImage(ImageSource.gallery);
-                                },
-                                child: Text("Gallery"),
-                              )
-                            ],
-                          )
-                        : Container(
-                            width: Get.width * .4,
-                            height: Get.width * .4,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                                ClipOval(
-                                  child: Image.file(
-                                    File(controller.cropImagePath.value),
-                                    width: Get.width * .4,
-                                    height: Get.width * .4,
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: GestureDetector(
-                                    onTap: () => controller
-                                        .getImage(ImageSource.gallery),
-                                    child: Container(
-                                      height: Get.width * .1,
-                                      width: Get.width * .1,
-                                      decoration: BoxDecoration(
-                                        color: primary,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Center(
-                                        heightFactor: 10,
-                                        widthFactor: 10,
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
-                                          size: 30,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                  ),
-                  SizedBox(height: Get.height * 0.01),
-                  RoundedInputField(
-                    hintText: "Nama Lengkap",
-                    textEditingController: controller.myControllerName,
-                    roundedCorner: 25,
-                  ),
-                  RoundedInputField(
-                    textEditingController: controller.myControllerPhoneNumber,
-                    hintText: "Nomor Hp",
-                    roundedCorner: 25,
-                  ),
-                  RoundedInputField(
-                    hintText: "Email",
-                    textEditingController: controller.myControllerEmail,
-                    roundedCorner: 25,
-                  ),
-                  RoundedInputField(
-                    textEditingController: controller.myControllerAddress,
-                    hintText: "Alamat",
-                    roundedCorner: 25,
-                  ),
-                  InputPassword(
-                    controller: controller,
-                  ),
-                  InputPasswordConfirm(
-                    controller: controller,
-                  ),
-                  controller.obx(
-                    (data) => Column(
+                    height: 200.h,
+                    width: 414.w,
+                    child: Stack(
+                      alignment: Alignment.center,
                       children: [
-                        Text(
-                          "Akun berhasil dibuat, anda dapat login sekarang",
-                          style: TextStyle(color: primary),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 25.w),
+                            child: GestureDetector(
+                                onTap: () => Get.back(),
+                                child: Icon(Icons.arrow_back_ios_new)),
+                          ),
                         ),
-                        RoundedButton(
-                          text: "LOGIN",
-                          press: () {
-                            Get.toNamed(Routes.LOGIN);
-                          },
-                          borderRadius: 25,
+                        SvgPicture.asset(
+                          "assets/svg/RegisterIlustration.svg",
+                          height: 200.h,
+                          width: 188.w,
                         ),
                       ],
                     ),
-                    onEmpty: RoundedButton(
-                      text: "DAFTAR",
-                      press: () {
-                        controller.registerUser(
-                          controller.myControllerName.text,
-                          controller.myControllerPhoneNumber.text,
-                          controller.myControllerEmail.text,
-                          controller.myControllerAddress.text,
-                          controller.myControllerPassword.text,
-                          controller.myControllerPasswordConfirm.text,
-                          controller.bytes64Image.value,
-                        );
-                      },
-                      borderRadius: 25,
+                  ),
+                  SizedBox(height: 21.h),
+                  Text(
+                    "Buat akun baru",
+                    style: TextStyle(
+                      fontFamily: 'Klasik',
+                      fontSize: 24.sp,
+                      color: kTextPurple,
                     ),
-                    onError: (err) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Center(
-                              child: Text(
-                                err!,
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            ),
-                          ),
-                          RoundedButton(
-                            text: "DAFTAR",
-                            press: () {
-                              controller.registerUser(
-                                controller.myControllerName.text,
-                                controller.myControllerPhoneNumber.text,
-                                controller.myControllerEmail.text,
-                                controller.myControllerAddress.text,
-                                controller.myControllerPassword.text,
-                                controller.myControllerPasswordConfirm.text,
-                                controller.bytes64Image.value,
-                              );
-                            },
-                            borderRadius: 25,
-                          ),
-                        ],
-                      );
+                  ),
+                  SizedBox(height: 66.h),
+                  RoundedInputField(
+                    hintText: "Nama Lengkap",
+                    backgroundColor: white,
+                    textEditingController: controller.myControllerName,
+                    roundedCorner: 12.r,
+                    width: 374.w,
+                    height: 56.h,
+                  ),
+                  SizedBox(height: 8.h),
+                  RoundedInputField(
+                    hintText: "Nama Lengkap",
+                    backgroundColor: white,
+                    textEditingController: controller.myControllerName,
+                    roundedCorner: 12.r,
+                    width: 374.w,
+                    height: 56.h,
+                  ),
+                  SizedBox(height: 8.h),
+                  RoundedInputField(
+                    hintText: "Nama Lengkap",
+                    backgroundColor: white,
+                    textEditingController: controller.myControllerName,
+                    roundedCorner: 12.r,
+                    width: 374.w,
+                    height: 56.h,
+                  ),
+                  SizedBox(
+                    height: 64.h,
+                  ),
+                  RoundedButton(
+                    text: "Next",
+                    fontSize: 16.sp,
+                    borderRadius: 12.w,
+                    height: 56.h,
+                    width: 376.w,
+                    color: kIconColor,
+                    press: () {
+                      Get.toNamed(Routes.REGISTER_NEXT);
                     },
                   ),
                 ],
               ),
               SizedBox(
-                height: 10,
+                height: 41.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: new Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                        child: Divider(
+                          color: kTextPurple,
+                          height: 36,
+                        )),
+                  ),
+                  Text(
+                    "Atau Daftar Dengan",
+                    style: TextStyle(
+                        color: kTextPurple,
+                        fontSize: 14.sp,
+                        fontFamily: 'Klasik'),
+                  ),
+                  Expanded(
+                    child: new Container(
+                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                        child: Divider(
+                          color: kTextPurple,
+                          height: 36,
+                        )),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LoginWithButton(
+                    text: "Google",
+                    iconPath: 'assets/svg/GoogleIcon.svg',
+                    borderRadius: 12,
+                    fontSize: 16.sp,
+                    height: 50.h,
+                    width: 181.w,
+                    textColor: kTextPurple,
+                    spaceBetweenIconAndText: 12.w,
+                    backgroundColor: white,
+                  ),
+                  SizedBox(
+                    width: 12.w,
+                  ),
+                  LoginWithButton(
+                    text: "Facebook",
+                    iconHeight: 32.h,
+                    iconWidth: 32.w,
+                    iconPath: 'assets/svg/FacebookIcon.svg',
+                    spaceBetweenIconAndText: 12.w,
+                    borderRadius: 12,
+                    fontSize: 16.sp,
+                    height: 50.h,
+                    width: 181.w,
+                    textColor: kTextPurple,
+                    backgroundColor: white,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 32.h,
               ),
               Center(
                 child: RichText(
                   text: TextSpan(
                     text: 'Sudah Punya Akun? ',
-                    style: GoogleFonts.poppins(fontSize: 18, color: kBlack),
+                    style: GoogleFonts.poppins(fontSize: 14.sp, color: kBlack),
                     children: [
                       TextSpan(
                         text: 'Masuk Disini! ',
@@ -196,8 +189,7 @@ class RegisterView extends GetView<RegisterController> {
                             Get.toNamed(Routes.LOGIN);
                           },
                         style: GoogleFonts.poppins(
-                          color: primary,
-                        ),
+                            color: kTextPurple, fontSize: 14.sp),
                       ),
                     ],
                   ),
