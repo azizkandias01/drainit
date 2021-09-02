@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+String imagePath() =>
+    "https://gis-drainase.pocari.id/storage/app/public/images/";
+
 void showErrorSnackBar(String? error, SnackPosition? snackPosition) {
   Get.rawSnackbar(
     snackStyle: SnackStyle.GROUNDED,

@@ -3,20 +3,25 @@ import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController with StateMixin<LoginReponse> {
   final isPasswordHidden = true.obs;
   late TextEditingController myControllerEmail;
   late TextEditingController myControllerPassword;
-
+  late GetStorage box;
   @override
   void onInit() {
     super.onInit();
+    box = GetStorage();
+
     //on init state set that state is empty
     change(null, status: RxStatus.empty());
     myControllerEmail = TextEditingController();
     myControllerPassword = TextEditingController();
   }
+
+  bool isLoggedIn() => box.hasData(Routes.TOKEN);
 
   void userLogin(String email, String password) async {
     final dataLogin = {
@@ -36,6 +41,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
           resp,
           status: RxStatus.success(),
         ),
+        box.write(Routes.TOKEN, resp.accessToken),
         Get.offAllNamed(Routes.HOME)
       },
       //if error happens then catch the error and show to user
@@ -53,5 +59,11 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
     myControllerPassword.dispose();
     myControllerEmail.dispose();
     super.onClose();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    if (isLoggedIn()) Get.offAllNamed(Routes.HOME);
   }
 }

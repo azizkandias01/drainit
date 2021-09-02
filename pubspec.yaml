@@ -22,6 +22,8 @@ dependencies:
   flare_splash_screen: ^4.0.0
   material_floating_search_bar: 0.3.4
   flutter_screenutil: 5.0.0+2
+  get_storage: 2.0.3
+  cached_network_image: ^3.1.0
   flutter: 
     sdk: flutter
 
@@ -31,9 +33,9 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
-  fonts:
+  fonts: 
     - family: Klasik
-      fonts:
+      fonts: 
         - asset: assets/fonts/Klasik-Regular.otf
   assets: 
     - assets/lottie/

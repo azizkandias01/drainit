@@ -16,6 +16,7 @@ abstract class Routes {
   static const EDIT_PASSWORD = _Paths.EDIT_PASSWORD;
   static const INTRODUCTION = _Paths.INTRODUCTION;
   static const TIMELINE = _Paths.TIMELINE;
+  static const TOKEN = _Paths.TOKEN;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const EDIT_PASSWORD = '/edit-password';
   static const INTRODUCTION = '/introduction';
   static const TIMELINE = '/timeline';
+  static const TOKEN = 'token';
 }

@@ -118,9 +118,12 @@ class LoginView extends GetView<LoginController> {
                             ),
                             RoundedInputField(
                               roundedCorner: 12.w,
+                              textEditingController:
+                                  controller.myControllerEmail,
                               hintText: "Email",
                               height: 56.h,
                               width: 376.w,
+                              textSize: 16.sp,
                             ),
                             SizedBox(
                               height: 16.h,
@@ -136,7 +139,12 @@ class LoginView extends GetView<LoginController> {
                               height: 56.h,
                               width: 376.w,
                               color: kIconColor,
-                              press: () => Get.toNamed(Routes.HOME),
+                              press: () {
+                                controller.userLogin(
+                                  controller.myControllerEmail.text,
+                                  controller.myControllerPassword.text,
+                                );
+                              },
                             ),
                             SizedBox(
                               height: 10.h,

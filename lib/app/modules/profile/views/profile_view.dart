@@ -1,6 +1,7 @@
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,78 +13,106 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: Size(414, 896),
-      builder: () => Scaffold(
-        backgroundColor: kBackgroundInput,
-        body: SafeArea(
-          child: Column(
-            children: [
-              TopMenu(),
-              SizedBox(
-                height: 48.h,
-              ),
-              ProfileBox(),
-              SizedBox(
-                height: 39.h,
-              ),
-              ProfileInfo(),
-              SizedBox(height: 22.h),
-              ProfileMenuButton(
-                text: "Ubah Password",
-                onPressed: () {
-                  Get.toNamed(Routes.EDIT_PASSWORD);
-                },
-                iconPath: 'assets/svg/password_icon.svg',
-                iconWidth: 38.w,
-                iconHeight: 38.h,
-                borderRadius: 12,
-                fontSize: 16.sp,
-                height: 50.h,
-                textColor: kTextPurple,
-                width: 374.w,
-                backgroundColor: white,
-              ),
-              SizedBox(height: 8.h),
-              ProfileMenuButton(
-                text: "Tentang Kami",
-                iconPath: 'assets/svg/question_icon.svg',
-                iconWidth: 38.w,
-                iconHeight: 38.h,
-                borderRadius: 12,
-                fontSize: 16.sp,
-                height: 50.h,
-                textColor: kTextPurple,
-                width: 374.w,
-                backgroundColor: white,
-              ),
-              SizedBox(height: 8.h),
-              ProfileMenuButton(
-                text: "Keluar Akun",
-                onPressed: () {
-                  Get.toNamed(Routes.LOGIN);
-                },
-                iconPath: 'assets/svg/logout_icon.svg',
-                iconWidth: 38.w,
-                iconHeight: 38.h,
-                borderRadius: 12,
-                fontSize: 16.sp,
-                height: 50.h,
-                width: 374.w,
-                textColor: kTextPurple,
-                backgroundColor: white,
-              ),
-            ],
+    return controller.obx(
+      (state) => ScreenUtilInit(
+        designSize: Size(414, 896),
+        builder: () => Scaffold(
+          backgroundColor: kBackgroundInput,
+          body: SafeArea(
+            child: Column(
+              children: [
+                TopMenu(),
+                SizedBox(
+                  height: 48.h,
+                ),
+                ProfileBox(
+                  email: this.controller.dataProfile.email,
+                ),
+                SizedBox(
+                  height: 39.h,
+                ),
+                ProfileInfo(
+                  name: this.controller.dataProfile.nama,
+                  address: this.controller.dataProfile.alamat,
+                  phoneNumber: this.controller.dataProfile.noHp,
+                  photoUrl: this.controller.dataProfile.foto,
+                ),
+                SizedBox(height: 22.h),
+                ProfileMenuButton(
+                  text: "Ubah Password",
+                  onPressed: () {
+                    Get.toNamed(Routes.EDIT_PASSWORD);
+                  },
+                  iconPath: 'assets/svg/password_icon.svg',
+                  iconWidth: 38.w,
+                  iconHeight: 38.h,
+                  borderRadius: 12,
+                  fontSize: 16.sp,
+                  height: 50.h,
+                  textColor: kTextPurple,
+                  width: 374.w,
+                  backgroundColor: white,
+                ),
+                SizedBox(height: 8.h),
+                ProfileMenuButton(
+                  text: "Tentang Kami",
+                  iconPath: 'assets/svg/question_icon.svg',
+                  iconWidth: 38.w,
+                  iconHeight: 38.h,
+                  borderRadius: 12,
+                  fontSize: 16.sp,
+                  height: 50.h,
+                  textColor: kTextPurple,
+                  width: 374.w,
+                  backgroundColor: white,
+                ),
+                SizedBox(height: 8.h),
+                ProfileMenuButton(
+                  text: "Keluar Akun",
+                  onPressed: () {
+                    controller.logoutAccount();
+                  },
+                  iconPath: 'assets/svg/logout_icon.svg',
+                  iconWidth: 38.w,
+                  iconHeight: 38.h,
+                  borderRadius: 12,
+                  fontSize: 16.sp,
+                  height: 50.h,
+                  width: 374.w,
+                  textColor: kTextPurple,
+                  backgroundColor: white,
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      onError: (err) {
+        return Container(
+          child: Center(
+            child: Text("Cannot Retrieve data error : $err"),
+          ),
+        );
+      },
     );
   }
 }
 
 class ProfileInfo extends StatelessWidget {
+  final String? name;
+  final String? totalReports;
+  final String? totalReportsDone;
+  final String? address;
+  final String? photoUrl;
+  final String? phoneNumber;
   const ProfileInfo({
     Key? key,
+    this.name,
+    this.totalReports,
+    this.totalReportsDone,
+    this.address,
+    this.photoUrl,
+    this.phoneNumber,
   }) : super(key: key);
 
   @override
@@ -105,10 +134,12 @@ class ProfileInfo extends StatelessWidget {
               SizedBox(
                 width: 16.w,
               ),
-              Image.asset(
-                "assets/image/ProfileImage.png",
-                height: 64.h,
-                width: 64.w,
+              CircleAvatar(
+                backgroundImage:
+                    NetworkImage(imagePath() + this.photoUrl!, scale: 64.w),
+                onBackgroundImageError: (object, trace) {
+                  print("error object");
+                },
               ),
               SizedBox(
                 width: 10.w,
@@ -124,7 +155,7 @@ class ProfileInfo extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Aziz Kandias",
+                        this.name ?? "default",
                         style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
@@ -187,7 +218,7 @@ class ProfileInfo extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "18",
+                                this.totalReports ?? "18",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontFamily: 'Klasik',
@@ -228,7 +259,7 @@ class ProfileInfo extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "12",
+                                this.totalReportsDone ?? "12",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontFamily: 'Klasik',
@@ -274,7 +305,7 @@ class ProfileInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "08233652155",
+                this.phoneNumber ?? "08233652155",
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: kColorGrey,
@@ -302,7 +333,8 @@ class ProfileInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Jalan Bukit Sari 10, Umban Sari Atas, Rumbai, Pek...",
+                this.address ??
+                    "Jalan Bukit Sari 10, Umban Sari Atas, Rumbai, Pek...",
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: kColorGrey,
@@ -317,8 +349,10 @@ class ProfileInfo extends StatelessWidget {
 }
 
 class ProfileBox extends StatelessWidget {
+  final String? email;
   const ProfileBox({
     Key? key,
+    this.email,
   }) : super(key: key);
 
   @override
@@ -365,7 +399,7 @@ class ProfileBox extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Azizkandias@gmail.com",
+                      this.email ?? "cannot retrieve email",
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: kColorGrey,

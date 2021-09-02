@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +12,7 @@ import 'package:line_icons/line_icons.dart';
 import '../controllers/timeline_controller.dart';
 
 class TimelineView extends GetView<TimelineController> {
-  List<String> dropdownValue = ["oke, deh", "Mantap"];
+  //List<String> dropdownValue = ["oke, deh", "Mantap"];
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -57,22 +59,33 @@ class TimelineView extends GetView<TimelineController> {
               SizedBox(
                 height: 24.h,
               ),
-              SingleChildScrollView(
-                child: Container(
-                  width: 374.w,
-                  height: 676.h,
-                  child: ListView.separated(
-                    itemCount: 10,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 14.h,
-                      );
-                    },
-                    itemBuilder: (BuildContext context, int Index) {
-                      return GestureDetector(
-                          onTap: () => print("posringan index ke $Index"),
-                          child: ListviewItem());
-                    },
+              controller.obx(
+                (state) => SingleChildScrollView(
+                  child: Container(
+                    width: 374.w,
+                    height: 676.h,
+                    child: ListView.separated(
+                      itemCount: controller.timeline.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: 14.h,
+                        );
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                            onTap: () => print(
+                                "timelineFiltered filtered length :" +
+                                    controller.timeline[index].id.toString()),
+                            child: ListviewItem(
+                              name: controller.timeline[index].namaPelapor,
+                              foto: controller.timeline[index].foto,
+                              description:
+                                  controller.timeline[index].deskripsiPengaduan,
+                              upVote: controller.timeline[index].upvote,
+                              downVote: controller.timeline[index].downvote,
+                            ));
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -85,8 +98,19 @@ class TimelineView extends GetView<TimelineController> {
 }
 
 class ListviewItem extends StatelessWidget {
+  final String? name;
+  final String? foto;
+  final String? description;
+  final int? upVote;
+  final int? downVote;
+
   const ListviewItem({
     Key? key,
+    this.name,
+    this.foto,
+    this.description,
+    this.upVote,
+    this.downVote,
   }) : super(key: key);
 
   @override
@@ -103,10 +127,17 @@ class ListviewItem extends StatelessWidget {
               SizedBox(
                 width: 16.w,
               ),
-              Image.asset(
-                "assets/image/ProfileImage.png",
-                height: 32.h,
-                width: 32.w,
+              CircleAvatar(
+                backgroundImage: CachedNetworkImageProvider(
+                  imagePath() + this.foto!,
+                  scale: 32.w,
+                  errorListener: () => Center(
+                    child: Text("image not loaded"),
+                  ),
+                ),
+                onBackgroundImageError: (object, trace) {
+                  print("error object");
+                },
               ),
               SizedBox(
                 width: 10.w,
@@ -122,7 +153,7 @@ class ListviewItem extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Aziz Kandias",
+                        this.name ?? "anonymouse",
                         style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
@@ -162,17 +193,40 @@ class ListviewItem extends StatelessWidget {
           Container(
             height: 40.h,
             width: 343.w,
-            child: Text(
+            child: Text(this.description ??
                 "Sampah di dekat selokan jalan sampurna menyebabkan air tersumbat dan banjir "),
           ),
           SizedBox(
             height: 15.h,
           ),
-          Container(
-            height: 157.h,
+          Image(
+            image: CachedNetworkImageProvider(
+              imagePath() + this.foto!,
+              errorListener: () => Center(
+                child: Text("image not loaded"),
+              ),
+            ),
             width: 351.w,
-            color: kTextPurple,
+            height: 157.h,
+            fit: BoxFit.fitWidth,
+            errorBuilder: (BuildContext, Object, Stack) {
+              return Center(
+                child: Text("Image error"),
+              );
+            },
           ),
+          // CachedNetworkImage(
+          //   imageUrl: imagePath() + this.foto!,
+          //   width: 351.w,
+          //   height: 157.h,
+          //   fit: BoxFit.fitWidth,
+          //   placeholder: (BuildContext, String) => Center(
+          //     child: CircularProgressIndicator(),
+          //   ),
+          //   errorWidget: (BuildContext, String, dynamic) => Center(
+          //     child: Text("Image error"),
+          //   ),
+          // ),
           SizedBox(
             height: 15.h,
           ),
@@ -182,12 +236,12 @@ class ListviewItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon(LineIcons.thumbsUp),
-                Text("28"),
+                Text(this.upVote.toString()),
                 SizedBox(
                   width: 20.w,
                 ),
                 Icon(LineIcons.thumbsDown),
-                Text("3")
+                Text(this.downVote.toString())
               ],
             ),
           ),
