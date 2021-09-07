@@ -2,6 +2,7 @@ import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +23,7 @@ class LoginView extends GetView<LoginController> {
                   top: -10.w,
                   child: Container(
                     width: 414.w,
-                    height: 699.h,
+                    height: 896.h,
                     child: SvgPicture.asset(
                       "assets/svg/bg.svg",
                       fit: BoxFit.fill,
@@ -132,17 +133,49 @@ class LoginView extends GetView<LoginController> {
                             SizedBox(
                               height: 20.h,
                             ),
-                            RoundedButton(
-                              text: "Login",
-                              fontSize: 16.sp,
-                              borderRadius: 12.w,
-                              height: 56.h,
-                              width: 376.w,
-                              color: kIconColor,
-                              press: () {
-                                controller.userLogin(
-                                  controller.myControllerEmail.text,
-                                  controller.myControllerPassword.text,
+                            controller.obx(
+                              (state) => RoundedButton(
+                                text: "Login",
+                                fontSize: 16.sp,
+                                borderRadius: 12.w,
+                                height: 56.h,
+                                width: 376.w,
+                                color: kIconColor,
+                                press: () {
+                                  controller.userLogin(
+                                    controller.myControllerEmail.text,
+                                    controller.myControllerPassword.text,
+                                  );
+                                },
+                              ),
+                              onEmpty: RoundedButton(
+                                text: "Login",
+                                fontSize: 16.sp,
+                                borderRadius: 12.w,
+                                height: 56.h,
+                                width: 376.w,
+                                color: kIconColor,
+                                press: () {
+                                  controller.userLogin(
+                                    controller.myControllerEmail.text,
+                                    controller.myControllerPassword.text,
+                                  );
+                                },
+                              ),
+                              onError: (err) {
+                                return RoundedButton(
+                                  text: "Login Lagi",
+                                  fontSize: 16.sp,
+                                  borderRadius: 12.w,
+                                  height: 56.h,
+                                  width: 376.w,
+                                  color: kIconColor,
+                                  press: () {
+                                    controller.userLogin(
+                                      controller.myControllerEmail.text,
+                                      controller.myControllerPassword.text,
+                                    );
+                                  },
                                 );
                               },
                             ),

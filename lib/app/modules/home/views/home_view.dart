@@ -1,3 +1,5 @@
+import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
+import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
 import 'package:drainit_flutter/app/modules/searchmap/controllers/searchmap_controller.dart';
@@ -18,7 +20,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
-    final SearchMapC = Get.find<SearchmapController>();
+    final floodDrainageListC = Get.find<FloodDrainageListController>();
     // ignore: unused_local_variable
     final ProfileC = Get.find<ProfileController>();
     var _selectedIndex = 0.obs;
@@ -34,7 +36,7 @@ class HomeView extends GetView<HomeController> {
         'Like',
         style: optionStyle,
       ),
-      SearchmapView(),
+      FloodDrainageListView(),
       ProfileView(),
     ];
 

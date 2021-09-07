@@ -17,6 +17,7 @@ abstract class Routes {
   static const INTRODUCTION = _Paths.INTRODUCTION;
   static const TIMELINE = _Paths.TIMELINE;
   static const TOKEN = _Paths.TOKEN;
+  static const FLOOD_DRAINAGE_LIST = _Paths.FLOOD_DRAINAGE_LIST;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const INTRODUCTION = '/introduction';
   static const TIMELINE = '/timeline';
   static const TOKEN = 'token';
+  static const FLOOD_DRAINAGE_LIST = '/flood-drainage-list';
 }

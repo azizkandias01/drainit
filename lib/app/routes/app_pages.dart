@@ -4,6 +4,8 @@ import 'package:drainit_flutter/app/modules/edit_password/bindings/edit_password
 import 'package:drainit_flutter/app/modules/edit_password/views/edit_password_view.dart';
 import 'package:drainit_flutter/app/modules/edit_profile/bindings/edit_profile_binding.dart';
 import 'package:drainit_flutter/app/modules/edit_profile/views/edit_profile_view.dart';
+import 'package:drainit_flutter/app/modules/flood_drainage_list/bindings/flood_drainage_list_binding.dart';
+import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
 import 'package:drainit_flutter/app/modules/forgot_password/bindings/forgot_password_binding.dart';
 import 'package:drainit_flutter/app/modules/forgot_password/views/forgot_password_view.dart';
 import 'package:drainit_flutter/app/modules/home/bindings/home_binding.dart';
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.TIMELINE,
       page: () => TimelineView(),
       binding: TimelineBinding(),
+    ),
+    GetPage(
+      name: _Paths.FLOOD_DRAINAGE_LIST,
+      page: () => FloodDrainageListView(),
+      binding: FloodDrainageListBinding(),
     ),
   ];
 }

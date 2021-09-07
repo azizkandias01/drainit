@@ -135,8 +135,11 @@ class ProfileInfo extends StatelessWidget {
                 width: 16.w,
               ),
               CircleAvatar(
-                backgroundImage:
-                    NetworkImage(imagePath() + this.photoUrl!, scale: 64.w),
+                backgroundImage: NetworkImage(
+                    this.photoUrl!.contains(".j")
+                        ? imagePath() + this.photoUrl!
+                        : "defaultbanjir.png",
+                    scale: 64.w),
                 onBackgroundImageError: (object, trace) {
                   print("error object");
                 },
