@@ -6,7 +6,6 @@ import 'package:drainit_flutter/app/components/rounded_input_field.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,16 +48,16 @@ class RegisterView extends GetView<RegisterController> {
                             ],
                           )
                         : Container(
-                            width: Get.width * .4,
-                            height: Get.width * .4,
+                            width: Get.width * .2,
+                            height: Get.width * .2,
                             child: Stack(
                               alignment: Alignment.center,
                               children: <Widget>[
                                 ClipOval(
                                   child: Image.file(
                                     File(controller.cropImagePath.value),
-                                    width: Get.width * .4,
-                                    height: Get.width * .4,
+                                    width: Get.width * .2,
+                                    height: Get.width * .2,
                                   ),
                                 ),
                                 Align(
