@@ -1,35 +1,43 @@
+import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
+import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
+import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
+import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
+import 'package:drainit_flutter/app/modules/searchmap/controllers/searchmap_controller.dart';
+import 'package:drainit_flutter/app/modules/searchmap/views/searchmap_view.dart';
+import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
+import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  final box = GetStorage();
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    final floodDrainageListC = Get.find<FloodDrainageListController>();
+    // ignore: unused_local_variable
+    final ProfileC = Get.find<ProfileController>();
     var _selectedIndex = 0.obs;
     const TextStyle optionStyle =
         TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
     List<Widget> _widgetOptions = <Widget>[
+      TimelineView(),
       Text(
-        'Home',
+        box.read(Routes.TOKEN),
         style: optionStyle,
       ),
       Text(
-        'Likes',
+        'Like',
         style: optionStyle,
       ),
-      Text(
-        'Search',
-        style: optionStyle,
-      ),
-      Text(
-        'Profile',
-        style: optionStyle,
-      ),
-      //RegisterView()
+      FloodDrainageListView(),
+      ProfileView(),
     ];
 
     return Scaffold(
@@ -66,6 +74,10 @@ class HomeView extends GetView<HomeController> {
                 GButton(
                   icon: LineIcons.home,
                   text: 'Home',
+                ),
+                GButton(
+                  icon: LineIcons.list,
+                  text: "Reports",
                 ),
                 GButton(
                   icon: LineIcons.heart,

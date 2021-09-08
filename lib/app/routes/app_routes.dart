@@ -9,6 +9,15 @@ abstract class Routes {
   static const REGISTER = _Paths.REGISTER;
   static const PROFILE = _Paths.PROFILE;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
+  static const SEARCHMAP = _Paths.SEARCHMAP;
+  static const REGISTER_NEXT = _Paths.REGISTER_NEXT;
+  static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
+  static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const EDIT_PASSWORD = _Paths.EDIT_PASSWORD;
+  static const INTRODUCTION = _Paths.INTRODUCTION;
+  static const TIMELINE = _Paths.TIMELINE;
+  static const TOKEN = _Paths.TOKEN;
+  static const FLOOD_DRAINAGE_LIST = _Paths.FLOOD_DRAINAGE_LIST;
 }
 
 abstract class _Paths {
@@ -17,4 +26,13 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const PROFILE = '/profile';
   static const SPLASHSCREEN = '/splashscreen';
+  static const SEARCHMAP = '/searchmap';
+  static const REGISTER_NEXT = '/register-next';
+  static const FORGOT_PASSWORD = '/forgot-password';
+  static const EDIT_PROFILE = '/edit-profile';
+  static const EDIT_PASSWORD = '/edit-password';
+  static const INTRODUCTION = '/introduction';
+  static const TIMELINE = '/timeline';
+  static const TOKEN = 'token';
+  static const FLOOD_DRAINAGE_LIST = '/flood-drainage-list';
 }
