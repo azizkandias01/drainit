@@ -20,8 +20,9 @@ Future<LatLng> _getPosition() async {
     if (!await location.requestService()) throw 'GPS service is disabled';
   }
   if (await location.hasPermission() == PermissionStatus.denied) {
-    if (await location.requestPermission() != PermissionStatus.granted)
+    if (await location.requestPermission() != PermissionStatus.granted) {
       throw 'No GPS permissions';
+    }
   }
   final LocationData data = await location.getLocation();
   return LatLng(data.latitude!, data.longitude!);
@@ -71,7 +72,7 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: CachedNetworkImage(
                                       imageUrl: imagePath() + item.foto!,
-                                      placeholder: (Context, String) {
+                                      placeholder: (_, __) {
                                         return Center(
                                             child: CircularProgressIndicator());
                                       },
@@ -239,8 +240,22 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
   }
 }
 
+Set<Polyline> _polylines = {};
+List<TaskModel> listofTasks = [];
+
 class Map extends GetView<FloodDrainageListController> {
-  static Completer<GoogleMapController> _controller = Completer();
+  void setMaps() {
+    Polyline polyline;
+    print(controller.polylineCoordinates);
+    polyline = Polyline(
+        polylineId: PolylineId(""),
+        color: primary,
+        width: 3,
+        points: controller.polylineCoordinates);
+    _polylines.add(polyline);
+  }
+
+  static final Completer<GoogleMapController> _controller = Completer();
   static Future<void> _goToCurrentLocation() async {
     _initialPosition = await _getPosition();
     final CameraPosition currentLocation = CameraPosition(
@@ -258,25 +273,43 @@ class Map extends GetView<FloodDrainageListController> {
 
   Widget buildMap() {
     final CameraPosition _kGooglePlex = CameraPosition(
-      target: LatLng(0.510440, 101.438309),
-      zoom: 14.4746,
+      target: LatLng(0.475547403985763, 101.48610746420654),
+      zoom: 12.4746,
     );
 
     return Scaffold(
       body: Obx(
         () => GoogleMap(
-          mapType: MapType.hybrid,
+          mapType: MapType.normal,
           initialCameraPosition: _kGooglePlex,
           markers: Set<Marker>.of(controller.markers),
+          polylines: controller.polylines,
           onMapCreated: (GoogleMapController controller) {
             if (!_controller.isCompleted) {
               _controller.complete(controller);
+              controller.setMapStyle(mapStyles);
+              setMaps();
             } else {
+              controller.setMapStyle(mapStyles);
               print("completer has created");
+              setMaps();
             }
           },
         ),
       ),
     );
   }
+}
+
+class TaskModel {
+  String taskid;
+  String name;
+  String address;
+  double slatitude;
+  double dlatitude;
+  double slongitude;
+  double dlongitude;
+
+  TaskModel(this.taskid, this.name, this.address, this.slongitude,
+      this.slatitude, this.dlongitude, this.dlatitude);
 }

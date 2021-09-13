@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 
-import '../models/drainage_model.dart';
+import '../models/drainage_map.dart';
 
-class DrainageProvider extends GetConnect {
-  Future loadDrainagePoint() async {
+class DrainageMapProvider extends GetConnect {
+  Future loadMapDrainage() async {
     final response = await get(
-      "https://gis-drainase.pocari.id/api/titik_tersumbat",
+      "https://gis-drainase.pocari.id/api/drainase",
     );
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());
@@ -13,7 +13,7 @@ class DrainageProvider extends GetConnect {
       // print(response.body);
       var dataRaw = (response.body as List)
           .map(
-            (e) => Drainage.fromJson(e),
+            (e) => DrainageMap.fromJson(e),
           )
           .toList();
       return dataRaw;

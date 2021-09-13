@@ -18,8 +18,8 @@ class TextPoppinsBold extends StatelessWidget {
       text,
       style: GoogleFonts.poppins(
         fontWeight: FontWeight.bold,
-        fontSize: this.fontSize,
-        color: this.textColour,
+        fontSize: fontSize,
+        color: textColour,
       ),
     );
   }
@@ -43,8 +43,8 @@ class TextPoppinsRegular extends StatelessWidget {
       text,
       style: GoogleFonts.poppins(
         fontWeight: FontWeight.normal,
-        fontSize: this.fontSize,
-        color: this.textColour,
+        fontSize: fontSize,
+        color: textColour,
       ),
     );
   }
@@ -66,9 +66,9 @@ class TextPoppinsItalic extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
-          color: this.textColour,
+          color: textColour,
           fontWeight: FontWeight.normal,
-          fontSize: this.fontSize,
+          fontSize: fontSize,
           fontStyle: FontStyle.italic),
     );
   }

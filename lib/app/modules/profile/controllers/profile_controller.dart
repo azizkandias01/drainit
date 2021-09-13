@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drainit_flutter/app/modules/profile/models/profile_model.dart';
 import 'package:drainit_flutter/app/modules/profile/providers/profile_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';

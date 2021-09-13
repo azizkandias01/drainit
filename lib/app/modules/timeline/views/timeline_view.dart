@@ -129,7 +129,7 @@ class ListviewItem extends StatelessWidget {
               ),
               CircleAvatar(
                 backgroundImage: CachedNetworkImageProvider(
-                  imagePath() + this.foto!,
+                  imagePath() + foto!,
                   scale: 32.w,
                   errorListener: () => Center(
                     child: Text("image not loaded"),
@@ -153,7 +153,7 @@ class ListviewItem extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        this.name ?? "anonymouse",
+                        name ?? "anonymouse",
                         style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
@@ -193,7 +193,7 @@ class ListviewItem extends StatelessWidget {
           Container(
             height: 40.h,
             width: 343.w,
-            child: Text(this.description ??
+            child: Text(description ??
                 "Sampah di dekat selokan jalan sampurna menyebabkan air tersumbat dan banjir "),
           ),
           SizedBox(
@@ -201,7 +201,7 @@ class ListviewItem extends StatelessWidget {
           ),
           Image(
             image: CachedNetworkImageProvider(
-              imagePath() + this.foto!,
+              imagePath() + foto!,
               errorListener: () => Center(
                 child: Text("image not loaded"),
               ),
@@ -236,12 +236,12 @@ class ListviewItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon(LineIcons.thumbsUp),
-                Text(this.upVote.toString()),
+                Text(upVote.toString()),
                 SizedBox(
                   width: 20.w,
                 ),
                 Icon(LineIcons.thumbsDown),
-                Text(this.downVote.toString())
+                Text(downVote.toString())
               ],
             ),
           ),

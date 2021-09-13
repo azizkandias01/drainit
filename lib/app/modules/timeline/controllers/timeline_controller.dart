@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:drainit_flutter/app/modules/timeline/models/timeline_model.dart';
 import 'package:drainit_flutter/app/modules/timeline/providers/timeline_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
