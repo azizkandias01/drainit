@@ -68,6 +68,7 @@ class LoginWithButton extends StatelessWidget {
   final double? fontSize;
   final double? iconWidth;
   final double? iconHeight;
+  final void Function()? onClick;
   const LoginWithButton({
     Key? key,
     this.iconPath,
@@ -81,6 +82,7 @@ class LoginWithButton extends StatelessWidget {
     this.fontSize,
     this.iconWidth,
     this.iconHeight,
+    this.onClick,
   }) : super(key: key);
 
   @override
@@ -108,7 +110,7 @@ class LoginWithButton extends StatelessWidget {
             style: TextButton.styleFrom(
               primary: textColor,
             ),
-            onPressed: () {},
+            onPressed: onClick,
             child: Text(
               text ?? "not defined",
               style: TextStyle(

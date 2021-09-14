@@ -25,11 +25,6 @@ class FloodDrainageListController extends GetxController {
     loadMapDrainage();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   void loadFloodPoint() async {
     var result =
         await FloodModelProvider().loadFloodPoint() as List<FloodModel>;

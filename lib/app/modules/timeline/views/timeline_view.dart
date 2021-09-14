@@ -12,9 +12,12 @@ import 'package:line_icons/line_icons.dart';
 import '../controllers/timeline_controller.dart';
 
 class TimelineView extends GetView<TimelineController> {
-  //List<String> dropdownValue = ["oke, deh", "Mantap"];
+  final String? type;
+
+  const TimelineView(this.type);
   @override
   Widget build(BuildContext context) {
+    controller.loadTimeline(type ?? "login");
     return ScreenUtilInit(
       designSize: Size(414, 896),
       builder: () => Scaffold(
@@ -64,27 +67,48 @@ class TimelineView extends GetView<TimelineController> {
                   child: Container(
                     width: 374.w,
                     height: 676.h,
-                    child: ListView.separated(
-                      itemCount: controller.timeline.length,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          height: 14.h,
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                            onTap: () => print(
-                                "timelineFiltered filtered length :" +
-                                    controller.timeline[index].id.toString()),
-                            child: ListviewItem(
-                              name: controller.timeline[index].namaPelapor,
-                              foto: controller.timeline[index].foto,
-                              description:
-                                  controller.timeline[index].deskripsiPengaduan,
-                              upVote: controller.timeline[index].upvote,
-                              downVote: controller.timeline[index].downvote,
-                            ));
-                      },
+                    child: RefreshIndicator(
+                      onRefresh: () => controller.loadTimeline(Get.arguments),
+                      child: ListView.separated(
+                        itemCount: Get.arguments == "anonymouse"
+                            ? controller.timelineAnonymouse.length
+                            : controller.timeline.length,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            height: 14.h,
+                          );
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                              onTap: () => print(
+                                  "timelineFiltered filtered length :" +
+                                      controller.timeline[index].id.toString()),
+                              child: Get.arguments == "anonymouse"
+                                  ? ListviewItem(
+                                      name: controller.timelineAnonymouse[index]
+                                          .namaPelapor,
+                                      foto: controller
+                                          .timelineAnonymouse[index].foto,
+                                      description: controller
+                                          .timelineAnonymouse[index]
+                                          .deskripsiPengaduan,
+                                      upVote: controller
+                                          .timelineAnonymouse[index].upvote,
+                                      downVote: controller
+                                          .timelineAnonymouse[index].downvote,
+                                    )
+                                  : ListviewItem(
+                                      name: controller
+                                          .timeline[index].namaPelapor,
+                                      foto: controller.timeline[index].foto,
+                                      description: controller
+                                          .timeline[index].deskripsiPengaduan,
+                                      upVote: controller.timeline[index].upvote,
+                                      downVote:
+                                          controller.timeline[index].downvote,
+                                    ));
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -209,24 +233,12 @@ class ListviewItem extends StatelessWidget {
             width: 351.w,
             height: 157.h,
             fit: BoxFit.fitWidth,
-            errorBuilder: (BuildContext, Object, Stack) {
+            errorBuilder: (_, __, ___) {
               return Center(
                 child: Text("Image error"),
               );
             },
           ),
-          // CachedNetworkImage(
-          //   imageUrl: imagePath() + this.foto!,
-          //   width: 351.w,
-          //   height: 157.h,
-          //   fit: BoxFit.fitWidth,
-          //   placeholder: (BuildContext, String) => Center(
-          //     child: CircularProgressIndicator(),
-          //   ),
-          //   errorWidget: (BuildContext, String, dynamic) => Center(
-          //     child: Text("Image error"),
-          //   ),
-          // ),
           SizedBox(
             height: 15.h,
           ),

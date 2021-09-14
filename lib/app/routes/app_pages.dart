@@ -92,7 +92,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TIMELINE,
-      page: () => TimelineView(),
+      page: () => TimelineView("login"),
       binding: TimelineBinding(),
     ),
     GetPage(

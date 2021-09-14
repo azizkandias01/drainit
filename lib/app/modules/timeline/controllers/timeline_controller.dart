@@ -8,35 +8,42 @@ class TimelineController extends GetxController with StateMixin {
   final count = 0.obs;
   late GetStorage box;
   late List<TimelineModel> timeline;
+  late List<TimelineModelAnonymouse> timelineAnonymouse;
   @override
   void onInit() {
     super.onInit();
     box = GetStorage();
     timeline = [];
     change(null, status: RxStatus.empty());
-    loadTimeline();
   }
 
-  void loadTimeline() async {
+  Future loadTimeline(String type) async {
     change(null, status: RxStatus.loading());
-    await TimelineProvider()
-        .loadTimeline(
-      box.read(Routes.TOKEN),
-    )
-        .then(
-      (value) => {
-        timeline = value,
-        this.change(value, status: RxStatus.success()),
-      },
-      onError: (err) {
-        change(err, status: RxStatus.error());
-      },
-    );
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
+    if (type == "anonymouse") {
+      await TimelineProvider().loadTimelineAnonymouse().then(
+        (value) => {
+          timelineAnonymouse = value,
+          change(value, status: RxStatus.success()),
+        },
+        onError: (err) {
+          change(err, status: RxStatus.error());
+        },
+      );
+    } else {
+      await TimelineProvider()
+          .loadTimeline(
+        box.read(Routes.TOKEN),
+      )
+          .then(
+        (value) => {
+          timeline = value,
+          change(value, status: RxStatus.success()),
+        },
+        onError: (err) {
+          change(err, status: RxStatus.error());
+        },
+      );
+    }
   }
 
   @override

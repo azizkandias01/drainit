@@ -56,30 +56,33 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 15.h),
-                    LoginWithButton(
-                      iconPath: 'assets/svg/FacebookIcon.svg',
-                      iconHeight: 23.h,
-                      iconWidth: 23.w,
-                      width: 374.w,
-                      height: 50.h,
-                      spaceBetweenIconAndText: 17.w,
-                      text: "Login With Google",
-                      borderRadius: 12.r,
-                      textColor: kTextPurple,
-                      backgroundColor: white,
-                      fontSize: 16.sp,
-                    ),
-                    SizedBox(height: 15.h),
+                    // SizedBox(height: 15.h),
+                    // LoginWithButton(
+                    //   iconPath: 'assets/svg/FacebookIcon.svg',
+                    //   iconHeight: 23.h,
+                    //   iconWidth: 23.w,
+                    //   width: 374.w,
+                    //   height: 50.h,
+                    //   spaceBetweenIconAndText: 17.w,
+                    //   text: "Login With Google",
+                    //   borderRadius: 12.r,
+                    //   textColor: kTextPurple,
+                    //   backgroundColor: white,
+                    //   fontSize: 16.sp,
+                    // ),
+                    SizedBox(height: 80.h),
                     LoginWithButton(
                       iconPath: 'assets/svg/GoogleIcon.svg',
                       width: 374.w,
                       height: 50.h,
                       spaceBetweenIconAndText: 17.w,
-                      text: "Login With Google",
+                      text: "Login Tanpa Akun",
                       borderRadius: 12.r,
                       textColor: kTextPurple,
                       backgroundColor: white,
+                      onClick: () {
+                        Get.toNamed(Routes.HOME, arguments: "anonymouse");
+                      },
                       fontSize: 16.sp,
                     ),
                     SizedBox(
@@ -258,13 +261,14 @@ class InputPassword extends StatelessWidget {
               bottom: 21.h,
             ),
             hintText: "Password",
+            hintStyle: TextStyle(fontSize: 16.sp),
             suffixIcon: IconButton(
               color: kIconColor,
               icon: controller.isPasswordHidden.value
                   ? Icon(Icons.remove_red_eye)
                   : Icon(Icons.remove_red_eye_outlined),
-              onPressed: () async {
-                await controller.isPasswordHidden.toggle();
+              onPressed: () {
+                controller.isPasswordHidden.toggle();
               },
             ),
             border: InputBorder.none,

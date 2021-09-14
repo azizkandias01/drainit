@@ -12,6 +12,7 @@ import 'package:location/location.dart';
 
 import '../controllers/flood_drainage_list_controller.dart';
 
+// ignore: prefer_typing_uninitialized_variables
 late var _initialPosition;
 
 Future<LatLng> _getPosition() async {
@@ -31,6 +32,7 @@ Future<LatLng> _getPosition() async {
 class FloodDrainageListView extends GetView<FloodDrainageListController> {
   @override
   Widget build(BuildContext context) {
+    loadFloodMarker(controller);
     return ScreenUtilInit(
       designSize: Size(414, 896),
       builder: () => Scaffold(
@@ -55,85 +57,9 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
               onPressed: () {
                 if (controller.markers.isNotEmpty) {
                   controller.markers.clear();
-                  for (var item in controller.floodPoint) {
-                    controller.markers.add(
-                      Marker(
-                        markerId: MarkerId(item.id!),
-                        icon: BitmapDescriptor.defaultMarker,
-                        position: controller.geoToLatlong(item.geometry!),
-                        onTap: () {
-                          Get.bottomSheet(
-                            Container(
-                              height: 300.h,
-                              color: white,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: imagePath() + item.foto!,
-                                      placeholder: (_, __) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      },
-                                      height: 150.h,
-                                      width: 300.w,
-                                      fit: BoxFit.cover,
-                                      errorWidget: (_, __, ___) {
-                                        return Text("data cannot be loaded!");
-                                      },
-                                    ),
-                                  ),
-                                  Text(item.namaJalan!),
-                                  Text(item.keterangan!),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  }
+                  loadFloodMarker(controller);
                 } else {
-                  for (var item in controller.floodPoint) {
-                    controller.markers.add(
-                      Marker(
-                        markerId: MarkerId(item.id!),
-                        icon: BitmapDescriptor.defaultMarker,
-                        position: controller.geoToLatlong(item.geometry!),
-                        onTap: () {
-                          Get.bottomSheet(
-                            Container(
-                              height: 300.h,
-                              color: white,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: imagePath() + item.foto!,
-                                      placeholder: (Context, String) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      },
-                                      height: 150.h,
-                                      width: 300.w,
-                                      fit: BoxFit.cover,
-                                      errorWidget: (_, __, ___) {
-                                        return Text("data cannot be loaded!");
-                                      },
-                                    ),
-                                  ),
-                                  Text(item.namaJalan!),
-                                  Text(item.keterangan!),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  }
+                  loadFloodMarker(controller);
                 }
               }),
           SizedBox(
@@ -144,87 +70,9 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
             onPressed: () {
               if (controller.markers.isNotEmpty) {
                 controller.markers.clear();
-                for (var item in controller.drainagePoint) {
-                  controller.markers.add(
-                    Marker(
-                      markerId: MarkerId(item.id!),
-                      icon: BitmapDescriptor.defaultMarker,
-                      position: controller.geoToLatlong(item.geometry!),
-                      onTap: () {
-                        Get.bottomSheet(
-                          Container(
-                            height: 300.h,
-                            color: white,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: imagePath() + item.foto!,
-                                    placeholder: (Context, String) {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    },
-                                    height: 150.h,
-                                    width: 300.w,
-                                    fit: BoxFit.cover,
-                                    errorWidget: (_, __, ___) {
-                                      return Text("data cannot be loaded!");
-                                    },
-                                  ),
-                                ),
-                                Text(item.namaJalan!),
-                                Text(item.keterangan!),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      infoWindow: InfoWindow(
-                          title: item.namaJalan, snippet: item.status),
-                    ),
-                  );
-                }
+                loadDrainageMarker(controller);
               } else {
-                for (var item in controller.drainagePoint) {
-                  controller.markers.add(
-                    Marker(
-                      markerId: MarkerId(item.id!),
-                      icon: BitmapDescriptor.defaultMarker,
-                      position: controller.geoToLatlong(item.geometry!),
-                      onTap: () {
-                        Get.bottomSheet(
-                          Container(
-                            height: 300.h,
-                            color: white,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: imagePath() + item.foto!,
-                                    placeholder: (Context, String) {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    },
-                                    height: 150.h,
-                                    width: 300.w,
-                                    fit: BoxFit.cover,
-                                    errorWidget: (_, __, ___) {
-                                      return Text("data cannot be loaded!");
-                                    },
-                                  ),
-                                ),
-                                Text(item.namaJalan!),
-                                Text(item.keterangan!),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }
+                loadDrainageMarker(controller);
               }
             },
           ),
@@ -240,21 +88,7 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
   }
 }
 
-Set<Polyline> _polylines = {};
-List<TaskModel> listofTasks = [];
-
 class Map extends GetView<FloodDrainageListController> {
-  void setMaps() {
-    Polyline polyline;
-    print(controller.polylineCoordinates);
-    polyline = Polyline(
-        polylineId: PolylineId(""),
-        color: primary,
-        width: 3,
-        points: controller.polylineCoordinates);
-    _polylines.add(polyline);
-  }
-
   static final Completer<GoogleMapController> _controller = Completer();
   static Future<void> _goToCurrentLocation() async {
     _initialPosition = await _getPosition();
@@ -288,11 +122,9 @@ class Map extends GetView<FloodDrainageListController> {
             if (!_controller.isCompleted) {
               _controller.complete(controller);
               controller.setMapStyle(mapStyles);
-              setMaps();
             } else {
               controller.setMapStyle(mapStyles);
               print("completer has created");
-              setMaps();
             }
           },
         ),
@@ -301,15 +133,84 @@ class Map extends GetView<FloodDrainageListController> {
   }
 }
 
-class TaskModel {
-  String taskid;
-  String name;
-  String address;
-  double slatitude;
-  double dlatitude;
-  double slongitude;
-  double dlongitude;
+void loadFloodMarker(FloodDrainageListController controller) {
+  for (var item in controller.floodPoint) {
+    controller.markers.add(
+      Marker(
+        markerId: MarkerId(item.id!),
+        icon: BitmapDescriptor.defaultMarker,
+        position: controller.geoToLatlong(item.geometry!),
+        onTap: () {
+          Get.bottomSheet(
+            Container(
+              height: 300.h,
+              color: white,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CachedNetworkImage(
+                      imageUrl: imagePath() + item.foto!,
+                      placeholder: (_, __) {
+                        return Center(child: CircularProgressIndicator());
+                      },
+                      height: 150.h,
+                      width: 300.w,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) {
+                        return Text("data cannot be loaded!");
+                      },
+                    ),
+                  ),
+                  Text(item.namaJalan!),
+                  Text(item.keterangan!),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
 
-  TaskModel(this.taskid, this.name, this.address, this.slongitude,
-      this.slatitude, this.dlongitude, this.dlatitude);
+void loadDrainageMarker(FloodDrainageListController controller) {
+  for (var item in controller.drainagePoint) {
+    controller.markers.add(
+      Marker(
+        markerId: MarkerId(item.id!),
+        icon: BitmapDescriptor.defaultMarker,
+        position: controller.geoToLatlong(item.geometry!),
+        onTap: () {
+          Get.bottomSheet(
+            Container(
+              height: 300.h,
+              color: white,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CachedNetworkImage(
+                      imageUrl: imagePath() + item.foto!,
+                      placeholder: (_, __) {
+                        return Center(child: CircularProgressIndicator());
+                      },
+                      height: 150.h,
+                      width: 300.w,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) {
+                        return Text("data cannot be loaded!");
+                      },
+                    ),
+                  ),
+                  Text(item.namaJalan!),
+                  Text(item.keterangan!),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
