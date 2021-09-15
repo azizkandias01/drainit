@@ -33,7 +33,7 @@ class RoundedButton extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: Container(
-        width: width != null ? this.width : size.width * 0.8,
+        width: width ?? size.width * 0.8,
         height: height,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius!),
@@ -41,15 +41,13 @@ class RoundedButton extends StatelessWidget {
               Stack(alignment: AlignmentDirectional.center, children: <Widget>[
             Positioned.fill(
               child: Container(
-                decoration: BoxDecoration(color: this.color),
+                decoration: BoxDecoration(color: color),
               ),
             ),
             Text(
               text,
               style: TextStyle(
-                  color: textColor,
-                  fontSize: this.fontSize,
-                  fontWeight: this.fontWeight),
+                  color: textColor, fontSize: fontSize, fontWeight: fontWeight),
             ),
           ]),
         ),
@@ -70,6 +68,7 @@ class LoginWithButton extends StatelessWidget {
   final double? fontSize;
   final double? iconWidth;
   final double? iconHeight;
+  final void Function()? onClick;
   const LoginWithButton({
     Key? key,
     this.iconPath,
@@ -83,39 +82,40 @@ class LoginWithButton extends StatelessWidget {
     this.fontSize,
     this.iconWidth,
     this.iconHeight,
+    this.onClick,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
       Container(
-        width: this.width,
-        height: this.height,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(this.borderRadius ?? 0)),
+            borderRadius: BorderRadius.circular(borderRadius ?? 0)),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            this.iconPath ?? "",
-            height: this.iconHeight,
-            width: this.iconWidth,
+            iconPath ?? "",
+            height: iconHeight,
+            width: iconWidth,
           ),
           SizedBox(
-            width: this.spaceBetweenIconAndText,
+            width: spaceBetweenIconAndText,
           ),
           TextButton(
             style: TextButton.styleFrom(
-              primary: this.textColor,
+              primary: textColor,
             ),
-            onPressed: () {},
+            onPressed: onClick,
             child: Text(
               text ?? "not defined",
               style: TextStyle(
-                color: this.textColor,
-                fontSize: this.fontSize,
+                color: textColor,
+                fontSize: fontSize,
               ),
             ),
           ),
@@ -158,37 +158,37 @@ class ProfileMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
       Container(
-        width: this.width,
-        height: this.height,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(this.borderRadius ?? 0)),
+            borderRadius: BorderRadius.circular(borderRadius ?? 0)),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           SvgPicture.asset(
-            this.iconPath ?? "",
-            height: this.iconHeight,
-            width: this.iconWidth,
+            iconPath ?? "",
+            height: iconHeight,
+            width: iconWidth,
           ),
           TextButton(
             style: TextButton.styleFrom(
-              primary: this.textColor,
+              primary: textColor,
             ),
             onPressed: onPressed,
             child: Text(
               text ?? "not defined",
               style: TextStyle(
-                color: this.textColor,
-                fontSize: this.fontSize,
+                color: textColor,
+                fontSize: fontSize,
               ),
             ),
           ),
           SvgPicture.asset(
             "assets/svg/arrow_right.svg",
-            height: this.iconHeight,
-            width: this.iconWidth,
+            height: iconHeight,
+            width: iconWidth,
           ),
         ],
       ),

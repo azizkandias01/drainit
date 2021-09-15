@@ -26,16 +26,16 @@ class ProfileView extends GetView<ProfileController> {
                   height: 48.h,
                 ),
                 ProfileBox(
-                  email: this.controller.dataProfile.email,
+                  email: controller.dataProfile.email,
                 ),
                 SizedBox(
                   height: 39.h,
                 ),
                 ProfileInfo(
-                  name: this.controller.dataProfile.nama,
-                  address: this.controller.dataProfile.alamat,
-                  phoneNumber: this.controller.dataProfile.noHp,
-                  photoUrl: this.controller.dataProfile.foto,
+                  name: controller.dataProfile.nama,
+                  address: controller.dataProfile.alamat,
+                  phoneNumber: controller.dataProfile.noHp,
+                  photoUrl: controller.dataProfile.foto,
                 ),
                 SizedBox(height: 22.h),
                 ProfileMenuButton(
@@ -136,8 +136,8 @@ class ProfileInfo extends StatelessWidget {
               ),
               CircleAvatar(
                 backgroundImage: NetworkImage(
-                    this.photoUrl!.contains(".j")
-                        ? imagePath() + this.photoUrl!
+                    photoUrl!.contains(".j")
+                        ? imagePath() + photoUrl!
                         : "defaultbanjir.png",
                     scale: 64.w),
                 onBackgroundImageError: (object, trace) {
@@ -158,7 +158,7 @@ class ProfileInfo extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        this.name ?? "default",
+                        name ?? "default",
                         style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
@@ -221,7 +221,7 @@ class ProfileInfo extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                this.totalReports ?? "18",
+                                totalReports ?? "18",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontFamily: 'Klasik',
@@ -262,7 +262,7 @@ class ProfileInfo extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                this.totalReportsDone ?? "12",
+                                totalReportsDone ?? "12",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontFamily: 'Klasik',
@@ -308,7 +308,7 @@ class ProfileInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                this.phoneNumber ?? "08233652155",
+                phoneNumber ?? "08233652155",
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: kColorGrey,
@@ -336,7 +336,7 @@ class ProfileInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                this.address ??
+                address ??
                     "Jalan Bukit Sari 10, Umban Sari Atas, Rumbai, Pek...",
                 style: TextStyle(
                   fontSize: 14.sp,
@@ -402,7 +402,7 @@ class ProfileBox extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      this.email ?? "cannot retrieve email",
+                      email ?? "cannot retrieve email",
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: kColorGrey,

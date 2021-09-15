@@ -114,7 +114,7 @@ class RegisterView extends GetView<RegisterController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: new Container(
+                    child: Container(
                         margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                         child: Divider(
                           color: kTextPurple,
@@ -129,7 +129,7 @@ class RegisterView extends GetView<RegisterController> {
                         fontFamily: 'Klasik'),
                   ),
                   Expanded(
-                    child: new Container(
+                    child: Container(
                         margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                         child: Divider(
                           color: kTextPurple,

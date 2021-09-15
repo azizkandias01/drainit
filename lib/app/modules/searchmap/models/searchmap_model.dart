@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_renaming_method_parameters
+
 class Place {
   final String name;
   final String state;

@@ -23,4 +23,23 @@ class TimelineProvider extends GetConnect {
       return dataRaw;
     }
   }
+
+  Future<List<TimelineModelAnonymouse>> loadTimelineAnonymouse() async {
+    final response = await get(
+      "https://gis-drainase.pocari.id/api/pengaduan",
+    );
+    if (response.status.hasError) {
+      return Future.error(response.statusText.toString());
+    } else {
+      print(response.body);
+      var dataRaw = (response.body as List)
+          .map(
+            (e) => TimelineModelAnonymouse.fromJson(e),
+          )
+          .where((element) =>
+              element.foto!.contains(".jpeg") || element.foto!.contains(".png"))
+          .toList();
+      return dataRaw;
+    }
+  }
 }

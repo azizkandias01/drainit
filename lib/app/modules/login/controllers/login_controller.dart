@@ -1,7 +1,9 @@
+import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
 import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -42,10 +44,19 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
           status: RxStatus.success(),
         ),
         box.write(Routes.TOKEN, resp.accessToken),
-        Get.offAllNamed(Routes.HOME)
+
+        Get.offAllNamed(Routes.HOME, arguments: "login")
       },
       //if error happens then catch the error and show to user
       onError: (err) {
+        Get.bottomSheet(
+          Container(
+            color: white,
+            child: Center(
+              child: Text("error ketika login $err"),
+            ),
+          ),
+        );
         change(
           null,
           status: RxStatus.error("Error occured : " + err.toString()),

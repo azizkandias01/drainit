@@ -19,11 +19,10 @@ class ShapeCustomYellow extends StatelessWidget {
         height: height,
         child: Stack(alignment: AlignmentDirectional.center, children: <Widget>[
           Container(
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: primary,
                 shape: BoxShape.rectangle,
-                borderRadius:
-                    BorderRadius.all(Radius.circular(this.borderRadius!))),
+                borderRadius: BorderRadius.all(Radius.circular(borderRadius!))),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
