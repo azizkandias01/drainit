@@ -39,11 +39,6 @@ class RegisterController extends GetxController with StateMixin<String> {
     change(null, status: RxStatus.empty());
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   void getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
@@ -113,11 +108,6 @@ class RegisterController extends GetxController with StateMixin<String> {
         );
       },
     );
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   @override

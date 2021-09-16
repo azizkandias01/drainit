@@ -20,12 +20,16 @@ import 'package:drainit_flutter/app/modules/register/bindings/register_binding.d
 import 'package:drainit_flutter/app/modules/register/views/register_view.dart';
 import 'package:drainit_flutter/app/modules/register_next/bindings/register_next_binding.dart';
 import 'package:drainit_flutter/app/modules/register_next/views/register_next_view.dart';
+import 'package:drainit_flutter/app/modules/reports/bindings/reports_binding.dart';
+import 'package:drainit_flutter/app/modules/reports/views/reports_view.dart';
 import 'package:drainit_flutter/app/modules/searchmap/bindings/searchmap_binding.dart';
 import 'package:drainit_flutter/app/modules/searchmap/views/searchmap_view.dart';
 import 'package:drainit_flutter/app/modules/splashscreen/bindings/splashscreen_binding.dart';
 import 'package:drainit_flutter/app/modules/splashscreen/views/splashscreen_view.dart';
 import 'package:drainit_flutter/app/modules/timeline/bindings/timeline_binding.dart';
 import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
+
+// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 
@@ -99,6 +103,11 @@ class AppPages {
       name: _Paths.FLOOD_DRAINAGE_LIST,
       page: () => FloodDrainageListView(),
       binding: FloodDrainageListBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORTS,
+      page: () => ReportsView(),
+      binding: ReportsBinding(),
     ),
   ];
 }

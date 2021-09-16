@@ -1,13 +1,11 @@
-// ignore_for_file: non_constant_identifier_names
-
-import 'dart:convert';
+// ignore_for_file: non_constant_identifier_names, unused_local_variable
 
 import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
+import 'package:drainit_flutter/app/modules/reports/views/reports_view.dart';
 import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
-import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -22,9 +20,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
     final floodDrainageListC = Get.find<FloodDrainageListController>();
-    // ignore: unused_local_variable
     if (Get.arguments.toString() != "anonymouse") {
       final ProfileC = Get.find<ProfileController>();
     }
@@ -34,16 +30,13 @@ class HomeView extends GetView<HomeController> {
     print(Get.arguments);
     List<Widget> _widgetOptions = Get.arguments == "anonymouse"
         ? [
+            ReportsView(),
             TimelineView(Get.arguments),
             FloodDrainageListView(),
-            Text("maps"),
           ]
         : [
+            ReportsView(),
             TimelineView(Get.arguments),
-            Text(
-              "dsas",
-              style: optionStyle,
-            ),
             Text(
               "like",
               style: optionStyle,
@@ -62,7 +55,7 @@ class HomeView extends GetView<HomeController> {
               text: "Reports",
             ),
             GButton(
-              icon: LineIcons.list,
+              icon: LineIcons.map,
               text: "Maps",
             ),
           ]
@@ -72,15 +65,15 @@ class HomeView extends GetView<HomeController> {
               text: 'Home',
             ),
             GButton(
-              icon: LineIcons.list,
+              icon: LineIcons.pen,
               text: "Reports",
             ),
             GButton(
-              icon: LineIcons.heart,
+              icon: LineIcons.clock,
               text: 'Likes',
             ),
             GButton(
-              icon: LineIcons.search,
+              icon: LineIcons.map,
               text: 'Search',
             ),
             GButton(

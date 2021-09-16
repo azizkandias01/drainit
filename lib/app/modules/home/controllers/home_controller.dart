@@ -11,11 +11,6 @@ class HomeController extends GetxController {
     box = GetStorage();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   Function getToken() {
     return box.read(Routes.TOKEN);
   }

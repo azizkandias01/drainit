@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:drainit_flutter/app/modules/profile/models/profile_model.dart';
 import 'package:drainit_flutter/app/modules/profile/providers/profile_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
@@ -29,18 +27,13 @@ class ProfileController extends GetxController with StateMixin {
 
     ProfileProvider().geProfile(box.read(Routes.TOKEN)).then(
       (value) => {
-        this.change(value, status: RxStatus.success()),
+        change(value, status: RxStatus.success()),
         dataProfile = value!,
       },
       onError: (err) {
         change(err, status: RxStatus.error());
       },
     );
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override
