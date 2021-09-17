@@ -11,7 +11,7 @@ class HomeController extends GetxController {
     box = GetStorage();
   }
 
-  Function getToken() {
+  Function? getToken() {
     return box.read(Routes.TOKEN);
   }
 

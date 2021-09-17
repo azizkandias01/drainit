@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
@@ -14,11 +16,11 @@ class RegisterNextView extends GetView<RegisterNextController> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(414, 896),
+      designSize: const Size(414, 896),
       builder: () => Scaffold(
         backgroundColor: kBackgroundInput,
         resizeToAvoidBottomInset: false,
-        body: Container(
+        body: SizedBox(
           width: 414.w,
           height: 896.h,
           child: Column(
@@ -40,12 +42,15 @@ class RegisterNextView extends GetView<RegisterNextController> {
                           child: Padding(
                             padding: EdgeInsets.only(left: 25.w),
                             child: GestureDetector(
-                                onTap: () => Get.back(),
-                                child: Icon(Icons.arrow_back_ios_new)),
+                              onTap: () => Get.back(),
+                              child: const Icon(
+                                Icons.arrow_back_ios_new,
+                              ),
+                            ),
                           ),
                         ),
                         SvgPicture.asset(
-                          "assets/svg/RegisterIlustration.svg",
+                          'assets/svg/RegisterIlustration.svg',
                           height: 200.h,
                           width: 188.w,
                         ),
@@ -54,7 +59,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
                   ),
                   SizedBox(height: 21.h),
                   Text(
-                    "Selamat Datang",
+                    'Selamat Datang',
                     style: TextStyle(
                       fontFamily: 'Klasik',
                       fontSize: 36.sp,
@@ -63,7 +68,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "Lengkapi data anda",
+                    'Lengkapi data anda',
                     style: TextStyle(
                       fontFamily: 'Klasik',
                       fontSize: 16.sp,
@@ -72,13 +77,13 @@ class RegisterNextView extends GetView<RegisterNextController> {
                   ),
                   SizedBox(height: 26.h),
                   SvgPicture.asset(
-                    "assets/svg/Profile_Img.svg",
+                    'assets/svg/Profile_Img.svg',
                     height: 86.h,
                     width: 86.w,
                   ),
                   SizedBox(height: 57.h),
                   RoundedInputField(
-                    hintText: "Nama Lengkap",
+                    hintText: 'Nama Lengkap',
                     backgroundColor: white,
                     //  textEditingController: controller.myControllerName,
                     roundedCorner: 12.r,
@@ -87,7 +92,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
                   ),
                   SizedBox(height: 8.h),
                   RoundedInputField(
-                    hintText: "Nama Lengkap",
+                    hintText: 'Nama Lengkap',
                     backgroundColor: white,
                     // textEditingController: controller.myControllerName,
                     roundedCorner: 12.r,
@@ -96,7 +101,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
                   ),
                   SizedBox(height: 8.h),
                   RoundedInputField(
-                    hintText: "Nama Lengkap",
+                    hintText: 'Nama Lengkap',
                     backgroundColor: white,
                     //  textEditingController: controller.myControllerName,
                     roundedCorner: 12.r,
@@ -107,7 +112,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
                     height: 48.h,
                   ),
                   RoundedButton(
-                    text: "Next",
+                    text: 'Next',
                     fontSize: 16.sp,
                     borderRadius: 12.w,
                     height: 56.h,
@@ -119,7 +124,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars, avoid_print
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
@@ -12,65 +14,67 @@ import 'package:line_icons/line_icons.dart';
 import '../controllers/timeline_controller.dart';
 
 class TimelineView extends GetView<TimelineController> {
+  const TimelineView(this.type);
+
   final String? type;
 
-  const TimelineView(this.type);
   @override
   Widget build(BuildContext context) {
-    controller.loadTimeline(type ?? "login");
+    controller.loadTimeline(type ?? 'login');
     return ScreenUtilInit(
-      designSize: Size(414, 896),
+      designSize: const Size(414, 896),
       builder: () => Scaffold(
         backgroundColor: kBackgroundInput,
         body: SafeArea(
           child: Column(
             children: [
-              TopMenu(),
+              const TopMenu(),
               SizedBox(
                 height: 20.h,
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Sort By :"),
-                    SizedBox(
-                      width: 4.w,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Sort By :'),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Container(
+                    width: 183.w,
+                    height: 33.h,
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
-                    Container(
-                      width: 183.w,
-                      height: 33.h,
-                      decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.circular(12.r)),
-                      child: Center(child: Text("Popular")),
+                    child: const Center(child: Text('Popular')),
+                  ),
+                  SizedBox(
+                    width: 21.w,
+                  ),
+                  Container(
+                    width: 110.w,
+                    height: 33.h,
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
-                    SizedBox(
-                      width: 21.w,
-                    ),
-                    Container(
-                      width: 110.w,
-                      height: 33.h,
-                      decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.circular(12.r)),
-                      child: Center(child: Text("Filter")),
-                    ),
-                  ],
-                ),
+                    child: const Center(child: Text('Filter')),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 24.h,
               ),
               controller.obx(
                 (state) => SingleChildScrollView(
-                  child: Container(
+                  child: SizedBox(
                     width: 374.w,
                     height: 676.h,
                     child: RefreshIndicator(
-                      onRefresh: () => controller.loadTimeline(Get.arguments),
+                      onRefresh: () =>
+                          controller.loadTimeline(Get.arguments as String),
                       child: ListView.separated(
-                        itemCount: Get.arguments == "anonymouse"
+                        itemCount: Get.arguments == 'anonymouse'
                             ? controller.timelineAnonymouse.length
                             : controller.timeline.length,
                         separatorBuilder: (BuildContext context, int index) {
@@ -80,33 +84,34 @@ class TimelineView extends GetView<TimelineController> {
                         },
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
-                              onTap: () => print(
-                                  "timelineFiltered filtered length :" +
-                                      controller.timeline[index].id.toString()),
-                              child: Get.arguments == "anonymouse"
-                                  ? ListviewItem(
-                                      name: controller.timelineAnonymouse[index]
-                                          .namaPelapor,
-                                      foto: controller
-                                          .timelineAnonymouse[index].foto,
-                                      description: controller
-                                          .timelineAnonymouse[index]
-                                          .deskripsiPengaduan,
-                                      upVote: controller
-                                          .timelineAnonymouse[index].upvote,
-                                      downVote: controller
-                                          .timelineAnonymouse[index].downvote,
-                                    )
-                                  : ListviewItem(
-                                      name: controller
-                                          .timeline[index].namaPelapor,
-                                      foto: controller.timeline[index].foto,
-                                      description: controller
-                                          .timeline[index].deskripsiPengaduan,
-                                      upVote: controller.timeline[index].upvote,
-                                      downVote:
-                                          controller.timeline[index].downvote,
-                                    ));
+                            onTap: () => print(
+                              'timelineFiltered filtered length :${controller.timeline[index].id}',
+                            ),
+                            child: Get.arguments == 'anonymouse'
+                                ? ListviewItem(
+                                    name: controller
+                                        .timelineAnonymouse[index].namaPelapor,
+                                    foto: controller
+                                        .timelineAnonymouse[index].foto,
+                                    description: controller
+                                        .timelineAnonymouse[index]
+                                        .deskripsiPengaduan,
+                                    upVote: controller
+                                        .timelineAnonymouse[index].upvote,
+                                    downVote: controller
+                                        .timelineAnonymouse[index].downvote,
+                                  )
+                                : ListviewItem(
+                                    name:
+                                        controller.timeline[index].namaPelapor,
+                                    foto: controller.timeline[index].foto,
+                                    description: controller
+                                        .timeline[index].deskripsiPengaduan,
+                                    upVote: controller.timeline[index].upvote,
+                                    downVote:
+                                        controller.timeline[index].downvote,
+                                  ),
+                          );
                         },
                       ),
                     ),
@@ -122,12 +127,6 @@ class TimelineView extends GetView<TimelineController> {
 }
 
 class ListviewItem extends StatelessWidget {
-  final String? name;
-  final String? foto;
-  final String? description;
-  final int? upVote;
-  final int? downVote;
-
   const ListviewItem({
     Key? key,
     this.name,
@@ -137,13 +136,21 @@ class ListviewItem extends StatelessWidget {
     this.downVote,
   }) : super(key: key);
 
+  final String? name;
+  final String? foto;
+  final String? description;
+  final int? upVote;
+  final int? downVote;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 331.h,
       width: 374.w,
       decoration: BoxDecoration(
-          color: white, borderRadius: BorderRadius.circular(12.r)),
+        color: white,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
       child: Column(
         children: [
           Row(
@@ -155,18 +162,18 @@ class ListviewItem extends StatelessWidget {
                 backgroundImage: CachedNetworkImageProvider(
                   imagePath() + foto!,
                   scale: 32.w,
-                  errorListener: () => Center(
-                    child: Text("image not loaded"),
+                  errorListener: () => const Center(
+                    child: Text('image not loaded'),
                   ),
                 ),
                 onBackgroundImageError: (object, trace) {
-                  print("error object");
+                  print('error object');
                 },
               ),
               SizedBox(
                 width: 10.w,
               ),
-              Container(
+              SizedBox(
                 width: 215.w,
                 height: 60.h,
                 child: Column(
@@ -177,11 +184,12 @@ class ListviewItem extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        name ?? "anonymouse",
+                        name ?? 'anonymouse',
                         style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                            color: kTextPurple),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: kTextPurple,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -190,7 +198,7 @@ class ListviewItem extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(
-                        "Beginner",
+                        'Beginner',
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: kColorGrey,
@@ -200,9 +208,9 @@ class ListviewItem extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               SvgPicture.asset(
-                "assets/svg/clock.svg",
+                'assets/svg/clock.svg',
                 height: 38.h,
                 width: 38.w,
               ),
@@ -214,11 +222,13 @@ class ListviewItem extends StatelessWidget {
           SizedBox(
             height: 15.h,
           ),
-          Container(
+          SizedBox(
             height: 40.h,
             width: 343.w,
-            child: Text(description ??
-                "Sampah di dekat selokan jalan sampurna menyebabkan air tersumbat dan banjir "),
+            child: Text(
+              description ??
+                  'Sampah di dekat selokan jalan sampurna menyebabkan air tersumbat dan banjir ',
+            ),
           ),
           SizedBox(
             height: 15.h,
@@ -226,16 +236,16 @@ class ListviewItem extends StatelessWidget {
           Image(
             image: CachedNetworkImageProvider(
               imagePath() + foto!,
-              errorListener: () => Center(
-                child: Text("image not loaded"),
+              errorListener: () => const Center(
+                child: Text('image not loaded'),
               ),
             ),
             width: 351.w,
             height: 157.h,
             fit: BoxFit.fitWidth,
             errorBuilder: (_, __, ___) {
-              return Center(
-                child: Text("Image error"),
+              return const Center(
+                child: Text('Image error'),
               );
             },
           ),
@@ -247,12 +257,12 @@ class ListviewItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon(LineIcons.thumbsUp),
+                const Icon(LineIcons.thumbsUp),
                 Text(upVote.toString()),
                 SizedBox(
                   width: 20.w,
                 ),
-                Icon(LineIcons.thumbsDown),
+                const Icon(LineIcons.thumbsDown),
                 Text(downVote.toString())
               ],
             ),
@@ -270,27 +280,30 @@ class TopMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 64.h,
       width: 387.w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SvgPicture.asset(
-            "assets/svg/Back_Icon.svg",
+            'assets/svg/Back_Icon.svg',
           ),
-          Spacer(),
+          const Spacer(),
           Text(
-            "Timeline",
+            'Timeline',
             style: TextStyle(
-                fontFamily: 'Klasik', fontSize: 16.sp, color: kTextPurple),
+              fontFamily: 'Klasik',
+              fontSize: 16.sp,
+              color: kTextPurple,
+            ),
           ),
-          Spacer(),
+          const Spacer(),
           GestureDetector(
             onTap: () {
               Get.toNamed(Routes.PROFILE);
             },
-            child: Image.asset("assets/image/ProfileImage.png"),
+            child: Image.asset('assets/image/ProfileImage.png'),
           ),
         ],
       ),

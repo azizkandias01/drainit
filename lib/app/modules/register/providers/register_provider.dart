@@ -8,12 +8,14 @@ class RegisterProvider extends GetConnect {
 
   Future<String> registerUser(Map data) async {
     final response = await post(
-        'https://gis-drainase.pocari.id/api/register/masyarakat', data);
+      'https://gis-drainase.pocari.id/api/register/masyarakat',
+      data,
+    );
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());
     } else {
-      print(response.body);
-      return "success register";
+      //print(response.body);
+      return 'success register';
     }
   }
 }

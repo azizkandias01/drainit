@@ -1,4 +1,23 @@
 class FloodModel {
+  FloodModel({
+    this.id,
+    this.namaJalan,
+    this.kondisiKerusakan,
+    this.foto,
+    this.keterangan,
+    this.status,
+    this.geometry,
+  });
+
+  FloodModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'] as String;
+    namaJalan = json['nama_jalan'] as String;
+    kondisiKerusakan = json['kondisi_kerusakan'] as String;
+    foto = json['foto'] as String;
+    keterangan = json['keterangan'] as String;
+    status = json['status'];
+    geometry = json['geometry'] as String;
+  }
   String? id;
   String? namaJalan;
   String? kondisiKerusakan;
@@ -6,25 +25,6 @@ class FloodModel {
   String? keterangan;
   dynamic status;
   String? geometry;
-
-  FloodModel(
-      {this.id,
-      this.namaJalan,
-      this.kondisiKerusakan,
-      this.foto,
-      this.keterangan,
-      this.status,
-      this.geometry});
-
-  FloodModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    namaJalan = json['nama_jalan'];
-    kondisiKerusakan = json['kondisi_kerusakan'];
-    foto = json['foto'];
-    keterangan = json['keterangan'];
-    status = json['status'];
-    geometry = json['geometry'];
-  }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

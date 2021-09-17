@@ -9,6 +9,7 @@ class TimelineController extends GetxController with StateMixin {
   late GetStorage box;
   late List<TimelineModel> timeline;
   late List<TimelineModelAnonymouse> timelineAnonymouse;
+
   @override
   void onInit() {
     super.onInit();
@@ -19,7 +20,7 @@ class TimelineController extends GetxController with StateMixin {
 
   Future loadTimeline(String type) async {
     change(null, status: RxStatus.loading());
-    if (type == "anonymouse") {
+    if (type == 'anonymouse') {
       await TimelineProvider().loadTimelineAnonymouse().then(
         (value) => {
           timelineAnonymouse = value,
@@ -32,11 +33,11 @@ class TimelineController extends GetxController with StateMixin {
     } else {
       await TimelineProvider()
           .loadTimeline(
-        box.read(Routes.TOKEN),
+        box.read(Routes.TOKEN) as String,
       )
           .then(
         (value) => {
-          timeline = value,
+          timeline = value as List<TimelineModel>,
           change(value, status: RxStatus.success()),
         },
         onError: (err) {

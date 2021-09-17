@@ -1,6 +1,8 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:drainit_flutter/app/components/constant.dart';
-import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
 import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
+import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
 
   bool isLoggedIn() => box.hasData(Routes.TOKEN);
 
-  void userLogin(String email, String password) async {
+  Future<void> userLogin(String email, String password) async {
     final dataLogin = {
       'email': email,
       'password': password,
@@ -45,7 +47,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
         ),
         box.write(Routes.TOKEN, resp.accessToken),
 
-        Get.offAllNamed(Routes.HOME, arguments: "login")
+        Get.offAllNamed(Routes.HOME, arguments: 'login')
       },
       //if error happens then catch the error and show to user
       onError: (err) {
@@ -53,13 +55,13 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
           Container(
             color: white,
             child: Center(
-              child: Text("error ketika login $err"),
+              child: Text('error ketika login $err'),
             ),
           ),
         );
         change(
           null,
-          status: RxStatus.error("Error occured : " + err.toString()),
+          status: RxStatus.error('Error occured : $err'),
         );
       },
     );

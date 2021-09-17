@@ -13,29 +13,28 @@ class EditProfileView extends GetView<EditProfileController> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(414, 896),
+      designSize: const Size(414, 896),
       builder: () => Scaffold(
         backgroundColor: kBackgroundInput,
         body: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TopMenu(),
+              const TopMenu(),
               SizedBox(
                 height: 49.h,
               ),
-              Container(
+              SizedBox(
                 width: 145.w,
                 height: 145.h,
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: 145.w,
                       height: 145.h,
-                      child: CircleAvatar(
+                      child: const CircleAvatar(
                         backgroundImage: NetworkImage(
-                          "https://reqres.in/img/faces/2-image.jpg",
+                          'https://reqres.in/img/faces/2-image.jpg',
                         ),
                       ),
                     ),
@@ -46,7 +45,7 @@ class EditProfileView extends GetView<EditProfileController> {
                         child: Container(
                           height: 44.h,
                           width: 44.w,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: kColorGrey,
                             shape: BoxShape.circle,
                           ),
@@ -69,29 +68,29 @@ class EditProfileView extends GetView<EditProfileController> {
                 height: 62.h,
               ),
               RoundedInputField(
-                hintText: "Nama Lengkap",
+                hintText: 'Nama Lengkap',
                 backgroundColor: white,
                 //textEditingController: controller.myControllerName,
                 roundedCorner: 12.r,
                 width: 374.w,
                 height: 56.h,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               RoundedInputField(
-                hintText: "Nama Lengkap",
+                hintText: 'Nama Lengkap',
                 backgroundColor: white,
                 //textEditingController: controller.myControllerName,
                 roundedCorner: 12.r,
                 width: 374.w,
                 height: 56.h,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               RoundedInputField(
-                hintText: "Nama Lengkap",
+                hintText: 'Nama Lengkap',
                 backgroundColor: white,
                 //textEditingController: controller.myControllerName,
                 roundedCorner: 12.r,
@@ -102,7 +101,7 @@ class EditProfileView extends GetView<EditProfileController> {
                 height: 247.h,
               ),
               RoundedButton(
-                text: "Next",
+                text: 'Next',
                 fontSize: 16.sp,
                 borderRadius: 12.w,
                 height: 56.h,
@@ -135,16 +134,19 @@ class TopMenu extends StatelessWidget {
         GestureDetector(
           onTap: () => Get.back(),
           child: SvgPicture.asset(
-            "assets/svg/Back_Icon.svg",
+            'assets/svg/Back_Icon.svg',
           ),
         ),
         SizedBox(
           width: 80.w,
         ),
         Text(
-          "Edit Profile",
+          'Edit Profile',
           style: TextStyle(
-              fontFamily: 'Klasik', fontSize: 18.sp, color: kTextPurple),
+            fontFamily: 'Klasik',
+            fontSize: 18.sp,
+            color: kTextPurple,
+          ),
         ),
       ],
     );

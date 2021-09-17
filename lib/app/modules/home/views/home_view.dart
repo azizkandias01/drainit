@@ -4,6 +4,7 @@ import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/floo
 import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
+import 'package:drainit_flutter/app/modules/reports/controllers/reports_controller.dart';
 import 'package:drainit_flutter/app/modules/reports/views/reports_view.dart';
 import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
 import 'package:flutter/material.dart';
@@ -21,62 +22,64 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final floodDrainageListC = Get.find<FloodDrainageListController>();
-    if (Get.arguments.toString() != "anonymouse") {
+    final String arguments = Get.arguments as String;
+    final reportsC = Get.find<ReportsController>();
+    if (isUserLogin()) {
       final ProfileC = Get.find<ProfileController>();
     }
-    var _selectedIndex = 0.obs;
+    final _selectedIndex = 0.obs;
     const TextStyle optionStyle =
         TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-    print(Get.arguments);
-    List<Widget> _widgetOptions = Get.arguments == "anonymouse"
+
+    final List<Widget> _widgetOptions = !isUserLogin()
         ? [
             ReportsView(),
-            TimelineView(Get.arguments),
+            TimelineView(arguments),
             FloodDrainageListView(),
           ]
         : [
             ReportsView(),
-            TimelineView(Get.arguments),
-            Text(
-              "like",
+            TimelineView(arguments),
+            const Text(
+              'like',
               style: optionStyle,
             ),
             FloodDrainageListView(),
             ProfileView(),
           ];
-    List<GButton> _widgetButton = Get.arguments == "anonymouse"
+    final List<GButton> _widgetButton = !isUserLogin()
         ? [
-            GButton(
+            const GButton(
               icon: LineIcons.home,
               text: 'Home',
             ),
-            GButton(
+            const GButton(
               icon: LineIcons.list,
-              text: "Reports",
+              text: 'Reports',
             ),
-            GButton(
+            const GButton(
               icon: LineIcons.map,
-              text: "Maps",
+              text: 'Maps',
             ),
           ]
         : [
-            GButton(
+            const GButton(
               icon: LineIcons.home,
               text: 'Home',
             ),
-            GButton(
+            const GButton(
               icon: LineIcons.pen,
-              text: "Reports",
+              text: 'Reports',
             ),
-            GButton(
+            const GButton(
               icon: LineIcons.clock,
               text: 'Likes',
             ),
-            GButton(
+            const GButton(
               icon: LineIcons.map,
               text: 'Search',
             ),
-            GButton(
+            const GButton(
               icon: LineIcons.user,
               text: 'Profile',
             ),
@@ -107,8 +110,8 @@ class HomeView extends GetView<HomeController> {
               gap: 8,
               activeColor: Colors.black,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: const Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
               color: Colors.black,
               tabs: _widgetButton,
@@ -121,5 +124,13 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
     );
+  }
+
+  bool isUserLogin() {
+    if (Get.arguments == 'anonymouse') {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

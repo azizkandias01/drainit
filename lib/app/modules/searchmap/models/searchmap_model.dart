@@ -1,11 +1,6 @@
 // ignore_for_file: avoid_renaming_method_parameters
 
 class Place {
-  final String name;
-  final String state;
-  final String country;
-  final double lat;
-  final double long;
   const Place({
     required this.lat,
     required this.long,
@@ -13,26 +8,30 @@ class Place {
     required this.state,
     required this.country,
   });
-
-  bool get hasState => state.isNotEmpty == true;
-  bool get hasCountry => country.isNotEmpty == true;
-
-  bool get isCountry => hasCountry && name == country;
-  bool get isState => hasState && name == state;
-
   factory Place.fromJson(Map<String, dynamic> map) {
     final props = map['properties'];
     final lat = map['geometry']['coordinates'][1];
     final long = map['geometry']['coordinates'][0];
 
     return Place(
-      name: props['name'] ?? '',
-      state: props['state'] ?? '',
-      country: props['country'] ?? '',
-      lat: lat + 0.0 ?? 0.0,
-      long: long + 0.0 ?? 0.0,
+      name: props['name'].toString(),
+      state: props['state'].toString(),
+      country: props['country'].toString(),
+      lat: double.parse(lat.toString()) + 0.0,
+      long: double.parse(long.toString()) + 0.0,
     );
   }
+  final String name;
+  final String state;
+  final String country;
+  final double lat;
+  final double long;
+
+  bool get hasCountry => country.isNotEmpty == true;
+  bool get hasState => state.isNotEmpty == true;
+
+  bool get isCountry => hasCountry && name == country;
+  bool get isState => hasState && name == state;
 
   String get address {
     if (isCountry) return country;

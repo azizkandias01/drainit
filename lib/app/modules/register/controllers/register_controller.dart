@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -18,14 +20,14 @@ class RegisterController extends GetxController with StateMixin<String> {
   final isPasswordHidden = true.obs;
   final isConfirmPasswordHidden = true.obs;
 
-  var selectedImagePath = ''.obs;
-  var selectedImageSize = ''.obs;
+  RxString selectedImagePath = ''.obs;
+  RxString selectedImageSize = ''.obs;
 
   // Crop code
-  var cropImagePath = ''.obs;
-  var cropImageSize = ''.obs;
+  RxString cropImagePath = ''.obs;
+  RxString cropImageSize = ''.obs;
 
-  var bytes64Image = ''.obs;
+  RxString bytes64Image = ''.obs;
 
   @override
   void onInit() {
@@ -39,34 +41,33 @@ class RegisterController extends GetxController with StateMixin<String> {
     change(null, status: RxStatus.empty());
   }
 
-  void getImage(ImageSource imageSource) async {
+  Future<void> getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
       selectedImagePath.value = pickedFile.path;
       selectedImageSize.value =
-          ((File(selectedImagePath.value)).lengthSync() / 1024 / 1024)
-                  .toStringAsFixed(2) +
-              " Mb";
+          '${(File(selectedImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
 
       // Crop
       final cropImageFile = await ImageCropper.cropImage(
-          sourcePath: selectedImagePath.value,
-          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-          maxWidth: 512,
-          maxHeight: 512,
-          compressFormat: ImageCompressFormat.jpg);
+        sourcePath: selectedImagePath.value,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        maxWidth: 512,
+        maxHeight: 512,
+      );
       cropImagePath.value = cropImageFile!.path;
       cropImageSize.value =
-          ((File(cropImagePath.value)).lengthSync() / 1024 / 1024)
-                  .toStringAsFixed(2) +
-              " Mb";
+          '${(File(cropImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
       final _bytes = File(cropImagePath.value).readAsBytesSync();
       bytes64Image.value = base64Encode(_bytes);
     } else {
-      Get.snackbar('Error', 'Error saat pemilihan gambar',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Error saat pemilihan gambar',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -80,13 +81,13 @@ class RegisterController extends GetxController with StateMixin<String> {
     String foto,
   ) {
     final registerData = {
-      "email": email,
-      "password": password,
-      "password_confirmation": confirmPassword,
-      "nama": name,
-      "no_hp": phone,
-      "foto": foto,
-      "alamat": alamat,
+      'email': email,
+      'password': password,
+      'password_confirmation': confirmPassword,
+      'nama': name,
+      'no_hp': phone,
+      'foto': foto,
+      'alamat': alamat,
     };
 
     change(
@@ -104,7 +105,7 @@ class RegisterController extends GetxController with StateMixin<String> {
       onError: (err) {
         change(
           null,
-          status: RxStatus.error("Error occured : " + err.toString()),
+          status: RxStatus.error('Error occured : $err'),
         );
       },
     );

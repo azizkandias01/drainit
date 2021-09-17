@@ -13,12 +13,12 @@ class EditPasswordView extends GetView<EditPasswordController> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(414, 896),
+      designSize: const Size(414, 896),
       builder: () => Scaffold(
         backgroundColor: kBackgroundInput,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: Get.width,
             height: Get.height,
             child: Column(
@@ -34,13 +34,13 @@ class EditPasswordView extends GetView<EditPasswordController> {
                           height: 120.h,
                           child: GestureDetector(
                             onTap: () => Get.back(),
-                            child: Icon(Icons.arrow_back_ios_new),
+                            child: const Icon(Icons.arrow_back_ios_new),
                           ),
                         ),
                       ),
                     ),
                     Text(
-                      "Ubah Password anda",
+                      'Ubah Password anda',
                       style: TextStyle(
                         fontFamily: 'Klasik',
                         fontSize: 24.sp,
@@ -51,7 +51,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
                       height: 39.h,
                     ),
                     SvgPicture.asset(
-                      "assets/svg/Password.svg",
+                      'assets/svg/Password.svg',
                       height: 264.h,
                       width: 414.w,
                     ),
@@ -66,23 +66,22 @@ class EditPasswordView extends GetView<EditPasswordController> {
                         color: white,
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
                             height: 25.h,
                           ),
                           RoundedInputField(
                             roundedCorner: 12.w,
-                            hintText: "Password Saat Ini",
+                            hintText: 'Password Saat Ini',
                             height: 56.h,
                             width: 334.w,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           RoundedInputField(
                             roundedCorner: 12.w,
-                            hintText: "Password Baru",
+                            hintText: 'Password Baru',
                             height: 56.h,
                             width: 334.w,
                           ),
@@ -91,7 +90,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
                           ),
                           RoundedInputField(
                             roundedCorner: 12.w,
-                            hintText: "Konfirmasi Password Baru",
+                            hintText: 'Konfirmasi Password Baru',
                             height: 56.h,
                             width: 334.w,
                           ),
@@ -99,7 +98,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
                             height: 20.h,
                           ),
                           RoundedButton(
-                            text: "Ubah Password",
+                            text: 'Ubah Password',
                             fontSize: 16.sp,
                             borderRadius: 12.w,
                             height: 56.h,
@@ -111,7 +110,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
           ),

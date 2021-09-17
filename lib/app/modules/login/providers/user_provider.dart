@@ -13,8 +13,8 @@ class UserProvider extends GetConnect {
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());
     } else {
-      print(response.body);
-      return LoginReponse.fromJson(response.body);
+      //print(response.body);
+      return LoginReponse.fromJson(response.body as Map<String, dynamic>);
     }
   }
 }

@@ -10,13 +10,26 @@ import 'package:drainit_flutter/app/modules/flood_drainage_list/providers/flood_
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+///controller for list of drainage, flood points and polylines for drainage line
 class FloodDrainageListController extends GetxController {
-  List<FloodModel> floodPoint = [];
-  List<Drainage> drainagePoint = [];
-  List<DrainageMap> drainageMapPoint = [];
-  List<LatLng> polylineCoordinates = [];
-  Set<Polyline> polylines = {};
+  ///list of flood point
+  List<FloodModel> floodPoint = <FloodModel>[];
+
+  ///list of drainage point
+  List<Drainage> drainagePoint = <Drainage>[];
+
+  ///list of drainage map point
+  List<DrainageMap> drainageMapPoint = <DrainageMap>[];
+
+  ///list of polylinse of coordinates
+  List<LatLng> polylineCoordinates = <LatLng>[];
+
+  ///list of polylines that will render on maps
+  Set<Polyline> polylines = <Polyline>{};
+
+  ///list of markers that observable means the variable could change
   List<Marker> markers = <Marker>[].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -25,25 +38,30 @@ class FloodDrainageListController extends GetxController {
     loadMapDrainage();
   }
 
-  void loadFloodPoint() async {
-    var result =
+  ///function for load flood points from API
+  Future<void> loadFloodPoint() async {
+    final List<FloodModel> result =
         await FloodModelProvider().loadFloodPoint() as List<FloodModel>;
     floodPoint = result;
   }
 
-  void loadDrainagePoint() async {
-    var result = await DrainageProvider().loadDrainagePoint();
+  ///function for load broken drainage points from API
+  Future<void> loadDrainagePoint() async {
+    final List<Drainage> result =
+        await DrainageProvider().loadDrainagePoint() as List<Drainage>;
     drainagePoint = result;
   }
 
-  void loadMapDrainage() async {
-    var result = await DrainageMapProvider().loadMapDrainage();
-    drainageMapPoint = result;
-    for (var element in drainageMapPoint) {
-      var typeDrainage = drainageType(element.geometry ?? "point");
-      var points = drainageGeometry(element.geometry!, typeDrainage);
-      List<LatLng> drainagePointsLocal = [];
-      for (var element in points) {
+  ///drawing polylines to map
+  Future<void> loadMapDrainage() async {
+    final dynamic result = await DrainageMapProvider().loadMapDrainage();
+    drainageMapPoint = result as List<DrainageMap>;
+    for (final DrainageMap element in drainageMapPoint) {
+      final String typeDrainage = drainageType(element.geometry ?? "'point'");
+      final List<dynamic> points =
+          drainageGeometry(element.geometry!, typeDrainage);
+      final List<LatLng> drainagePointsLocal = <LatLng>[];
+      for (final dynamic element in points) {
         drainagePointsLocal.add(
           LatLng(
             double.parse(
@@ -56,19 +74,21 @@ class FloodDrainageListController extends GetxController {
         );
         Polyline polyline;
         polyline = Polyline(
-            polylineId: PolylineId(""),
-            color: primary,
-            width: 3,
-            points: drainagePointsLocal);
+          polylineId: const PolylineId(''),
+          color: primary,
+          width: 3,
+          points: drainagePointsLocal,
+        );
         polylines.add(polyline);
       }
     }
   }
 
+  ///converting geo data from api to latlong
   LatLng geoToLatlong(String string) {
-    var substring = string.substring(34, string.length - 2);
-    List<String> latlong = substring.split(",");
-    final latLng = LatLng(
+    final String substring = string.substring(34, string.length - 2);
+    final List<String> latlong = substring.split(',');
+    final LatLng latLng = LatLng(
       double.parse(latlong[1]),
       double.parse(
         latlong[0],
@@ -77,23 +97,26 @@ class FloodDrainageListController extends GetxController {
     return latLng;
   }
 
+  ///get drainage type from given geo data
   String drainageType(String parse) {
-    return jsonDecode(parse)['type'];
+    return jsonDecode(parse)['type'] as String;
   }
 
+  ///decode data that api gives as string so this needs to be parse to json
   List<dynamic> drainageGeometry(String geometry, String type) {
-    if (type == "MultiLineString") {
-      var tagsJson = jsonDecode(geometry)['coordinates'][0];
-      List<dynamic>? tags = List.from(tagsJson);
-
+    if (type == 'MultiLineString') {
+      final dynamic tagsJson = jsonDecode(geometry)['coordinates'][0];
+      final List<dynamic> tags =
+          List<dynamic>.from(tagsJson as Iterable<dynamic>);
       return tags;
-    } else if (type == "LineString") {
-      var tagsJson = jsonDecode(geometry)['coordinates'];
-      List<dynamic>? tags = List.from(tagsJson);
+    } else if (type == 'LineString') {
+      final dynamic tagsJson = jsonDecode(geometry)['coordinates'];
+      final List<dynamic> tags =
+          List<dynamic>.from(tagsJson as Iterable<dynamic>);
 
       return tags;
     } else {
-      return [];
+      return <dynamic>[];
     }
   }
 

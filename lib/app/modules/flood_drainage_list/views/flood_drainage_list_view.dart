@@ -13,7 +13,7 @@ import 'package:location/location.dart';
 import '../controllers/flood_drainage_list_controller.dart';
 
 // ignore: prefer_typing_uninitialized_variables
-late var _initialPosition;
+late LatLng _initialPosition;
 
 Future<LatLng> _getPosition() async {
   final Location location = Location();
@@ -34,56 +34,57 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
   Widget build(BuildContext context) {
     loadFloodMarker(controller);
     return ScreenUtilInit(
-      designSize: Size(414, 896),
+      designSize: const Size(414, 896),
       builder: () => Scaffold(
         body: Center(
-            child: Stack(
-          children: [
-            Map(),
-            SafeArea(child: chipAction()),
-          ],
-        )),
+          child: Stack(
+            children: [
+              Map(),
+              SafeArea(child: chipAction()),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   Widget chipAction() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ActionChip(
-              label: Text("Flood"),
-              onPressed: () {
-                if (controller.markers.isNotEmpty) {
-                  controller.markers.clear();
-                  loadFloodMarker(controller);
-                } else {
-                  loadFloodMarker(controller);
-                }
-              }),
-          SizedBox(
-            width: 10,
-          ),
-          ActionChip(
-            label: Text("Drainage"),
-            onPressed: () {
-              if (controller.markers.isNotEmpty) {
-                controller.markers.clear();
-                loadDrainageMarker(controller);
-              } else {
-                loadDrainageMarker(controller);
-              }
-            },
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-          ActionChip(
-              label: Text("Current Location"),
-              onPressed: () => Map._goToCurrentLocation()),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ActionChip(
+          label: const Text('Flood'),
+          onPressed: () {
+            if (controller.markers.isNotEmpty) {
+              controller.markers.clear();
+              loadFloodMarker(controller);
+            } else {
+              loadFloodMarker(controller);
+            }
+          },
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        ActionChip(
+          label: const Text('Drainage'),
+          onPressed: () {
+            if (controller.markers.isNotEmpty) {
+              controller.markers.clear();
+              loadDrainageMarker(controller);
+            } else {
+              loadDrainageMarker(controller);
+            }
+          },
+        ),
+        SizedBox(
+          width: 10.w,
+        ),
+        ActionChip(
+          label: const Text('Current Location'),
+          onPressed: () => Map._goToCurrentLocation(),
+        ),
+      ],
     );
   }
 }
@@ -106,7 +107,7 @@ class Map extends GetView<FloodDrainageListController> {
   }
 
   Widget buildMap() {
-    final CameraPosition _kGooglePlex = CameraPosition(
+    const CameraPosition _kGooglePlex = CameraPosition(
       target: LatLng(0.475547403985763, 101.48610746420654),
       zoom: 12.4746,
     );
@@ -114,7 +115,6 @@ class Map extends GetView<FloodDrainageListController> {
     return Scaffold(
       body: Obx(
         () => GoogleMap(
-          mapType: MapType.normal,
           initialCameraPosition: _kGooglePlex,
           markers: Set<Marker>.of(controller.markers),
           polylines: controller.polylines,
@@ -124,7 +124,7 @@ class Map extends GetView<FloodDrainageListController> {
               controller.setMapStyle(mapStyles);
             } else {
               controller.setMapStyle(mapStyles);
-              print("completer has created");
+              //print('completer has created');
             }
           },
         ),
@@ -134,11 +134,10 @@ class Map extends GetView<FloodDrainageListController> {
 }
 
 void loadFloodMarker(FloodDrainageListController controller) {
-  for (var item in controller.floodPoint) {
+  for (final item in controller.floodPoint) {
     controller.markers.add(
       Marker(
         markerId: MarkerId(item.id!),
-        icon: BitmapDescriptor.defaultMarker,
         position: controller.geoToLatlong(item.geometry!),
         onTap: () {
           Get.bottomSheet(
@@ -152,13 +151,13 @@ void loadFloodMarker(FloodDrainageListController controller) {
                     child: CachedNetworkImage(
                       imageUrl: imagePath() + item.foto!,
                       placeholder: (_, __) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       },
                       height: 150.h,
                       width: 300.w,
                       fit: BoxFit.cover,
                       errorWidget: (_, __, ___) {
-                        return Text("data cannot be loaded!");
+                        return const Text('data cannot be loaded!');
                       },
                     ),
                   ),
@@ -175,11 +174,10 @@ void loadFloodMarker(FloodDrainageListController controller) {
 }
 
 void loadDrainageMarker(FloodDrainageListController controller) {
-  for (var item in controller.drainagePoint) {
+  for (final item in controller.drainagePoint) {
     controller.markers.add(
       Marker(
         markerId: MarkerId(item.id!),
-        icon: BitmapDescriptor.defaultMarker,
         position: controller.geoToLatlong(item.geometry!),
         onTap: () {
           Get.bottomSheet(
@@ -193,13 +191,13 @@ void loadDrainageMarker(FloodDrainageListController controller) {
                     child: CachedNetworkImage(
                       imageUrl: imagePath() + item.foto!,
                       placeholder: (_, __) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       },
                       height: 150.h,
                       width: 300.w,
                       fit: BoxFit.cover,
                       errorWidget: (_, __, ___) {
-                        return Text("data cannot be loaded!");
+                        return const Text('data cannot be loaded!');
                       },
                     ),
                   ),

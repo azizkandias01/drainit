@@ -1,20 +1,21 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dart';
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-
-import '../controllers/searchmap_controller.dart';
 import 'dart:async';
 import 'dart:math';
+
+import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:location/location.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-late var _initialPosition;
+import '../controllers/searchmap_controller.dart';
+
+late LatLng _initialPosition;
 
 Future<LatLng> _getPosition() async {
   final Location location = Location();
@@ -22,8 +23,9 @@ Future<LatLng> _getPosition() async {
     if (!await location.requestService()) throw 'GPS service is disabled';
   }
   if (await location.hasPermission() == PermissionStatus.denied) {
-    if (await location.requestPermission() != PermissionStatus.granted)
+    if (await location.requestPermission() != PermissionStatus.granted) {
       throw 'No GPS permissions';
+    }
   }
   final LocationData data = await location.getLocation();
   return LatLng(data.latitude!, data.longitude!);
@@ -42,7 +44,7 @@ class SearchmapView extends GetView<SearchmapController> {
     // setState(() {});
   }
 
-  late var isPortrait;
+  late bool isPortrait;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,6 @@ class SearchmapView extends GetView<SearchmapController> {
   Widget buildSearchBar() {
     final actions = [
       FloatingSearchBarAction(
-        showIfOpened: false,
         child: CircularButton(
           icon: const Icon(Icons.place),
           onPressed: () async {
@@ -80,7 +81,6 @@ class SearchmapView extends GetView<SearchmapController> {
       () => FloatingSearchBar(
         automaticallyImplyBackButton: false,
         controller: fabController,
-        clearQueryOnClose: true,
         hint: 'search place here',
         iconColor: Colors.grey,
         transitionDuration: const Duration(milliseconds: 800),
@@ -211,18 +211,20 @@ class SearchmapView extends GetView<SearchmapController> {
 }
 
 class Map extends GetView<SearchmapController> {
-  static Completer<GoogleMapController> _controller = Completer();
+  static final Completer<GoogleMapController> _controller = Completer();
 
   static final Marker marker = Marker(
-    markerId: MarkerId("marker pku"),
-    position: LatLng(
+    markerId: const MarkerId('marker pku'),
+    position: const LatLng(
       0.5696307903657801,
       101.42544396221638,
     ),
-    infoWindow: InfoWindow(
-        title: "Marker in rumbai", snippet: 'Hi this is marker in rumbai'),
+    infoWindow: const InfoWindow(
+      title: 'Marker in rumbai',
+      snippet: 'Hi this is marker in rumbai',
+    ),
     onTap: () {
-      print(marker.infoWindow.title);
+      // print(marker.infoWindow.title);
     },
   );
 
@@ -238,7 +240,7 @@ class Map extends GetView<SearchmapController> {
 
   static Future<void> _goToSearch(double lat, double long) async {
     final GoogleMapController controller = await _controller.future;
-    CameraPosition cameraPosition = CameraPosition(
+    final CameraPosition cameraPosition = CameraPosition(
       target: LatLng(lat, long),
       zoom: 18.151926040649414,
     );
@@ -251,7 +253,7 @@ class Map extends GetView<SearchmapController> {
   }
 
   Widget buildMap() {
-    final CameraPosition _kGooglePlex = CameraPosition(
+    const CameraPosition _kGooglePlex = CameraPosition(
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
@@ -259,9 +261,28 @@ class Map extends GetView<SearchmapController> {
     return Scaffold(
       body: GoogleMap(
         mapType: MapType.hybrid,
-        onTap: (LatLng latLng) {
+        onTap: (LatLng latLng) async {
           controller.data.value = latLng;
-          _handleTap(latLng);
+          Get.bottomSheet(
+            Center(
+              child: Container(
+                width: Get.width,
+                color: white,
+                child: Column(
+                  children: [
+                    Text(await controller.getAddress(latLng)),
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.back();
+                        Get.back(result: controller.getAddress(latLng));
+                      },
+                      child: const Text('select this coordinate'),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
         },
         markers: Set.from(controller.myMarker),
         initialCameraPosition: _kGooglePlex,
@@ -269,27 +290,11 @@ class Map extends GetView<SearchmapController> {
           if (!_controller.isCompleted) {
             _controller.complete(controller);
           } else {
-            print("completer has created");
+            //print('completer has created');
           }
         },
       ),
     );
-  }
-
-  _handleTap(LatLng data) {
-    var markers = controller.myMarker.value as List<Marker>;
-    print(data.toString());
-    if (markers.isNotEmpty) {
-      markers = [];
-    } else {
-      markers.add(
-        Marker(
-            markerId: MarkerId(
-              data.toString(),
-            ),
-            position: data),
-      );
-    }
   }
 }
 

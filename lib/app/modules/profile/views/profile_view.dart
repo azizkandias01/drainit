@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
@@ -15,13 +17,13 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (state) => ScreenUtilInit(
-        designSize: Size(414, 896),
+        designSize: const Size(414, 896),
         builder: () => Scaffold(
           backgroundColor: kBackgroundInput,
           body: SafeArea(
             child: Column(
               children: [
-                TopMenu(),
+                const TopMenu(),
                 SizedBox(
                   height: 48.h,
                 ),
@@ -39,7 +41,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 22.h),
                 ProfileMenuButton(
-                  text: "Ubah Password",
+                  text: 'Ubah Password',
                   onPressed: () {
                     Get.toNamed(Routes.EDIT_PASSWORD);
                   },
@@ -55,7 +57,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 8.h),
                 ProfileMenuButton(
-                  text: "Tentang Kami",
+                  text: 'Tentang Kami',
                   iconPath: 'assets/svg/question_icon.svg',
                   iconWidth: 38.w,
                   iconHeight: 38.h,
@@ -68,7 +70,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 8.h),
                 ProfileMenuButton(
-                  text: "Keluar Akun",
+                  text: 'Keluar Akun',
                   onPressed: () {
                     controller.logoutAccount();
                   },
@@ -88,10 +90,8 @@ class ProfileView extends GetView<ProfileController> {
         ),
       ),
       onError: (err) {
-        return Container(
-          child: Center(
-            child: Text("Cannot Retrieve data error : $err"),
-          ),
+        return Center(
+          child: Text('Cannot Retrieve data error : $err'),
         );
       },
     );
@@ -99,12 +99,6 @@ class ProfileView extends GetView<ProfileController> {
 }
 
 class ProfileInfo extends StatelessWidget {
-  final String? name;
-  final String? totalReports;
-  final String? totalReportsDone;
-  final String? address;
-  final String? photoUrl;
-  final String? phoneNumber;
   const ProfileInfo({
     Key? key,
     this.name,
@@ -114,6 +108,13 @@ class ProfileInfo extends StatelessWidget {
     this.photoUrl,
     this.phoneNumber,
   }) : super(key: key);
+
+  final String? name;
+  final String? totalReports;
+  final String? totalReportsDone;
+  final String? address;
+  final String? photoUrl;
+  final String? phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -136,18 +137,19 @@ class ProfileInfo extends StatelessWidget {
               ),
               CircleAvatar(
                 backgroundImage: NetworkImage(
-                    photoUrl!.contains(".j")
-                        ? imagePath() + photoUrl!
-                        : "defaultbanjir.png",
-                    scale: 64.w),
+                  photoUrl!.contains('.j')
+                      ? imagePath() + photoUrl!
+                      : 'defaultbanjir.png',
+                  scale: 64.w,
+                ),
                 onBackgroundImageError: (object, trace) {
-                  print("error object");
+                  print('error object');
                 },
               ),
               SizedBox(
                 width: 10.w,
               ),
-              Container(
+              SizedBox(
                 width: 215.w,
                 height: 60.h,
                 child: Column(
@@ -158,11 +160,12 @@ class ProfileInfo extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        name ?? "default",
+                        name ?? 'default',
                         style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            color: kTextPurple),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: kTextPurple,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -171,7 +174,7 @@ class ProfileInfo extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(
-                        "Beginner",
+                        'Beginner',
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: kColorGrey,
@@ -185,7 +188,7 @@ class ProfileInfo extends StatelessWidget {
                 width: 10.w,
               ),
               SvgPicture.asset(
-                "assets/svg/Badge.svg",
+                'assets/svg/Badge.svg',
                 height: 38.h,
                 width: 38.w,
               ),
@@ -194,99 +197,93 @@ class ProfileInfo extends StatelessWidget {
           SizedBox(
             height: 17.w,
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  height: 63.h,
-                  width: 186.w,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: kBackgroundInput),
-                  ),
-                  child: Container(
-                    height: 40.h,
-                    width: 155.w,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Total Laporan",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                              Text(
-                                totalReports ?? "18",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontFamily: 'Klasik',
-                                  fontSize: 24.sp,
-                                  color: kTextPurple,
-                                ),
-                              ),
-                            ],
+          Row(
+            children: [
+              Container(
+                height: 63.h,
+                width: 186.w,
+                decoration: BoxDecoration(
+                  border: Border.all(color: kBackgroundInput),
+                ),
+                child: SizedBox(
+                  height: 40.h,
+                  width: 155.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Total Laporan',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 38.w,
-                        ),
-                        SvgPicture.asset("assets/svg/clock.svg"),
-                      ],
-                    ),
+                          Text(
+                            totalReports ?? '18',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'Klasik',
+                              fontSize: 24.sp,
+                              color: kTextPurple,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 38.w,
+                      ),
+                      SvgPicture.asset('assets/svg/clock.svg'),
+                    ],
                   ),
                 ),
-                Container(
-                  height: 63.h,
-                  width: 188.w,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: kBackgroundInput)),
-                  child: Container(
-                    height: 40.h,
-                    width: 155.w,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Laporan Selesai",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                              Text(
-                                totalReportsDone ?? "12",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontFamily: 'Klasik',
-                                  fontSize: 24.sp,
-                                  color: kTextPurple,
-                                ),
-                              ),
-                            ],
+              ),
+              Container(
+                height: 63.h,
+                width: 188.w,
+                decoration: BoxDecoration(
+                  border: Border.all(color: kBackgroundInput),
+                ),
+                child: SizedBox(
+                  height: 40.h,
+                  width: 155.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Laporan Selesai',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 38.w,
-                        ),
-                        SvgPicture.asset(
-                          "assets/svg/flag.svg",
-                          height: 40.h,
-                          width: 40.w,
-                        ),
-                      ],
-                    ),
+                          Text(
+                            totalReportsDone ?? '12',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'Klasik',
+                              fontSize: 24.sp,
+                              color: kTextPurple,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 38.w,
+                      ),
+                      SvgPicture.asset(
+                        'assets/svg/flag.svg',
+                        height: 40.h,
+                        width: 40.w,
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           SizedBox(height: 18.h),
           Padding(
@@ -294,7 +291,7 @@ class ProfileInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Nomor Handphone",
+                'Nomor Handphone',
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: kTextPurple,
@@ -308,7 +305,7 @@ class ProfileInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                phoneNumber ?? "08233652155",
+                phoneNumber ?? '08233652155',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: kColorGrey,
@@ -322,7 +319,7 @@ class ProfileInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Alamat",
+                'Alamat',
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: kTextPurple,
@@ -337,7 +334,7 @@ class ProfileInfo extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 address ??
-                    "Jalan Bukit Sari 10, Umban Sari Atas, Rumbai, Pek...",
+                    'Jalan Bukit Sari 10, Umban Sari Atas, Rumbai, Pek...',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: kColorGrey,
@@ -352,12 +349,12 @@ class ProfileInfo extends StatelessWidget {
 }
 
 class ProfileBox extends StatelessWidget {
-  final String? email;
   const ProfileBox({
     Key? key,
     this.email,
   }) : super(key: key);
 
+  final String? email;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -372,13 +369,13 @@ class ProfileBox extends StatelessWidget {
               ),
             ),
             child: SvgPicture.asset(
-              "assets/svg/Profile_Box.svg",
+              'assets/svg/Profile_Box.svg',
               fit: BoxFit.fill,
             ),
           ),
           Positioned(
             left: 33.w,
-            child: Container(
+            child: SizedBox(
               width: 172.w,
               height: 146.h,
               child: Column(
@@ -389,11 +386,12 @@ class ProfileBox extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Lihat Profil Anda",
+                      'Lihat Profil Anda',
                       style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                          color: kTextPurple),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: kTextPurple,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -402,7 +400,7 @@ class ProfileBox extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      email ?? "cannot retrieve email",
+                      email ?? 'cannot retrieve email',
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: kColorGrey,
@@ -415,7 +413,7 @@ class ProfileBox extends StatelessWidget {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: RoundedButton(
-                      text: "Beginner",
+                      text: 'Beginner',
                       borderRadius: 8.w,
                       color: kIconColor,
                       fontSize: 14.sp,
@@ -440,28 +438,31 @@ class TopMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 64.h,
       width: 387.w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SvgPicture.asset(
-            "assets/svg/Back_Icon.svg",
+            'assets/svg/Back_Icon.svg',
           ),
-          Spacer(),
+          const Spacer(),
           Text(
-            "Profile",
+            'Profile',
             style: TextStyle(
-                fontFamily: 'Klasik', fontSize: 16.sp, color: kTextPurple),
+              fontFamily: 'Klasik',
+              fontSize: 16.sp,
+              color: kTextPurple,
+            ),
           ),
-          Spacer(),
+          const Spacer(),
           GestureDetector(
             onTap: () {
               Get.toNamed(Routes.EDIT_PROFILE);
             },
             child: SvgPicture.asset(
-              "assets/svg/Edit_Icon.svg",
+              'assets/svg/Edit_Icon.svg',
             ),
           ),
         ],

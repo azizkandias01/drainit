@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
@@ -12,12 +14,12 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(414, 896),
+      designSize: const Size(414, 896),
       builder: () => Scaffold(
         backgroundColor: kBackgroundInput,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: Get.width,
             height: Get.height,
             child: Column(
@@ -33,13 +35,13 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                           height: 120.h,
                           child: GestureDetector(
                             onTap: () => Get.back(),
-                            child: Icon(Icons.arrow_back_ios_new),
+                            child: const Icon(Icons.arrow_back_ios_new),
                           ),
                         ),
                       ),
                     ),
                     Text(
-                      "Reset Password anda",
+                      'Reset Password anda',
                       style: TextStyle(
                         fontFamily: 'Klasik',
                         fontSize: 24.sp,
@@ -50,7 +52,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                       height: 39.h,
                     ),
                     SvgPicture.asset(
-                      "assets/svg/Password.svg",
+                      'assets/svg/Password.svg',
                       height: 264.h,
                       width: 414.w,
                     ),
@@ -68,10 +70,11 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Column(
-                            children: [
+                            children: const [
                               Text(
-                                  "Masukan email anda yang telah terdaftar untuk"),
-                              Text("menerima email reset password"),
+                                'Masukan email anda yang telah terdaftar untuk',
+                              ),
+                              Text('menerima email reset password'),
                             ],
                           ),
                           SizedBox(
@@ -79,7 +82,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                           ),
                           RoundedInputField(
                             roundedCorner: 12.w,
-                            hintText: "Email",
+                            hintText: 'Email',
                             height: 56.h,
                             width: 334.w,
                           ),
@@ -87,7 +90,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                             height: 20.h,
                           ),
                           RoundedButton(
-                            text: "Kirim Email Konfirmasi",
+                            text: 'Kirim Email Konfirmasi',
                             fontSize: 16.sp,
                             borderRadius: 12.w,
                             height: 56.h,
@@ -99,7 +102,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
           ),

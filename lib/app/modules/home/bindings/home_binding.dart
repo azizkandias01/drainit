@@ -1,5 +1,6 @@
 import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
+import 'package:drainit_flutter/app/modules/reports/controllers/reports_controller.dart';
 import 'package:drainit_flutter/app/modules/timeline/controllers/timeline_controller.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,9 @@ class HomeBinding extends Bindings {
     );
     Get.lazyPut<TimelineController>(
       () => TimelineController(),
+    );
+    Get.lazyPut<ReportsController>(
+      () => ReportsController(),
     );
   }
 }

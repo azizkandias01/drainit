@@ -1,17 +1,18 @@
 class LoginReponse {
+  LoginReponse({this.message, this.user, this.accessToken, this.statusCode});
+
+  LoginReponse.fromJson(Map<String, dynamic> json) {
+    message = json['message'] as String;
+    user = json['user'] != null
+        ? LoginReponse?.fromJson(json['user'] as Map<String, dynamic>)
+        : null;
+    accessToken = json['access_token'] as String;
+    statusCode = json['status_code'] as int;
+  }
   String? message;
   LoginReponse? user;
   String? accessToken;
   int? statusCode;
-
-  LoginReponse({this.message, this.user, this.accessToken, this.statusCode});
-
-  LoginReponse.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    user = json['user'] != null ? LoginReponse?.fromJson(json['user']) : null;
-    accessToken = json['access_token'];
-    statusCode = json['status_code'];
-  }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -26,6 +27,27 @@ class LoginReponse {
 }
 
 class User {
+  User({
+    this.id,
+    this.nama,
+    this.foto,
+    this.noHp,
+    this.alamat,
+    this.email,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'] as String;
+    nama = json['nama'] as String;
+    foto = json['foto'] as String;
+    noHp = json['no_hp'] as String;
+    alamat = json['alamat'] as String;
+    email = json['email'] as String;
+    createdAt = json['created_at'] as String;
+    updatedAt = json['updated_at'] as String;
+  }
   String? id;
   String? nama;
   String? foto;
@@ -34,27 +56,6 @@ class User {
   String? email;
   String? createdAt;
   String? updatedAt;
-
-  User(
-      {this.id,
-      this.nama,
-      this.foto,
-      this.noHp,
-      this.alamat,
-      this.email,
-      this.createdAt,
-      this.updatedAt});
-
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nama = json['nama'];
-    foto = json['foto'];
-    noHp = json['no_hp'];
-    alamat = json['alamat'];
-    email = json['email'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

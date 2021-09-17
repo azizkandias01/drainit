@@ -1,4 +1,37 @@
+///model class for drainage map
 class DrainageMap {
+  DrainageMap({
+    this.id,
+    this.namaJalan,
+    this.lebar,
+    this.panjang,
+    this.kedalaman,
+    this.bahan,
+    this.kondisi,
+    this.akhirPembuangan,
+    this.arahAlir,
+    this.foto,
+    this.tipeDrainase,
+    this.status,
+    this.geometry,
+  });
+
+  DrainageMap.fromJson(Map<String, dynamic> json) {
+    id = json['id'] as String;
+    namaJalan = json['nama_jalan'] as String;
+    lebar = double.parse(json['lebar'].toString());
+    panjang = double.parse(json['panjang'].toString());
+    kedalaman = double.parse(json['kedalaman'].toString());
+    bahan = json['bahan'] as String;
+    kondisi = json['kondisi'] as String;
+    akhirPembuangan = json['akhir_pembuangan'] as String;
+    arahAlir = json['arah_alir'] as String;
+    foto = json['foto'] as String;
+    tipeDrainase = json['tipe_drainase'] as String;
+    status = json['status'];
+    geometry = json['geometry'] as String;
+  }
+
   String? id;
   String? namaJalan;
   double? lebar;
@@ -13,39 +46,8 @@ class DrainageMap {
   dynamic status;
   String? geometry;
 
-  DrainageMap(
-      {this.id,
-      this.namaJalan,
-      this.lebar,
-      this.panjang,
-      this.kedalaman,
-      this.bahan,
-      this.kondisi,
-      this.akhirPembuangan,
-      this.arahAlir,
-      this.foto,
-      this.tipeDrainase,
-      this.status,
-      this.geometry});
-
-  DrainageMap.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    namaJalan = json['nama_jalan'];
-    lebar = double.parse(json['lebar'].toString());
-    panjang = double.parse(json['panjang'].toString());
-    kedalaman = double.parse(json['kedalaman'].toString());
-    bahan = json['bahan'];
-    kondisi = json['kondisi'];
-    akhirPembuangan = json['akhir_pembuangan'];
-    arahAlir = json['arah_alir'];
-    foto = json['foto'];
-    tipeDrainase = json['tipe_drainase'];
-    status = json['status'];
-    geometry = json['geometry'];
-  }
-
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['nama_jalan'] = namaJalan;
     data['lebar'] = lebar;

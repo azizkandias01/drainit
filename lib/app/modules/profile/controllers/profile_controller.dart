@@ -25,7 +25,7 @@ class ProfileController extends GetxController with StateMixin {
   void getAccountProfile() {
     change(null, status: RxStatus.loading());
 
-    ProfileProvider().geProfile(box.read(Routes.TOKEN)).then(
+    ProfileProvider().geProfile(box.read(Routes.TOKEN) as String).then(
       (value) => {
         change(value, status: RxStatus.success()),
         dataProfile = value!,
