@@ -8,6 +8,8 @@ import 'package:drainit_flutter/app/modules/flood_drainage_list/bindings/flood_d
 import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
 import 'package:drainit_flutter/app/modules/forgot_password/bindings/forgot_password_binding.dart';
 import 'package:drainit_flutter/app/modules/forgot_password/views/forgot_password_view.dart';
+import 'package:drainit_flutter/app/modules/history/bindings/history_binding.dart';
+import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
 import 'package:drainit_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:drainit_flutter/app/modules/home/views/home_view.dart';
 import 'package:drainit_flutter/app/modules/introduction/bindings/introduction_binding.dart';
@@ -108,6 +110,11 @@ class AppPages {
       name: _Paths.REPORTS,
       page: () => ReportsView(),
       binding: ReportsBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORY,
+      page: () => HistoryView(),
+      binding: HistoryBinding(),
     ),
   ];
 }

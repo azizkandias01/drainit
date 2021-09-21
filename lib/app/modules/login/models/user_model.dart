@@ -1,19 +1,19 @@
 class LoginReponse {
-  LoginReponse({this.message, this.user, this.accessToken, this.statusCode});
-
-  LoginReponse.fromJson(Map<String, dynamic> json) {
-    message = json['message'] as String;
-    user = json['user'] != null
-        ? LoginReponse?.fromJson(json['user'] as Map<String, dynamic>)
-        : null;
-    accessToken = json['access_token'] as String;
-    statusCode = json['status_code'] as int;
-  }
   String? message;
-  LoginReponse? user;
+  User? user;
   String? accessToken;
   int? statusCode;
 
+  LoginReponse({this.message, this.user, this.accessToken, this.statusCode});
+
+  LoginReponse.fromJson(Map<String, dynamic> json) {
+    message = json['message'].toString();
+    user = json['user'] != null
+        ? User?.fromJson(json['user'] as Map<String, dynamic>)
+        : null;
+    accessToken = json['access_token'].toString();
+    statusCode = json['status_code'] as int;
+  }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['message'] = message;

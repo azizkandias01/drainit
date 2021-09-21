@@ -143,8 +143,8 @@ class LoginView extends GetView<LoginController> {
                               height: 56.h,
                               width: 376.w,
                               color: kIconColor,
-                              press: () {
-                                controller.userLogin(
+                              press: () async {
+                                await controller.userLogin(
                                   controller.myControllerEmail.text,
                                   controller.myControllerPassword.text,
                                 );
@@ -157,8 +157,8 @@ class LoginView extends GetView<LoginController> {
                               height: 56.h,
                               width: 376.w,
                               color: kIconColor,
-                              press: () {
-                                controller.userLogin(
+                              press: () async {
+                                await controller.userLogin(
                                   controller.myControllerEmail.text,
                                   controller.myControllerPassword.text,
                                 );
@@ -172,8 +172,8 @@ class LoginView extends GetView<LoginController> {
                                 height: 56.h,
                                 width: 376.w,
                                 color: kIconColor,
-                                press: () {
-                                  controller.userLogin(
+                                press: () async {
+                                  await controller.userLogin(
                                     controller.myControllerEmail.text,
                                     controller.myControllerPassword.text,
                                   );

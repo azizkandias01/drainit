@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +15,7 @@ class UserProvider extends GetConnect {
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());
     } else {
-      //print(response.body);
+      log(response.body.toString());
       return LoginReponse.fromJson(response.body as Map<String, dynamic>);
     }
   }

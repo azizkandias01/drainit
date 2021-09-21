@@ -2,6 +2,8 @@
 
 import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
+import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
+import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
 import 'package:drainit_flutter/app/modules/reports/controllers/reports_controller.dart';
@@ -22,10 +24,11 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final floodDrainageListC = Get.find<FloodDrainageListController>();
-    final String arguments = Get.arguments as String;
+    final String arguments = Get.arguments.toString();
     final reportsC = Get.find<ReportsController>();
     if (isUserLogin()) {
       final ProfileC = Get.find<ProfileController>();
+      final historyC = Get.find<HistoryController>();
     }
     final _selectedIndex = 0.obs;
     const TextStyle optionStyle =
@@ -40,10 +43,7 @@ class HomeView extends GetView<HomeController> {
         : [
             ReportsView(),
             TimelineView(arguments),
-            const Text(
-              'like',
-              style: optionStyle,
-            ),
+            HistoryView(),
             FloodDrainageListView(),
             ProfileView(),
           ];
@@ -73,7 +73,7 @@ class HomeView extends GetView<HomeController> {
             ),
             const GButton(
               icon: LineIcons.clock,
-              text: 'Likes',
+              text: 'history',
             ),
             const GButton(
               icon: LineIcons.map,
