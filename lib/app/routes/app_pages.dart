@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:drainit_flutter/app/modules/detail/bindings/detail_binding.dart';
+import 'package:drainit_flutter/app/modules/detail/views/detail_view.dart';
 import 'package:drainit_flutter/app/modules/edit_password/bindings/edit_password_binding.dart';
 import 'package:drainit_flutter/app/modules/edit_password/views/edit_password_view.dart';
 import 'package:drainit_flutter/app/modules/edit_profile/bindings/edit_profile_binding.dart';
@@ -115,6 +117,11 @@ class AppPages {
       name: _Paths.HISTORY,
       page: () => HistoryView(),
       binding: HistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL,
+      page: () => DetailView(),
+      binding: DetailBinding(),
     ),
   ];
 }

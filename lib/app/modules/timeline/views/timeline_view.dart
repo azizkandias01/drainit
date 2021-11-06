@@ -153,6 +153,9 @@ class ListviewItem extends StatelessWidget {
       ),
       child: Column(
         children: [
+          SizedBox(
+            height: 7.h,
+          ),
           Row(
             children: [
               SizedBox(
@@ -228,6 +231,10 @@ class ListviewItem extends StatelessWidget {
             child: Text(
               description ??
                   'Sampah di dekat selokan jalan sampurna menyebabkan air tersumbat dan banjir ',
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: kColorGrey,
+              ),
             ),
           ),
           SizedBox(
@@ -257,13 +264,31 @@ class ListviewItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Icon(LineIcons.thumbsUp),
-                Text(upVote.toString()),
+                Icon(
+                  LineIcons.thumbsUp,
+                  size: 15.w,
+                ),
+                Text(
+                  upVote.toString(),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: kColorGrey,
+                  ),
+                ),
                 SizedBox(
                   width: 20.w,
                 ),
-                const Icon(LineIcons.thumbsDown),
-                Text(downVote.toString())
+                Icon(
+                  LineIcons.thumbsDown,
+                  size: 15.w,
+                ),
+                Text(
+                  downVote.toString(),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: kColorGrey,
+                  ),
+                )
               ],
             ),
           ),

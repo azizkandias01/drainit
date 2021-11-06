@@ -45,8 +45,8 @@ class User {
     noHp = json['no_hp'] as String;
     alamat = json['alamat'] as String;
     email = json['email'] as String;
-    createdAt = json['created_at'] as String;
-    updatedAt = json['updated_at'] as String;
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
   String? id;
   String? nama;

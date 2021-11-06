@@ -10,6 +10,7 @@ import 'package:drainit_flutter/app/modules/reports/controllers/reports_controll
 import 'package:drainit_flutter/app/modules/reports/views/reports_view.dart';
 import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -102,23 +103,26 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
-              gap: 8,
-              activeColor: Colors.black,
-              iconSize: 24,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: const Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
-              color: Colors.black,
-              tabs: _widgetButton,
-              selectedIndex: _selectedIndex.value,
-              onTabChange: (index) {
-                _selectedIndex.value = index;
-              },
+          child: ScreenUtilInit(
+            designSize: const Size(414, 896),
+            builder: () => Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 8.w),
+              child: GNav(
+                rippleColor: Colors.grey[300]!,
+                hoverColor: Colors.grey[100]!,
+                gap: 8.w,
+                activeColor: Colors.black,
+                iconSize: 24.sp,
+                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 12.w),
+                duration: const Duration(milliseconds: 400),
+                tabBackgroundColor: Colors.grey[100]!,
+                color: Colors.black,
+                tabs: _widgetButton,
+                selectedIndex: _selectedIndex.value,
+                onTabChange: (index) {
+                  _selectedIndex.value = index;
+                },
+              ),
             ),
           ),
         ),

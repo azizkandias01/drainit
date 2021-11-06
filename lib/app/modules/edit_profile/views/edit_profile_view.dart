@@ -75,19 +75,8 @@ class EditProfileView extends GetView<EditProfileController> {
                 width: 374.w,
                 height: 56.h,
               ),
-              const SizedBox(
-                height: 8,
-              ),
-              RoundedInputField(
-                hintText: 'Nama Lengkap',
-                backgroundColor: white,
-                //textEditingController: controller.myControllerName,
-                roundedCorner: 12.r,
-                width: 374.w,
-                height: 56.h,
-              ),
-              const SizedBox(
-                height: 8,
+              SizedBox(
+                height: 8.h,
               ),
               RoundedInputField(
                 hintText: 'Nama Lengkap',
@@ -98,7 +87,18 @@ class EditProfileView extends GetView<EditProfileController> {
                 height: 56.h,
               ),
               SizedBox(
-                height: 247.h,
+                height: 8.h,
+              ),
+              RoundedInputField(
+                hintText: 'Nama Lengkap',
+                backgroundColor: white,
+                //textEditingController: controller.myControllerName,
+                roundedCorner: 12.r,
+                width: 374.w,
+                height: 56.h,
+              ),
+              SizedBox(
+                height: 245.h,
               ),
               RoundedButton(
                 text: 'Next',

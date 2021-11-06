@@ -22,6 +22,7 @@ abstract class Routes {
   static const FLOOD_DRAINAGE_LIST = _Paths.FLOOD_DRAINAGE_LIST;
   static const REPORTS = _Paths.REPORTS;
   static const HISTORY = _Paths.HISTORY;
+  static const DETAIL = _Paths.DETAIL;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const FLOOD_DRAINAGE_LIST = '/flood-drainage-list';
   static const REPORTS = '/reports';
   static const HISTORY = '/history';
+  static const DETAIL = '/detail';
 }
