@@ -5,6 +5,7 @@ import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -46,7 +47,22 @@ class TimelineView extends GetView<TimelineController> {
                       color: white,
                       borderRadius: BorderRadius.circular(12.r),
                     ),
-                    child: const Center(child: Text('Popular')),
+                    child: DropdownButton(
+                      alignment: Alignment.bottomCenter,
+                      items: const [
+                        DropdownMenuItem(
+                          child: Text('Date'),
+                          value: 1,
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Name'),
+                          value: 2,
+                        ),
+                      ],
+                      onChanged: (value) {
+                        print(value);
+                      },
+                    ),
                   ),
                   SizedBox(
                     width: 21.w,
@@ -96,6 +112,8 @@ class TimelineView extends GetView<TimelineController> {
                                     description: controller
                                         .timelineAnonymouse[index]
                                         .deskripsiPengaduan,
+                                    tanggal: controller
+                                        .timelineAnonymouse[index].createdAt,
                                     upVote: controller
                                         .timelineAnonymouse[index].upvote,
                                     downVote: controller
@@ -107,6 +125,8 @@ class TimelineView extends GetView<TimelineController> {
                                     foto: controller.timeline[index].foto,
                                     description: controller
                                         .timeline[index].deskripsiPengaduan,
+                                    tanggal:
+                                        controller.timeline[index].createdAt,
                                     upVote: controller.timeline[index].upvote,
                                     downVote:
                                         controller.timeline[index].downvote,
@@ -132,6 +152,7 @@ class ListviewItem extends StatelessWidget {
     this.name,
     this.foto,
     this.description,
+    this.tanggal,
     this.upVote,
     this.downVote,
   }) : super(key: key);
@@ -139,6 +160,7 @@ class ListviewItem extends StatelessWidget {
   final String? name;
   final String? foto;
   final String? description;
+  final String? tanggal;
   final int? upVote;
   final int? downVote;
 
@@ -201,7 +223,7 @@ class ListviewItem extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(
-                        'Beginner',
+                        tanggal!,
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: kColorGrey,
