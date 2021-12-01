@@ -12,6 +12,34 @@ import '../controllers/login_controller.dart';
 class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
+    Future<void> _showMyDialog() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('AlertDialog Title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text('This is a demo alert dialog.'),
+                  Text('Would you like to approve of this message?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Approve'),
+                onPressed: () {
+                  print('Approve');
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: () => Scaffold(
@@ -56,20 +84,6 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ],
                   ),
-                  // SizedBox(height: 15.h),
-                  // LoginWithButton(
-                  //   iconPath: 'assets/svg/FacebookIcon.svg',
-                  //   iconHeight: 23.h,
-                  //   iconWidth: 23.w,
-                  //   width: 374.w,
-                  //   height: 50.h,
-                  //   spaceBetweenIconAndText: 17.w,
-                  //   text: "Login With Google",
-                  //   borderRadius: 12.r,
-                  //   textColor: kTextPurple,
-                  //   backgroundColor: white,
-                  //   fontSize: 16.sp,
-                  // ),
                   SizedBox(height: 80.h),
                   LoginWithButton(
                     iconPath: 'assets/svg/GoogleIcon.svg',
@@ -121,7 +135,9 @@ class LoginView extends GetView<LoginController> {
                             height: 16.h,
                           ),
                           RoundedInputField(
+                            key: const Key("emailFormField"),
                             roundedCorner: 12.w,
+                            padding: EdgeInsets.all(20.w),
                             textEditingController: controller.myControllerEmail,
                             hintText: 'Email',
                             height: 56.h,
@@ -131,12 +147,16 @@ class LoginView extends GetView<LoginController> {
                           SizedBox(
                             height: 16.h,
                           ),
-                          InputPassword(controller: controller),
+                          InputPassword(
+                            key: const Key("passwordFormField"),
+                            controller: controller,
+                          ),
                           SizedBox(
                             height: 20.h,
                           ),
                           controller.obx(
                             (state) => RoundedButton(
+                              key: const Key("loginButton"),
                               text: 'Login',
                               fontSize: 16.sp,
                               borderRadius: 12.w,
@@ -144,10 +164,16 @@ class LoginView extends GetView<LoginController> {
                               width: 376.w,
                               color: kIconColor,
                               press: () async {
-                                await controller.userLogin(
-                                  controller.myControllerEmail.text,
-                                  controller.myControllerPassword.text,
-                                );
+                                if (controller.myControllerEmail.text.isEmpty ||
+                                    controller
+                                        .myControllerPassword.text.isEmpty) {
+                                  controller.loginInformationEmpty();
+                                } else {
+                                  await controller.userLogin(
+                                    controller.myControllerEmail.text,
+                                    controller.myControllerPassword.text,
+                                  );
+                                }
                               },
                             ),
                             onEmpty: RoundedButton(
@@ -158,27 +184,41 @@ class LoginView extends GetView<LoginController> {
                               width: 376.w,
                               color: kIconColor,
                               press: () async {
-                                await controller.userLogin(
-                                  controller.myControllerEmail.text,
-                                  controller.myControllerPassword.text,
-                                );
+                                if (controller.myControllerEmail.text.isEmpty ||
+                                    controller
+                                        .myControllerPassword.text.isEmpty) {
+                                  controller.loginInformationEmpty();
+                                } else {
+                                  await controller.userLogin(
+                                    controller.myControllerEmail.text,
+                                    controller.myControllerPassword.text,
+                                  );
+                                }
                               },
                             ),
                             onError: (err) {
-                              return RoundedButton(
-                                text: 'Login Lagi',
+                              final Widget errorLogin = RoundedButton(
+                                text: 'Login',
                                 fontSize: 16.sp,
                                 borderRadius: 12.w,
                                 height: 56.h,
                                 width: 376.w,
                                 color: kIconColor,
                                 press: () async {
-                                  await controller.userLogin(
-                                    controller.myControllerEmail.text,
-                                    controller.myControllerPassword.text,
-                                  );
+                                  if (controller
+                                          .myControllerEmail.text.isEmpty ||
+                                      controller
+                                          .myControllerPassword.text.isEmpty) {
+                                    controller.loginInformationEmpty();
+                                  } else {
+                                    await controller.userLogin(
+                                      controller.myControllerEmail.text,
+                                      controller.myControllerPassword.text,
+                                    );
+                                  }
                                 },
                               );
+                              return errorLogin;
                             },
                           ),
                           SizedBox(

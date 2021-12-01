@@ -6,6 +6,7 @@ import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -53,9 +54,30 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
       onError: (err) {
         Get.bottomSheet(
           Container(
-            color: white,
-            child: Center(
-              child: Text('error ketika login $err'),
+            key: const Key('error'),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/svg/not_found.svg',
+                  height: Get.height * 0.3,
+                ),
+                Text(
+                  'Error ketika login : $err',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: kTextPurple,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
         );
@@ -64,6 +86,38 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
           status: RxStatus.error('Error occured : $err'),
         );
       },
+    );
+  }
+
+  void loginInformationEmpty() {
+    Get.bottomSheet(
+      Container(
+        key: const Key('error'),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/svg/not_found.svg',
+              height: Get.height * 0.3,
+            ),
+            const Text(
+              'Email dan Password tidak boleh kosong',
+              style: TextStyle(
+                fontSize: 16,
+                color: kTextPurple,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
     );
   }
 

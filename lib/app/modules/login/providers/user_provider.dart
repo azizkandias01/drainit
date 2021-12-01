@@ -13,7 +13,7 @@ class UserProvider extends GetConnect {
     final response =
         await post('https://gis-drainase.pocari.id/api/login/masyarakat', data);
     if (response.status.hasError) {
-      return Future.error(response.statusText.toString());
+      return Future.error(response.statusCode.toString());
     } else {
       log(response.body.toString());
       return LoginReponse.fromJson(response.body as Map<String, dynamic>);
