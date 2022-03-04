@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable
 
+import 'package:badges/badges.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
@@ -16,7 +17,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
-
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -65,12 +65,25 @@ class HomeView extends GetView<HomeController> {
           ]
         : [
             const GButton(
-              icon: LineIcons.home,
-              text: 'Home',
-            ),
-            const GButton(
               icon: LineIcons.pen,
               text: 'Reports',
+            ),
+            GButton(
+              leading: Badge(
+                badgeColor: Colors.red.shade100,
+                elevation: 0,
+                position: BadgePosition.topEnd(top: -12, end: -12),
+                badgeContent: Text(
+                  "1",
+                  style: TextStyle(color: Colors.red.shade900),
+                ),
+                child: const Icon(
+                  LineIcons.home,
+                  color: Colors.black,
+                ),
+              ),
+              icon: LineIcons.home,
+              text: 'Home',
             ),
             const GButton(
               icon: LineIcons.clock,

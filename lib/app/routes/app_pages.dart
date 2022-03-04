@@ -1,37 +1,39 @@
 import 'package:get/get.dart';
 
-import 'package:drainit_flutter/app/modules/detail/bindings/detail_binding.dart';
-import 'package:drainit_flutter/app/modules/detail/views/detail_view.dart';
-import 'package:drainit_flutter/app/modules/edit_password/bindings/edit_password_binding.dart';
-import 'package:drainit_flutter/app/modules/edit_password/views/edit_password_view.dart';
-import 'package:drainit_flutter/app/modules/edit_profile/bindings/edit_profile_binding.dart';
-import 'package:drainit_flutter/app/modules/edit_profile/views/edit_profile_view.dart';
-import 'package:drainit_flutter/app/modules/flood_drainage_list/bindings/flood_drainage_list_binding.dart';
-import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
-import 'package:drainit_flutter/app/modules/forgot_password/bindings/forgot_password_binding.dart';
-import 'package:drainit_flutter/app/modules/forgot_password/views/forgot_password_view.dart';
-import 'package:drainit_flutter/app/modules/history/bindings/history_binding.dart';
-import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
-import 'package:drainit_flutter/app/modules/home/bindings/home_binding.dart';
-import 'package:drainit_flutter/app/modules/home/views/home_view.dart';
-import 'package:drainit_flutter/app/modules/introduction/bindings/introduction_binding.dart';
-import 'package:drainit_flutter/app/modules/introduction/views/introduction_view.dart';
-import 'package:drainit_flutter/app/modules/login/bindings/login_binding.dart';
-import 'package:drainit_flutter/app/modules/login/views/login_view.dart';
-import 'package:drainit_flutter/app/modules/profile/bindings/profile_binding.dart';
-import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
-import 'package:drainit_flutter/app/modules/register/bindings/register_binding.dart';
-import 'package:drainit_flutter/app/modules/register/views/register_view.dart';
-import 'package:drainit_flutter/app/modules/register_next/bindings/register_next_binding.dart';
-import 'package:drainit_flutter/app/modules/register_next/views/register_next_view.dart';
-import 'package:drainit_flutter/app/modules/reports/bindings/reports_binding.dart';
-import 'package:drainit_flutter/app/modules/reports/views/reports_view.dart';
-import 'package:drainit_flutter/app/modules/searchmap/bindings/searchmap_binding.dart';
-import 'package:drainit_flutter/app/modules/searchmap/views/searchmap_view.dart';
-import 'package:drainit_flutter/app/modules/splashscreen/bindings/splashscreen_binding.dart';
-import 'package:drainit_flutter/app/modules/splashscreen/views/splashscreen_view.dart';
-import 'package:drainit_flutter/app/modules/timeline/bindings/timeline_binding.dart';
-import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
+import '../modules/detail/bindings/detail_binding.dart';
+import '../modules/detail/views/detail_view.dart';
+import '../modules/edit_password/bindings/edit_password_binding.dart';
+import '../modules/edit_password/views/edit_password_view.dart';
+import '../modules/edit_profile/bindings/edit_profile_binding.dart';
+import '../modules/edit_profile/views/edit_profile_view.dart';
+import '../modules/flood_drainage_list/bindings/flood_drainage_list_binding.dart';
+import '../modules/flood_drainage_list/views/flood_drainage_list_view.dart';
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
+import '../modules/history/bindings/history_binding.dart';
+import '../modules/history/views/history_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/introduction/bindings/introduction_binding.dart';
+import '../modules/introduction/views/introduction_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/register/bindings/register_binding.dart';
+import '../modules/register/views/register_view.dart';
+import '../modules/register_next/bindings/register_next_binding.dart';
+import '../modules/register_next/views/register_next_view.dart';
+import '../modules/reports/bindings/reports_binding.dart';
+import '../modules/reports/views/reports_view.dart';
+import '../modules/searchmap/bindings/searchmap_binding.dart';
+import '../modules/searchmap/views/searchmap_view.dart';
+import '../modules/splashscreen/bindings/splashscreen_binding.dart';
+import '../modules/splashscreen/views/splashscreen_view.dart';
+import '../modules/timeline/bindings/timeline_binding.dart';
+import '../modules/timeline/views/timeline_view.dart';
+import '../modules/welcome/bindings/welcome_binding.dart';
+import '../modules/welcome/views/welcome_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -40,7 +42,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.SPLASHSCREEN;
 
   static final routes = [
     GetPage(
@@ -122,6 +124,11 @@ class AppPages {
       name: _Paths.DETAIL,
       page: () => DetailView(),
       binding: DetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.WELCOME,
+      page: () => WelcomeView(),
+      binding: WelcomeBinding(),
     ),
   ];
 }

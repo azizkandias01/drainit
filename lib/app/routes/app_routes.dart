@@ -10,7 +10,6 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const REGISTER = _Paths.REGISTER;
   static const PROFILE = _Paths.PROFILE;
-  static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const SEARCHMAP = _Paths.SEARCHMAP;
   static const REGISTER_NEXT = _Paths.REGISTER_NEXT;
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
@@ -23,6 +22,8 @@ abstract class Routes {
   static const REPORTS = _Paths.REPORTS;
   static const HISTORY = _Paths.HISTORY;
   static const DETAIL = _Paths.DETAIL;
+  static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
+  static const WELCOME = _Paths.WELCOME;
 }
 
 abstract class _Paths {
@@ -30,7 +31,6 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const REGISTER = '/register';
   static const PROFILE = '/profile';
-  static const SPLASHSCREEN = '/splashscreen';
   static const SEARCHMAP = '/searchmap';
   static const REGISTER_NEXT = '/register-next';
   static const FORGOT_PASSWORD = '/forgot-password';
@@ -43,4 +43,6 @@ abstract class _Paths {
   static const REPORTS = '/reports';
   static const HISTORY = '/history';
   static const DETAIL = '/detail';
+  static const SPLASHSCREEN = '/splashscreen';
+  static const WELCOME = '/welcome';
 }

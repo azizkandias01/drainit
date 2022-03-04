@@ -10,7 +10,7 @@ void main() async {
   await GetStorage.init();
   runApp(
     ScreenUtilInit(
-      designSize: Size(414, 896),
+      designSize: const Size(414, 896),
       builder: () => GetMaterialApp(
         title: "Application",
         initialRoute: AppPages.INITIAL,

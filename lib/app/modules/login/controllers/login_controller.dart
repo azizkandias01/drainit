@@ -4,7 +4,6 @@ import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -24,9 +23,8 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
     change(null, status: RxStatus.empty());
     myControllerEmail = TextEditingController();
     myControllerPassword = TextEditingController();
+    printInfo(info: 'onInit');
   }
-
-  bool isLoggedIn() => box.hasData(Routes.TOKEN);
 
   Future<void> userLogin(String email, String password) async {
     final dataLogin = {
@@ -131,6 +129,5 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
   @override
   void onReady() {
     super.onReady();
-    if (isLoggedIn()) Get.offAllNamed(Routes.HOME);
   }
 }

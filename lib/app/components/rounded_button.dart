@@ -172,16 +172,19 @@ class ProfileMenuButton extends StatelessWidget {
             height: iconHeight,
             width: iconWidth,
           ),
-          TextButton(
-            style: TextButton.styleFrom(
-              primary: textColor,
-            ),
-            onPressed: onPressed,
-            child: Text(
-              text ?? "not defined",
-              style: TextStyle(
-                color: textColor,
-                fontSize: fontSize,
+          Expanded(
+            child: TextButton(
+              style: TextButton.styleFrom(
+                primary: textColor,
+              ),
+              onPressed: onPressed,
+              child: Text(
+                text ?? "not defined",
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: fontSize,
+                ),
               ),
             ),
           ),

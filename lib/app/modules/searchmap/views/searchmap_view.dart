@@ -64,22 +64,23 @@ class SearchmapView extends GetView<SearchmapController> {
 
   Widget buildSearchBar() {
     final actions = [
-      FloatingSearchBarAction(
-        child: CircularButton(
-          icon: const Icon(Icons.place),
-          onPressed: () async {
-            await Map._goToCurrentLocation();
-          },
-        ),
-      ),
+      // FloatingSearchBarAction(
+      //   // child: CircularButton(
+      //   //   icon: const Icon(Icons.place),
+      //   //   onPressed: () async {
+      //   //     await Map._goToCurrentLocation();
+      //   //   },
+      //   // ),
+      // ),
       FloatingSearchBarAction.searchToClear(
-        showIfClosed: false,
+        showIfClosed: true,
       ),
     ];
 
     return Obx(
       () => FloatingSearchBar(
-        automaticallyImplyBackButton: false,
+        automaticallyImplyBackButton: true,
+        automaticallyImplyDrawerHamburger: false,
         controller: fabController,
         hint: 'search place here',
         iconColor: Colors.grey,
@@ -88,7 +89,7 @@ class SearchmapView extends GetView<SearchmapController> {
         physics: const BouncingScrollPhysics(),
         axisAlignment: isPortrait ? 0.0 : -1.0,
         openAxisAlignment: 0.0,
-        actions: actions,
+        //actions: actions,
         progress: controller.isLoading.value,
         debounceDelay: const Duration(milliseconds: 500),
         onQueryChanged: controller.onQueryChanged,
@@ -178,7 +179,11 @@ class SearchmapView extends GetView<SearchmapController> {
                   child: GestureDetector(
                     onTap: () async {
                       FloatingSearchBar.of(context)!.close();
-                      await Map._goToSearch(place.lat, place.long);
+                      controller.goToSearch(
+                        place.lat,
+                        place.long,
+                        await Map._updateController.future,
+                      );
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -212,6 +217,7 @@ class SearchmapView extends GetView<SearchmapController> {
 
 class Map extends GetView<SearchmapController> {
   static final Completer<GoogleMapController> _controller = Completer();
+  static final Completer<GoogleMapController> _updateController = Completer();
 
   static final Marker marker = Marker(
     markerId: const MarkerId('marker pku'),
@@ -228,25 +234,6 @@ class Map extends GetView<SearchmapController> {
     },
   );
 
-  static Future<void> _goToCurrentLocation() async {
-    _initialPosition = await _getPosition();
-    final CameraPosition currentLocation = CameraPosition(
-      target: _initialPosition,
-      zoom: 18.151926040649414,
-    );
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(currentLocation));
-  }
-
-  static Future<void> _goToSearch(double lat, double long) async {
-    final GoogleMapController controller = await _controller.future;
-    final CameraPosition cameraPosition = CameraPosition(
-      target: LatLng(lat, long),
-      zoom: 18.151926040649414,
-    );
-    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-  }
-
   @override
   Widget build(BuildContext context) {
     return buildMap();
@@ -259,40 +246,51 @@ class Map extends GetView<SearchmapController> {
     );
 
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        onTap: (LatLng latLng) async {
-          controller.data.value = latLng;
-          Get.bottomSheet(
-            Center(
-              child: Container(
-                width: Get.width,
-                color: white,
-                child: Column(
-                  children: [
-                    Text(await controller.getAddress(latLng)),
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.back();
-                        Get.back(result: controller.getAddress(latLng));
-                      },
-                      child: const Text('select this coordinate'),
-                    )
-                  ],
+      body: Obx(
+        () => GoogleMap(
+          onTap: (LatLng latLng) async {
+            controller.myMarker.clear();
+            controller.myMarker.add(
+              Marker(markerId: const MarkerId("newMarker"), position: latLng),
+            );
+            controller.data.value = latLng;
+            Get.bottomSheet(
+              Center(
+                child: Container(
+                  width: Get.width,
+                  color: white,
+                  child: Column(
+                    children: [
+                      Text(await controller.getAddress(latLng)),
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                          Get.back(result: controller.getAddress(latLng));
+                        },
+                        child: const Text('select this coordinate'),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
-        markers: Set.from(controller.myMarker),
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          if (!_controller.isCompleted) {
-            _controller.complete(controller);
-          } else {
-            //print('completer has created');
-          }
-        },
+            );
+          },
+          markers: Set.from(controller.myMarker),
+          initialCameraPosition: _kGooglePlex,
+          onMapCreated: (controller) {
+            if (!_controller.isCompleted) {
+              _controller.complete(controller);
+              _updateController.complete(controller);
+              this.controller.goToSearch(
+                  0.5696307903657801, 101.42544396221638, controller);
+              controller.dispose();
+            } else {
+              this.controller.goToSearch(
+                  0.5696307903657801, 101.42544396221638, controller);
+              controller.dispose();
+            }
+          },
+        ),
       ),
     );
   }

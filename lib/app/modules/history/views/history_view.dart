@@ -14,61 +14,105 @@ import '../controllers/history_controller.dart';
 class HistoryView extends GetView<HistoryController> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> _buildList() {
+      final List<Widget> listItems = [];
+
+      for (int i = 0; i < controller.historyList.length; i++) {
+        listItems.add(historyItem(
+            controller.historyList[i].foto ?? '',
+            controller.historyList[i].statusPengaduan ?? '',
+            controller.historyList[i].tipePengaduan ?? '',
+            controller.historyList[i].namaJalan ?? '', () {
+          Get.toNamed(
+            Routes.DETAIL,
+            arguments: controller.historyList[i].id,
+          );
+        }));
+      }
+      return listItems;
+    }
+
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: () => Scaffold(
-        body: Container(
-          height: 896.w,
-          width: 414.w,
-          color: kBackgroundInput,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 286.h,
-              ),
-              Container(
-                decoration: const BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(36),
-                    topRight: Radius.circular(36),
-                  ),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: ScreenUtil().setHeight(100),
+              backgroundColor: kIconColor,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                titlePadding: EdgeInsets.only(
+                  left: ScreenUtil().setWidth(20),
+                  right: ScreenUtil().setWidth(20),
                 ),
-                height: 610.h,
-                width: 414.w,
-                child: controller.obx(
-                  (state) => SingleChildScrollView(
-                    child: SizedBox(
-                      width: 414.w,
-                      height: 676.h,
-                      child: RefreshIndicator(
-                        onRefresh: () => controller.loadHistory(),
-                        child: ListView.builder(
-                          itemCount: controller.historyList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return historyItem(
-                              controller.historyList[index].foto ?? '',
-                              controller.historyList[index].statusPengaduan ??
-                                  '',
-                              controller.historyList[index].tipePengaduan ?? '',
-                              controller.historyList[index].namaJalan ?? '',
-                              () {
-                                Get.toNamed(
-                                  Routes.DETAIL,
-                                  arguments: controller.historyList[index].id,
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
+                title: Text(
+                  'History',
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: ScreenUtil().setSp(30),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SliverList(delegate: SliverChildListDelegate.fixed(_buildList()))
+          ],
         ),
+
+        // body: Container(
+        //   height: 896.w,
+        //   width: 414.w,
+        //   color: kBackgroundInput,
+        //   child: Column(
+        //     children: [
+        //       SizedBox(
+        //         height: 286.h,
+        //       ),
+        //       Container(
+        //         decoration: const BoxDecoration(
+        //           color: white,
+        //           borderRadius: BorderRadius.only(
+        //             topLeft: Radius.circular(36),
+        //             topRight: Radius.circular(36),
+        //           ),
+        //         ),
+        //         height: 610.h,
+        //         width: 414.w,
+        //         child: controller.obx(
+        //           (state) => SingleChildScrollView(
+        //             child: SizedBox(
+        //               width: 414.w,
+        //               height: 676.h,
+        //               child: RefreshIndicator(
+        //                 onRefresh: () => controller.loadHistory(),
+        //                 child: ListView.builder(
+        //                   itemCount: controller.historyList.length,
+        //                   itemBuilder: (BuildContext context, int index) {
+        //                     return historyItem(
+        //                       controller.historyList[index].foto ?? '',
+        //                       controller.historyList[index].statusPengaduan ??
+        //                           '',
+        //                       controller.historyList[index].tipePengaduan ?? '',
+        //                       controller.historyList[index].namaJalan ?? '',
+        //                       () {
+        //                         Get.toNamed(
+        //                           Routes.DETAIL,
+        //                           arguments: controller.historyList[index].id,
+        //                         );
+        //                       },
+        //                     );
+        //                   },
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }
@@ -106,8 +150,8 @@ class HistoryView extends GetView<HistoryController> {
                         height: 110.h,
                         fit: BoxFit.fill,
                         errorBuilder: (_, __, ___) {
-                          return const Center(
-                            child: Text('Image error'),
+                          return SizedBox(
+                            width: 167.w,
                           );
                         },
                         image: CachedNetworkImageProvider(imagePath() + foto),
