@@ -7,7 +7,6 @@ import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/profile_controller.dart';
@@ -19,11 +18,10 @@ class ProfileView extends GetView<ProfileController> {
       (state) => ScreenUtilInit(
         designSize: const Size(414, 896),
         builder: () => Scaffold(
-          backgroundColor: kBackgroundInput,
-          body: SafeArea(
+          backgroundColor: Colors.grey[100],
+          body: SingleChildScrollView(
             child: Column(
               children: [
-                const TopMenu(),
                 SizedBox(
                   height: 48.h,
                 ),

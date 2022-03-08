@@ -53,6 +53,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
         Get.bottomSheet(
           Container(
             key: const Key('error'),
+            height: Get.height / 2.7,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -61,11 +62,12 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SvgPicture.asset(
-                  'assets/svg/not_found.svg',
-                  height: Get.height * 0.3,
+                  'assets/svg/il_err_404.svg',
+                  height: 200,
+                  width: 200,
                 ),
                 Text(
                   'Error ketika login : $err',

@@ -19,6 +19,7 @@ class RegisterController extends GetxController with StateMixin<String> {
   late TextEditingController myControllerAddress;
   final isPasswordHidden = true.obs;
   final isConfirmPasswordHidden = true.obs;
+  final isChecked = false.obs;
 
   RxString selectedImagePath = ''.obs;
   RxString selectedImageSize = ''.obs;
@@ -49,7 +50,7 @@ class RegisterController extends GetxController with StateMixin<String> {
           '${(File(selectedImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
 
       // Crop
-      final cropImageFile = await ImageCropper.cropImage(
+      final cropImageFile = await ImageCropper().cropImage(
         sourcePath: selectedImagePath.value,
         aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
         maxWidth: 512,

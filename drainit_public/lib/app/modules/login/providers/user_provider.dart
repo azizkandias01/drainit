@@ -11,7 +11,12 @@ class UserProvider extends GetConnect {
 
   Future<LoginReponse> loginUser(Map data) async {
     final response =
-        await post('https://gis-drainase.pocari.id/api/login/masyarakat', data);
+        await post('https://gis-drainase.pocari.id/api/login/masyarakat', data)
+            .timeout(
+      const Duration(
+        seconds: 5,
+      ),
+    );
     if (response.status.hasError) {
       return Future.error(response.statusCode.toString());
     } else {

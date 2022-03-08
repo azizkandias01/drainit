@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable
 
-import 'package:badges/badges.dart';
+import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/views/flood_drainage_list_view.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
@@ -9,14 +9,14 @@ import 'package:drainit_flutter/app/modules/profile/controllers/profile_controll
 import 'package:drainit_flutter/app/modules/profile/views/profile_view.dart';
 import 'package:drainit_flutter/app/modules/reports/controllers/reports_controller.dart';
 import 'package:drainit_flutter/app/modules/reports/views/reports_view.dart';
-import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -27,6 +27,9 @@ class HomeView extends GetView<HomeController> {
     final floodDrainageListC = Get.find<FloodDrainageListController>();
     final String arguments = Get.arguments.toString();
     final reportsC = Get.find<ReportsController>();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: kIconColor, //or set color with: Color(0xFF0000FF)
+    ));
     if (isUserLogin()) {
       final ProfileC = Get.find<ProfileController>();
       final historyC = Get.find<HistoryController>();
@@ -38,22 +41,16 @@ class HomeView extends GetView<HomeController> {
     final List<Widget> _widgetOptions = !isUserLogin()
         ? [
             ReportsView(),
-            TimelineView(arguments),
             FloodDrainageListView(),
           ]
         : [
             ReportsView(),
-            TimelineView(arguments),
             HistoryView(),
             FloodDrainageListView(),
             ProfileView(),
           ];
     final List<GButton> _widgetButton = !isUserLogin()
         ? [
-            const GButton(
-              icon: LineIcons.home,
-              text: 'Home',
-            ),
             const GButton(
               icon: LineIcons.list,
               text: 'Reports',
@@ -68,23 +65,23 @@ class HomeView extends GetView<HomeController> {
               icon: LineIcons.pen,
               text: 'Reports',
             ),
-            GButton(
-              leading: Badge(
-                badgeColor: Colors.red.shade100,
-                elevation: 0,
-                position: BadgePosition.topEnd(top: -12, end: -12),
-                badgeContent: Text(
-                  "1",
-                  style: TextStyle(color: Colors.red.shade900),
-                ),
-                child: const Icon(
-                  LineIcons.home,
-                  color: Colors.black,
-                ),
-              ),
-              icon: LineIcons.home,
-              text: 'Home',
-            ),
+            // GButton(
+            //   leading: Badge(
+            //     badgeColor: Colors.red.shade100,
+            //     elevation: 0,
+            //     position: BadgePosition.topEnd(top: -12, end: -12),
+            //     badgeContent: Text(
+            //       "1",
+            //       style: TextStyle(color: Colors.red.shade900),
+            //     ),
+            //     child: const Icon(
+            //       LineIcons.home,
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            //   icon: LineIcons.home,
+            //   text: 'Home',
+            // ),
             const GButton(
               icon: LineIcons.clock,
               text: 'history',
@@ -115,27 +112,26 @@ class HomeView extends GetView<HomeController> {
             )
           ],
         ),
-        child: SafeArea(
-          child: ScreenUtilInit(
-            designSize: const Size(414, 896),
-            builder: () => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 8.w),
-              child: GNav(
-                rippleColor: Colors.grey[300]!,
-                hoverColor: Colors.grey[100]!,
-                gap: 8.w,
-                activeColor: Colors.black,
-                iconSize: 24.sp,
-                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 12.w),
-                duration: const Duration(milliseconds: 400),
-                tabBackgroundColor: Colors.grey[100]!,
-                color: Colors.black,
-                tabs: _widgetButton,
-                selectedIndex: _selectedIndex.value,
-                onTabChange: (index) {
-                  _selectedIndex.value = index;
-                },
-              ),
+        child: ScreenUtilInit(
+          designSize: const Size(414, 896),
+          builder: () => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 20.w),
+            child: GNav(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              rippleColor: Colors.grey[300]!,
+              hoverColor: Colors.grey[100]!,
+              gap: 8.h,
+              activeColor: Colors.black,
+              iconSize: 24.sp,
+              padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 12.w),
+              duration: const Duration(milliseconds: 400),
+              tabBackgroundColor: Colors.grey[100]!,
+              color: Colors.black,
+              tabs: _widgetButton,
+              selectedIndex: _selectedIndex.value,
+              onTabChange: (index) {
+                _selectedIndex.value = index;
+              },
             ),
           ),
         ),

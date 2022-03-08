@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -15,7 +16,12 @@ void main() async {
         title: "Application",
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle.dark, // 2
+          ),
+        ),
       ),
     ),
   );

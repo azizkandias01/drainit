@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'constant.dart';
 
 class RoundedInputField extends StatelessWidget {
@@ -13,18 +14,20 @@ class RoundedInputField extends StatelessWidget {
   final double? textSize;
   final Color? backgroundColor;
   final EdgeInsetsGeometry? padding;
+  final Color? borderColor;
   const RoundedInputField({
     Key? key,
     this.hintText,
     this.icon = Icons.person,
     this.onChanged,
     this.textEditingController,
-    this.roundedCorner = 29,
+    this.roundedCorner = 10,
     this.height,
     this.width,
     this.textSize,
     this.backgroundColor,
     this.padding,
+    this.borderColor,
   }) : super(key: key);
 
   @override
@@ -33,10 +36,6 @@ class RoundedInputField extends StatelessWidget {
       width: width,
       height: height,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: backgroundColor ?? kBackgroundInput,
-        borderRadius: BorderRadius.circular(roundedCorner!),
-      ),
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
@@ -48,7 +47,20 @@ class RoundedInputField extends StatelessWidget {
         cursorColor: kBackgroundInput,
         controller: textEditingController,
         decoration: InputDecoration(
-          contentPadding: padding ?? const EdgeInsets.symmetric(vertical: 10),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(roundedCorner!),
+            borderSide: const BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(roundedCorner!),
+            borderSide: const BorderSide(
+              color: Colors.green,
+            ),
+          ),
+          contentPadding: padding ??
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           hintText: hintText,
           hintStyle: TextStyle(fontSize: textSize ?? 13),
           border: InputBorder.none,

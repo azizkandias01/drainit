@@ -161,30 +161,30 @@ class ProfileMenuButton extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius ?? 0)),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(borderRadius ?? 0),
+        ),
       ),
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.asset(
             iconPath ?? "",
             height: iconHeight,
             width: iconWidth,
           ),
-          Expanded(
-            child: TextButton(
-              style: TextButton.styleFrom(
-                primary: textColor,
-              ),
-              onPressed: onPressed,
-              child: Text(
-                text ?? "not defined",
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: fontSize,
-                ),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: textColor,
+            ),
+            onPressed: onPressed,
+            child: Text(
+              text ?? "not defined",
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: textColor,
+                fontSize: fontSize,
               ),
             ),
           ),
