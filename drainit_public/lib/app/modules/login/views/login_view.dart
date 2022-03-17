@@ -14,17 +14,20 @@ import '../controllers/login_controller.dart';
 class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
+    whiteBar();
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: () => Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SvgPicture.asset(
-              'assets/svg/il_login.svg',
-              height: ScreenUtil().setHeight(400),
-              width: ScreenUtil().setWidth(400),
-              fit: BoxFit.fitHeight,
+            Center(
+              child: SvgPicture.asset(
+                'assets/svg/il_login.svg',
+                height: ScreenUtil().setHeight(400),
+                width: ScreenUtil().setWidth(400),
+                fit: BoxFit.fitHeight,
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(

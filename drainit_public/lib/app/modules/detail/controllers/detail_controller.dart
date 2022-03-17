@@ -12,11 +12,6 @@ class DetailController extends GetxController with StateMixin {
     getDetail();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   void getDetail() {
     change(null, status: RxStatus.loading());
 
@@ -30,7 +25,4 @@ class DetailController extends GetxController with StateMixin {
       },
     );
   }
-
-  @override
-  void onClose() {}
 }

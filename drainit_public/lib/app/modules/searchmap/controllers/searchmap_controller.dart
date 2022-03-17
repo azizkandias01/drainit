@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dart';
 import 'package:drainit_flutter/app/modules/searchmap/providers/searchmap_provider.dart';
 import 'package:geocoding/geocoding.dart';
@@ -75,7 +73,7 @@ class SearchmapController extends GetxController {
     final thoroughfare = first.thoroughfare ?? '';
     final subThoroughfare = first.subThoroughfare ?? '';
     final addressLine =
-        '$locality,$administrativeArea,$subLocality,$subAdministrativeArea,$street,$name,$thoroughfare,$subThoroughfare';
+        '$street,$locality,$subLocality,$subAdministrativeArea,$administrativeArea';
     return addressLine;
   }
 
@@ -94,7 +92,6 @@ class SearchmapController extends GetxController {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     print("dispose map");
   }

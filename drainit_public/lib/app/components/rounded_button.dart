@@ -32,7 +32,7 @@ class RoundedButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: press,
-      child: Container(
+      child: SizedBox(
         width: width ?? size.width * 0.8,
         height: height,
         child: ClipRRect(

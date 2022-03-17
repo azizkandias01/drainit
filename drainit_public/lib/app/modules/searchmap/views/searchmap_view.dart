@@ -263,9 +263,14 @@ class Map extends GetView<SearchmapController> {
                     children: [
                       Text(await controller.getAddress(latLng)),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           Get.back();
-                          Get.back(result: controller.getAddress(latLng));
+                          Get.back(
+                            result: [
+                              await controller.getAddress(latLng),
+                              latLng,
+                            ],
+                          );
                         },
                         child: const Text('select this coordinate'),
                       )

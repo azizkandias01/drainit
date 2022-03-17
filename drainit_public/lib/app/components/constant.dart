@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const black = Color(0xFF000000);
 const green = Color(0xff068246);
@@ -28,3 +29,12 @@ const textGrey = Color(0xFF868A8F);
 const header = Color(0xFFFFC736);
 const error = Color(0xFFF5365C);
 const danger = Color(0xFFBB2124);
+
+void whiteBar() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+}

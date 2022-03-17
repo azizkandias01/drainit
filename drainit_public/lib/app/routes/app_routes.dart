@@ -24,6 +24,8 @@ abstract class Routes {
   static const DETAIL = _Paths.DETAIL;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const WELCOME = _Paths.WELCOME;
+  static const IMAGEURL =
+      "https://gis-drainase.pocari.id/storage/app/public/images/";
 }
 
 abstract class _Paths {

@@ -5,6 +5,7 @@ import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -17,6 +18,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
   @override
   void onInit() {
     super.onInit();
+    FlutterNativeSplash.remove();
     box = GetStorage();
 
     //on init state set that state is empty
@@ -123,13 +125,6 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
 
   @override
   void onClose() {
-    myControllerPassword.dispose();
-    myControllerEmail.dispose();
     super.onClose();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 }
