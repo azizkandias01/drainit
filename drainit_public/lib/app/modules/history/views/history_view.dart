@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
-import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,109 +23,79 @@ class HistoryView extends GetView<HistoryController> {
         listItems.add(
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.DETAIL, arguments: [
-                controller.list[i].id,
-                controller.list[i].geometry
-              ]);
+              Get.toNamed(
+                Routes.DETAIL,
+                arguments: [controller.list[i].id, controller.list[i].geometry],
+              );
             },
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 325.w,
-                  height: 122.h,
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        width: 325.w,
-                        height: 122.h,
-                        child: isBanjir
-                            ? Image.asset(
-                                "assets/image/bg_tersumbat.png",
-                                fit: BoxFit.fill,
-                              )
-                            : SvgPicture.asset(
-                                "assets/image/bg_tersumbat.png",
-                                fit: BoxFit.fill,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 10.w,
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: Image(
+                        width: 100.w,
+                        height: 100.h,
+                        fit: BoxFit.fill,
+                        errorBuilder: (_, __, ___) {
+                          return Container(
+                            width: 100.w,
+                            height: 100.h,
+                            color: Colors.white,
+                            child: Center(
+                              child: TextPoppinsBold(
+                                text: "cannot load image",
+                                fontSize: 8.sp,
                               ),
+                            ),
+                          );
+                        },
+                        image: CachedNetworkImageProvider(Routes.IMAGEURL +
+                            (controller.list[i].foto ??
+                                "defaultpengaduan.png")),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextPoppinsBold(
+                        text: controller.list[i].tipePengaduan.toString(),
+                        fontSize: 14.sp,
+                        textColour: Colors.black,
                       ),
                       SizedBox(
-                        width: 325.w,
-                        height: 122.h,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.w),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.r),
-                                child: Image(
-                                  width: 147.w,
-                                  height: 97.h,
-                                  fit: BoxFit.fill,
-                                  errorBuilder: (_, __, ___) {
-                                    return Container(
-                                      width: 147.w,
-                                      height: 97.h,
-                                      color: Colors.white,
-                                      child: Center(
-                                        child: TextPoppinsBold(
-                                          text: "cannot load image",
-                                          fontSize: 8.sp,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  image: CachedNetworkImageProvider(
-                                      Routes.IMAGEURL +
-                                          (controller.list[i].foto ??
-                                              "defaultpengaduan.png")),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Expanded(
-                              child: SizedBox(
-                                height: 97.h,
-                                width: 160.w,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextPoppinsBold(
-                                      text: controller.list[i].tipePengaduan ??
-                                          "",
-                                      fontSize: 11.sp,
-                                      textColour: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    TextPoppinsBold(
-                                      text: controller.list[i].namaJalan ?? "",
-                                      overflow: TextOverflow.ellipsis,
-                                      fontSize: 11.sp,
-                                      textColour: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      height: 8.h,
-                                    ),
-                                    TextPoppinsBold(
-                                      text: controller.list[i].createdAt ?? "",
-                                      fontSize: 11.sp,
-                                      textColour: Colors.white,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        height: 5.h,
+                      ),
+                      TextPoppinsRegular(
+                        text: controller.list[i].createdAt.toString(),
+                        fontSize: 12.sp,
+                        textColour: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      TextPoppinsRegular(
+                        text: "Jl. Bukitsari no.9a",
+                        fontSize: 12.sp,
+                        textColour: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      TextPoppinsBold(
+                        text: "${controller.list[i].statusPengaduan}",
+                        fontSize: 12.sp,
+                        textColour: Colors.black,
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -161,61 +130,61 @@ class HistoryView extends GetView<HistoryController> {
       designSize: const Size(375, 812),
       builder: () => Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-        floatingActionButton: FloatingActionBubble(
-          // Menu items
-          items: <Bubble>[
-            // Floating action menu item
-            Bubble(
-              title: "Settings",
-              iconColor: Colors.white,
-              bubbleColor: Colors.blue,
-              icon: Icons.settings,
-              titleStyle: TextStyle(fontSize: 16, color: Colors.white),
-              onPress: () {
-                controller.animationController.reverse();
-              },
-            ),
-            // Floating action menu item
-            Bubble(
-              title: "Profile",
-              iconColor: Colors.white,
-              bubbleColor: Colors.blue,
-              icon: Icons.people,
-              titleStyle: TextStyle(fontSize: 16, color: Colors.white),
-              onPress: () {
-                controller.animationController.reverse();
-              },
-            ),
-            //Floating action menu item
-            Bubble(
-              title: "Home",
-              iconColor: Colors.white,
-              bubbleColor: Colors.blue,
-              icon: Icons.home,
-              titleStyle: TextStyle(fontSize: 16, color: Colors.white),
-              onPress: () {
-                print("Home");
-                controller.animationController.reverse();
-              },
-            ),
-          ],
-
-          // animation controller
-          animation: controller.animation,
-
-          // On pressed change animation state
-          onPress: () => controller.animationController.isCompleted
-              ? controller.animationController.reverse()
-              : controller.animationController.forward(),
-
-          // Floating Action button Icon color
-          iconColor: green,
-
-          // Flaoting Action button Icon
-          iconData: Icons.align_vertical_bottom_outlined,
-          backGroundColor: Colors.white,
-        ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        // floatingActionButton: FloatingActionBubble(
+        //   // Menu items
+        //   items: <Bubble>[
+        //     // Floating action menu item
+        //     Bubble(
+        //       title: "Settings",
+        //       iconColor: Colors.white,
+        //       bubbleColor: Colors.blue,
+        //       icon: Icons.settings,
+        //       titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+        //       onPress: () {
+        //         controller.animationController.reverse();
+        //       },
+        //     ),
+        //     // Floating action menu item
+        //     Bubble(
+        //       title: "Profile",
+        //       iconColor: Colors.white,
+        //       bubbleColor: Colors.blue,
+        //       icon: Icons.people,
+        //       titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+        //       onPress: () {
+        //         controller.animationController.reverse();
+        //       },
+        //     ),
+        //     //Floating action menu item
+        //     Bubble(
+        //       title: "Home",
+        //       iconColor: Colors.white,
+        //       bubbleColor: Colors.blue,
+        //       icon: Icons.home,
+        //       titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+        //       onPress: () {
+        //         print("Home");
+        //         controller.animationController.reverse();
+        //       },
+        //     ),
+        //   ],
+        //
+        //   // animation controller
+        //   animation: controller.animation,
+        //
+        //   // On pressed change animation state
+        //   onPress: () => controller.animationController.isCompleted
+        //       ? controller.animationController.reverse()
+        //       : controller.animationController.forward(),
+        //
+        //   // Floating Action button Icon color
+        //   iconColor: green,
+        //
+        //   // Flaoting Action button Icon
+        //   iconData: Icons.align_vertical_bottom_outlined,
+        //   backGroundColor: Colors.white,
+        // ),
         body: controller.obx(
           (state) => RefreshIndicator(
             onRefresh: () {
@@ -224,22 +193,162 @@ class HistoryView extends GetView<HistoryController> {
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  expandedHeight: ScreenUtil().setHeight(100),
-                  backgroundColor: white,
-                  flexibleSpace: FlexibleSpaceBar(
-                    titlePadding: EdgeInsets.only(
-                      left: ScreenUtil().setWidth(30),
-                      top: ScreenUtil().setHeight(50),
-                    ),
-                    title: TextPoppinsBold(
-                      text: 'Riwayat \nLaporan',
-                      fontSize: ScreenUtil().setSp(16),
-                      textColour: Colors.black,
+                  pinned: true,
+                  elevation: 0,
+                  bottom: PreferredSize(
+                    preferredSize: Size(Get.width, 0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextPoppinsBold(
+                              text: "Riwayat Laporan",
+                              fontSize: 20.sp,
+                              textColour: Colors.black,
+                            ),
+                            SizedBox(height: 10.h),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 25.h,
+                                    width: 50.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.grey[200],
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: .2,
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: TextPoppinsRegular(
+                                        text: "Semua",
+                                        fontSize: 9.sp,
+                                        textColour: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 8.w),
+                                    child: Container(
+                                      height: 25.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey[200],
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: .2,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: TextPoppinsRegular(
+                                          text: "Laporan selesai",
+                                          fontSize: 9.sp,
+                                          textColour: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 8.w),
+                                    child: Container(
+                                      height: 25.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey[200],
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: .2,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: TextPoppinsRegular(
+                                          text: "Sedang diproses",
+                                          fontSize: 9.sp,
+                                          textColour: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 8.w),
+                                    child: Container(
+                                      height: 25.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey[200],
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: .2,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: TextPoppinsRegular(
+                                          text: "Laporan terbaru",
+                                          fontSize: 9.sp,
+                                          textColour: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 8.w),
+                                    child: Container(
+                                      height: 25.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey[200],
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                          width: .2,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: TextPoppinsRegular(
+                                          text: "Laporan terlama",
+                                          fontSize: 9.sp,
+                                          textColour: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
+                  expandedHeight: ScreenUtil().setHeight(80),
+                  collapsedHeight: ScreenUtil().setHeight(80),
+                  backgroundColor: white,
+                  // flexibleSpace: FlexibleSpaceBar(
+                  //   titlePadding: EdgeInsets.only(
+                  //     left: ScreenUtil().setWidth(30),
+                  //     top: ScreenUtil().setHeight(50),
+                  //   ),
+                  //   title: TextPoppinsBold(
+                  //     text: 'Riwayat Laporan',
+                  //     fontSize: ScreenUtil().setSp(16),
+                  //     textColour: Colors.black,
+                  //   ),
+                  // ),
                 ),
                 SliverList(
-                  delegate: SliverChildListDelegate.fixed(_buildList()),
+                  delegate: SliverChildListDelegate.fixed(
+                    _buildList(),
+                  ),
                 ),
               ],
             ),
@@ -363,6 +472,121 @@ class HistoryView extends GetView<HistoryController> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OldListView extends StatelessWidget {
+  const OldListView({
+    Key? key,
+    required this.isBanjir,
+    required this.controller,
+    required this.i,
+  }) : super(key: key);
+
+  final bool isBanjir;
+  final HistoryController controller;
+  final int i;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: Get.width,
+          height: 122.h,
+          child: Stack(
+            children: [
+              SizedBox(
+                width: 325.w,
+                height: 122.h,
+                child: isBanjir
+                    ? Image.asset(
+                        "assets/image/bg_tersumbat.png",
+                        fit: BoxFit.fill,
+                      )
+                    : SvgPicture.asset(
+                        "assets/image/bg_tersumbat.png",
+                        fit: BoxFit.fill,
+                      ),
+              ),
+              SizedBox(
+                width: 325.w,
+                height: 122.h,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 8.w),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.r),
+                        child: Image(
+                          width: 147.w,
+                          height: 97.h,
+                          fit: BoxFit.fill,
+                          errorBuilder: (_, __, ___) {
+                            return Container(
+                              width: 147.w,
+                              height: 97.h,
+                              color: Colors.white,
+                              child: Center(
+                                child: TextPoppinsBold(
+                                  text: "cannot load image",
+                                  fontSize: 8.sp,
+                                ),
+                              ),
+                            );
+                          },
+                          image: CachedNetworkImageProvider(Routes.IMAGEURL +
+                              (controller.list[i].foto ??
+                                  "defaultpengaduan.png")),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 97.h,
+                        width: 160.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextPoppinsBold(
+                              text: controller.list[i].tipePengaduan ?? "",
+                              fontSize: 11.sp,
+                              textColour: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            TextPoppinsBold(
+                              text: controller.list[i].namaJalan ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 11.sp,
+                              textColour: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 8.h,
+                            ),
+                            TextPoppinsBold(
+                              text: controller.list[i].createdAt ?? "",
+                              fontSize: 11.sp,
+                              textColour: Colors.white,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),

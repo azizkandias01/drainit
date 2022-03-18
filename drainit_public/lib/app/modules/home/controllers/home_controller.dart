@@ -112,7 +112,8 @@ class HomeController extends GetxController {
     super.onInit();
     FlutterNativeSplash.remove();
     box = GetStorage();
-    if (Get.arguments == 'anonymouse') {
+    if (Get.arguments != 'anonymouse') {
+      print("no account");
       final ProfileC = Get.find<ProfileController>();
       final historyC = Get.find<HistoryController>();
     }

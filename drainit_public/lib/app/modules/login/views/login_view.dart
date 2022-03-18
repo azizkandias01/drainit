@@ -18,181 +18,183 @@ class LoginView extends GetView<LoginController> {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: () => Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: SvgPicture.asset(
-                'assets/svg/il_login.svg',
-                height: ScreenUtil().setHeight(400),
-                width: ScreenUtil().setWidth(400),
-                fit: BoxFit.fitHeight,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: SvgPicture.asset(
+                  'assets/svg/il_login.svg',
+                  height: ScreenUtil().setHeight(400),
+                  width: ScreenUtil().setWidth(400),
+                  fit: BoxFit.fitHeight,
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 20.w,
-                right: 20.w,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextPoppinsBold(text: "Masuk", fontSize: 24.sp),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextPoppinsRegular(text: "Email", fontSize: 14.sp),
-                      SizedBox(height: ScreenUtil().setHeight(10)),
-                      RoundedInputField(
-                        hintText: "example@gmail.com",
-                        textEditingController: controller.myControllerEmail,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextPoppinsRegular(text: "Password", fontSize: 14.sp),
-                      SizedBox(height: ScreenUtil().setHeight(10)),
-                      InputPassword(
-                        controller: controller,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(20)),
-                  controller.obx(
-                    (state) => RoundedButton(
-                      text: "Masuk",
-                      height: ScreenUtil().setHeight(50),
-                      borderRadius: 10.r,
-                      width: Get.width,
-                      color: Colors.green,
-                      textColor: Colors.white,
-                      press: () async {
-                        if (controller.myControllerEmail.text.isEmpty ||
-                            controller.myControllerPassword.text.isEmpty) {
-                          controller.loginInformationEmpty();
-                        } else {
-                          await controller.userLogin(
-                            controller.myControllerEmail.text,
-                            controller.myControllerPassword.text,
-                          );
-                        }
-                      },
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 20.w,
+                  right: 20.w,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextPoppinsBold(text: "Masuk", fontSize: 24.sp),
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextPoppinsRegular(text: "Email", fontSize: 14.sp),
+                        SizedBox(height: ScreenUtil().setHeight(10)),
+                        RoundedInputField(
+                          hintText: "example@gmail.com",
+                          textEditingController: controller.myControllerEmail,
+                        ),
+                      ],
                     ),
-                    onLoading: Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 20.r,
-                      ),
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextPoppinsRegular(text: "Password", fontSize: 14.sp),
+                        SizedBox(height: ScreenUtil().setHeight(10)),
+                        InputPassword(
+                          controller: controller,
+                        ),
+                      ],
                     ),
-                    onEmpty: RoundedButton(
-                      text: "Masuk",
-                      height: ScreenUtil().setHeight(50),
-                      borderRadius: 10.r,
-                      width: Get.width,
-                      color: Colors.green,
-                      textColor: Colors.white,
-                      press: () async {
-                        if (controller.myControllerEmail.text.isEmpty ||
-                            controller.myControllerPassword.text.isEmpty) {
-                          controller.loginInformationEmpty();
-                        } else {
-                          await controller.userLogin(
-                            controller.myControllerEmail.text,
-                            controller.myControllerPassword.text,
-                          );
-                        }
-                      },
-                    ),
-                    onError: (error) => RoundedButton(
-                      text: "Masuk",
-                      height: ScreenUtil().setHeight(50),
-                      borderRadius: 10.r,
-                      width: Get.width,
-                      color: Colors.green,
-                      textColor: Colors.white,
-                      press: () async {
-                        if (controller.myControllerEmail.text.isEmpty ||
-                            controller.myControllerPassword.text.isEmpty) {
-                          controller.loginInformationEmpty();
-                        } else {
-                          await controller.userLogin(
-                            controller.myControllerEmail.text,
-                            controller.myControllerPassword.text,
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Center(
-                    child: TextPoppinsRegular(
-                      text: "Atau",
-                      fontSize: 14.sp,
-                      textColour: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Container(
-                    width: Get.width,
-                    height: ScreenUtil().setHeight(50),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
+                    SizedBox(height: ScreenUtil().setHeight(20)),
+                    controller.obx(
+                      (state) => RoundedButton(
+                        text: "Masuk",
+                        height: ScreenUtil().setHeight(50),
+                        borderRadius: 10.r,
+                        width: Get.width,
                         color: Colors.green,
-                        width: 1.w,
+                        textColor: Colors.white,
+                        press: () async {
+                          if (controller.myControllerEmail.text.isEmpty ||
+                              controller.myControllerPassword.text.isEmpty) {
+                            controller.loginInformationEmpty();
+                          } else {
+                            await controller.userLogin(
+                              controller.myControllerEmail.text,
+                              controller.myControllerPassword.text,
+                            );
+                          }
+                        },
                       ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () => {
-                        Get.toNamed(Routes.HOME, arguments: 'anonymouse'),
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            CupertinoIcons.person,
-                            color: Colors.green,
-                          ),
-                          SizedBox(width: ScreenUtil().setWidth(10)),
-                          TextPoppinsRegular(
-                            text: "Login tanpa akun",
-                            fontSize: 14.sp,
-                            textColour: Colors.green,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(20)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Belum Punya Akun?',
-                        style: TextStyle(
-                          fontSize: 14.sp,
+                      onLoading: Center(
+                        child: CupertinoActivityIndicator(
+                          radius: 20.r,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () => Get.toNamed(Routes.REGISTER),
-                        child: Text(
-                          ' Daftar Disini!',
+                      onEmpty: RoundedButton(
+                        text: "Masuk",
+                        height: ScreenUtil().setHeight(50),
+                        borderRadius: 10.r,
+                        width: Get.width,
+                        color: Colors.green,
+                        textColor: Colors.white,
+                        press: () async {
+                          if (controller.myControllerEmail.text.isEmpty ||
+                              controller.myControllerPassword.text.isEmpty) {
+                            controller.loginInformationEmpty();
+                          } else {
+                            await controller.userLogin(
+                              controller.myControllerEmail.text,
+                              controller.myControllerPassword.text,
+                            );
+                          }
+                        },
+                      ),
+                      onError: (error) => RoundedButton(
+                        text: "Masuk",
+                        height: ScreenUtil().setHeight(50),
+                        borderRadius: 10.r,
+                        width: Get.width,
+                        color: Colors.green,
+                        textColor: Colors.white,
+                        press: () async {
+                          if (controller.myControllerEmail.text.isEmpty ||
+                              controller.myControllerPassword.text.isEmpty) {
+                            controller.loginInformationEmpty();
+                          } else {
+                            await controller.userLogin(
+                              controller.myControllerEmail.text,
+                              controller.myControllerPassword.text,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    Center(
+                      child: TextPoppinsRegular(
+                        text: "Atau",
+                        fontSize: 14.sp,
+                        textColour: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    Container(
+                      width: Get.width,
+                      height: ScreenUtil().setHeight(50),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: Colors.green,
+                          width: 1.w,
+                        ),
+                      ),
+                      child: GestureDetector(
+                        onTap: () => {
+                          Get.toNamed(Routes.HOME, arguments: 'anonymouse'),
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              CupertinoIcons.person,
+                              color: Colors.green,
+                            ),
+                            SizedBox(width: ScreenUtil().setWidth(10)),
+                            TextPoppinsRegular(
+                              text: "Login tanpa akun",
+                              fontSize: 14.sp,
+                              textColour: Colors.green,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(20)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Belum Punya Akun?',
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: Colors.green,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
+                        GestureDetector(
+                          onTap: () => Get.toNamed(Routes.REGISTER),
+                          child: Text(
+                            ' Daftar Disini!',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
