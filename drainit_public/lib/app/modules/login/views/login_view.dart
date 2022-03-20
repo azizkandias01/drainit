@@ -16,7 +16,7 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     whiteBar();
     return ScreenUtilInit(
-      designSize: const Size(414, 896),
+      designSize: designSize,
       builder: () => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -46,6 +46,7 @@ class LoginView extends GetView<LoginController> {
                         TextPoppinsRegular(text: "Email", fontSize: 14.sp),
                         SizedBox(height: ScreenUtil().setHeight(10)),
                         RoundedInputField(
+                          key: const Key('emailFormField'),
                           hintText: "example@gmail.com",
                           textEditingController: controller.myControllerEmail,
                         ),
@@ -58,6 +59,7 @@ class LoginView extends GetView<LoginController> {
                         TextPoppinsRegular(text: "Password", fontSize: 14.sp),
                         SizedBox(height: ScreenUtil().setHeight(10)),
                         InputPassword(
+                          key: const Key('passwordFormField'),
                           controller: controller,
                         ),
                       ],
@@ -65,6 +67,7 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(height: ScreenUtil().setHeight(20)),
                     controller.obx(
                       (state) => RoundedButton(
+                        key: const Key('loginButton'),
                         text: "Masuk",
                         height: ScreenUtil().setHeight(50),
                         borderRadius: 10.r,
@@ -89,6 +92,7 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                       onEmpty: RoundedButton(
+                        key: const Key('loginButton'),
                         text: "Masuk",
                         height: ScreenUtil().setHeight(50),
                         borderRadius: 10.r,

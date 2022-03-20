@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:line_icons/line_icons.dart';
 
 import '../../../components/text_poppins.dart';
 import '../controllers/profile_controller.dart';
@@ -17,7 +18,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (state) => ScreenUtilInit(
-        designSize: const Size(414, 896),
+        designSize: designSize,
         builder: () => Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
@@ -33,9 +34,7 @@ class ProfileView extends GetView<ProfileController> {
                             ? imagePath() + controller.dataProfile.foto!
                             : 'defaultbanjir.png',
                       ),
-                      onBackgroundImageError: (object, trace) {
-                        print('error object');
-                      },
+                      backgroundColor: green,
                     ),
                     SizedBox(height: 20.h),
                     TextPoppinsBold(
@@ -51,40 +50,9 @@ class ProfileView extends GetView<ProfileController> {
                       height: ScreenUtil().setHeight(10),
                     ),
                     TextPoppinsBold(
-                      text: controller.dataProfile.alamat!,
+                      text: controller.dataProfile.noHp!,
                       fontSize: 15.sp,
                       textColour: Colors.grey[500],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(20),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: ScreenUtil().setWidth(250),
-                          height: ScreenUtil().setHeight(50),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: green,
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenUtil().setWidth(10),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            controller.logoutAccount();
-                          },
-                          child: Container(
-                            width: ScreenUtil().setWidth(100),
-                            height: ScreenUtil().setHeight(50),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: green,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                     SizedBox(
                       height: ScreenUtil().setHeight(20),
@@ -157,6 +125,142 @@ class ProfileView extends GetView<ProfileController> {
                           ],
                         ),
                         const Spacer(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0.r),
+                            ),
+                            primary: Colors.green,
+                            minimumSize: Size(
+                              Get.width / 2,
+                              ScreenUtil().setHeight(50),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10.w),
+                              TextPoppinsBold(
+                                text: 'Edit Profile',
+                                fontSize: 15.sp,
+                                textColour: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(10),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0.r),
+                            ),
+                            primary: Colors.green,
+                            minimumSize: Size(
+                              Get.width / 3,
+                              ScreenUtil().setHeight(50),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              const Icon(
+                                LineIcons.arrowCircleRight,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10.w),
+                              TextPoppinsBold(
+                                text: 'Logout',
+                                fontSize: 15.sp,
+                                textColour: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(20),
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0.r),
+                            ),
+                            primary: Colors.green,
+                            minimumSize: Size(
+                              Get.width / 3,
+                              ScreenUtil().setHeight(50),
+                            ),
+                          ),
+                          onPressed: () {
+                            const AboutDialog(
+                              applicationName: "Drainit",
+                              applicationVersion: "1.0.0",
+                              applicationLegalese: "Drainit Laporan masyarakt",
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.info_outline_rounded,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10.w),
+                              TextPoppinsBold(
+                                text: 'App info',
+                                fontSize: 15.sp,
+                                textColour: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(10),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0.r),
+                            ),
+                            primary: Colors.green,
+                            minimumSize: Size(
+                              Get.width / 2,
+                              ScreenUtil().setHeight(50),
+                            ),
+                          ),
+                          onPressed: () {
+                            Get.toNamed(Routes.EDIT_PASSWORD);
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(
+                                LineIcons.lock,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10.w),
+                              TextPoppinsBold(
+                                text: 'Ubah password',
+                                fontSize: 15.sp,
+                                textColour: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(

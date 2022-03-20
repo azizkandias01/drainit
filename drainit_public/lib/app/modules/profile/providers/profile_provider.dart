@@ -7,7 +7,11 @@ class ProfileProvider extends GetConnect {
     final response = await get(
       'https://gis-drainase.pocari.id/api/masyarakat/profile',
       headers: header,
-    );
-    return Profile.fromJson(response.body as Map<String, dynamic>);
+    ).timeout(const Duration(seconds: 10));
+    if (response.statusCode == 200) {
+      return Profile.fromJson(response.body as Map<String, dynamic>);
+    } else {
+      return Future.error(response.statusText.toString());
+    }
   }
 }

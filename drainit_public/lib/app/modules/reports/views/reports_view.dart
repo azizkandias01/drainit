@@ -56,6 +56,7 @@ class ReportsView extends GetView<ReportsController> {
                 controller.page.value = 0;
               },
               child: TextPoppinsBold(
+                key: const Key('reports'),
                 text: "Banjir",
                 fontSize: 16.sp,
                 textColour:
@@ -140,12 +141,11 @@ class ReportsView extends GetView<ReportsController> {
               () => Checkbox(
                 value: controller.isChecked.value,
                 onChanged: (value) {
-                  print(Get.width);
                   controller.isChecked.value = value!;
                 },
               ),
             ),
-            if (Get.width >= 500)
+            if (Get.width >= 600)
               TextPoppinsRegular(
                 text:
                     "Saya menyatakan laporan saya benar dan dapat dipertanggung jawabkan",
@@ -160,23 +160,49 @@ class ReportsView extends GetView<ReportsController> {
           ],
         ),
         SizedBox(height: 10.h),
-        RoundedButton(
-          text: 'Laporkan',
-          textColor: white,
-          fontSize: 16.sp,
-          borderRadius: 12.w,
-          height: 56.h,
-          width: 376.w,
-          color: controller.page.value == 1 ? Colors.red : Colors.green,
-          press: () {
-            controller.createReport(
-              controller.latlng.value,
-              controller.bytes64Image.value,
-              "banjir",
-              controller.deskripsiController.text,
-              controller.geometry,
-            );
-          },
+        controller.obx(
+          (state) => Container(),
+          onEmpty: RoundedButton(
+            text: 'Laporkan',
+            textColor: white,
+            fontSize: 16.sp,
+            borderRadius: 12.w,
+            height: 56.h,
+            width: 376.w,
+            color: controller.page.value == 1 ? Colors.red : Colors.green,
+            press: () {
+              controller.createReport(
+                controller.latlng.value,
+                controller.bytes64Image.value,
+                "banjir",
+                controller.deskripsiController.text,
+                controller.geometry,
+              );
+            },
+          ),
+          onLoading: Center(
+            child: CupertinoActivityIndicator(
+              radius: 20.r,
+            ),
+          ),
+          onError: (error) => RoundedButton(
+            text: 'Laporkan',
+            textColor: white,
+            fontSize: 16.sp,
+            borderRadius: 12.w,
+            height: 56.h,
+            width: 376.w,
+            color: controller.page.value == 1 ? Colors.red : Colors.green,
+            press: () {
+              controller.createReport(
+                controller.latlng.value,
+                controller.bytes64Image.value,
+                "banjir",
+                controller.deskripsiController.text,
+                controller.geometry,
+              );
+            },
+          ),
         )
       ],
     );

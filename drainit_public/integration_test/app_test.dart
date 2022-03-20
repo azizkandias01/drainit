@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:drainit_flutter/app/components/rounded_button.dart';
-import 'package:drainit_flutter/app/modules/login/views/login_view.dart';
 import "package:drainit_flutter/main.dart" as app;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,17 +19,25 @@ void main() {
         //find password text field
         final passwirdFormField = find.byKey(const Key('passwordFormField'));
         //find login button
-        final loginButton = find.byType(RoundedButton).first;
+        final loginButton = find.byKey(const Key("loginButton")).first;
 
+        await tester.pumpAndSettle();
         //enter email
         await tester.enterText(emailFormField, "aziz@gmail.com");
         //enter password
-        await tester.enterText(passwirdFormField, "12345678");
+        await tester.enterText(passwirdFormField, "aziz1234");
+        await tester.tap(loginButton, warnIfMissed: false);
         //wait for the login button to be enabled
         await tester.pumpAndSettle();
         //tap on the login button
-        await tester.tap(loginButton, warnIfMissed: false);
-        await tester.pumpAndSettle();
+
+        // await tester.runAsync(() async {
+        //   await tester.tap(loginButton, warnIfMissed: false);
+        //   await tester.pumpAndSettle();
+        //   Future.delayed(const Duration(seconds: 5), () {
+        //     expect(find.byKey(const Key("reports")), findsOneWidget);
+        //   });
+        // });
       });
 
       //test the login page if incorrect
@@ -41,23 +45,28 @@ void main() {
         'login incorrect',
         (WidgetTester tester) async {
           app.main();
-          await tester.pumpAndSettle();
-
-          final emailFormField = find.byKey(const Key('emailFormField'));
-          final passwirdFormField = find.byKey(const Key('passwordFormField'));
-          final loginButton = find.byType(RoundedButton).first;
-
-          await tester.enterText(emailFormField, "aziz@gmail.com");
-          await tester.enterText(passwirdFormField, "1234567");
-          await tester.pumpAndSettle();
-          await tester.tap(loginButton, warnIfMissed: false);
-          //important to wait for the animation to finish
-          await tester.runAsync(() async {
+          try {
             await tester.pumpAndSettle();
-            Future.delayed(const Duration(seconds: 5), () {
-              expect(find.byKey(const Key("error")), findsOneWidget);
+
+            final emailFormField = find.byKey(const Key('emailFormField'));
+            final passwirdFormField =
+                find.byKey(const Key('passwordFormField'));
+            final loginButton = find.byKey(const Key("loginButton"));
+            await tester.pumpAndSettle();
+
+            await tester.enterText(emailFormField, "aziz@gmail.com");
+            await tester.enterText(passwirdFormField, "1121234");
+            await tester.pumpAndSettle();
+            await tester.tap(loginButton, warnIfMissed: false);
+          } catch (e) {
+            //important to wait for the animation to finish
+            await tester.runAsync(() async {
+              await tester.pumpAndSettle();
+              Future.delayed(const Duration(seconds: 5), () {
+                expect(find.byKey(const Key("error")), findsOneWidget);
+              });
             });
-          });
+          }
         },
       );
     },

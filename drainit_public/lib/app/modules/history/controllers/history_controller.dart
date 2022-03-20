@@ -1,6 +1,5 @@
 import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
 import 'package:drainit_flutter/app/modules/history/providers/history_provider.dart';
-import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,6 @@ class HistoryController extends GetxController
     list = [];
     change(null, status: RxStatus.empty());
     loadHistory();
-    buildList();
     animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 260),
@@ -46,23 +44,5 @@ class HistoryController extends GetxController
         change(err, status: RxStatus.error());
       },
     );
-  }
-
-  List<Widget> buildList() {
-    final List<Widget> listItems = [];
-
-    for (int i = 0; i < historyList.length; i++) {
-      listItems.add(HistoryView().historyItem(
-          historyList[i].foto ?? '',
-          historyList[i].statusPengaduan ?? '',
-          historyList[i].tipePengaduan ?? '',
-          historyList[i].namaJalan ?? '', () {
-        Get.toNamed(
-          Routes.DETAIL,
-          arguments: historyList[i].id,
-        );
-      }));
-    }
-    return listItems;
   }
 }

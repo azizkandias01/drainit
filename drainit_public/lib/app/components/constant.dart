@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 const black = Color(0xFF000000);
 const green = Color(0xff068246);
 const white = Color(0xFFFFFFFF);
+const red = Color(0xFFF44336);
 const primary = Color(0xFFFFD200);
 const primaryVariant = Color(0xFFFF7000);
 const secondary = Color(0xFF27AE60);
@@ -38,3 +39,6 @@ void whiteBar() {
     ),
   );
 }
+
+const spacer = Spacer();
+const designSize = Size(414, 896);

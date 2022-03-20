@@ -5,11 +5,11 @@ void main() {
   test("api login should success", () async {
     final login = UserProvider();
     final dataLogin = {
-      'email': "aziz@gmail.com",
+      'email': "zee@gmail.com",
       'password': "12345678",
     };
     final response = await login.loginUser(dataLogin);
-    expect(response.user?.nama, "aziz kandias");
+    expect(response.user?.nama, "zee");
   });
   test("api login with wrong username and password should unsuccess", () async {
     try {

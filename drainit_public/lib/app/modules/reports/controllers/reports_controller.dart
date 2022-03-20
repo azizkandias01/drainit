@@ -47,11 +47,8 @@ class ReportsController extends GetxController with StateMixin {
       'tipe_pengaduan': tipePengaduan,
       'deskripsi_pengaduan': deskripsiPengaduan,
       'geometry':
-          "{\"type\": \"Point\", \"coordinates\": [101.42554722726345,0.5690943750491332]}",
+          "{\"type\": \"Point\", \"coordinates\": [${geometry.latitude},${geometry.longitude}]}",
     };
-    reportData.forEach((key, value) {
-      printError(info: value);
-    });
     change(
       null,
       status: RxStatus.loading(),
@@ -65,11 +62,34 @@ class ReportsController extends GetxController with StateMixin {
           resp,
           status: RxStatus.success(),
         ),
+        Get.offAllNamed(Routes.HOME),
+        Get.snackbar(
+          'Berhasil',
+          'Laporan telah dibuat',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: const Duration(seconds: 2),
+        ),
       },
       onError: (err) {
         change(
           null,
           status: RxStatus.error('Error occured : $err'),
+        );
+        Get.snackbar(
+          'Error',
+          'Terjadi kesalahan saat menghubungi server',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: const Duration(seconds: 2),
         );
       },
     );
