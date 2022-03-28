@@ -33,6 +33,7 @@ dependencies:
   timeline_tile: 2.0.0
   badges: 2.0.2
   dropdown_button2: ^1.2.0
+  back_button_interceptor: 5.0.2
   flutter: 
     sdk: flutter
 
@@ -54,8 +55,9 @@ flutter:
     - assets/image/
   uses-material-design: true
 
-flutter_native_splash:
-  uses-material-design: true
-  color: "#e1f5fe"
-  fullscreen: false
+flutter_native_splash: 
+  color: '#e1f5fe'
   image: assets/image/logo.png
+  uses-material-design: true
+  fullscreen: false
+

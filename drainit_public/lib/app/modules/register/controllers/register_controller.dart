@@ -7,12 +7,25 @@ import 'package:get/get.dart';
 import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController with StateMixin<String> {
+  //key for test
+  final nameKey = const Key("name");
+  final emailKey = const Key("email");
+  final passwordKey = const Key("password");
+  final confirmPasswordKey = const Key("confirmPassword");
+  final phoneKey = const Key("phone");
+  final addressKey = const Key("address");
+  final isCheckedKey = const Key("isChecked");
+  final nextKey = const Key("next");
+
+  //TexteditingController
   late TextEditingController myControllerEmail;
   late TextEditingController myControllerPassword;
   late TextEditingController myControllerPasswordConfirm;
   late TextEditingController myControllerName;
   late TextEditingController myControllerPhoneNumber;
   late TextEditingController myControllerAddress;
+
+  //controller for hide show password
   final isPasswordHidden = true.obs;
   final isConfirmPasswordHidden = true.obs;
   final isChecked = false.obs;

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
-import 'package:drainit_flutter/app/components/error_page.dart';
+import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
@@ -214,7 +213,17 @@ class DetailView extends GetView<DetailController> {
             ],
           ),
           onError: (err) {
-            return const ErrorPage();
+            return GestureDetector(
+              onTap: () {
+                Get.offNamedUntil(
+                  Routes.HOME,
+                  ModalRoute.withName(Routes.DETAIL),
+                );
+              },
+              child: const Center(
+                child: Text("Kembali"),
+              ),
+            );
           },
         ),
       ),

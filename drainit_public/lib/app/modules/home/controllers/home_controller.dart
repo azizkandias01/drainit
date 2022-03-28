@@ -114,7 +114,7 @@ class HomeController extends GetxController {
     box = GetStorage();
     if (Get.arguments != 'anonymouse') {
       print("no account");
-      final ProfileC = Get.find<ProfileController>();
+      final profileC = Get.find<ProfileController>();
       final historyC = Get.find<HistoryController>();
     }
     widgetOptions = !isUserLogin()

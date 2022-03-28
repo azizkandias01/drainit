@@ -31,31 +31,37 @@ class RegisterView extends GetView<RegisterController> {
                     height: 10.h,
                   ),
                   InputText(
+                    key: controller.nameKey,
                     title: "Nama",
                     hintText: "Example",
                     controller: controller.myControllerName,
                   ),
                   InputText(
+                    key: controller.phoneKey,
                     title: "Telepon",
                     hintText: "0821000000",
                     controller: controller.myControllerPhoneNumber,
                   ),
                   InputText(
+                    key: controller.emailKey,
                     title: "Email",
                     hintText: "Example@gmail.com",
                     controller: controller.myControllerEmail,
                   ),
                   InputText(
+                    key: controller.addressKey,
                     title: "Alamat",
                     hintText: "Jl. Sudirman no.16",
                     controller: controller.myControllerAddress,
                   ),
                   InputText(
+                    key: controller.passwordKey,
                     title: "Password",
                     hintText: "******",
                     controller: controller.myControllerPassword,
                   ),
                   InputText(
+                    key: controller.confirmPasswordKey,
                     title: "Password Confirmation",
                     hintText: "******",
                     controller: controller.myControllerPasswordConfirm,
@@ -64,6 +70,7 @@ class RegisterView extends GetView<RegisterController> {
                     children: [
                       Obx(
                         () => Checkbox(
+                          key: controller.isCheckedKey,
                           value: controller.isChecked.value,
                           onChanged: (value) {
                             controller.isChecked.value = value!;
@@ -77,6 +84,7 @@ class RegisterView extends GetView<RegisterController> {
                     ],
                   ),
                   RoundedButton(
+                    key: controller.nextKey,
                     text: "Lanjut",
                     height: ScreenUtil().setHeight(50),
                     borderRadius: 10.r,

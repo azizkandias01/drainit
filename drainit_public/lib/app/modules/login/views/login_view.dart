@@ -183,6 +183,7 @@ class LoginView extends GetView<LoginController> {
                           ),
                         ),
                         GestureDetector(
+                          key: const Key('register'),
                           onTap: () => Get.toNamed(Routes.REGISTER),
                           child: Text(
                             ' Daftar Disini!',

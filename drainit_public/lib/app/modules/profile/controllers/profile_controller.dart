@@ -8,6 +8,7 @@ class ProfileController extends GetxController with StateMixin {
   final count = 0.obs;
   late GetStorage box;
   late Profile dataProfile;
+
   @override
   void onInit() {
     super.onInit();

@@ -1,13 +1,11 @@
 // ignore_for_file: avoid_print
 
 import 'package:drainit_flutter/app/components/constant.dart';
-import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../../../components/text_poppins.dart';
@@ -16,752 +14,272 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-      (state) => ScreenUtilInit(
-        designSize: designSize,
-        builder: () => Scaffold(
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h),
+    return ScreenUtilInit(
+      designSize: designSize,
+      builder: () => Scaffold(
+        backgroundColor: Colors.green[600],
+        body: SafeArea(
+          child: controller.obx(
+            (state) => SingleChildScrollView(
+              child: SizedBox(
+                height: ScreenUtil().setHeight(1000),
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      maxRadius: ScreenUtil().setWidth(50),
-                      backgroundImage: NetworkImage(
-                        controller.dataProfile.foto!.contains('.j')
-                            ? imagePath() + controller.dataProfile.foto!
-                            : 'defaultbanjir.png',
-                      ),
-                      backgroundColor: green,
-                    ),
-                    SizedBox(height: 20.h),
-                    TextPoppinsBold(
-                      text: controller.dataProfile.nama!,
-                      fontSize: 25.sp,
-                    ),
-                    TextPoppinsBold(
-                      text: controller.dataProfile.email!,
-                      fontSize: 15.sp,
-                      textColour: Colors.grey[500],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(10),
-                    ),
-                    TextPoppinsBold(
-                      text: controller.dataProfile.noHp!,
-                      fontSize: 15.sp,
-                      textColour: Colors.grey[500],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(20),
-                    ),
+                    //TOP BAR
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextPoppinsBold(
-                              text: 'Total Laporan',
-                              fontSize: 15.sp,
-                              textColour: Colors.grey[500],
-                            ),
-                            SizedBox(
-                              height: ScreenUtil().setHeight(5),
-                            ),
-                            TextPoppinsBold(
-                              text: "50",
-                              fontSize: 30.sp,
-                            ),
-                          ],
+                        IconButton(
+                          icon: const Icon(
+                            LineIcons.arrowLeft,
+                            color: white,
+                          ),
+                          onPressed: () => Get.back(),
                         ),
-                        const Spacer(),
-                        Container(
-                          width: ScreenUtil().setWidth(1),
-                          height: ScreenUtil().setHeight(50),
-                          color: Colors.grey[300],
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            LineIcons.verticalEllipsis,
+                            color: white,
+                          ),
                         ),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextPoppinsBold(
-                              text: 'Selesai',
-                              fontSize: 15.sp,
-                              textColour: Colors.grey[500],
-                            ),
-                            SizedBox(
-                              height: ScreenUtil().setHeight(5),
-                            ),
-                            TextPoppinsBold(
-                              text: "23",
-                              fontSize: 30.sp,
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Container(
-                          width: ScreenUtil().setWidth(1),
-                          height: ScreenUtil().setHeight(50),
-                          color: Colors.grey[300],
-                        ),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextPoppinsBold(
-                              text: 'Proses',
-                              fontSize: 15.sp,
-                              textColour: Colors.grey[500],
-                            ),
-                            SizedBox(
-                              height: ScreenUtil().setHeight(5),
-                            ),
-                            TextPoppinsBold(
-                              text: "27",
-                              fontSize: 30.sp,
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
                       ],
                     ),
                     SizedBox(
                       height: 20.h,
                     ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0.r),
-                            ),
-                            primary: Colors.green,
-                            minimumSize: Size(
-                              Get.width / 2,
-                              ScreenUtil().setHeight(50),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Row(
+                    //PROFILE IMAGE
+                    Padding(
+                      padding: EdgeInsets.only(left: 30.w, right: 30.w),
+                      child: Column(
+                        children: [
+                          Row(
                             children: [
-                              const Icon(
-                                Icons.edit,
-                                color: Colors.white,
+                              CircleAvatar(
+                                maxRadius: ScreenUtil().setWidth(40),
+                                minRadius: ScreenUtil().setWidth(40),
+                                backgroundImage: NetworkImage(
+                                  controller.dataProfile.foto!.contains('.j')
+                                      ? Routes.IMAGEURL +
+                                          controller.dataProfile.foto!
+                                      : 'defaultbanjir.png',
+                                ),
+                                backgroundColor: green,
                               ),
-                              SizedBox(width: 10.w),
-                              TextPoppinsBold(
-                                text: 'Edit Profile',
-                                fontSize: 15.sp,
-                                textColour: Colors.white,
+                              SizedBox(
+                                width: 30.w,
                               ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenUtil().setWidth(10),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0.r),
-                            ),
-                            primary: Colors.green,
-                            minimumSize: Size(
-                              Get.width / 3,
-                              ScreenUtil().setHeight(50),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              const Icon(
-                                LineIcons.arrowCircleRight,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10.w),
-                              TextPoppinsBold(
-                                text: 'Logout',
-                                fontSize: 15.sp,
-                                textColour: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(20),
-                    ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0.r),
-                            ),
-                            primary: Colors.green,
-                            minimumSize: Size(
-                              Get.width / 3,
-                              ScreenUtil().setHeight(50),
-                            ),
-                          ),
-                          onPressed: () {
-                            const AboutDialog(
-                              applicationName: "Drainit",
-                              applicationVersion: "1.0.0",
-                              applicationLegalese: "Drainit Laporan masyarakt",
-                            );
-                          },
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.info_outline_rounded,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10.w),
-                              TextPoppinsBold(
-                                text: 'App info',
-                                fontSize: 15.sp,
-                                textColour: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: ScreenUtil().setWidth(10),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0.r),
-                            ),
-                            primary: Colors.green,
-                            minimumSize: Size(
-                              Get.width / 2,
-                              ScreenUtil().setHeight(50),
-                            ),
-                          ),
-                          onPressed: () {
-                            Get.toNamed(Routes.EDIT_PASSWORD);
-                          },
-                          child: Row(
-                            children: [
-                              const Icon(
-                                LineIcons.lock,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10.w),
-                              TextPoppinsBold(
-                                text: 'Ubah password',
-                                fontSize: 15.sp,
-                                textColour: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(20),
-                    ),
-                    TextPoppinsBold(
-                      text: 'Laporan Terbaru',
-                      fontSize: 20.sp,
-                      textColour: Colors.grey[500],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(2000),
-                      child: ListView.builder(
-                          itemBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: Get.width,
-                                  height: ScreenUtil().setHeight(150),
-                                  decoration: BoxDecoration(
-                                    color: green,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Center(
-                                    child: TextPoppinsBold(
-                                      text: 'Laporan ke-$index',
-                                      fontSize: 15.sp,
-                                      textColour: Colors.grey[500],
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    controller.dataProfile.nama!,
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: ScreenUtil().setSp(30),
+                                      fontWeight: FontWeight.bold,
+                                      color: white,
                                     ),
+                                  ),
+                                  TextPoppinsRegular(
+                                    text: controller.dataProfile.email!,
+                                    fontSize: 20.sp,
+                                    textColour: white,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.phone,
+                                    color: white,
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Text(
+                                    controller.dataProfile.noHp ?? "no_data",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: ScreenUtil().setSp(16),
+                                      color: white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          //ADDRESS & EDIT BUTTON
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.place,
+                                    color: white,
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Text(
+                                    controller.dataProfile.alamat ?? "no_data",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: ScreenUtil().setSp(16),
+                                      color: white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              spacer,
+                              Container(
+                                width: Get.width / 4,
+                                height: 30.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: white,
+                                ),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        LineIcons.pen,
+                                        color: green,
+                                        size: 20.sp,
+                                      ),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
+                                      Text(
+                                        'Edit',
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: ScreenUtil().setSp(16),
+                                          fontWeight: FontWeight.bold,
+                                          color: green,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                          itemCount: 100),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          //REPORT SUMMARY
+                          Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextPoppinsBold(
+                                    text: 'Total Laporan',
+                                    fontSize: 15.sp,
+                                    textColour: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(5),
+                                  ),
+                                  TextPoppinsBold(
+                                    text: "50",
+                                    fontSize: 30.sp,
+                                    textColour: Colors.white,
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: ScreenUtil().setWidth(1),
+                                height: ScreenUtil().setHeight(50),
+                                color: white,
+                              ),
+                              const Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextPoppinsBold(
+                                    text: 'Selesai',
+                                    fontSize: 15.sp,
+                                    textColour: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(5),
+                                  ),
+                                  TextPoppinsBold(
+                                    text: "23",
+                                    fontSize: 30.sp,
+                                    textColour: Colors.white,
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Container(
+                                width: ScreenUtil().setWidth(1),
+                                height: ScreenUtil().setHeight(50),
+                                color: Colors.grey[300],
+                              ),
+                              const Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextPoppinsBold(
+                                    text: 'Proses',
+                                    fontSize: 15.sp,
+                                    textColour: white,
+                                  ),
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(5),
+                                  ),
+                                  TextPoppinsBold(
+                                    text: "27",
+                                    fontSize: 30.sp,
+                                    textColour: white,
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(20),
+                    ),
+                    Flexible(
+                      child: Container(
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.r),
+                            topRight: Radius.circular(20.r),
+                          ),
+                        ),
+                        child: Container(),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-      onError: (err) {
-        return Center(
-          child: Text('Cannot Retrieve data error : $err'),
-        );
-      },
-    );
-  }
-}
-
-class oldView extends StatelessWidget {
-  const oldView({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  final ProfileController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 48.h,
-        ),
-        ProfileBox(
-          email: controller.dataProfile.email,
-        ),
-        SizedBox(
-          height: 39.h,
-        ),
-        ProfileInfo(
-          name: controller.dataProfile.nama,
-          address: controller.dataProfile.alamat,
-          phoneNumber: controller.dataProfile.noHp,
-          photoUrl: controller.dataProfile.foto,
-        ),
-        SizedBox(height: 22.h),
-        ProfileMenuButton(
-          text: 'Ubah Password',
-          onPressed: () {
-            Get.toNamed(Routes.EDIT_PASSWORD);
-          },
-          iconPath: 'assets/svg/password_icon.svg',
-          iconWidth: 38.w,
-          iconHeight: 38.h,
-          borderRadius: 12,
-          fontSize: 16.sp,
-          height: 50.h,
-          textColor: kTextPurple,
-          width: 374.w,
-          backgroundColor: white,
-        ),
-        SizedBox(height: 8.h),
-        ProfileMenuButton(
-          onPressed: () {
-            showAboutDialog(
-              context: context,
-              applicationName: "Drainit",
-              applicationVersion: "1.0.0",
-            );
-          },
-          text: 'Tentang Kami',
-          iconPath: 'assets/svg/question_icon.svg',
-          iconWidth: 38.w,
-          iconHeight: 38.h,
-          borderRadius: 12,
-          fontSize: 16.sp,
-          height: 50.h,
-          textColor: kTextPurple,
-          width: 374.w,
-          backgroundColor: white,
-        ),
-        SizedBox(height: 8.h),
-        ProfileMenuButton(
-          text: 'Keluar Akun',
-          onPressed: () {
-            controller.logoutAccount();
-          },
-          iconPath: 'assets/svg/logout_icon.svg',
-          iconWidth: 38.w,
-          iconHeight: 38.h,
-          borderRadius: 12,
-          fontSize: 16.sp,
-          height: 50.h,
-          width: 374.w,
-          textColor: kTextPurple,
-          backgroundColor: white,
-        ),
-      ],
-    );
-  }
-}
-
-class ProfileInfo extends StatelessWidget {
-  const ProfileInfo({
-    Key? key,
-    this.name,
-    this.totalReports,
-    this.totalReportsDone,
-    this.address,
-    this.photoUrl,
-    this.phoneNumber,
-  }) : super(key: key);
-
-  final String? name;
-  final String? totalReports;
-  final String? totalReportsDone;
-  final String? address;
-  final String? photoUrl;
-  final String? phoneNumber;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 320.h,
-      width: 374.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.w),
-        color: white,
-      ),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 12.h,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: 16.w,
-              ),
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                  photoUrl!.contains('.j')
-                      ? imagePath() + photoUrl!
-                      : 'defaultbanjir.png',
-                  scale: 64.w,
-                ),
-                onBackgroundImageError: (object, trace) {
-                  print('error object');
-                },
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              SizedBox(
-                width: 215.w,
-                height: 60.h,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 12.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        name ?? 'default',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                          color: kTextPurple,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Beginner',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: kColorGrey,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              SvgPicture.asset(
-                'assets/svg/Badge.svg',
-                height: 38.h,
-                width: 38.w,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 17.w,
-          ),
-          Row(
-            children: [
-              Container(
-                height: 63.h,
-                width: 186.w,
-                decoration: BoxDecoration(
-                  border: Border.all(color: kBackgroundInput),
-                ),
-                child: SizedBox(
-                  height: 40.h,
-                  width: 155.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Total Laporan',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            totalReports ?? '18',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontFamily: 'Klasik',
-                              fontSize: 24.sp,
-                              color: kTextPurple,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 38.w,
-                      ),
-                      SvgPicture.asset('assets/svg/clock.svg'),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                height: 63.h,
-                width: 188.w,
-                decoration: BoxDecoration(
-                  border: Border.all(color: kBackgroundInput),
-                ),
-                child: SizedBox(
-                  height: 40.h,
-                  width: 155.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Laporan Selesai',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            totalReportsDone ?? '12',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontFamily: 'Klasik',
-                              fontSize: 24.sp,
-                              color: kTextPurple,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 38.w,
-                      ),
-                      SvgPicture.asset(
-                        'assets/svg/flag.svg',
-                        height: 40.h,
-                        width: 40.w,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 18.h),
-          Padding(
-            padding: EdgeInsets.only(left: 22.w),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Nomor Handphone',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: kTextPurple,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Padding(
-            padding: EdgeInsets.only(left: 22.w),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                phoneNumber ?? '08233652155',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: kColorGrey,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20.h),
-          Padding(
-            padding: EdgeInsets.only(left: 22.w),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Alamat',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: kTextPurple,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Padding(
-            padding: EdgeInsets.only(left: 22.w),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                address ??
-                    'Jalan Bukit Sari 10, Umban Sari Atas, Rumbai, Pek...',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: kColorGrey,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ProfileBox extends StatelessWidget {
-  const ProfileBox({
-    Key? key,
-    this.email,
-  }) : super(key: key);
-
-  final String? email;
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        children: [
-          Container(
-            width: 374.w,
-            height: 146.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                12.w,
-              ),
-            ),
-            child: SvgPicture.asset(
-              'assets/svg/Profile_Box.svg',
-              fit: BoxFit.fill,
-            ),
-          ),
-          Positioned(
-            left: 33.w,
-            child: SizedBox(
-              width: 172.w,
-              height: 146.h,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Lihat Profil Anda',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        color: kTextPurple,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      email ?? 'cannot retrieve email',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: kColorGrey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 22.h,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: RoundedButton(
-                      text: 'Beginner',
-                      borderRadius: 8.w,
-                      color: kIconColor,
-                      fontSize: 14.sp,
-                      width: 120.w,
-                      height: 40.h,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class TopMenu extends StatelessWidget {
-  const TopMenu({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 64.h,
-      width: 387.w,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SvgPicture.asset(
-            'assets/svg/Back_Icon.svg',
-          ),
-          const Spacer(),
-          Text(
-            'Profile',
-            style: TextStyle(
-              fontFamily: 'Klasik',
-              fontSize: 16.sp,
-              color: kTextPurple,
-            ),
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              Get.toNamed(Routes.EDIT_PROFILE);
+            onError: (err) {
+              return Center(
+                child: Text('Cannot Retrieve data error : $err'),
+              );
             },
-            child: SvgPicture.asset(
-              'assets/svg/Edit_Icon.svg',
-            ),
           ),
-        ],
+        ),
       ),
     );
   }

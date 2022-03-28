@@ -14,7 +14,7 @@ class ReportsProvider extends GetConnect {
       },
     ).timeout(const Duration(seconds: 10));
     if (response.status.hasError) {
-      return Future.error(response);
+      return Future.error(response.statusText!);
     } else {
       return 'success report';
     }

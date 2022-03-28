@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:drainit_flutter/app/modules/reports/providers/reports_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,7 +16,7 @@ class ReportsController extends GetxController with StateMixin {
   final page = 0.obs;
   final isChecked = false.obs;
   late GetStorage box;
-  var geometry = LatLng(0, 0);
+  LatLng geometry = const LatLng(0, 0);
   TextEditingController deskripsiController = TextEditingController();
 
   RxString selectedImagePath = ''.obs;
@@ -32,6 +33,37 @@ class ReportsController extends GetxController with StateMixin {
     super.onInit();
     box = GetStorage();
     change(null, status: RxStatus.empty());
+  }
+
+  void validateReportForm(
+    String namaJalan,
+    String foto,
+    String tipePengaduan,
+    String deskripsiPengaduan,
+    LatLng geometry,
+  ) {
+    if (deskripsiController.text.isEmpty) {
+      showErrorSnackBar("Deskripsi tidak boleh kosong!");
+    } else if (foto.isEmpty) {
+      showErrorSnackBar("Foto tidak boleh kosong!");
+    } else if (namaJalan.isEmpty) {
+      showErrorSnackBar("Lokasi laporan kosong!");
+    } else if (!isChecked.value) {
+      showErrorSnackBar("Anda belum menyetujui syarat dan ketentuan");
+    } else {
+      showConfirmDialog(
+        "Yakin ingin melaporkan?",
+        "Anda telah yakin dan melaporkan leporan ini dengan benar.",
+        () => createReport(
+          namaJalan,
+          foto,
+          tipePengaduan,
+          deskripsiPengaduan,
+          geometry,
+        ),
+        () => showErrorSnackBar("Laporan gagal dibuat!"),
+      );
+    }
   }
 
   void createReport(
@@ -63,34 +95,14 @@ class ReportsController extends GetxController with StateMixin {
           status: RxStatus.success(),
         ),
         Get.offAllNamed(Routes.HOME),
-        Get.snackbar(
-          'Berhasil',
-          'Laporan telah dibuat',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-          borderRadius: 10,
-          margin: EdgeInsets.all(10),
-          snackStyle: SnackStyle.FLOATING,
-          duration: const Duration(seconds: 2),
-        ),
+        showSuccessSnackBar("Laporan berhasil dibuat!"),
       },
       onError: (err) {
         change(
           null,
           status: RxStatus.error('Error occured : $err'),
         );
-        Get.snackbar(
-          'Error',
-          'Terjadi kesalahan saat menghubungi server',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          borderRadius: 10,
-          margin: EdgeInsets.all(10),
-          snackStyle: SnackStyle.FLOATING,
-          duration: const Duration(seconds: 2),
-        );
+        showErrorSnackBar("Terjadi kesalahan pada server : $err");
       },
     );
   }
@@ -115,13 +127,7 @@ class ReportsController extends GetxController with StateMixin {
       final _bytes = File(cropImagePath.value).readAsBytesSync();
       bytes64Image.value = base64Encode(_bytes);
     } else {
-      Get.snackbar(
-        'Error',
-        'Error saat pemilihan gambar',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      showErrorSnackBar("Gagal mengambil gambar!");
     }
   }
 }

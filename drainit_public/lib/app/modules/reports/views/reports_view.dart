@@ -171,10 +171,10 @@ class ReportsView extends GetView<ReportsController> {
             width: 376.w,
             color: controller.page.value == 1 ? Colors.red : Colors.green,
             press: () {
-              controller.createReport(
+              controller.validateReportForm(
                 controller.latlng.value,
                 controller.bytes64Image.value,
-                "banjir",
+                controller.page.value == 0 ? "Banjir" : "Drainase Tersumbat",
                 controller.deskripsiController.text,
                 controller.geometry,
               );
@@ -194,10 +194,10 @@ class ReportsView extends GetView<ReportsController> {
             width: 376.w,
             color: controller.page.value == 1 ? Colors.red : Colors.green,
             press: () {
-              controller.createReport(
+              controller.validateReportForm(
                 controller.latlng.value,
                 controller.bytes64Image.value,
-                "banjir",
+                controller.page.value == 0 ? "Banjir" : "Drainase Tersumbat",
                 controller.deskripsiController.text,
                 controller.geometry,
               );
