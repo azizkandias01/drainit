@@ -80,34 +80,101 @@ class ReportsView extends GetView<ReportsController> {
         SizedBox(height: 20.h),
         TextPoppinsRegular(text: "Pilih foto", fontSize: 14.sp),
         SizedBox(height: 10.h),
-        GestureDetector(
-          onTap: () {
-            controller.getImage(ImageSource.camera);
-          },
-          child: Center(
-            child: controller.bytes64Image.value.isEmpty
-                ? Container(
-                    width: 200.w,
-                    height: 150.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.w),
-                      color: controller.page.value == 1
-                          ? Colors.red
-                          : Colors.green,
-                    ),
-                    child: const Icon(
-                      Icons.camera_alt,
-                      color: white,
-                    ),
-                  )
-                : Image.memory(
-                    base64Decode(controller.bytes64Image.value),
-                    fit: BoxFit.cover,
-                    width: 200.w,
-                    height: 150.h,
-                  ),
+        if (controller.bytes64Image.value.isEmpty)
+          const SizedBox()
+        else
+          Container(
+            height: Get.width,
+            width: Get.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.w),
+              image: DecorationImage(
+                image: MemoryImage(
+                  base64Decode(controller.bytes64Image.value),
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
+        SizedBox(height: 10.h),
+        Row(
+          children: [
+            spacer,
+            GestureDetector(
+              onTap: () {
+                controller.getImage(ImageSource.camera);
+              },
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.camera_alt,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(width: 10.w),
+                  TextPoppinsRegular(
+                    text: "Ambil foto",
+                    fontSize: 14.sp,
+                  ),
+                ],
+              ),
+            ),
+            spacer,
+            GestureDetector(
+              onTap: () {
+                controller.getImage(ImageSource.gallery);
+              },
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.image,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(width: 10.w),
+                  TextPoppinsRegular(
+                    text: "Pilih dari gallery",
+                    fontSize: 14.sp,
+                  ),
+                ],
+              ),
+            ),
+            spacer,
+          ],
         ),
+        // GestureDetector(
+        //   onTap: () {
+        //     controller.getImage(ImageSource.camera);
+        //   },
+        //   child: Center(
+        //     child: controller.bytes64Image.value.isEmpty
+        //         ? Container(
+        //             width: Get.width,
+        //             height: Get.width,
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(10.w),
+        //               color: controller.page.value == 1
+        //                   ? Colors.red
+        //                   : Colors.green,
+        //             ),
+        //             child: const Icon(
+        //               Icons.camera_alt,
+        //               color: white,
+        //             ),
+        //           )
+        //         : Container(
+        //             height: Get.width,
+        //             width: Get.width,
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(10.w),
+        //               image: DecorationImage(
+        //                 image: MemoryImage(
+        //                   base64Decode(controller.bytes64Image.value),
+        //                 ),
+        //                 fit: BoxFit.cover,
+        //               ),
+        //             ),
+        //           ),
+        //   ),
+        // ),
         SizedBox(height: 20.h),
         TextPoppinsRegular(text: "Pilih lokasi", fontSize: 14.sp),
         SizedBox(height: 10.h),
@@ -197,13 +264,14 @@ class ReportsView extends GetView<ReportsController> {
               controller.validateReportForm(
                 controller.latlng.value,
                 controller.bytes64Image.value,
-                controller.page.value == 0 ? "Banjir" : "Drainase Tersumbat",
+                controller.page.value == 0 ? "Banjir" : "Drainase Rusak",
                 controller.deskripsiController.text,
                 controller.geometry,
               );
             },
           ),
-        )
+        ),
+        SizedBox(height: 20.h),
       ],
     );
   }

@@ -17,6 +17,7 @@ const kTextPurple = Color(0xFF573353);
 const kBackgroundInput = Color(0xFFFFF6ED);
 const kIconColor = Color(0xFFFC9D45);
 const kColorGrey = Color(0xFF9E9E9E);
+const green2 = Color(0xFF1CC37A);
 
 const grey = Color(0xFFEBEFF0);
 const orange = Color(0xFFFB7834);

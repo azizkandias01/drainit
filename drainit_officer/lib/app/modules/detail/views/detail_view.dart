@@ -3,19 +3,17 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:drainit_petugas/app/utils/colors.dart';
-import 'package:drainit_petugas/app/utils/rounded_button.dart';
 import 'package:drainit_petugas/app/utils/text_poppins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:readmore/readmore.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 import '../controllers/detail_controller.dart';
+import 'update_laporan_view.dart';
 
 class DetailView extends GetView<DetailController> {
   static final Completer<GoogleMapController> _googleMapsController =
@@ -94,7 +92,7 @@ class DetailView extends GetView<DetailController> {
                           );
                         }
                         if (controller.page.value == 1) {
-                          return UpdateLaporanWidget();
+                          return UpdateLaporanView();
                         } else {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,79 +172,6 @@ class DetailView extends GetView<DetailController> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class UpdateLaporanWidget extends StatelessWidget {
-  const UpdateLaporanWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 37.h,
-        ),
-        TextField(
-          maxLines: 5,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            labelText: 'Deskripsi',
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            LineIcon.camera(
-              size: 30.w,
-            ),
-            RoundedButtonWidget(
-                buttonText: "Update Laporan", width: 150.w, onpressed: () {}),
-          ],
-        ),
-        TextPoppinsBold(
-          text: "Laporan Petugas",
-          fontSize: 12.sp,
-          textColour: kMainGreen,
-        ),
-        SizedBox(
-          width: 414.w,
-          height: 1000.h,
-          child: ListView.builder(
-            itemBuilder: (context, id) => TimelineTile(
-              lineXY: 0.3,
-              alignment: TimelineAlign.manual,
-              endChild: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 274.w,
-                  height: 137.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      30.r,
-                    ),
-                    color: kMainGreen,
-                  ),
-                  child: Column(
-                    children: [Text("Laporan $id")],
-                  ),
-                ),
-              ),
-              startChild: Container(
-                color: kSecondaryGreen,
-                child: Text("Senin"),
-              ),
-            ),
-            itemCount: 20,
-          ),
-        ),
-      ],
     );
   }
 }

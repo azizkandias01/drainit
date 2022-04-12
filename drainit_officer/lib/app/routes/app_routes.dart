@@ -17,6 +17,7 @@ abstract class Routes {
   static const DETAIL = _Paths.DETAIL;
   static const IMAGEURL = _Paths.IMAGEURL;
   static const MAPS = _Paths.MAPS;
+  static const UPDATE_LAPORAN = _Paths.UPDATE_LAPORAN;
 }
 
 abstract class _Paths {
@@ -24,7 +25,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SPLASHSCREEN = '/splashscreen';
-  static const BASEURL = "https://gis-drainase.pocari.id/api/";
+  static const BASEURL = "https://drainit.pocari.id/api/";
   static const NEW_REPORTS = '/new-reports';
   static const PROCESSED_REPORTS = '/processed-reports';
   static const DONE_REPORTS = '/done-reports';
@@ -32,6 +33,7 @@ abstract class _Paths {
   static const TOKEN = '/token';
   static const DETAIL = '/detail';
   static const IMAGEURL =
-      "https://gis-drainase.pocari.id/storage/app/public/images/";
+      "https://drainit.pocari.id/storage/app/public/images/";
   static const MAPS = '/maps';
+  static const UPDATE_LAPORAN = '/update-laporan';
 }

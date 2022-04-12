@@ -25,7 +25,8 @@ abstract class Routes {
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const WELCOME = _Paths.WELCOME;
   static const IMAGEURL =
-      "https://gis-drainase.pocari.id/storage/app/public/images/";
+      "https://drainit.pocari.id/storage/app/public/images/";
+  static const BASEURL = "https://drainit.pocari.id/api/";
 }
 
 abstract class _Paths {

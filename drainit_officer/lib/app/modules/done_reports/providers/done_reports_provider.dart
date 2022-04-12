@@ -5,10 +5,8 @@ import '../models/report_model.dart';
 
 class ReportProvider extends GetConnect {
 
-  static const String url = Routes.BASEURL;
-
   Future<List<Report>> reportList() async {
-    final response = await get(url+'pengaduan');
+    final response = await get(Routes.BASEURL+'pengaduan');
     if (response.status.hasError) {
       return Future.error(response.statusCode.toString());
     } else {

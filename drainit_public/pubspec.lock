@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  back_button_interceptor:
-    dependency: "direct main"
-    description:
-      name: back_button_interceptor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.2"
   badges:
     dependency: "direct main"
     description:
@@ -113,13 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  dropdown_button2:
-    dependency: "direct main"
+  dots_indicator:
+    dependency: transitive
     description:
-      name: dropdown_button2
+      name: dots_indicator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.2"
+    version: "2.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -141,34 +134,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
-  flare_flutter:
-    dependency: transitive
-    description:
-      name: flare_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.2"
-  flare_loading:
-    dependency: transitive
-    description:
-      name: flare_loading
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
-  flare_splash_screen:
-    dependency: "direct main"
-    description:
-      name: flare_splash_screen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.0"
-  floating_action_bubble:
-    dependency: "direct main"
-    description:
-      name: floating_action_bubble
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -292,13 +257,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
-  google_nav_bar:
-    dependency: "direct main"
-    description:
-      name: google_nav_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.5"
   http:
     dependency: transitive
     description:
@@ -360,6 +318,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  introduction_screen:
+    dependency: "direct main"
+    description:
+      name: introduction_screen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
   js:
     dependency: transitive
     description:
@@ -409,13 +374,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
-  lottie:
-    dependency: "direct main"
-    description:
-      name: lottie
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.2"
   matcher:
     dependency: transitive
     description:
@@ -451,6 +409,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  palette_generator:
+    dependency: "direct main"
+    description:
+      name: palette_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.3"
   path:
     dependency: transitive
     description:

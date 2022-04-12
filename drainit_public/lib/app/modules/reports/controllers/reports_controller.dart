@@ -33,6 +33,9 @@ class ReportsController extends GetxController with StateMixin {
     super.onInit();
     box = GetStorage();
     change(null, status: RxStatus.empty());
+    if (Get.arguments != null) {
+      latlng.value = Get.arguments[1].toString();
+    }
   }
 
   void validateReportForm(

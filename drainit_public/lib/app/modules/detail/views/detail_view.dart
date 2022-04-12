@@ -1,232 +1,283 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/rounded_button.dart';
+import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:timeline_tile/timeline_tile.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../controllers/detail_controller.dart';
 
 class DetailView extends GetView<DetailController> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+    final Completer<GoogleMapController> _googleMapsController = Completer();
     return ScreenUtilInit(
       designSize: const Size(414, 896),
-      builder: () => Scaffold(
-        body: controller.obx(
-          (state) => Stack(
-            children: [
-              SizedBox(
-                child: Image(
-                  height: 350.h,
-                  width: 414.w,
-                  image: CachedNetworkImageProvider(
-                    imagePath() + controller.detail.foto!,
-                    errorListener: () => const Center(
-                      child: Text('image not loaded'),
-                    ),
+      builder: () => WillPopScope(
+        onWillPop: () async {
+          Get.offAllNamed(Routes.HOME, parameters: {'index': "1"});
+          return false;
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: controller.obx(
+            (state) => SafeArea(
+              bottom: false,
+              child: CustomScrollView(
+                slivers: [
+                  const _FlexibleSpaceHeader(),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _HeaderSliver(),
                   ),
-                  fit: BoxFit.fitHeight,
-                  errorBuilder: (_, __, ___) {
-                    return const Center(
-                      child: Text('Image error'),
-                    );
-                  },
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: 414.w,
-                  height: 600.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      30.r,
-                    ),
-                    color: kBackgroundInput,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 33.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 120.w,
-                            height: 40.h,
-                            child: Row(
+                  // for (var i = 0; i < 10; i++) ...[
+                  //   SliverList(
+                  //     delegate: SliverChildListDelegate([
+                  //       TimelineTile(
+                  //         lineXY: 0.3,
+                  //         alignment: TimelineAlign.manual,
+                  //         endChild: Padding(
+                  //           padding: const EdgeInsets.all(8.0),
+                  //           child: Container(
+                  //             width: 274.w,
+                  //             height: 137.w,
+                  //             decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.circular(
+                  //                 30.r,
+                  //               ),
+                  //               color: kIconColor,
+                  //             ),
+                  //             child: Column(
+                  //               children: [Text("Laporan $i")],
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         startChild: Container(
+                  //           color: kIconColor,
+                  //           child: Text("Senin"),
+                  //         ),
+                  //       ),
+                  //     ]),
+                  //   ),
+                  // ],
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        SizedBox(
+                          width: Get.width,
+                          height: 1000.h,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 30.w,
+                              right: 17.w,
+                              top: 20.h,
+                            ),
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 5.w),
-                                  child: SvgPicture.asset(
-                                    "assets/svg/clock.svg",
-                                    width: 40.w,
-                                    height: 40.h,
-                                  ),
-                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      "14:55:40",
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Jan 20, 2021",
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 117.w,
-                          ),
-                          SizedBox(
-                            width: 120.w,
-                            height: 40.h,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 5.w),
-                                  child: SvgPicture.asset(
-                                    "assets/svg/flag.svg",
-                                    width: 40.w,
-                                    height: 40.h,
-                                  ),
-                                ),
-                                Text(
-                                  "Selesai",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 32.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              controller.detail.tipePengaduan!,
-                              style: GoogleFonts.poppins(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: kIconColor,
-                              ),
-                            ),
-                            Text(controller.detail.namaJalan!),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Text(
-                              "Deskripsi",
-                              style: GoogleFonts.poppins(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: kIconColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Text(controller.detail.deskripsiPengaduan!),
-                            SizedBox(
-                              width: 414.w,
-                              height: 350.h,
-                              child: ListView.builder(
-                                itemBuilder: (context, id) => TimelineTile(
-                                  lineXY: 0.3,
-                                  alignment: TimelineAlign.manual,
-                                  endChild: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: 274.w,
-                                      height: 137.w,
+                                    Container(
+                                      width: Get.width,
+                                      height: 500.h,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                           30.r,
                                         ),
-                                        color: kIconColor,
+                                        color: green2,
                                       ),
                                       child: Column(
-                                        children: [Text("Laporan $id")],
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(20.r),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                30.r,
+                                              ),
+                                              child: Image(
+                                                fit: BoxFit.cover,
+                                                image:
+                                                    CachedNetworkImageProvider(
+                                                  Routes.IMAGEURL +
+                                                      controller.detail.foto!,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  startChild: Container(
-                                    color: kIconColor,
-                                    child: Text("Senin"),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                TextPoppinsBold(
+                                  text: "Lokasi",
+                                  textColour: black,
+                                  fontSize: 16.sp,
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                SizedBox(
+                                  height: 300.h,
+                                  width: Get.width,
+                                  child: GoogleMap(
+                                    initialCameraPosition: CameraPosition(
+                                      target: controller.geoToLatlong(
+                                          controller.detail.geometry ?? ""),
+                                      zoom: 17.0,
+                                    ),
+                                    onMapCreated:
+                                        (GoogleMapController controller) {
+                                      if (!_googleMapsController.isCompleted) {
+                                        _googleMapsController
+                                            .complete(controller);
+                                      }
+                                    },
                                   ),
                                 ),
-                                itemCount: 10,
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
-              Positioned(
-                top: 40.h,
-                left: 20.w,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Icon(
-                    LineIcons.arrowCircleLeft,
-                    size: 50.w,
-                  ),
+            ),
+            onError: (err) {
+              return GestureDetector(
+                onTap: () {
+                  Get.offNamedUntil(
+                    Routes.HOME,
+                    ModalRoute.withName(Routes.DETAIL),
+                  );
+                },
+                child: const Center(
+                  child: Text("Kembali"),
                 ),
-              ),
-            ],
+              );
+            },
           ),
-          onError: (err) {
-            return GestureDetector(
-              onTap: () {
-                Get.offNamedUntil(
-                  Routes.HOME,
-                  ModalRoute.withName(Routes.DETAIL),
-                );
-              },
-              child: const Center(
-                child: Text("Kembali"),
-              ),
-            );
-          },
         ),
       ),
     );
   }
+}
+
+class _FlexibleSpaceHeader extends GetView<DetailController> {
+  const _FlexibleSpaceHeader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: 120.h,
+      collapsedHeight: 120.h,
+      leading: const SizedBox(),
+      backgroundColor: Colors.transparent,
+      flexibleSpace: FlexibleSpaceBar(
+        titlePadding: EdgeInsets.only(left: 30.w, right: 30.w),
+        collapseMode: CollapseMode.pin,
+        title: Stack(
+          children: [
+            TextPoppinsBold(
+              text: "Detail\nLaporan",
+              fontSize: 36.sp,
+              textColour: black,
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: RoundedButton(
+                text: "Selesai",
+                width: 100.w,
+                height: 50.h,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+final maxHeaderExtent = 80.0.h;
+
+class _HeaderSliver extends SliverPersistentHeaderDelegate {
+  final controller = Get.find<DetailController>();
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final percent = shrinkOffset / maxHeaderExtent;
+    return Positioned(
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      child: Container(
+        height: maxHeaderExtent,
+        color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.only(left: 30.w, right: 30.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              RoundedButton(
+                text: "Detail",
+                width: 80.w,
+                height: 40.h,
+                color: green2,
+                textColor: white,
+              ),
+              RoundedButton(
+                text: "Update Laporan",
+                width: 150.w,
+                height: 40.h,
+                color: green2,
+                textColor: white,
+              ),
+              RoundedButton(
+                text: "Feedback",
+                width: 100.w,
+                height: 40.h,
+                color: green2,
+                textColor: white,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => maxHeaderExtent;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => maxHeaderExtent;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      false;
 }

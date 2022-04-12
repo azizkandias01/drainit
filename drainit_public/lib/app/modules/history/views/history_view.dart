@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../components/text_poppins.dart';
 import '../../../routes/app_pages.dart';
@@ -18,28 +19,98 @@ class HistoryView extends GetView<HistoryController> {
       final List<Widget> listItems = [];
 
       for (int i = 0; i < controller.list.length; i++) {
-        final isBanjir = controller.list[i].tipePengaduan == 'banjir';
+        final isBanjir =
+            controller.list[i].tipePengaduan?.toLowerCase() == 'banjir';
+        final namaJalanFull = controller.list[i].namaJalan?.split(',');
+        final namaJalan =
+            namaJalanFull == null ? "tidak ada data" : namaJalanFull[0];
         listItems.add(
           GestureDetector(
             onTap: () {
               Get.toNamed(
                 Routes.DETAIL,
-                arguments: [controller.list[i].id, controller.list[i].geometry],
+                arguments: controller.list[i].id,
               );
             },
             child: Padding(
               padding: EdgeInsets.only(
                 left: 10.w,
+                right: 10.w,
               ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(10.w),
-                    child: ClipRRect(
+              child: Padding(
+                padding: EdgeInsets.all(10.r),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextPoppinsBold(
+                            text: controller.list[i].namaPelapor ?? "",
+                            fontSize: 12.sp,
+                            textColour: black,
+                          ),
+                        ),
+                        TextPoppinsRegular(
+                          text: "2 hari yang lalu",
+                          fontSize: 12.sp,
+                          textColour: Colors.grey[400],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      children: [
+                        TextPoppinsRegular(
+                          text: "melaporkan",
+                          fontSize: 12.sp,
+                          textColour: black,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        TextPoppinsBold(
+                          text: isBanjir ? "banjir " : "kebakaran ",
+                          fontSize: 12.sp,
+                          textColour: black,
+                        ),
+                        Text(
+                          "di $namaJalan",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            fontSize: 12.sp,
+                            color: black,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      controller.list[i].deskripsiPengaduan ?? "",
+                      style: GoogleFonts.poppins(
+                        fontSize: 12.sp,
+                        color: black,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    ClipRRect(
                       borderRadius: BorderRadius.circular(20.r),
                       child: Image(
-                        width: 100.w,
-                        height: 100.h,
+                        width: Get.width,
+                        height: Get.width,
                         fit: BoxFit.fill,
                         errorBuilder: (_, __, ___) {
                           return Container(
@@ -59,42 +130,8 @@ class HistoryView extends GetView<HistoryController> {
                                 "defaultpengaduan.png")),
                       ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextPoppinsBold(
-                        text: controller.list[i].tipePengaduan.toString(),
-                        fontSize: 14.sp,
-                        textColour: Colors.black,
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      TextPoppinsRegular(
-                        text: controller.list[i].createdAt.toString(),
-                        fontSize: 12.sp,
-                        textColour: Colors.grey,
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      TextPoppinsRegular(
-                        text: "Jl. Bukitsari no.9a",
-                        fontSize: 12.sp,
-                        textColour: Colors.grey,
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      TextPoppinsBold(
-                        text: "${controller.list[i].statusPengaduan}",
-                        fontSize: 12.sp,
-                        textColour: Colors.black,
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -137,14 +174,13 @@ class HistoryView extends GetView<HistoryController> {
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  pinned: true,
                   elevation: 0,
                   bottom: PreferredSize(
                     preferredSize: Size(Get.width, 0),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 20.w),
+                        padding: EdgeInsets.only(left: 20.w, right: 20.w),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -152,6 +188,18 @@ class HistoryView extends GetView<HistoryController> {
                               text: "Riwayat Laporan",
                               fontSize: 20.sp,
                               textColour: Colors.black,
+                            ),
+                            SizedBox(height: 10.h),
+                            Container(
+                              padding: EdgeInsets.all(
+                                20.r,
+                              ),
+                              width: Get.width,
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20.r),
+                              ),
                             ),
                             SizedBox(height: 10.h),
                             SingleChildScrollView(
@@ -274,8 +322,8 @@ class HistoryView extends GetView<HistoryController> {
                       ),
                     ),
                   ),
-                  expandedHeight: ScreenUtil().setHeight(80),
-                  collapsedHeight: ScreenUtil().setHeight(80),
+                  expandedHeight: ScreenUtil().setHeight(120),
+                  collapsedHeight: ScreenUtil().setHeight(130),
                   backgroundColor: white,
                   // ),
                 ),

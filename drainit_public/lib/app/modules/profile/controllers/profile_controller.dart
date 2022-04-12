@@ -1,6 +1,7 @@
 import 'package:drainit_flutter/app/modules/profile/models/profile_model.dart';
 import 'package:drainit_flutter/app/modules/profile/providers/profile_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -19,8 +20,15 @@ class ProfileController extends GetxController with StateMixin {
   }
 
   void logoutAccount() {
-    box.remove(Routes.TOKEN);
-    Get.offAllNamed(Routes.LOGIN);
+    showConfirmDialog(
+      "Logout",
+      "Yakin ingin logout akun?",
+      () {
+        box.remove(Routes.TOKEN);
+        Get.offAllNamed(Routes.LOGIN);
+      },
+      () {},
+    );
   }
 
   void getAccountProfile() {

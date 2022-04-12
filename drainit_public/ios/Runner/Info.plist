@@ -43,5 +43,7 @@
 		<false/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Shows your location on the map and helps improve the map</string>
 	</dict>
 </plist>

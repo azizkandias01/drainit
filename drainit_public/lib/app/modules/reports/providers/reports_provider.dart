@@ -1,3 +1,4 @@
+import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -6,7 +7,7 @@ class ReportsProvider extends GetConnect {
 
   Future<String> createReport(Map data, String auth) async {
     final response = await post(
-      'https://gis-drainase.pocari.id/api/pengaduan',
+      '${Routes.BASEURL}pengaduan',
       data,
       headers: {
         'Accept': 'application/geo+json',

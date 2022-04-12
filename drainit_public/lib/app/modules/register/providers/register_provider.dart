@@ -1,9 +1,10 @@
+import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class RegisterProvider extends GetConnect {
   Future<String> registerUser(Map data) async {
     final response = await post(
-      'https://gis-drainase.pocari.id/api/register/masyarakat',
+      '${Routes.BASEURL}register/masyarakat',
       data,
     );
     if (response.status.hasError) {

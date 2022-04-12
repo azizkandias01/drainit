@@ -1,20 +1,44 @@
-import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/modules/detail/models/detail_model.dart';
 import 'package:drainit_flutter/app/modules/detail/providers/detail_provider.dart';
+import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../routes/app_pages.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 class DetailController extends GetxController with StateMixin {
   late Detail detail;
+  late Color dominantColor;
   @override
   void onInit() {
     super.onInit();
     detail = Detail();
+    dominantColor = const Color(0xFFF5F5F5);
+    getDominantColor();
     change(null, status: RxStatus.empty());
     getDetail();
-    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  String convertDate() {
+    DateTime date = DateTime.parse(detail.createdAt ?? "");
+    return "${date.hour}:${date.minute}:${date.second} ${date.day}/${date.month}/${date.year}";
+  }
+
+  Future<PaletteGenerator> _updatePaletteGenerator() async {
+    final paletteGenerator = await PaletteGenerator.fromImageProvider(
+      CachedNetworkImageProvider(
+        Routes.IMAGEURL + detail.foto!,
+      ),
+    );
+    return paletteGenerator;
+  }
+
+  void getDominantColor() {
+    _updatePaletteGenerator().then((paletteGenerator) {
+      dominantColor = paletteGenerator.dominantColor?.color ?? Colors.white;
+    });
   }
 
   void getDetail() {
@@ -31,17 +55,15 @@ class DetailController extends GetxController with StateMixin {
     );
   }
 
-  @override
-  void dispose() {
-    BackButtonInterceptor.remove(myInterceptor);
-    super.dispose();
-  }
-
-  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    Get.offNamedUntil(
-      Routes.HOME,
-      ModalRoute.withName(Routes.DETAIL),
+  LatLng geoToLatlong(String string) {
+    final String substring = string.substring(34, string.length - 2);
+    final List<String> latlong = substring.split(',');
+    final LatLng latLng = LatLng(
+      double.parse(latlong[0]),
+      double.parse(
+        latlong[1],
+      ),
     );
-    return false;
+    return latLng;
   }
 }
