@@ -35,6 +35,14 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: () => Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Peta titik',
+            style: TextStyle(color: Colors.black),
+          ),
+          centerTitle: true,
+          elevation: 2,
+        ),
         body: Center(
           child: Stack(
             children: [

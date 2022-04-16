@@ -20,22 +20,38 @@ class ReportsView extends GetView<ReportsController> {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: () => Scaffold(
+        appBar: AppBar(
+          title: Obx(
+            () => Text(
+              'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ),
         backgroundColor: white,
         body: SingleChildScrollView(
           child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 25.w,
-                right: 20.w,
-              ),
-              child: Obx(
-                () => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildBody(),
-                  ],
-                ),
-              ),
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildBody(),
+                ],
+              ).paddingOnly(left: 20.w, right: 20.w, bottom: 20.h),
             ),
           ),
         ),
@@ -47,8 +63,10 @@ class ReportsView extends GetView<ReportsController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HeaderReports(),
+        // const HeaderReports(),
         SizedBox(height: 10.h),
+        TextPoppinsRegular(text: "Pilih jenis laporan", fontSize: 11.sp),
+        10.verticalSpace,
         Row(
           children: [
             GestureDetector(
@@ -69,7 +87,7 @@ class ReportsView extends GetView<ReportsController> {
                 controller.page.value = 1;
               },
               child: TextPoppinsBold(
-                text: "Drainase tersumbat",
+                text: "Drainase Rusak",
                 fontSize: 16.sp,
                 textColour:
                     controller.page.value == 1 ? Colors.red : Colors.grey,
@@ -78,28 +96,30 @@ class ReportsView extends GetView<ReportsController> {
           ],
         ),
         SizedBox(height: 20.h),
-        TextPoppinsRegular(text: "Pilih foto", fontSize: 14.sp),
+        TextPoppinsRegular(text: "Pilih foto", fontSize: 11.sp),
         SizedBox(height: 10.h),
         if (controller.bytes64Image.value.isEmpty)
           const SizedBox()
         else
-          Container(
-            height: Get.width,
-            width: Get.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.w),
-              image: DecorationImage(
-                image: MemoryImage(
-                  base64Decode(controller.bytes64Image.value),
+          Center(
+            child: Container(
+              height: Get.width / 2,
+              width: Get.width / 2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.w),
+                image: DecorationImage(
+                  image: MemoryImage(
+                    base64Decode(controller.bytes64Image.value),
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               ),
             ),
           ),
         SizedBox(height: 10.h),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            spacer,
             GestureDetector(
               onTap: () {
                 controller.getImage(ImageSource.camera);
@@ -113,12 +133,11 @@ class ReportsView extends GetView<ReportsController> {
                   SizedBox(width: 10.w),
                   TextPoppinsRegular(
                     text: "Ambil foto",
-                    fontSize: 14.sp,
+                    fontSize: 11.sp,
                   ),
                 ],
               ),
             ),
-            spacer,
             GestureDetector(
               onTap: () {
                 controller.getImage(ImageSource.gallery);
@@ -132,55 +151,40 @@ class ReportsView extends GetView<ReportsController> {
                   SizedBox(width: 10.w),
                   TextPoppinsRegular(
                     text: "Pilih dari gallery",
-                    fontSize: 14.sp,
+                    fontSize: 11.sp,
                   ),
                 ],
               ),
             ),
-            spacer,
+            if (controller.bytes64Image.value.isNotEmpty)
+              GestureDetector(
+                onTap: () {
+                  controller.bytes64Image.value = '';
+                },
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.delete,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(width: 10.w),
+                    TextPoppinsRegular(
+                      text: "Hapus",
+                      fontSize: 11.sp,
+                    ),
+                  ],
+                ),
+              )
+            else
+              const SizedBox(),
           ],
         ),
-        // GestureDetector(
-        //   onTap: () {
-        //     controller.getImage(ImageSource.camera);
-        //   },
-        //   child: Center(
-        //     child: controller.bytes64Image.value.isEmpty
-        //         ? Container(
-        //             width: Get.width,
-        //             height: Get.width,
-        //             decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(10.w),
-        //               color: controller.page.value == 1
-        //                   ? Colors.red
-        //                   : Colors.green,
-        //             ),
-        //             child: const Icon(
-        //               Icons.camera_alt,
-        //               color: white,
-        //             ),
-        //           )
-        //         : Container(
-        //             height: Get.width,
-        //             width: Get.width,
-        //             decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(10.w),
-        //               image: DecorationImage(
-        //                 image: MemoryImage(
-        //                   base64Decode(controller.bytes64Image.value),
-        //                 ),
-        //                 fit: BoxFit.cover,
-        //               ),
-        //             ),
-        //           ),
-        //   ),
-        // ),
         SizedBox(height: 20.h),
-        TextPoppinsRegular(text: "Pilih lokasi", fontSize: 14.sp),
+        TextPoppinsRegular(text: "Pilih lokasi", fontSize: 11.sp),
         SizedBox(height: 10.h),
         selectLocation(),
         SizedBox(height: 20.h),
-        TextPoppinsRegular(text: "Deskripsi", fontSize: 14.sp),
+        TextPoppinsRegular(text: "Deskripsi", fontSize: 11.sp),
         SizedBox(height: 10.h),
         TextFormField(
           maxLines: Get.height > 800 ? 6 : 4,
@@ -201,7 +205,7 @@ class ReportsView extends GetView<ReportsController> {
             ),
           ),
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height: 20.h),
         Row(
           children: [
             Obx(
@@ -212,21 +216,16 @@ class ReportsView extends GetView<ReportsController> {
                 },
               ),
             ),
-            if (Get.width >= 600)
-              TextPoppinsRegular(
+            Flexible(
+              child: TextPoppinsRegular(
                 text:
                     "Saya menyatakan laporan saya benar dan dapat dipertanggung jawabkan",
-                fontSize: 12.sp,
-              )
-            else
-              TextPoppinsRegular(
-                text:
-                    "Saya menyatakan laporan saya benar dan \ndapat dipertanggung jawabkan",
-                fontSize: 12.sp,
+                fontSize: 11.sp,
               ),
+            )
           ],
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height: 20.h),
         controller.obx(
           (state) => Container(),
           onEmpty: RoundedButton(

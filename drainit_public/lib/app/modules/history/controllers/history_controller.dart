@@ -2,34 +2,24 @@ import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
 import 'package:drainit_flutter/app/modules/history/providers/history_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 ///controller for handling history
-class HistoryController extends GetxController
-    with StateMixin, GetSingleTickerProviderStateMixin {
+class HistoryController extends GetxController with StateMixin {
   ///list of history that user has reported to system
-  late List<HistoryModel> historyList;
-  late List<HistoryModel> list;
+  List<HistoryModel> list = [];
+  RxList<HistoryModel> foundList = <HistoryModel>[].obs;
   late GetStorage box;
-  late Animation<double> animation;
-  late AnimationController animationController;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
     box = GetStorage();
-    historyList = [];
-    list = [];
     change(null, status: RxStatus.empty());
     loadHistory();
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 260),
-    );
-    final curvedAnimation =
-        CurvedAnimation(curve: Curves.easeInOut, parent: animationController);
-    animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
   }
 
   ///load the history from api
@@ -38,11 +28,39 @@ class HistoryController extends GetxController
     await HistoryProvider().loadHistory(box.read(Routes.TOKEN) as String).then(
       (value) => {
         list = value,
-        change(value, status: RxStatus.success()),
+        change(null, status: RxStatus.success()),
       },
       onError: (err) {
         change(err, status: RxStatus.error());
       },
     );
+  }
+
+  void searchHistory(String name) {
+    List<HistoryModel> filteredList = [];
+    if (name == "") {
+      filteredList = list;
+    } else {
+      filteredList = list
+          .where((element) =>
+              element.namaJalan!.toLowerCase().contains(name.toLowerCase()))
+          .toList();
+    }
+    foundList.value = filteredList;
+  }
+
+  Color getStatusColor(String status) {
+    switch (status) {
+      case "NOT_YET_VERIFIED":
+        return Colors.orange;
+      case "ON_PROGRESS":
+        return Colors.yellow;
+      case "COMPLETED":
+        return Colors.green;
+      case "REFUSED":
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
   }
 }

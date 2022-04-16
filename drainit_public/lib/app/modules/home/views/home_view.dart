@@ -9,29 +9,50 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final box = GetStorage();
-
   @override
   Widget build(BuildContext context) {
     whiteBar();
-    return PersistentTabView(
-      context,
-      controller: controller.tabController,
-      screens: controller.widgetOptions,
-      items: controller.navBarsItems(),
-      padding: const NavBarPadding.all(8),
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
+    return WillPopScope(
+      onWillPop: () async {
+        Get.dialog(
+          AlertDialog(
+            title: Text('Are you sure you want to exit?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        );
+        return false;
+      },
+      child: PersistentTabView(
+        context,
+        controller: controller.tabController,
+        screens: controller.widgetOptions,
+        items: controller.navBarsItems(),
+        padding: const NavBarPadding.all(8),
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          colorBehindNavBar: Colors.white,
+        ),
+        itemAnimationProperties: const ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.linear,
+        ),
+        screenTransitionAnimation: const ScreenTransitionAnimation(
+          animateTabTransition: true,
+        ),
+        navBarStyle:
+            NavBarStyle.style6, // Choose the nav bar style with this property.
       ),
-      itemAnimationProperties: const ItemAnimationProperties(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.linear,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        animateTabTransition: true,
-      ),
-      navBarStyle:
-          NavBarStyle.style6, // Choose the nav bar style with this property.
     );
   }
 }
