@@ -5,10 +5,12 @@ class TextPoppinsBold extends StatelessWidget {
   final String text;
   final double? fontSize;
   final Color? textColour;
+  final TextOverflow? overflow;
   const TextPoppinsBold({
     Key? key,
     required this.text,
     required this.fontSize,
+    this.overflow,
     this.textColour,
   }) : super(key: key);
 
@@ -16,6 +18,7 @@ class TextPoppinsBold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: overflow,
       style: GoogleFonts.poppins(
         fontWeight: FontWeight.bold,
         fontSize: fontSize,

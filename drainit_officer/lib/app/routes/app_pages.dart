@@ -1,9 +1,9 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:get/get.dart';
 
 import '../modules/detail/bindings/detail_binding.dart';
+import '../modules/detail/bindings/update_laporan_binding.dart';
 import '../modules/detail/views/detail_view.dart';
+import '../modules/detail/views/update_laporan_view.dart';
 import '../modules/done_reports/bindings/done_reports_binding.dart';
 import '../modules/done_reports/views/done_reports_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -20,6 +20,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/splashscreen/bindings/splashscreen_binding.dart';
 import '../modules/splashscreen/views/splashscreen_view.dart';
+
+// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 
@@ -73,6 +75,11 @@ class AppPages {
       name: _Paths.MAPS,
       page: () => MapsView(),
       binding: MapsBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPDATE_LAPORAN,
+      page: () => UpdateLaporanView(),
+      binding: UpdateLaporanBinding(),
     ),
   ];
 }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dart';
 import 'package:drainit_flutter/app/modules/searchmap/providers/searchmap_provider.dart';
 import 'package:geocoding/geocoding.dart';
@@ -37,24 +35,19 @@ class SearchmapController extends GetxController {
     isLoading.value = false;
   }
 
-  void goToSearch(
-    double lat,
-    double long,
-    GoogleMapController controller,
-  ) {
-    final CameraPosition cameraPosition = CameraPosition(
-      target: LatLng(lat, long),
-      zoom: 18.151926040649414,
-    );
-    myMarker.clear();
-    myMarker.add(
-      Marker(
-        markerId: const MarkerId("rand"),
-        position: LatLng(lat, long),
-      ),
-    );
-    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-  }
+  // void goToSearch(
+  //   double lat,
+  //   double long,
+  //   MapboxMapController mapboxMapController,
+  // ) {
+  //   final CameraPosition cameraPosition = CameraPosition(
+  //     target: LatLng(lat, long),
+  //     zoom: 18.151926040649414,
+  //   );
+  //   mapboxMapController.animateCamera(
+  //     CameraUpdate.newCameraPosition(cameraPosition),
+  //   );
+  // }
 
   void clear() {
     _suggestions = history;
@@ -75,7 +68,7 @@ class SearchmapController extends GetxController {
     final thoroughfare = first.thoroughfare ?? '';
     final subThoroughfare = first.subThoroughfare ?? '';
     final addressLine =
-        '$locality,$administrativeArea,$subLocality,$subAdministrativeArea,$street,$name,$thoroughfare,$subThoroughfare';
+        '$street,$locality,$subLocality,$subAdministrativeArea,$administrativeArea';
     return addressLine;
   }
 
@@ -87,6 +80,12 @@ class SearchmapController extends GetxController {
   }
 
   @override
+  void refresh() {
+    super.refresh();
+    print("refresh map");
+  }
+
+  @override
   void onInit() {
     super.onInit();
     print("strart map");
@@ -94,7 +93,6 @@ class SearchmapController extends GetxController {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     print("dispose map");
   }

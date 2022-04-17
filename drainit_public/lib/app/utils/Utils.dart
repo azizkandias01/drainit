@@ -3,48 +3,143 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../components/text_poppins.dart';
+
+String timeAgoSinceDate(String dateString, {bool numericDates = true}) {
+  final DateTime reportDate = DateTime.parse(dateString);
+  final date2 = DateTime.now();
+  final difference = date2.difference(reportDate);
+
+  if (difference.inDays > 60) {
+    return '2 months ago';
+  }
+  if (difference.inDays > 30) {
+    return '1 month ago';
+  }
+  if (difference.inDays > 21) {
+    return '4 weeks ago';
+  }
+  if (difference.inDays > 15) {
+    return '3 weeks ago';
+  }
+  if (difference.inDays > 8) {
+    return '2 weeks ago';
+  } else if ((difference.inDays / 7).floor() >= 1) {
+    return (numericDates) ? '1 week ago' : 'Last week';
+  } else if (difference.inDays >= 2) {
+    return '${difference.inDays} days ago';
+  } else if (difference.inDays >= 1) {
+    return (numericDates) ? '1 day ago' : 'Yesterday';
+  } else if (difference.inHours >= 2) {
+    return '${difference.inHours} hours ago';
+  } else if (difference.inHours >= 1) {
+    return (numericDates) ? '1 hour ago' : 'An hour ago';
+  } else if (difference.inMinutes >= 2) {
+    return '${difference.inMinutes} minutes ago';
+  } else if (difference.inMinutes >= 1) {
+    return (numericDates) ? '1 minute ago' : 'A minute ago';
+  } else if (difference.inSeconds >= 3) {
+    return '${difference.inSeconds} seconds ago';
+  } else {
+    return 'Just now';
+  }
+}
+
 String imagePath() =>
     "https://gis-drainase.pocari.id/storage/app/public/images/";
 
-void showErrorSnackBar(String? error, SnackPosition? snackPosition) {
-  Get.rawSnackbar(
-    snackStyle: SnackStyle.GROUNDED,
+void showErrorSnackBar(String error) {
+  Get.snackbar(
+    'Error',
+    error,
+    snackPosition: SnackPosition.BOTTOM,
     backgroundColor: Colors.red,
-    borderRadius: 5,
-    messageText: Text(
-      error ?? 'There error',
-      maxLines: 30,
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-      ),
-    ),
-    isDismissible: true,
-    forwardAnimationCurve: Curves.easeInOut,
-    barBlur: 20,
-    snackPosition: snackPosition ?? SnackPosition.BOTTOM,
-    margin: EdgeInsets.zero,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
   );
 }
 
-void showSuccessSnackBar(String? body, SnackPosition? snackPosition) {
-  Get.rawSnackbar(
-    snackStyle: SnackStyle.GROUNDED,
+void showSuccessSnackBar(String body) {
+  Get.snackbar(
+    'Berhasil',
+    body,
+    snackPosition: SnackPosition.BOTTOM,
     backgroundColor: Colors.green,
-    snackPosition: snackPosition ?? SnackPosition.BOTTOM,
-    borderRadius: 5,
-    messageText: Text(
-      body ?? '',
-      maxLines: 30,
-      style: TextStyle(
-        color: Colors.white,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
+  );
+}
+
+void showInfoSnackBar(String body) {
+  Get.snackbar(
+    'Info',
+    body,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.blue,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
+  );
+}
+
+void showWarningSnackBar(String body) {
+  Get.snackbar(
+    'Warning',
+    body,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.orange,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
+  );
+}
+
+void showConfirmDialog(
+  String title,
+  String body,
+  Function() onConfirm,
+  Function() onCancel, {
+  String confirmText = 'Ya',
+  String cancelText = 'Tidak',
+}) {
+  Get.dialog(
+    AlertDialog(
+      title: TextPoppinsBold(
+        text: title,
         fontSize: 16,
       ),
+      content: TextPoppinsRegular(
+        text: body,
+        fontSize: 14,
+      ),
+      actions: [
+        FlatButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: TextPoppinsBold(
+            text: cancelText,
+            fontSize: 16,
+          ),
+        ),
+        FlatButton(
+          onPressed: () {
+            Get.back();
+            onConfirm();
+          },
+          child: TextPoppinsBold(
+            text: confirmText,
+            fontSize: 16,
+          ),
+        ),
+      ],
     ),
-    isDismissible: true,
-    forwardAnimationCurve: Curves.easeInOut,
-    barBlur: 20,
-    margin: EdgeInsets.zero,
   );
 }
 
@@ -57,7 +152,7 @@ extension ExtendedDouble on double {
       );
 }
 
-String mapStyles = '''[
+const String mapStyles = '''[
   {
     "elementType": "geometry",
     "stylers": [

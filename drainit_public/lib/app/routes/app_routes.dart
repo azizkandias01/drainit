@@ -24,6 +24,9 @@ abstract class Routes {
   static const DETAIL = _Paths.DETAIL;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const WELCOME = _Paths.WELCOME;
+  static const IMAGEURL =
+      "https://drainit.pocari.id/storage/app/public/images/";
+  static const BASEURL = "https://drainit.pocari.id/api/";
 }
 
 abstract class _Paths {

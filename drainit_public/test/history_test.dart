@@ -2,14 +2,15 @@ import 'package:drainit_flutter/app/modules/history/providers/history_provider.d
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test("get all history", () async {
-    var history = await HistoryProvider().loadHistory(
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNDgwZjQ4NTQ4ZmU0MTg4ZjVmYmIyZDYxNGUxYjczMzRlZjE1MmIxYmNjMGQxN2Y1MTI2NmViMTVmZTg5ZDJhNTQ2NzEzZDQ4NDcyMGE1MjEiLCJpYXQiOjE2Mzc4MjcyNDAsIm5iZiI6MTYzNzgyNzI0MCwiZXhwIjoxNjY5MzYzMjQwLCJzdWIiOiJmYmE5NWMyYi1hMjBlLTRjM2EtODQzMC01MDEwZGRlOTI0NDQiLCJzY29wZXMiOltdfQ.SlWZX5skaZ9jjy8ozeq-o-koOjRiA7XXQ5znK_0S0cMDoPLcolabPWiblSPnESsN_jRib_-ly_quI2qCxJPrA0ULuS8BLC-n8uLDyrJUMNn7YbLOm0a37TFv-IyDOuGLmWTNPLtpeWU_YTbeR1EkyXSSsTMwdJwzcPJ6eVAQqHKdDAyOVUOAnV4_w999OKUeWMUjIF37R-bi8IijR0jQSX7VNuA7j1bOxdKs84WLSoWHxvoq9ik9rdSQwZx10OPYQPcJNDZhVTN4cW8JxoNYh2mx1Xr41yV3mFGz7np5MIzSr3OFrw4hy7OLidFju9lC9IYJbxaQo3M12-JY18e65BgyIYf5gqdLHcy9yW2AkdOyljzChp6gpSnJntPN19NeBLpPfEnueBbYxdBfqK3DxWMR3HzUc7WYvKPSETONF--D1H5O9o4Qkz00aKnaT-wL07U2CfCiNqOvSpi0ry3KwUEjnBH2N0eUhacM9gzBeGAb4JWWMW-yQz7xoNSodvU6WFJlMNZ9h5jV4_NgKhS2fESd8QYAQIAGNXEIGQnn2V0EMEom3rWxg_bWmP6cwmS9D_voJKco-phdXrwk2C9wB2E3aLlJkn_5BikIXeogykJTxYaAAKsyk4g58VbLEQ_Fa661XPYYPQhu3PMWFCek32qypIsOLAbvwmbhEOOt6cE");
+  test("get all history with bearer should success", () async {
+    final history = await HistoryProvider().loadHistory(
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzVhYTYwODQ5MGJjNGYxNjU1ZGJjZjdlMDRhNTcwYmQ5YmFlOWU1ODQxZDNjOTI1MWRmZGE4YmVjMmU0Yzc2MzY4OWJmMjI0ZWQzOGVmNDEiLCJpYXQiOjE2NDc3NTQyMjEuNDE1NjM1LCJuYmYiOjE2NDc3NTQyMjEuNDE1NjQyLCJleHAiOjE2NzkyOTAyMjEuMzg1OTUzLCJzdWIiOiJjNDAxZjlmOS0wMDE0LTQ1MzMtOTRhYS0xNDkxMmQ1ZmIyMjEiLCJzY29wZXMiOltdfQ.Y1zdB4LBLe1eAXJk7LKJzqPriDcx7Fs9dP3zdxHK1NqkFiXuUpyN9gZ4M9xxF5yUt1BmEFtyhNAK8MMnijyPpLZJmmPXZ-0QAYMQt5VYNSbSSmXygolP6RyA7BlC1FCHCJ2G525elxnfRy_ydEgjKykAi3v3HGojczvcgW9nfLJAmYLKc2LgLpD_7qVze6pfDzXsVRYUh7fvlzBrJkdKDC9SxRsUQlhJludJLnB2CktEPhqnXhK2g1kkX7mTIyXmKSCRgwls_BhGQzqwzMcn5LXCW-kpmvSpism6Gjm3HfidKIzR7xaU-KIzcNEH3mjaZDfbnXkduDHSUy_F7t44GFOgZeWZy-7rYFQQSFzBBclUw8asQI-hmcVd24rnfaI55w9_CI4a1aeI7XnzPtkE58KaTZ-lwHfuHkm1EqgjZNC9HzqdNNaOSGrXZqfzGcVRiCfYmisFFX7ZZLlxkjewUTh1VU4MTWg20z35IoE_sNcc1Nlm-Sbsh9i4boYeGv7zwRjEFqS13aSqIQHnmLB-ZP3hrV0SB2XMzqiNa4EV5usYRpY1KNB-HuboIqg5o4l9GMdmSQnC5G9anIUarF7NaZrq3LACceoADg4vXMPCBghl0jRe2eq3MwsEqTgYUE90O64jmoXU0djcvRl4V7Z6-8ExK36rBRZ9kPfIvn8YFPQ",
+    );
     expect(history.length, greaterThan(0));
   });
-  test("get all history without bearer", () async {
+  test("get all history without bearer should unsuccessful", () async {
     try {
-      var history = await HistoryProvider().loadHistory("");
+      final history = await HistoryProvider().loadHistory("");
       expect(history.length, greaterThan(0));
     } catch (e) {
       expect(e.toString(), "Internal Server Error");

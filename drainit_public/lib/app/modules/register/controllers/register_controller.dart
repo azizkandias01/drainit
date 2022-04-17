@@ -1,33 +1,34 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:drainit_flutter/app/modules/register/providers/register_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+
+import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController with StateMixin<String> {
+  //key for test
+  final nameKey = const Key("name");
+  final emailKey = const Key("email");
+  final passwordKey = const Key("password");
+  final confirmPasswordKey = const Key("confirmPassword");
+  final phoneKey = const Key("phone");
+  final addressKey = const Key("address");
+  final isCheckedKey = const Key("isChecked");
+  final nextKey = const Key("next");
+
+  //TexteditingController
   late TextEditingController myControllerEmail;
   late TextEditingController myControllerPassword;
   late TextEditingController myControllerPasswordConfirm;
   late TextEditingController myControllerName;
   late TextEditingController myControllerPhoneNumber;
   late TextEditingController myControllerAddress;
+
+  //controller for hide show password
   final isPasswordHidden = true.obs;
   final isConfirmPasswordHidden = true.obs;
-
-  RxString selectedImagePath = ''.obs;
-  RxString selectedImageSize = ''.obs;
-
-  // Crop code
-  RxString cropImagePath = ''.obs;
-  RxString cropImageSize = ''.obs;
-
-  RxString bytes64Image = ''.obs;
+  final isChecked = false.obs;
 
   @override
   void onInit() {
@@ -41,74 +42,85 @@ class RegisterController extends GetxController with StateMixin<String> {
     change(null, status: RxStatus.empty());
   }
 
-  Future<void> getImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
-    if (pickedFile != null) {
-      selectedImagePath.value = pickedFile.path;
-      selectedImageSize.value =
-          '${(File(selectedImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
-
-      // Crop
-      final cropImageFile = await ImageCropper.cropImage(
-        sourcePath: selectedImagePath.value,
-        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-        maxWidth: 512,
-        maxHeight: 512,
-      );
-      cropImagePath.value = cropImageFile!.path;
-      cropImageSize.value =
-          '${(File(cropImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
-      final _bytes = File(cropImagePath.value).readAsBytesSync();
-      bytes64Image.value = base64Encode(_bytes);
-    } else {
+  void validateForm() {
+    if (myControllerEmail.text.isEmpty ||
+        myControllerPassword.text.isEmpty ||
+        myControllerPasswordConfirm.text.isEmpty ||
+        myControllerName.text.isEmpty ||
+        myControllerPhoneNumber.text.isEmpty ||
+        myControllerAddress.text.isEmpty) {
       Get.snackbar(
         'Error',
-        'Error saat pemilihan gambar',
+        'Please fill all the fields',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
+        borderRadius: 10,
+        margin: EdgeInsets.all(10),
+        snackStyle: SnackStyle.FLOATING,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (!GetUtils.isEmail(myControllerEmail.text)) {
+      Get.snackbar(
+        'Error',
+        'Please enter a valid email',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        borderRadius: 10,
+        margin: EdgeInsets.all(10),
+        snackStyle: SnackStyle.FLOATING,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (myControllerPassword.text.length < 6) {
+      Get.snackbar(
+        'Error',
+        'Password must be at least 6 characters',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        borderRadius: 10,
+        margin: EdgeInsets.all(10),
+        snackStyle: SnackStyle.FLOATING,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (myControllerPassword.text != myControllerPasswordConfirm.text) {
+      Get.snackbar(
+        'Error',
+        'Password and Confirm Password does not match',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        borderRadius: 10,
+        margin: EdgeInsets.all(10),
+        snackStyle: SnackStyle.FLOATING,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (!isChecked.value) {
+      Get.snackbar(
+        'Error',
+        'Please accept the terms and conditions',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        borderRadius: 10,
+        margin: EdgeInsets.all(10),
+        snackStyle: SnackStyle.FLOATING,
+        duration: const Duration(seconds: 2),
+      );
+    } else {
+      Get.toNamed(
+        Routes.REGISTER_NEXT,
+        arguments: [
+          myControllerName.text,
+          myControllerPhoneNumber.text,
+          myControllerEmail.text,
+          myControllerAddress.text,
+          myControllerPassword.text,
+          myControllerPasswordConfirm.text,
+        ],
       );
     }
-  }
-
-  void registerUser(
-    String name,
-    String phone,
-    String email,
-    String alamat,
-    String password,
-    String confirmPassword,
-    String foto,
-  ) {
-    final registerData = {
-      'email': email,
-      'password': password,
-      'password_confirmation': confirmPassword,
-      'nama': name,
-      'no_hp': phone,
-      'foto': foto,
-      'alamat': alamat,
-    };
-
-    change(
-      null,
-      status: RxStatus.loading(),
-    );
-
-    RegisterProvider().registerUser(registerData).then(
-      (resp) => {
-        change(
-          resp,
-          status: RxStatus.success(),
-        ),
-      },
-      onError: (err) {
-        change(
-          null,
-          status: RxStatus.error('Error occured : $err'),
-        );
-      },
-    );
   }
 
   @override

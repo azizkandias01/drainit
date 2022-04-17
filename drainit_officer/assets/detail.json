@@ -1,21 +1,18 @@
-{
-  "id": "4fbd1956-3212-423b-92b5-3534241f1c1d",
-  "id_masyarakat": "28692564-0b62-4294-bf85-47c36bfa9374",
-  "nama_pelapor": "mike",
-  "id_admin": "2794060a-d367-4319-8a45-757bfe69210b",
-  "nama_admin": "Administrator",
-  "id_petugas": "832592ec-3cf4-48ea-9b90-880da68825dd",
-  "nama_petugas": "petugas",
-  "nama_jalan": "Jl. Umbansari Atas No.223, Umban Sari, Kec. Rumbai, Kota Pekanbaru, Riau 28264, Indonesia",
-  "foto": "60d20c86c7c73.jpeg",
-  "tipe_pengaduan": "Tersumbat",
-  "deskripsi_pengaduan": "sudah tersumbat banget sampai banyak sampah menumpuk",
-  "status_pengaduan": "Selesai",
-  "laporan_petugas": "Saluran Air telah di bersihkan",
-  "feedback_masyarakat": null,
-  "created_at": "2021-06-22 16:15:02",
-  "updated_at": "2021-06-22 20:48:43",
-  "geometry": "{\"type\": \"Point\", \"coordinates\": [0.5833871439704899, 101.41549699008463]}",
-  "upvote": 3,
-  "downvote": 1
-}
+[
+  {
+    "id": "0cb0152b-0d9e-4888-9444-0e6748f47da0",
+    "nama_petugas": "Petugas",
+    "judul": "Menyiapkan keperluan",
+    "deskripsi": "Membeli 10 sak semen",
+    "foto": "tidak ada",
+    "waktu": "2022-03-20 23:50:18"
+  },
+  {
+    "id": "6b310f44-e6e7-400f-9e00-35c7381d10ff",
+    "nama_petugas": "Petugas",
+    "judul": "Mengumpulkan petugas kuning",
+    "deskripsi": "Laporan ini membutuhkan sekitar 10 petugas kuning",
+    "foto": "tidak ada",
+    "waktu": "2022-03-20 23:50:18"
+  }
+]

@@ -107,12 +107,15 @@ class DoneReportsView extends GetView<DoneReportsController> {
                                         SizedBox(
                                           width: 5.w,
                                         ),
-                                        TextPoppinsBold(
-                                          text: controller.list[i].createdAt ??
-                                              "",
-                                          fontSize: 11.sp,
-                                          textColour: Colors.white,
-                                          overflow: TextOverflow.ellipsis,
+                                        Flexible(
+                                          child: TextPoppinsBold(
+                                            text:
+                                                controller.list[i].createdAt ??
+                                                    "",
+                                            fontSize: 11.sp,
+                                            textColour: Colors.white,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       ],
                                     ),

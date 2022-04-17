@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -108,7 +107,7 @@ class SearchmapView extends GetView<SearchmapController> {
           child: IndexedStack(
             index: min(index, 2),
             children: [
-              Map(),
+              buildMap(),
               FloatingSearchAppBarExample(),
             ],
           ),
@@ -179,11 +178,13 @@ class SearchmapView extends GetView<SearchmapController> {
                   child: GestureDetector(
                     onTap: () async {
                       FloatingSearchBar.of(context)!.close();
-                      controller.goToSearch(
-                        place.lat,
-                        place.long,
-                        await Map._updateController.future,
-                      );
+                      // controller.goToSearch(
+                      //   place.lat,
+                      //   place.long,
+                      //   mapController,
+                      // );
+                      //   await Map._updateController.future,
+                      // );
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -213,86 +214,93 @@ class SearchmapView extends GetView<SearchmapController> {
       ],
     );
   }
-}
 
-class Map extends GetView<SearchmapController> {
-  static final Completer<GoogleMapController> _controller = Completer();
-  static final Completer<GoogleMapController> _updateController = Completer();
-
-  static final Marker marker = Marker(
-    markerId: const MarkerId('marker pku'),
-    position: const LatLng(
-      0.5696307903657801,
-      101.42544396221638,
-    ),
-    infoWindow: const InfoWindow(
-      title: 'Marker in rumbai',
-      snippet: 'Hi this is marker in rumbai',
-    ),
-    onTap: () {
-      // print(marker.infoWindow.title);
-    },
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return buildMap();
-  }
+  // void _updateSelectedSymbol(SymbolOptions changes) async {
+  //   await mapController!.updateSymbol(_selectedSymbol!, changes);
+  // }
 
   Widget buildMap() {
-    const CameraPosition _kGooglePlex = CameraPosition(
-      target: LatLng(37.42796133580664, -122.085749655962),
-      zoom: 14.4746,
-    );
-
     return Scaffold(
-      body: Obx(
-        () => GoogleMap(
-          onTap: (LatLng latLng) async {
-            controller.myMarker.clear();
-            controller.myMarker.add(
-              Marker(markerId: const MarkerId("newMarker"), position: latLng),
-            );
-            controller.data.value = latLng;
-            Get.bottomSheet(
-              Center(
-                child: Container(
-                  width: Get.width,
-                  color: white,
-                  child: Column(
-                    children: [
-                      Text(await controller.getAddress(latLng)),
-                      ElevatedButton(
-                        onPressed: () {
-                          Get.back();
-                          Get.back(result: controller.getAddress(latLng));
-                        },
-                        child: const Text('select this coordinate'),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-          markers: Set.from(controller.myMarker),
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (controller) {
-            if (!_controller.isCompleted) {
-              _controller.complete(controller);
-              _updateController.complete(controller);
-              this.controller.goToSearch(
-                  0.5696307903657801, 101.42544396221638, controller);
-              controller.dispose();
-            } else {
-              this.controller.goToSearch(
-                  0.5696307903657801, 101.42544396221638, controller);
-              controller.dispose();
-            }
-          },
-        ),
-      ),
-    );
+        // body: MapboxMap(
+        //   accessToken:
+        //       "sk.eyJ1IjoiemVla2FuZHMiLCJhIjoiY2wxZXNzcHY1MGNwcDNpbXFsczV2OXB6dSJ9.Fon9KA_46CpH2d1Yps8S_g",
+        //   styleString: "mapbox://styles/mapbox/streets-v11",
+        //   initialCameraPosition: const CameraPosition(
+        //     target: LatLng(
+        //       0.5696307903657801,
+        //       101.42544396221638,
+        //     ),
+        //     zoom: 15,
+        //   ),
+        //   onMapCreated: (MapboxMapController controller) async {
+        //     mapController = controller;
+        //     final result = await _getPosition();
+        //     await controller.animateCamera(
+        //       CameraUpdate.newLatLng(result),
+        //     );
+        //
+        //     await controller.addCircle(
+        //       CircleOptions(
+        //         circleRadius: 8.0,
+        //         circleColor: '#006992',
+        //         circleOpacity: 0.8,
+        //         geometry: result,
+        //         draggable: false,
+        //       ),
+        //     );
+        //   },
+        //   onMapClick: (point, latlng) async {
+        //     await mapController.addCircle(
+        //       CircleOptions(
+        //         circleRadius: 8.0,
+        //         circleColor: '#006992',
+        //         circleOpacity: 0.8,
+        //         geometry: latlng,
+        //         draggable: false,
+        //       ),
+        //     );
+        //
+        //     Get.bottomSheet(Container(
+        //       height: Get.height / 2.5,
+        //       width: Get.width,
+        //       decoration: const BoxDecoration(
+        //         color: Colors.white,
+        //         borderRadius: BorderRadius.only(
+        //           topLeft: Radius.circular(20),
+        //           topRight: Radius.circular(20),
+        //         ),
+        //       ),
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(20),
+        //         child: Column(
+        //           mainAxisSize: MainAxisSize.min,
+        //           children: [
+        //             Flexible(child: SvgPicture.asset('assets/svg/il_map.svg')),
+        //             const SizedBox(height: 20),
+        //             Text(
+        //               await controller.getAddress(latlng),
+        //               style: TextStyle(fontSize: 18),
+        //             ),
+        //             const SizedBox(height: 10),
+        //             ElevatedButton(
+        //               onPressed: () async {
+        //                 Get.back();
+        //                 Get.back(
+        //                   result: [
+        //                     await controller.getAddress(latlng),
+        //                     latlng,
+        //                   ],
+        //                 );
+        //               },
+        //               child: Text('Pilih Lokasi'),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ));
+        //   },
+        // ),
+        );
   }
 }
 

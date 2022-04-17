@@ -10,13 +10,13 @@ class FloodModel {
   });
 
   FloodModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'] as String;
-    namaJalan = json['nama_jalan'] as String;
-    kondisiKerusakan = json['kondisi_kerusakan'] as String;
-    foto = json['foto'] as String;
-    keterangan = json['keterangan'] as String;
-    status = json['status'];
-    geometry = json['geometry'] as String;
+    id = json['id'].toString();
+    namaJalan = json['nama_jalan'].toString();
+    kondisiKerusakan = json['kondisi_kerusakan'].toString();
+    foto = json['foto'].toString();
+    keterangan = json['keterangan'].toString();
+    status = json['status'].toString();
+    geometry = json['geometry'].toString();
   }
   String? id;
   String? namaJalan;

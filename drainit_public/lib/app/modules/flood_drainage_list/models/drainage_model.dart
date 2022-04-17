@@ -9,12 +9,12 @@ class Drainage {
   });
 
   Drainage.fromJson(Map<String, dynamic> json) {
-    id = json['id'] as String;
-    namaJalan = json['nama_jalan'] as String;
-    keterangan = json['keterangan'] as String;
-    status = json['status'];
-    foto = json['foto'] as String;
-    geometry = json['geometry'] as String;
+    id = json['id'].toString();
+    namaJalan = json['nama_jalan'].toString();
+    keterangan = json['keterangan'].toString();
+    status = json['status'].toString();
+    foto = json['foto'].toString();
+    geometry = json['geometry'].toString();
   }
 
   String? id;

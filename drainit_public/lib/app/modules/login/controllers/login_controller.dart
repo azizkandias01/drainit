@@ -5,6 +5,7 @@ import 'package:drainit_flutter/app/modules/login/models/user_model.dart';
 import 'package:drainit_flutter/app/modules/login/providers/user_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -17,6 +18,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
   @override
   void onInit() {
     super.onInit();
+    FlutterNativeSplash.remove();
     box = GetStorage();
 
     //on init state set that state is empty
@@ -53,6 +55,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
         Get.bottomSheet(
           Container(
             key: const Key('error'),
+            height: Get.height / 2.7,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -61,11 +64,12 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SvgPicture.asset(
-                  'assets/svg/not_found.svg',
-                  height: Get.height * 0.3,
+                  'assets/svg/il_err_404.svg',
+                  height: 200,
+                  width: 200,
                 ),
                 Text(
                   'Error ketika login : $err',
@@ -121,13 +125,6 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
 
   @override
   void onClose() {
-    myControllerPassword.dispose();
-    myControllerEmail.dispose();
     super.onClose();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 }
