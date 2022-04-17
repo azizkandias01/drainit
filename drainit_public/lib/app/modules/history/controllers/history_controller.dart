@@ -1,6 +1,7 @@
 import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
 import 'package:drainit_flutter/app/modules/history/providers/history_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class HistoryController extends GetxController with StateMixin {
   RxList<HistoryModel> foundList = <HistoryModel>[].obs;
   late GetStorage box;
   TextEditingController searchController = TextEditingController();
+  final selectedFilter = "semua".obs;
 
   @override
   void onInit() {
@@ -45,6 +47,26 @@ class HistoryController extends GetxController with StateMixin {
           .where((element) =>
               element.namaJalan!.toLowerCase().contains(name.toLowerCase()))
           .toList();
+    }
+    foundList.value = filteredList;
+  }
+
+  void sortHistory(String filter) {
+    List<HistoryModel> filteredList = list;
+    if (filter == "semua") {
+      filteredList = list;
+    } else if (filter == "terbaru") {
+      filteredList.sort((a, b) => timeAgoSinceDate(a.createdAt!)
+          .compareTo(timeAgoSinceDate(b.createdAt!)));
+    } else if (filter == "terlama") {
+      filteredList.sort((a, b) => timeAgoSinceDate(a.createdAt!)
+          .compareTo(timeAgoSinceDate(b.createdAt!)));
+      filteredList = filteredList.reversed.toList();
+    } else if (filter == "status") {
+      filteredList
+          .sort((a, b) => a.statusPengaduan!.compareTo(b.statusPengaduan!));
+    } else if (filter == "jenis") {
+      filteredList.sort((a, b) => a.tipePengaduan!.compareTo(b.tipePengaduan!));
     }
     foundList.value = filteredList;
   }

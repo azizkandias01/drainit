@@ -31,19 +31,73 @@ class HistoryView extends GetView<HistoryController> {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            onSelected: (value) {},
-            itemBuilder: (context) => const [
-              CheckedPopupMenuItem(
+            onSelected: (value) {
+              if (value == "semua") {
+                controller.sortHistory(value.toString());
+              } else if (value == "terbaru") {
+                controller.sortHistory(value.toString());
+              } else if (value == "terlama") {
+                controller.sortHistory(value.toString());
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
                 value: 'semua',
-                child: Text('Semua'),
+                onTap: () {
+                  controller.selectedFilter.value = "semua";
+                },
+                child: Container(
+                    color: controller.selectedFilter.value == "semua"
+                        ? red
+                        : white,
+                    child: Text('Semua')),
               ),
-              CheckedPopupMenuItem(
-                value: 'banjir',
-                child: Text('Titik banjir'),
+              PopupMenuItem(
+                value: 'terbaru',
+                onTap: () {
+                  controller.selectedFilter.value = "terbaru";
+                },
+                child: Container(
+                    color: controller.selectedFilter.value == "terbaru"
+                        ? red
+                        : white,
+                    child: Text('terbaru')),
               ),
-              CheckedPopupMenuItem(
-                value: 'rusak',
-                child: Text('Titik rusak'),
+              PopupMenuItem(
+                value: 'terlama',
+                onTap: () {
+                  controller.selectedFilter.value = "terlama";
+                },
+                child: Container(
+                    color: controller.selectedFilter.value == "terlama"
+                        ? red
+                        : white,
+                    child: Text('terlama')),
+              ),
+              PopupMenuItem(
+                value: 'status',
+                onTap: () {
+                  controller.selectedFilter.value = "status";
+                  controller.sortHistory("status");
+                },
+                child: Container(
+                    padding: EdgeInsets.all(10.r),
+                    color: controller.selectedFilter.value == "status"
+                        ? green
+                        : white,
+                    child: Text('status')),
+              ),
+              PopupMenuItem(
+                value: 'jenis',
+                onTap: () {
+                  controller.selectedFilter.value = "jenis";
+                  controller.sortHistory("jenis");
+                },
+                child: Container(
+                    color: controller.selectedFilter.value == "jenis"
+                        ? red
+                        : white,
+                    child: Text('jenis')),
               ),
             ],
           ),
