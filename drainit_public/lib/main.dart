@@ -10,6 +10,17 @@ import 'app/routes/app_pages.dart';
 void main() async {
   await GetStorage.init();
   GetStorage box = GetStorage();
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Text(
+          "error occured : check console!",
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  };
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

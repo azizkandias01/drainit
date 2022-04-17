@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 class HistoryView extends GetView<HistoryController> {
   @override
   Widget build(BuildContext context) {
+    var selectedFilter = controller.selectedFilter.value;
     return ScreenUtilInit(
       designSize: designSize,
       builder: () => Scaffold(
@@ -33,71 +34,121 @@ class HistoryView extends GetView<HistoryController> {
             ),
             onSelected: (value) {
               if (value == "semua") {
+                selectedFilter = "semua";
                 controller.sortHistory(value.toString());
               } else if (value == "terbaru") {
+                selectedFilter = "terbaru";
+
                 controller.sortHistory(value.toString());
               } else if (value == "terlama") {
+                selectedFilter = "terlama";
+
+                controller.sortHistory(value.toString());
+              } else if (value == "status") {
+                selectedFilter = "status";
+
+                controller.sortHistory(value.toString());
+              } else if (value == "jenis") {
+                selectedFilter = "jenis";
+
                 controller.sortHistory(value.toString());
               }
             },
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'semua',
-                onTap: () {
-                  controller.selectedFilter.value = "semua";
-                },
                 child: Container(
-                    color: controller.selectedFilter.value == "semua"
-                        ? red
-                        : white,
-                    child: Text('Semua')),
+                  height: 20.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.r, vertical: 5.r),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                    color: selectedFilter == "semua" ? green : white,
+                  ),
+                  child: Text(
+                    'Semua',
+                    style: TextStyle(
+                      color: selectedFilter == "semua" ? white : black,
+                      fontSize: 10.sp,
+                    ),
+                  ),
+                ),
               ),
               PopupMenuItem(
                 value: 'terbaru',
-                onTap: () {
-                  controller.selectedFilter.value = "terbaru";
-                },
                 child: Container(
-                    color: controller.selectedFilter.value == "terbaru"
-                        ? red
-                        : white,
-                    child: Text('terbaru')),
+                  height: 20.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.r, vertical: 5.r),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                    color: selectedFilter == "terbaru" ? green : white,
+                  ),
+                  child: Text(
+                    'Terbaru',
+                    style: TextStyle(
+                      color: selectedFilter == "terbaru" ? white : black,
+                      fontSize: 10.sp,
+                    ),
+                  ),
+                ),
               ),
               PopupMenuItem(
                 value: 'terlama',
-                onTap: () {
-                  controller.selectedFilter.value = "terlama";
-                },
                 child: Container(
-                    color: controller.selectedFilter.value == "terlama"
-                        ? red
-                        : white,
-                    child: Text('terlama')),
+                  height: 20.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.r, vertical: 5.r),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                    color: selectedFilter == "terlama" ? green : white,
+                  ),
+                  child: Text(
+                    'Terlama',
+                    style: TextStyle(
+                      color: selectedFilter == "terlama" ? white : black,
+                      fontSize: 10.sp,
+                    ),
+                  ),
+                ),
               ),
               PopupMenuItem(
                 value: 'status',
-                onTap: () {
-                  controller.selectedFilter.value = "status";
-                  controller.sortHistory("status");
-                },
                 child: Container(
-                    padding: EdgeInsets.all(10.r),
-                    color: controller.selectedFilter.value == "status"
-                        ? green
-                        : white,
-                    child: Text('status')),
+                  height: 20.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.r, vertical: 5.r),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                    color: selectedFilter == "status" ? green : white,
+                  ),
+                  child: Text(
+                    'Status',
+                    style: TextStyle(
+                      color: selectedFilter == "status" ? white : black,
+                      fontSize: 10.sp,
+                    ),
+                  ),
+                ),
               ),
               PopupMenuItem(
                 value: 'jenis',
-                onTap: () {
-                  controller.selectedFilter.value = "jenis";
-                  controller.sortHistory("jenis");
-                },
                 child: Container(
-                    color: controller.selectedFilter.value == "jenis"
-                        ? red
-                        : white,
-                    child: Text('jenis')),
+                  height: 20.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.r, vertical: 5.r),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                    color: selectedFilter == "jenis" ? green : white,
+                  ),
+                  child: Text(
+                    'Jenis',
+                    style: TextStyle(
+                      color: selectedFilter == "jenis" ? white : black,
+                      fontSize: 10.sp,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

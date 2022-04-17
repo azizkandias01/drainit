@@ -5,6 +5,7 @@ import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -88,7 +89,7 @@ class DetailView extends GetView<DetailController> {
                                 backgroundColor: Colors.amber,
                                 minRadius: 20.r,
                               ),
-                              20.horizontalSpace,
+                              10.horizontalSpace,
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -98,7 +99,8 @@ class DetailView extends GetView<DetailController> {
                                     textColour: black,
                                   ),
                                   TextPoppinsRegular(
-                                    text: "2 minggu lalu",
+                                    text:
+                                        "${timeAgoSinceDate(controller.detail.createdAt!)}",
                                     fontSize: 11.sp,
                                     textColour: Colors.grey,
                                   ),
@@ -113,24 +115,44 @@ class DetailView extends GetView<DetailController> {
                           20.verticalSpace,
                           Row(
                             children: [
-                              Image(
-                                image: CachedNetworkImageProvider(
-                                  Routes.IMAGEURL + controller.detail.foto!,
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(
+                                    HeroPhotoViewRouteWrapper(
+                                      maxScale: 3.0,
+                                      minScale: 0.5,
+                                      imageProvider: CachedNetworkImageProvider(
+                                        Routes.IMAGEURL +
+                                            controller.detail.foto!,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Hero(
+                                  tag: "image",
+                                  child: Image(
+                                    image: CachedNetworkImageProvider(
+                                      Routes.IMAGEURL + controller.detail.foto!,
+                                    ),
+                                    width: Get.width / 2,
+                                    height: Get.width,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
-                                width: Get.width / 2,
-                                height: Get.width,
-                                fit: BoxFit.fitHeight,
                               ),
                               SizedBox(
                                 width: Get.width / 2,
                                 height: Get.width,
                                 child: GoogleMap(
-                                  initialCameraPosition: const CameraPosition(
-                                      target: LatLng(0, 0)),
+                                  initialCameraPosition: CameraPosition(
+                                      zoom: 15,
+                                      target: controller.geoToLatlong(
+                                          controller.detail.geometry!)),
                                   markers: <Marker>{
-                                    const Marker(
+                                    Marker(
                                         markerId: MarkerId("1"),
-                                        position: LatLng(0, 0))
+                                        position: controller.geoToLatlong(
+                                            controller.detail.geometry!))
                                   },
                                 ),
                               ),
@@ -200,7 +222,9 @@ class DetailView extends GetView<DetailController> {
                           ),
                           const Text("Riwayat Update Laporan")
                               .paddingOnly(left: 20.w),
-                          for (int i = 0; i <= 10; i++)
+                          for (int i = 0;
+                              i < controller.updateReport.value.length;
+                              i++)
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -226,14 +250,25 @@ class DetailView extends GetView<DetailController> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          TextPoppinsBold(
-                                            text: "Muksim Amin",
-                                            fontSize: 12.sp,
-                                            textColour: black,
+                                          Text(
+                                            "${controller.updateReport.value[i].namaPetugas}",
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
+                                          5.verticalSpace,
+                                          Text(
+                                            "Update: ${controller.updateReport.value[i].judul}",
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                          5.verticalSpace,
                                           TextPoppinsRegular(
                                             text:
-                                                "Mempersiapkan alat dan bahan",
+                                                "${controller.updateReport.value[i].deskripsi}",
                                             fontSize: 11.sp,
                                             textColour: black,
                                           ),
@@ -241,13 +276,16 @@ class DetailView extends GetView<DetailController> {
                                       ).paddingAll(10.r),
                                     ),
                                     TextPoppinsRegular(
-                                      text: "1 jam yang lalu",
+                                      text:
+                                          "${controller.updateReport.value[i].waktu}",
                                       fontSize: 11.sp,
                                       textColour: Colors.grey,
                                     ),
                                     5.verticalSpace,
                                     Visibility(
-                                      visible: i.isOdd,
+                                      visible: controller
+                                              .updateReport.value[i].foto !=
+                                          "tidak ada",
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(10.r),
@@ -306,133 +344,6 @@ class DetailView extends GetView<DetailController> {
                 ],
               ),
             ),
-            //   CustomScrollView(
-            //     slivers: [
-            //       const _FlexibleSpaceHeader(),
-            //       SliverPersistentHeader(
-            //         pinned: true,
-            //         delegate: _HeaderSliver(),
-            //       ),
-            //       // for (var i = 0; i < 10; i++) ...[
-            //       //   SliverList(
-            //       //     delegate: SliverChildListDelegate([
-            //       //       TimelineTile(
-            //       //         lineXY: 0.3,
-            //       //         alignment: TimelineAlign.manual,
-            //       //         endChild: Padding(
-            //       //           padding: const EdgeInsets.all(8.0),
-            //       //           child: Container(
-            //       //             width: 274.w,
-            //       //             height: 137.w,
-            //       //             decoration: BoxDecoration(
-            //       //               borderRadius: BorderRadius.circular(
-            //       //                 30.r,
-            //       //               ),
-            //       //               color: kIconColor,
-            //       //             ),
-            //       //             child: Column(
-            //       //               children: [Text("Laporan $i")],
-            //       //             ),
-            //       //           ),
-            //       //         ),
-            //       //         startChild: Container(
-            //       //           color: kIconColor,
-            //       //           child: Text("Senin"),
-            //       //         ),
-            //       //       ),
-            //       //     ]),
-            //       //   ),
-            //       // ],
-            //       SliverList(
-            //         delegate: SliverChildListDelegate(
-            //           [
-            //             SizedBox(
-            //               width: Get.width,
-            //               height: 1000.h,
-            //               child: Padding(
-            //                 padding: EdgeInsets.only(
-            //                   left: 30.w,
-            //                   right: 17.w,
-            //                   top: 20.h,
-            //                 ),
-            //                 child: Column(
-            //                   crossAxisAlignment: CrossAxisAlignment.start,
-            //                   children: [
-            //                     Column(
-            //                       crossAxisAlignment: CrossAxisAlignment.start,
-            //                       children: [
-            //                         Container(
-            //                           width: Get.width,
-            //                           height: 500.h,
-            //                           decoration: BoxDecoration(
-            //                             borderRadius: BorderRadius.circular(
-            //                               30.r,
-            //                             ),
-            //                             color: green2,
-            //                           ),
-            //                           child: Column(
-            //                             children: [
-            //                               Padding(
-            //                                 padding: EdgeInsets.all(20.r),
-            //                                 child: ClipRRect(
-            //                                   borderRadius:
-            //                                       BorderRadius.circular(
-            //                                     30.r,
-            //                                   ),
-            //                                   child: Image(
-            //                                     fit: BoxFit.cover,
-            //                                     image:
-            //                                         CachedNetworkImageProvider(
-            //                                       Routes.IMAGEURL +
-            //                                           controller.detail.foto!,
-            //                                     ),
-            //                                   ),
-            //                                 ),
-            //                               ),
-            //                             ],
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     SizedBox(
-            //                       height: 20.h,
-            //                     ),
-            //                     TextPoppinsBold(
-            //                       text: "Lokasi",
-            //                       textColour: black,
-            //                       fontSize: 16.sp,
-            //                     ),
-            //                     SizedBox(
-            //                       height: 10.h,
-            //                     ),
-            //                     SizedBox(
-            //                       height: 300.h,
-            //                       width: Get.width,
-            //                       child: GoogleMap(
-            //                         initialCameraPosition: CameraPosition(
-            //                           target: controller.geoToLatlong(
-            //                               controller.detail.geometry ?? ""),
-            //                           zoom: 17.0,
-            //                         ),
-            //                         onMapCreated:
-            //                             (GoogleMapController controller) {
-            //                           if (!_googleMapsController.isCompleted) {
-            //                             _googleMapsController
-            //                                 .complete(controller);
-            //                           }
-            //                         },
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             onError: (err) {
               return GestureDetector(
                 onTap: () {

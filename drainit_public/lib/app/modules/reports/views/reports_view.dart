@@ -20,6 +20,7 @@ class ReportsView extends GetView<ReportsController> {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       builder: () => Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Obx(
             () => Text(
@@ -257,7 +258,7 @@ class ReportsView extends GetView<ReportsController> {
             fontSize: 16.sp,
             borderRadius: 12.w,
             height: 56.h,
-            width: 376.w,
+            width: Get.width,
             color: controller.page.value == 1 ? Colors.red : Colors.green,
             press: () {
               controller.validateReportForm(
@@ -270,7 +271,6 @@ class ReportsView extends GetView<ReportsController> {
             },
           ),
         ),
-        SizedBox(height: 20.h),
       ],
     );
   }
