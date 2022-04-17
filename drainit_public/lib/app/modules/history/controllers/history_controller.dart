@@ -54,7 +54,7 @@ class HistoryController extends GetxController with StateMixin {
       case "NOT_YET_VERIFIED":
         return Colors.orange;
       case "ON_PROGRESS":
-        return Colors.yellow;
+        return Colors.purple;
       case "COMPLETED":
         return Colors.green;
       case "REFUSED":

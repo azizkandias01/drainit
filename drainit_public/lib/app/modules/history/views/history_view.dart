@@ -3,6 +3,7 @@ import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,6 +26,27 @@ class HistoryView extends GetView<HistoryController> {
           elevation: 0,
           backgroundColor: white,
           centerTitle: true,
+          leading: PopupMenuButton(
+            icon: const Icon(Icons.filter_list, color: black),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            onSelected: (value) {},
+            itemBuilder: (context) => const [
+              CheckedPopupMenuItem(
+                value: 'semua',
+                child: Text('Semua'),
+              ),
+              CheckedPopupMenuItem(
+                value: 'banjir',
+                child: Text('Titik banjir'),
+              ),
+              CheckedPopupMenuItem(
+                value: 'rusak',
+                child: Text('Titik rusak'),
+              ),
+            ],
+          ),
           actions: [
             IconButton(
               icon: const Icon(
@@ -40,42 +62,31 @@ class HistoryView extends GetView<HistoryController> {
           (state) => SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.menu),
-                      iconSize: 24.sp,
-                    ),
-                    Flexible(
-                      child: SizedBox(
-                        height: 60.h,
-                        child: TextField(
-                          controller: controller.searchController,
-                          onChanged: (value) {
-                            controller.searchHistory(value);
-                          },
-                          decoration: InputDecoration(
-                            hintText: "Cari laporan",
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 10.sp,
-                            ),
-                            suffixIcon: const Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.r),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Colors.grey[200],
-                          ),
-                        ).paddingAll(10.r),
+                SizedBox(
+                  height: 60.h,
+                  child: TextField(
+                    controller: controller.searchController,
+                    onChanged: (value) {
+                      controller.searchHistory(value);
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Cari laporan",
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10.sp,
                       ),
+                      suffixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
                     ),
-                  ],
+                  ).paddingAll(10.r),
                 ),
                 RefreshIndicator(
                   onRefresh: () => controller.loadHistory(),
@@ -184,7 +195,8 @@ class HistoryView extends GetView<HistoryController> {
                                         ),
                                         5.verticalSpace,
                                         Text(
-                                          "2 jam yang lalu",
+                                          timeAgoSinceDate(controller.foundList
+                                              .value[index].createdAt!),
                                           style: TextStyle(
                                             fontSize: 11.sp,
                                             color: Colors.grey,

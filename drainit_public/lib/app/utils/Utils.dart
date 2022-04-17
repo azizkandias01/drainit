@@ -5,6 +5,46 @@ import 'package:get/get.dart';
 
 import '../components/text_poppins.dart';
 
+String timeAgoSinceDate(String dateString, {bool numericDates = true}) {
+  final DateTime reportDate = DateTime.parse(dateString);
+  final date2 = DateTime.now();
+  final difference = date2.difference(reportDate);
+
+  if (difference.inDays > 60) {
+    return '2 months ago';
+  }
+  if (difference.inDays > 30) {
+    return '1 month ago';
+  }
+  if (difference.inDays > 21) {
+    return '4 weeks ago';
+  }
+  if (difference.inDays > 15) {
+    return '3 weeks ago';
+  }
+  if (difference.inDays > 8) {
+    return '2 weeks ago';
+  } else if ((difference.inDays / 7).floor() >= 1) {
+    return (numericDates) ? '1 week ago' : 'Last week';
+  } else if (difference.inDays >= 2) {
+    return '${difference.inDays} days ago';
+  } else if (difference.inDays >= 1) {
+    return (numericDates) ? '1 day ago' : 'Yesterday';
+  } else if (difference.inHours >= 2) {
+    return '${difference.inHours} hours ago';
+  } else if (difference.inHours >= 1) {
+    return (numericDates) ? '1 hour ago' : 'An hour ago';
+  } else if (difference.inMinutes >= 2) {
+    return '${difference.inMinutes} minutes ago';
+  } else if (difference.inMinutes >= 1) {
+    return (numericDates) ? '1 minute ago' : 'A minute ago';
+  } else if (difference.inSeconds >= 3) {
+    return '${difference.inSeconds} seconds ago';
+  } else {
+    return 'Just now';
+  }
+}
+
 String imagePath() =>
     "https://gis-drainase.pocari.id/storage/app/public/images/";
 

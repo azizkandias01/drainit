@@ -2,6 +2,7 @@
 
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -92,22 +93,28 @@ class BodyBuild extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ).paddingOnly(left: 20.r),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Log out',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                const Icon(
-                  Icons.arrow_forward,
-                  color: Colors.black,
-                ),
-              ],
-            ).paddingAll(20.r),
+            GestureDetector(
+              onTap: () => controller.logoutAccount(),
+              child: Container(
+                color: white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Log out',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: Colors.black,
+                    ),
+                  ],
+                ).paddingAll(20.r),
+              ),
+            ),
           ],
         ),
       ),
@@ -329,7 +336,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              '${controller.dataProfile.createdAt}',
+              timeAgoSinceDate(controller.dataProfile.createdAt!),
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -337,56 +344,72 @@ class PersonInfo extends StatelessWidget {
             ),
           ],
         ).paddingAll(10.r),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(Routes.EDIT_PROFILE, arguments: controller.dataProfile);
+          },
+          child: Container(
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.edit,
+                      color: Colors.black,
+                    ),
+                    10.horizontalSpace,
+                    Text(
+                      'Edit Profil',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
                 const Icon(
-                  Icons.edit,
+                  Icons.arrow_forward,
                   color: Colors.black,
                 ),
-                10.horizontalSpace,
-                Text(
-                  'Edit Profil',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
               ],
-            ),
-            const Icon(
-              Icons.arrow_forward,
-              color: Colors.black,
-            ),
-          ],
-        ).paddingAll(10.r),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+            ).paddingAll(10.r),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(Routes.EDIT_PASSWORD);
+          },
+          child: Container(
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.lock,
+                      color: Colors.black,
+                    ),
+                    10.horizontalSpace,
+                    Text(
+                      'Edit password',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
                 const Icon(
-                  Icons.lock,
+                  Icons.arrow_forward,
                   color: Colors.black,
                 ),
-                10.horizontalSpace,
-                Text(
-                  'Edit password',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
               ],
-            ),
-            const Icon(
-              Icons.arrow_forward,
-              color: Colors.black,
-            ),
-          ],
-        ).paddingAll(10.r),
+            ).paddingAll(10.r),
+          ),
+        ),
       ],
     );
   }
