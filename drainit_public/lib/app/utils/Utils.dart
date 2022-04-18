@@ -1,10 +1,29 @@
 // ignore_for_file: file_names
 
+import 'dart:async';
+
+import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:photo_view/photo_view.dart';
 
-import '../components/text_poppins.dart';
+Future<LatLng> getPosition() async {
+  final Location location = Location();
+  if (!await location.serviceEnabled()) {
+    if (!await location.requestService()) throw 'GPS service is disabled';
+    await getPosition();
+  }
+  if (await location.hasPermission() == PermissionStatus.denied) {
+    if (await location.requestPermission() != PermissionStatus.granted) {
+      throw 'No GPS permissions';
+    }
+    await getPosition();
+  }
+  final LocationData data = await location.getLocation();
+  return LatLng(data.latitude!, data.longitude!);
+}
 
 class HeroPhotoViewRouteWrapper extends StatelessWidget {
   const HeroPhotoViewRouteWrapper({

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,9 @@ class HomeView extends GetView<HomeController> {
               ),
               FlatButton(
                 child: Text('Yes'),
-                onPressed: () {},
+                onPressed: () {
+                  exit(0);
+                },
               ),
             ],
           ),

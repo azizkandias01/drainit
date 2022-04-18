@@ -8,26 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
 import '../controllers/flood_drainage_list_controller.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 late LatLng _initialPosition;
-
-Future<LatLng> _getPosition() async {
-  final Location location = Location();
-  if (!await location.serviceEnabled()) {
-    if (!await location.requestService()) throw 'GPS service is disabled';
-  }
-  if (await location.hasPermission() == PermissionStatus.denied) {
-    if (await location.requestPermission() != PermissionStatus.granted) {
-      throw 'No GPS permissions';
-    }
-  }
-  final LocationData data = await location.getLocation();
-  return LatLng(data.latitude!, data.longitude!);
-}
 
 class FloodDrainageListView extends GetView<FloodDrainageListController> {
   @override
@@ -140,7 +125,7 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
 class Map extends GetView<FloodDrainageListController> {
   static final Completer<GoogleMapController> _controller = Completer();
   static Future<void> _goToCurrentLocation() async {
-    _initialPosition = await _getPosition();
+    _initialPosition = await getPosition();
     final CameraPosition currentLocation = CameraPosition(
       target: _initialPosition,
       zoom: 15.151926040649414,
