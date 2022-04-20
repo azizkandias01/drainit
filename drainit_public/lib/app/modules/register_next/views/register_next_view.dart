@@ -19,7 +19,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         backgroundColor: white,
         resizeToAvoidBottomInset: false,
         body: Padding(

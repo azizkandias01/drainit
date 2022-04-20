@@ -20,7 +20,7 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
     loadFloodMarker(controller);
     return ScreenUtilInit(
       designSize: const Size(414, 896),
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         appBar: AppBar(
           title: const Text(
             'Peta titik',
@@ -72,7 +72,20 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
                 Icons.refresh,
                 color: black,
               ),
-              onPressed: () => {controller.rebuildAllChildren(context)},
+              onPressed: () {
+                Get.dialog(Container(
+                  color: Colors.white,
+                  width: ScreenUtil().setWidth(100),
+                  height: ScreenUtil().setHeight(100),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ));
+                controller.loadDrainagePoint();
+                controller.loadFloodPoint();
+                controller.loadMapDrainage();
+                Get.back();
+              },
             ),
           ],
         ),

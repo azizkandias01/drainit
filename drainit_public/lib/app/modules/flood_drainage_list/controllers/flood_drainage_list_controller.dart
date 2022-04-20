@@ -7,7 +7,6 @@ import 'package:drainit_flutter/app/modules/flood_drainage_list/models/flood_mod
 import 'package:drainit_flutter/app/modules/flood_drainage_list/providers/drainage_map_provider.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/providers/drainage_provider.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/providers/flood_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -31,6 +30,8 @@ class FloodDrainageListController extends GetxController {
   ///list of markers that observable means the variable could change
   List<Marker> markers = <Marker>[].obs;
 
+  final loading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -39,20 +40,13 @@ class FloodDrainageListController extends GetxController {
     loadMapDrainage();
   }
 
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-
-    (context as Element).visitChildren(rebuild);
-  }
-
   ///function for load flood points from API
   Future<void> loadFloodPoint() async {
+    loading.value = true;
     final List<FloodModel> result =
         await FloodModelProvider().loadFloodPoint() as List<FloodModel>;
     floodPoint = result;
+    loading.value = false;
   }
 
   ///function for load broken drainage points from API

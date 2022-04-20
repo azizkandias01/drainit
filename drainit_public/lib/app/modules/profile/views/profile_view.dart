@@ -16,7 +16,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: designSize,
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,

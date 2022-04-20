@@ -9,6 +9,25 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:photo_view/photo_view.dart';
 
+Color getStatusColor(String status) {
+  switch (status) {
+    case "NOT_YET_VERIFIED":
+      return Colors.orange.shade300;
+    case "ON_PROGRESS":
+      return Colors.purple.shade300;
+    case "COMPLETED":
+      return Colors.green.shade300;
+    case "REFUSED":
+      return Colors.red.shade300;
+    case "Banjir":
+      return Colors.blue.shade300;
+    case "Drainase Rusak":
+      return Colors.brown.shade300;
+    default:
+      return Colors.grey.shade300;
+  }
+}
+
 Future<LatLng> getPosition() async {
   final Location location = Location();
   if (!await location.serviceEnabled()) {

@@ -27,13 +27,17 @@ void main() async {
   runApp(
     ScreenUtilInit(
       designSize: const Size(414, 896),
-      builder: () => GetMaterialApp(
+      builder: (context) => GetMaterialApp(
         title: "Application",
         initialRoute: box.hasData(Routes.TOKEN) ? Routes.HOME : Routes.LOGIN,
         getPages: AppPages.routes,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           backgroundColor: Colors.white,
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.white,
+            elevation: 0,
+          ),
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(

@@ -1,32 +1,12 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
-import 'dart:math';
-
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/modules/searchmap/controllers/searchmap_controller.dart';
 import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-import '../controllers/searchmap_controller.dart';
-
-// ignore: must_be_immutable
 class SearchmapView extends GetView<SearchmapController> {
-  final fabController = FloatingSearchBarController();
-  int _index = 0;
-
-  int get index => _index;
-
-  set index(int value) {
-    _index = min(value, 2);
-    _index == 2 ? fabController.hide() : fabController.show();
-    // setState(() {});
-  }
-
-  late bool isPortrait;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,9 +63,19 @@ class SearchmapView extends GetView<SearchmapController> {
                       height: 300,
                       child: Column(
                         children: [
-                          Text('Lat: ${latLng.latitude}'),
                           Text(await controller.getAddress(
                               LatLng(latLng.latitude, latLng.longitude))),
+                          ElevatedButton(
+                            onPressed: () async {
+                              Get.back();
+                              Get.back(result: [
+                                await controller.getAddress(
+                                    LatLng(latLng.latitude, latLng.longitude)),
+                                LatLng(latLng.latitude, latLng.longitude)
+                              ]);
+                            },
+                            child: const Text('select this coordinate'),
+                          )
                         ],
                       ),
                     ),
@@ -109,7 +99,7 @@ class SearchmapSearchDelegate extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -148,18 +138,37 @@ class SearchmapSearchDelegate extends SearchDelegate {
                   matchData.value[index].long, controller.googleMapController);
               controller.myMarker.clear();
               controller.myMarker.add(Marker(
-                markerId: MarkerId('my'),
+                markerId: const MarkerId('my'),
                 position: LatLng(
                     matchData.value[index].lat, matchData.value[index].long),
-                icon: BitmapDescriptor.defaultMarker,
               ));
               Get.bottomSheet(
                 Container(
                   color: Colors.white,
                   height: 300,
-                  child: Text(await controller.getAddress(LatLng(
-                      matchData.value[index].lat,
-                      matchData.value[index].long))),
+                  child: Column(
+                    children: [
+                      Text(await controller.getAddress(LatLng(
+                          matchData.value[index].lat,
+                          matchData.value[index].long))),
+                      ElevatedButton(
+                        onPressed: () async {
+                          Get.back();
+                          Get.back(
+                            result: [
+                              await controller.getAddress(
+                                LatLng(matchData.value[index].lat,
+                                    matchData.value[index].long),
+                              ),
+                              LatLng(matchData.value[index].lat,
+                                  matchData.value[index].long)
+                            ],
+                          );
+                        },
+                        child: const Text('select this coordinate'),
+                      )
+                    ],
+                  ),
                 ),
               );
             },
@@ -210,9 +219,29 @@ class SearchmapSearchDelegate extends SearchDelegate {
                 Container(
                   color: Colors.white,
                   height: 300,
-                  child: Text(await controller.getAddress(LatLng(
-                      matchData.value[index].lat,
-                      matchData.value[index].long))),
+                  child: Column(
+                    children: [
+                      Text(await controller.getAddress(LatLng(
+                          matchData.value[index].lat,
+                          matchData.value[index].long))),
+                      ElevatedButton(
+                        onPressed: () async {
+                          Get.back();
+                          Get.back(
+                            result: [
+                              await controller.getAddress(
+                                LatLng(matchData.value[index].lat,
+                                    matchData.value[index].long),
+                              ),
+                              LatLng(matchData.value[index].lat,
+                                  matchData.value[index].long)
+                            ],
+                          );
+                        },
+                        child: const Text('select this coordinate'),
+                      )
+                    ],
+                  ),
                 ),
               );
             },

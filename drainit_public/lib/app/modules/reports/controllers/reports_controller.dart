@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:drainit_flutter/app/modules/reports/providers/reports_provider.dart';
@@ -76,35 +77,62 @@ class ReportsController extends GetxController with StateMixin {
     final reportData = {
       'nama_jalan': namaJalan,
       'foto': foto,
-      'tipe_pengaduan': tipePengaduan,
       'deskripsi_pengaduan': deskripsiPengaduan,
       'geometry':
-          "{\"type\": \"Point\", \"coordinates\": [${geometry.latitude},${geometry.longitude}]}",
+          "{\"type\": \"Point\", \"coordinates\": [${geometry.longitude},${geometry.latitude}]}",
     };
+    log(reportData.toString());
     change(
       null,
       status: RxStatus.loading(),
     );
+    if (tipePengaduan == "Banjir") {
+      print("Banjir");
+      ReportsProvider()
+          .createFloodReport(reportData, box.read(Routes.TOKEN).toString())
+          .then(
+        (resp) => {
+          change(
+            resp,
+            status: RxStatus.success(),
+          ),
+          Get.offAllNamed(Routes.HOME),
+          showSuccessSnackBar("Laporan berhasil dibuat!"),
+        },
+        onError: (err) {
+          change(
+            null,
+            status: RxStatus.error('Error occured : $err'),
+          );
+          print(err);
+          showErrorSnackBar("Terjadi kesalahan pada server : $err");
+        },
+      );
+    } else {
+      print("drainase");
 
-    ReportsProvider()
-        .createReport(reportData, box.read(Routes.TOKEN).toString())
-        .then(
-      (resp) => {
-        change(
-          resp,
-          status: RxStatus.success(),
-        ),
-        Get.offAllNamed(Routes.HOME),
-        showSuccessSnackBar("Laporan berhasil dibuat!"),
-      },
-      onError: (err) {
-        change(
-          null,
-          status: RxStatus.error('Error occured : $err'),
-        );
-        showErrorSnackBar("Terjadi kesalahan pada server : $err");
-      },
-    );
+      ReportsProvider()
+          .createBrokenDrainageReport(
+              reportData, box.read(Routes.TOKEN).toString())
+          .then(
+        (resp) => {
+          change(
+            resp,
+            status: RxStatus.success(),
+          ),
+          Get.offAllNamed(Routes.HOME),
+          showSuccessSnackBar("Laporan berhasil dibuat!"),
+        },
+        onError: (err) {
+          change(
+            null,
+            status: RxStatus.error('Error occured : $err'),
+          );
+          print(err);
+          showErrorSnackBar("Terjadi kesalahan pada server : $err");
+        },
+      );
+    }
   }
 
   Future<void> getImage(ImageSource imageSource) async {

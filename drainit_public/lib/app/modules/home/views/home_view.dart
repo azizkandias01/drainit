@@ -18,16 +18,16 @@ class HomeView extends GetView<HomeController> {
       onWillPop: () async {
         Get.dialog(
           AlertDialog(
-            title: Text('Are you sure you want to exit?'),
+            title: const Text('Are you sure you want to exit?'),
             actions: <Widget>[
               FlatButton(
-                child: Text('No'),
+                child: const Text('No'),
                 onPressed: () {
                   Get.back();
                 },
               ),
               FlatButton(
-                child: Text('Yes'),
+                child: const Text('Yes'),
                 onPressed: () {
                   exit(0);
                 },
