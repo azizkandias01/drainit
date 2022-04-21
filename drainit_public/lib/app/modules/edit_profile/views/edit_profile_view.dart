@@ -32,7 +32,8 @@ class EditProfileView extends GetView<EditProfileController> {
                 Icons.arrow_back,
                 color: Colors.black,
               ),
-              onPressed: () => Get.back(),
+              onPressed: () =>
+                  Get.offAllNamed(Routes.HOME, parameters: {'index': "3"}),
             ),
           ),
           body: Column(

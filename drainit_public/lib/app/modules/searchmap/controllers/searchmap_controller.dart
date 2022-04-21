@@ -55,7 +55,7 @@ class SearchmapController extends GetxController {
     final subAdministrativeArea = first.subAdministrativeArea ?? '';
     final street = first.street ?? '';
     final addressLine =
-        '$street,$locality,$subLocality,$subAdministrativeArea,$administrativeArea';
+        '$street, $locality, $subLocality, $subAdministrativeArea, $administrativeArea';
     return addressLine;
   }
 }

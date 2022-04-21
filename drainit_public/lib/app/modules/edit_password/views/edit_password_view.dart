@@ -32,7 +32,8 @@ class EditPasswordView extends GetView<EditPasswordController> {
                 Icons.arrow_back,
                 color: Colors.black,
               ),
-              onPressed: () => Get.back(),
+              onPressed: () =>
+                  Get.offAllNamed(Routes.HOME, parameters: {'index': "3"}),
             ),
           ),
           backgroundColor: white,

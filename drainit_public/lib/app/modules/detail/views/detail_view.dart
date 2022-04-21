@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
@@ -94,20 +94,20 @@ class DetailView extends GetView<DetailController> {
               appBar: AppBar(
                 backgroundColor: white,
                 elevation: 0,
-                title: const Text(
-                  "Detail Laporan",
-                  style: TextStyle(color: black),
+                title: TextMedium(
+                  text: "Detail Laporan",
+                  fontSize: 18.sp,
                 ),
                 centerTitle: true,
                 toolbarHeight: 50.h,
                 leading: IconButton(
                   iconSize: 24.sp,
-                  icon: const Icon(
-                    Icons.arrow_back_outlined,
+                  icon: Icon(
+                    Icons.adaptive.arrow_back_outlined,
                     color: black,
                   ),
                   onPressed: () {
-                    print("back");
+                    Get.offAllNamed(Routes.HOME, parameters: {'index': "1"});
                   },
                 ),
                 actions: [
@@ -144,180 +144,288 @@ class DetailView extends GetView<DetailController> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextPoppinsBold(
+                                const TextBold(
                                   text: "Aziz Kandias",
-                                  fontSize: 12.sp,
-                                  textColour: black,
                                 ),
-                                TextPoppinsRegular(
-                                  text:
-                                      "${timeAgoSinceDate(controller.detail.createdAt!)}",
-                                  fontSize: 11.sp,
+                                TextRegular(
+                                  text: timeAgoSinceDate(
+                                    controller.detail.createdAt!,
+                                  ),
                                   textColour: Colors.grey,
                                 ),
                               ],
                             ),
                           ],
-                        ).paddingOnly(left: 20.w, right: 20.w),
-                        20.verticalSpace,
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 5.r,
-                                vertical: 5.r,
-                              ),
-                              height: 20.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5.r),
-                                ),
-                                color:
-                                    controller.detail.tipePengaduan == "Banjir"
-                                        ? Colors.lightBlue
-                                        : Colors.brown,
-                              ),
-                              child: Text(
-                                "${controller.detail.tipePengaduan}",
-                                style: TextStyle(
-                                  fontSize: 10.sp,
-                                  color: white,
-                                ),
+                        ).paddingOnly(left: 20.w, right: 20.w, bottom: 10.h),
+                        Container(
+                          decoration: const BoxDecoration(
+                            border: Border.fromBorderSide(
+                              BorderSide(
+                                color: Colors.grey,
+                                width: .3,
                               ),
                             ),
-                            10.horizontalSpace,
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 5.r,
-                                vertical: 5.r,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextBold(
+                                text: "Jenis Dan Status Laporan",
                               ),
-                              height: 20.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5.r),
-                                ),
-                                color: getStatusColor(
-                                  controller.detail.statusPengaduan!,
-                                ),
-                              ),
-                              child: Text(
-                                controller.detail.statusPengaduan!,
-                                style: TextStyle(
-                                  fontSize: 10.sp,
-                                  color: white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ).paddingOnly(left: 20.w, right: 20.w),
-                        20.verticalSpace,
-                        const Text(
-                                "Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau presentasi visual seperti font, tipografi, dan tata letak.")
-                            .paddingOnly(left: 20.w, right: 20.w, bottom: 20.h),
-                        // Container(
-                        //   height: 60.h,
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.all(
-                        //       Radius.circular(10.r),
-                        //     ),
-                        //     border: Border.all(
-                        //       color: Colors.grey,
-                        //     ),
-                        //   ),
-                        //   child: Row(children: [
-                        //     Text(
-                        //       "${controller.detail.namaJalan}",
-                        //       style: TextStyle(
-                        //         fontSize: 12.sp,
-                        //         color: Colors.grey,
-                        //       ),
-                        //     ),
-                        //   ]),
-                        // ).paddingAll(20.r),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(
-                                  HeroPhotoViewRouteWrapper(
-                                    maxScale: 3.0,
-                                    minScale: 0.5,
-                                    imageProvider: CachedNetworkImageProvider(
-                                      Routes.IMAGEURL + controller.detail.foto!,
+                              20.verticalSpace,
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5.r,
+                                      vertical: 5.r,
+                                    ),
+                                    alignment: Alignment.center,
+                                    height: 30.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5.r),
+                                      ),
+                                      color: getStatusColor(
+                                        controller.detail.tipePengaduan!,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      controller.detail.tipePengaduan!,
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        color: white,
+                                      ),
                                     ),
                                   ),
-                                );
-                              },
-                              child: Hero(
-                                tag: "image",
-                                child: Image(
-                                  image: CachedNetworkImageProvider(
-                                    Routes.IMAGEURL + controller.detail.foto!,
+                                  10.horizontalSpace,
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5.r,
+                                      vertical: 5.r,
+                                    ),
+                                    alignment: Alignment.center,
+                                    height: 30.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5.r),
+                                      ),
+                                      color: getStatusColor(
+                                        controller.detail.statusPengaduan!,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      controller.detail.statusPengaduan!,
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        color: white,
+                                      ),
+                                    ),
                                   ),
-                                  width: Get.width / 2,
-                                  height: Get.width,
-                                  fit: BoxFit.fitHeight,
+                                ],
+                              ),
+                            ],
+                          ).paddingAll(20.r),
+                        ),
+                        Container(
+                          width: Get.width,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey,
+                                width: .3,
+                              ),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextBold(
+                                text: "Deskripi Laporan",
+                              ),
+                              10.verticalSpace,
+                              Text(
+                                '${controller.detail.deskripsiPengaduan}',
+                              )
+                            ],
+                          ).paddingAll(20.r),
+                        ),
+                        Container(
+                          width: Get.width,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey,
+                                width: .3,
+                              ),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextBold(
+                                text: "Nama Jalan",
+                              ),
+                              10.verticalSpace,
+                              Text(
+                                '${controller.detail.namaJalan}',
+                              )
+                            ],
+                          ).paddingAll(20.r),
+                        ),
+                        Container(
+                          width: Get.width,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey,
+                                width: .3,
+                              ),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextBold(
+                                text: "Laporan Ditangani Oleh",
+                              ),
+                              10.verticalSpace,
+                              Text(
+                                '${controller.detail.namaPetugas}',
+                              )
+                            ],
+                          ).paddingAll(20.r),
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey,
+                                width: .3,
+                              ),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextBold(
+                                text: "Foto dan Lokasi Laporan",
+                              ),
+                              10.verticalSpace,
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(
+                                    () => HeroPhotoViewRouteWrapper(
+                                      maxScale: 3.0,
+                                      minScale: 0.5,
+                                      imageProvider: CachedNetworkImageProvider(
+                                        Routes.IMAGEURL +
+                                            controller.detail.foto!,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.r),
+                                  ),
+                                  child: Hero(
+                                    tag: "image",
+                                    child: Image(
+                                      image: CachedNetworkImageProvider(
+                                        Routes.IMAGEURL +
+                                            controller.detail.foto!,
+                                      ),
+                                      width: Get.width,
+                                      height: 200.w,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: Get.width / 2,
-                              height: Get.width,
-                              child: GoogleMap(
-                                initialCameraPosition: CameraPosition(
-                                    zoom: 15,
-                                    target: controller.geoToLatlong(
-                                        controller.detail.geometry!)),
-                                markers: <Marker>{
-                                  Marker(
-                                      markerId: MarkerId("1"),
-                                      position: controller.geoToLatlong(
-                                          controller.detail.geometry!))
-                                },
+                              20.verticalSpace,
+                              ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.r),
+                                ),
+                                child: SizedBox(
+                                  width: Get.width,
+                                  height: 200.w,
+                                  child: GoogleMap(
+                                    initialCameraPosition: CameraPosition(
+                                        zoom: 15,
+                                        target: controller.geoToLatlong(
+                                            controller.detail.geometry!)),
+                                    markers: <Marker>{
+                                      Marker(
+                                          markerId: MarkerId("1"),
+                                          position: controller.geoToLatlong(
+                                              controller.detail.geometry!))
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const Text(
-                          "Tanggapan anda 5 hari yang lalu",
-                          style: TextStyle(color: Colors.grey),
-                        ).paddingOnly(left: 20.w, top: 10.h),
-                        Divider(
-                          thickness: 1.h,
+                            ],
+                          ).paddingAll(20.r),
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 20.w, vertical: 10.h),
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CircleAvatar(
-                                backgroundImage:
-                                    const CachedNetworkImageProvider(
-                                  "https://i.pravatar.cc/300",
-                                ),
-                                backgroundColor: Colors.amber,
-                                minRadius: 20.r,
+                              const TextBold(
+                                text: "Tanggapan Anda",
                               ),
-                              10.horizontalSpace,
-                              Flexible(
-                                child: AutoSizeText(
-                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
+                              20.verticalSpace,
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage:
+                                        const CachedNetworkImageProvider(
+                                      "https://i.pravatar.cc/300",
+                                    ),
+                                    backgroundColor: Colors.amber,
+                                    minRadius: 20.r,
                                   ),
-                                  maxLines: 5,
-                                ),
+                                  10.horizontalSpace,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextBold(
+                                        text: controller.detail.namaPelapor!,
+                                        fontSize: 16.sp,
+                                      ),
+                                      TextRegular(
+                                        text: controller.detail.createdAt!,
+                                        fontSize: 14.sp,
+                                        textColour: Colors.grey,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              10.verticalSpace,
+                              Text(
+                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                               ),
                             ],
                           ),
                         ),
-                        Divider(
-                          thickness: 1.h,
+                        const Divider(
+                          height: .3,
+                          color: Colors.grey,
                         ),
-                        const Text(
-                          "Riwayat Update Laporan Petugas",
-                          style: TextStyle(color: Colors.grey),
-                        ).paddingOnly(left: 20.w),
+                        const TextBold(text: "Riwayat Update Laporan")
+                            .paddingAll(
+                          20.r,
+                        ),
+                        if (controller.updateReport.value.isEmpty)
+                          const Center(
+                                  child:
+                                      Text("Belum ada update untuk sekarang"))
+                              .paddingAll(20.r),
                         for (int i = 0;
                             i < controller.updateReport.value.length;
                             i++)

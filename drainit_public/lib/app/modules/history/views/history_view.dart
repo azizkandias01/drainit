@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
-import 'package:drainit_flutter/app/components/text_ceraround.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
@@ -19,7 +19,7 @@ class HistoryView extends GetView<HistoryController> {
       designSize: designSize,
       builder: (context) => Scaffold(
         appBar: AppBar(
-          title: TextCeraRoundBold(
+          title: TextBold(
             text: "Riwayat Laporan",
             fontSize: ScreenUtil().setSp(23),
           ).paddingOnly(left: 15.r),
@@ -184,8 +184,11 @@ class HistoryView extends GetView<HistoryController> {
                                 ),
                               ),
                             )
-                          : BuildSortedHistoryList(controller: controller)
-                              .paddingOnly(bottom: 20.h),
+                          : Scrollbar(
+                              child:
+                                  BuildSortedHistoryList(controller: controller)
+                                      .paddingOnly(bottom: 20.h),
+                            ),
                     ),
                   );
                 },
@@ -374,9 +377,8 @@ class BuildSortedHistoryList extends StatelessWidget {
                 Get.offNamed(Routes.DETAIL,
                     arguments: controller.sortedList.value[index].id);
               },
-              title: TextCeraRoundRegular(
+              title: TextBold(
                 text: " ${controller.sortedList.value[index].namaJalan!}",
-                fontSize: 14.sp,
               ).paddingAll(5.r),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -456,13 +458,6 @@ class BuildSortedHistoryList extends StatelessWidget {
                   ),
                 ],
               ).paddingAll(5.r),
-              // trailing: Image(
-              //   image: CachedNetworkImageProvider(
-              //       Routes.IMAGEURL + controller.sortedList.value[index].foto!),
-              //   height: 50,
-              //   width: 50,
-              //   fit: BoxFit.fill,
-              // ),
             )
           : Center(
               child: Text(

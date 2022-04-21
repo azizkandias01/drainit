@@ -59,16 +59,31 @@ class HeroPhotoViewRouteWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(
-        height: MediaQuery.of(context).size.height,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Foto Laporan',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.black,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      child: PhotoView(
-        imageProvider: imageProvider,
-        backgroundDecoration: backgroundDecoration,
-        minScale: minScale,
-        maxScale: maxScale,
-        heroAttributes: const PhotoViewHeroAttributes(tag: "image"),
+      body: Container(
+        constraints: BoxConstraints.expand(
+          height: MediaQuery.of(context).size.height,
+        ),
+        child: PhotoView(
+          imageProvider: imageProvider,
+          backgroundDecoration: backgroundDecoration,
+          minScale: minScale,
+          maxScale: maxScale,
+          heroAttributes: const PhotoViewHeroAttributes(tag: "image"),
+        ),
       ),
     );
   }

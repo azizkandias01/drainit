@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
-import 'package:drainit_flutter/app/components/text_ceraround.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class ReportsView extends GetView<ReportsController> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Obx(
-            () => TextCeraRoundBold(
+            () => TextBold(
               text:
                   'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
               fontSize: 18.sp,
@@ -39,8 +39,6 @@ class ReportsView extends GetView<ReportsController> {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const HeaderReports(),
-                  SizedBox(height: 10.h),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -60,9 +58,9 @@ class ReportsView extends GetView<ReportsController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextCeraRoundBold(
+                        TextBold(
                           text: "Pilih jenis laporan",
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                         ),
                         10.verticalSpace,
                         Row(
@@ -86,9 +84,9 @@ class ReportsView extends GetView<ReportsController> {
                                   ),
                                 ),
                                 child: Center(
-                                  child: TextCeraRoundBold(
+                                  child: TextBold(
                                     text: "Banjir",
-                                    fontSize: 16.sp,
+                                    fontSize: 14.sp,
                                     textColour: controller.page.value == 0
                                         ? Colors.white
                                         : Colors.black,
@@ -115,9 +113,9 @@ class ReportsView extends GetView<ReportsController> {
                                   ),
                                 ),
                                 child: Center(
-                                  child: TextCeraRoundBold(
+                                  child: TextBold(
                                     text: "Drainase Rusak",
-                                    fontSize: 16.sp,
+                                    fontSize: 14.sp,
                                     textColour: controller.page.value == 1
                                         ? Colors.white
                                         : Colors.black,
@@ -130,7 +128,7 @@ class ReportsView extends GetView<ReportsController> {
                       ],
                     ).paddingAll(20.r),
                   ),
-                  SizedBox(height: 20.h),
+                  10.verticalSpace,
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -150,9 +148,9 @@ class ReportsView extends GetView<ReportsController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextCeraRoundBold(
+                        TextBold(
                           text: "Pilih foto lokasi",
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                         ),
                         SizedBox(height: 10.h),
                         if (controller.bytes64Image.value.isEmpty)
@@ -188,7 +186,7 @@ class ReportsView extends GetView<ReportsController> {
                                     color: Colors.grey,
                                   ),
                                   SizedBox(width: 10.w),
-                                  TextCeraRoundLight(
+                                  TextLight(
                                     text: "Kamera",
                                     fontSize: 12.sp,
                                   ),
@@ -206,7 +204,7 @@ class ReportsView extends GetView<ReportsController> {
                                     color: Colors.grey,
                                   ),
                                   SizedBox(width: 10.w),
-                                  TextCeraRoundLight(
+                                  TextLight(
                                     text: "Galerry",
                                     fontSize: 12.sp,
                                   ),
@@ -225,7 +223,7 @@ class ReportsView extends GetView<ReportsController> {
                                       color: Colors.grey,
                                     ),
                                     SizedBox(width: 10.w),
-                                    TextCeraRoundLight(
+                                    TextLight(
                                       text: "Hapus",
                                       fontSize: 12.sp,
                                     ),
@@ -239,7 +237,7 @@ class ReportsView extends GetView<ReportsController> {
                       ],
                     ).paddingAll(20.r),
                   ),
-                  20.verticalSpace,
+                  10.verticalSpace,
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -259,16 +257,16 @@ class ReportsView extends GetView<ReportsController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextCeraRoundBold(
+                        TextBold(
                           text: "Pilih lokasi",
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                         ),
                         SizedBox(height: 10.h),
                         selectLocation(),
                       ],
                     ).paddingAll(20.r),
                   ),
-                  20.verticalSpace,
+                  10.verticalSpace,
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -288,9 +286,9 @@ class ReportsView extends GetView<ReportsController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextCeraRoundBold(
+                        TextBold(
                           text: "Deskripsi laporan",
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                         ),
                         SizedBox(height: 10.h),
                         TextFormField(
@@ -316,7 +314,7 @@ class ReportsView extends GetView<ReportsController> {
                       ],
                     ).paddingAll(20.r),
                   ),
-                  SizedBox(height: 20.h),
+                  10.verticalSpace,
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -347,21 +345,21 @@ class ReportsView extends GetView<ReportsController> {
                               ),
                             ),
                             Flexible(
-                              child: TextCeraRoundThin(
+                              child: TextThin(
                                 text:
                                     "Saya menyatakan laporan saya benar dan dapat dipertanggung jawabkan",
-                                fontSize: 14.sp,
+                                fontSize: 12.sp,
                               ),
                             )
                           ],
                         ),
-                        SizedBox(height: 20.h),
+                        SizedBox(height: 10.h),
                         controller.obx(
                           (state) => Container(),
                           onEmpty: RoundedButton(
                             text: 'Laporkan',
                             textColor: white,
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             borderRadius: 12.w,
                             height: 56.h,
                             width: 376.w,
@@ -388,7 +386,7 @@ class ReportsView extends GetView<ReportsController> {
                           onError: (error) => RoundedButton(
                             text: 'Laporkan',
                             textColor: white,
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             borderRadius: 12.w,
                             height: 56.h,
                             width: Get.width,
