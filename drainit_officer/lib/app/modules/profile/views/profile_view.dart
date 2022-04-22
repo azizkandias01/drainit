@@ -2,7 +2,6 @@ import 'package:drainit_petugas/app/utils/rounded_button.dart';
 import 'package:drainit_petugas/app/utils/text_poppins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/profile_controller.dart';
@@ -12,7 +11,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(375, 812),
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

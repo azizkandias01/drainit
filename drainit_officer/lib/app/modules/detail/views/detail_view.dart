@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:drainit_petugas/app/utils/colors.dart';
+import 'package:drainit_petugas/app/utils/text_default.dart';
 import 'package:drainit_petugas/app/utils/text_poppins.dart';
+import 'package:drainit_petugas/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:readmore/readmore.dart';
 
 import '../controllers/detail_controller.dart';
@@ -20,156 +21,379 @@ class DetailView extends GetView<DetailController> {
       Completer();
   @override
   Widget build(BuildContext context) {
-    List<Marker> markers = <Marker>[
-      Marker(
-          markerId: MarkerId('1'),
-          position: controller.geoToLatlong(controller.geometry)),
-    ];
-    return ScreenUtilInit(
-      designSize: Size(375, 812),
-      builder: () => Scaffold(
-        body: controller.obx(
-          (state) => NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  iconTheme: IconThemeData(color: Colors.black),
-                  expandedHeight: ScreenUtil().setHeight(100),
-                  backgroundColor: Colors.white,
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: false,
-                    titlePadding: EdgeInsets.only(
-                      left: ScreenUtil().setWidth(40),
-                      bottom: ScreenUtil().setHeight(20),
-                    ),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: ScreenUtil().setWidth(100),
-                          child: TextPoppinsBold(
-                            text: 'Detail \nLaporan',
-                            fontSize: ScreenUtil().setSp(18),
-                            textColour: Colors.black,
-                          ),
-                        ),
-                        Container(
-                          width: 50.w,
-                          child: TextPoppinsBold(
-                            text: 'Selesai',
-                            fontSize: ScreenUtil().setSp(10),
-                            textColour: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
+    return DefaultTabController(
+      length: 3,
+      child: ScreenUtilInit(
+        designSize: Size(375, 812),
+        builder: (_) => Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.adaptive.arrow_back_outlined,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Get.to(UpdateLaporanView());
+                },
+              ),
+            ],
+            title: TextMedium(
+              text: 'Detail Laporan',
+            ),
+            bottom: TabBar(
+              indicatorColor: Colors.black,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey,
+              tabs: [
+                Tab(
+                  child: TextRegular(
+                    text: 'Detail',
                   ),
-                )
-              ];
-            },
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(left: 23.w, right: 15.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppBar(
-                      controller: controller,
-                    ),
-                    Obx(
-                      () {
-                        if (controller.page.value == 0) {
-                          return DetailWidget(
-                            controller: controller,
-                            cameraPosition: CameraPosition(
-                              target:
-                                  controller.geoToLatlong(controller.geometry),
-                              zoom: 17,
+                ),
+                Tab(
+                  child: TextRegular(
+                    text: 'Update Laporan',
+                  ),
+                ),
+                Tab(
+                  child: TextRegular(
+                    text: 'Review Laporan',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          body: controller.obx(
+            (state) => TabBarView(
+              children: [
+                DetailTab(controller: controller),
+                SingleChildScrollView(child: UpdateLaporanView()),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TextBold(
+                        text: "Tanggapan Masyarakat",
+                      ),
+                      20.verticalSpace,
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: const CachedNetworkImageProvider(
+                              "https://i.pravatar.cc/300",
                             ),
-                            markers: markers,
-                            googleMapsController: _googleMapsController,
-                          );
-                        }
-                        if (controller.page.value == 1) {
-                          return UpdateLaporanView();
-                        } else {
-                          return Column(
+                            backgroundColor: Colors.amber,
+                            minRadius: 20.r,
+                          ),
+                          10.horizontalSpace,
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: ScreenUtil().setHeight(20),
+                              TextBold(
+                                text: controller.detail.namaPelapor!,
+                                fontSize: 16.sp,
                               ),
-                              TextPoppinsBold(
-                                text: "Feedback Masyarakat",
-                                fontSize: 18.sp,
-                                textColour: kMainGreen,
-                              ),
-                              SizedBox(
-                                height: ScreenUtil().setHeight(20),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  LineIcon.star(
-                                    color: Colors.amber,
-                                    size: ScreenUtil().setWidth(50),
-                                  ),
-                                  LineIcon.star(
-                                    color: Colors.amber,
-                                    size: ScreenUtil().setWidth(50),
-                                  ),
-                                  LineIcon.star(
-                                    color: Colors.amber,
-                                    size: ScreenUtil().setWidth(50),
-                                  ),
-                                  LineIcon.star(
-                                    color: Colors.amber,
-                                    size: ScreenUtil().setWidth(50),
-                                  ),
-                                  LineIcon.star(
-                                    color: Colors.amber,
-                                    size: ScreenUtil().setWidth(50),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: ScreenUtil().setHeight(20),
-                              ),
-                              TextField(
-                                maxLines: 5,
-                                decoration: InputDecoration(
-                                  hintText:
-                                      "Drainase tersumbat sudah diperbaiki dan sudah berjalan sesuai dengan semestinya",
-                                  hintStyle: GoogleFonts.poppins(
-                                    fontSize: ScreenUtil().setSp(14),
-                                    color: Colors.grey,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
+                              TextRegular(
+                                text: timeAgoSinceDate(
+                                    controller.detail.createdAt!),
+                                textColour: Colors.grey,
                               ),
                             ],
-                          );
-                        }
-                      },
+                          ),
+                        ],
+                      ),
+                      10.verticalSpace,
+                      Text(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            onLoading: Center(
+              child: CircularProgressIndicator.adaptive(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              ),
+            ),
+            onError: (err) => Center(
+              child: TextBold(
+                text: "Terjadi kesalahan",
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DetailTab extends StatelessWidget {
+  const DetailTab({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final DetailController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            10.verticalSpace,
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: const CachedNetworkImageProvider(
+                    "https://i.pravatar.cc/300",
+                  ),
+                  backgroundColor: Colors.amber,
+                  minRadius: 20.r,
+                ),
+                10.horizontalSpace,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TextBold(
+                      text: "Aziz Kandias",
+                    ),
+                    TextRegular(
+                      text: timeAgoSinceDate(
+                        controller.detail.createdAt!,
+                      ),
+                      textColour: Colors.grey,
                     ),
                   ],
                 ),
+              ],
+            ).paddingOnly(left: 20.w, right: 20.w, bottom: 10.h),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border.fromBorderSide(
+                  BorderSide(
+                    color: Colors.grey,
+                    width: .3,
+                  ),
+                ),
               ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextBold(
+                    text: "Jenis Dan Status Laporan",
+                  ),
+                  20.verticalSpace,
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        alignment: Alignment.center,
+                        height: 30.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: getStatusColor(
+                            controller.detail.tipePengaduan!,
+                          ),
+                        ),
+                        child: Text(
+                          controller.detail.tipePengaduan!,
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: white,
+                          ),
+                        ),
+                      ),
+                      10.horizontalSpace,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        alignment: Alignment.center,
+                        height: 30.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: getStatusColor(
+                            controller.detail.statusPengaduan!,
+                          ),
+                        ),
+                        child: Text(
+                          controller.detail.statusPengaduan!,
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ).paddingAll(20.r),
             ),
-          ),
-          onLoading: Center(
-            child: CircularProgressIndicator(),
-          ),
-          onError: (err) => Container(
-            child: Center(
-              child: Text(
-                err.toString(),
+            Container(
+              width: Get.width,
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .3,
+                  ),
+                ),
               ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextBold(
+                    text: "Deskripi Laporan",
+                  ),
+                  10.verticalSpace,
+                  Text(
+                    '${controller.detail.deskripsiPengaduan}',
+                  )
+                ],
+              ).paddingAll(20.r),
             ),
-          ),
+            Container(
+              width: Get.width,
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .3,
+                  ),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextBold(
+                    text: "Nama Jalan",
+                  ),
+                  10.verticalSpace,
+                  Text(
+                    '${controller.detail.namaJalan}',
+                  )
+                ],
+              ).paddingAll(20.r),
+            ),
+            Container(
+              width: Get.width,
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .3,
+                  ),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextBold(
+                    text: "Laporan Ditangani Oleh",
+                  ),
+                  10.verticalSpace,
+                  Text(
+                    '${controller.detail.namaPetugas}',
+                  )
+                ],
+              ).paddingAll(20.r),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .3,
+                  ),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextBold(
+                    text: "Foto dan Lokasi Laporan",
+                  ),
+                  10.verticalSpace,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => HeroPhotoViewRouteWrapper(
+                          maxScale: 3.0,
+                          minScale: 0.5,
+                          imageProvider: CachedNetworkImageProvider(
+                            Routes.IMAGEURL + controller.detail.foto!,
+                          ),
+                        ),
+                      );
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.r),
+                      ),
+                      child: Hero(
+                        tag: "image",
+                        child: Image(
+                          image: CachedNetworkImageProvider(
+                            Routes.IMAGEURL + controller.detail.foto!,
+                          ),
+                          width: Get.width,
+                          height: 200.w,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                  ),
+                  20.verticalSpace,
+                  ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.r),
+                    ),
+                    child: SizedBox(
+                      width: Get.width,
+                      height: 200.w,
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                            zoom: 15,
+                            target: controller
+                                .geoToLatlong(controller.detail.geometry!)),
+                        markers: <Marker>{
+                          Marker(
+                              markerId: MarkerId("1"),
+                              position: controller
+                                  .geoToLatlong(controller.detail.geometry!))
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ).paddingAll(20.r),
+            ),
+          ],
         ),
       ),
     );
@@ -336,67 +560,67 @@ class DetailWidget extends StatelessWidget {
   }
 }
 
-class AppBar extends StatelessWidget {
-  final DetailController controller;
-
-  const AppBar({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      color: Colors.white,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Obx(
-            () => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    controller.page.value = 0;
-                  },
-                  child: TabItemChip(
-                    isSelected: controller.page.value == 0,
-                    text: "Detail",
-                    width: 90.w,
-                    height: 40.h,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.page.value = 1;
-                  },
-                  child: TabItemChip(
-                    isSelected: controller.page.value == 1,
-                    text: "Update Laporan",
-                    width: 120.w,
-                    height: 40.h,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.page.value = 2;
-                  },
-                  child: TabItemChip(
-                    isSelected: controller.page.value == 2,
-                    text: "Feedback",
-                    width: 90.w,
-                    height: 40.h,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class AppBar extends StatelessWidget {
+//   final DetailController controller;
+//
+//   const AppBar({
+//     Key? key,
+//     required this.controller,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.all(8),
+//       color: Colors.white,
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Obx(
+//             () => Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceAround,
+//               children: [
+//                 GestureDetector(
+//                   onTap: () {
+//                     controller.page.value = 0;
+//                   },
+//                   child: TabItemChip(
+//                     isSelected: controller.page.value == 0,
+//                     text: "Detail",
+//                     width: 90.w,
+//                     height: 40.h,
+//                   ),
+//                 ),
+//                 GestureDetector(
+//                   onTap: () {
+//                     controller.page.value = 1;
+//                   },
+//                   child: TabItemChip(
+//                     isSelected: controller.page.value == 1,
+//                     text: "Update Laporan",
+//                     width: 120.w,
+//                     height: 40.h,
+//                   ),
+//                 ),
+//                 GestureDetector(
+//                   onTap: () {
+//                     controller.page.value = 2;
+//                   },
+//                   child: TabItemChip(
+//                     isSelected: controller.page.value == 2,
+//                     text: "Feedback",
+//                     width: 90.w,
+//                     height: 40.h,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class TabItemChip extends StatelessWidget {
   final bool isSelected;

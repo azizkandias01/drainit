@@ -16,10 +16,10 @@ class LoginView extends GetView<LoginController> {
       statusBarIconBrightness: Brightness.dark,
     ));
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: ScreenUtilInit(
         designSize: Size(375, 812),
-        builder: () => Center(
+        builder: (context) => Center(
           child: Column(
             children: [
               SizedBox(height: ScreenUtil().setHeight(80)),

@@ -139,7 +139,7 @@ class DoneReportsView extends GetView<DoneReportsController> {
 
     return ScreenUtilInit(
       designSize: Size(375, 812),
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         body: controller.obx(
           (state) => CustomScrollView(
             slivers: [
