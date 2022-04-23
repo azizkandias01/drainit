@@ -76,35 +76,58 @@ class ReportsController extends GetxController with StateMixin {
     final reportData = {
       'nama_jalan': namaJalan,
       'foto': foto,
-      'tipe_pengaduan': tipePengaduan,
       'deskripsi_pengaduan': deskripsiPengaduan,
       'geometry':
-          "{\"type\": \"Point\", \"coordinates\": [${geometry.latitude},${geometry.longitude}]}",
+          "{\"type\": \"Point\", \"coordinates\": [${geometry.longitude},${geometry.latitude}]}",
     };
     change(
       null,
       status: RxStatus.loading(),
     );
-
-    ReportsProvider()
-        .createReport(reportData, box.read(Routes.TOKEN).toString())
-        .then(
-      (resp) => {
-        change(
-          resp,
-          status: RxStatus.success(),
-        ),
-        Get.offAllNamed(Routes.HOME),
-        showSuccessSnackBar("Laporan berhasil dibuat!"),
-      },
-      onError: (err) {
-        change(
-          null,
-          status: RxStatus.error('Error occured : $err'),
-        );
-        showErrorSnackBar("Terjadi kesalahan pada server : $err");
-      },
-    );
+    if (tipePengaduan == "Banjir") {
+      ReportsProvider()
+          .createFloodReport(reportData, box.read(Routes.TOKEN).toString())
+          .then(
+        (resp) => {
+          change(
+            resp,
+            status: RxStatus.success(),
+          ),
+          Get.offAllNamed(Routes.DETAIL, arguments: resp.data?.id.toString()),
+          showSuccessSnackBar("Laporan berhasil dibuat!"),
+        },
+        onError: (err) {
+          change(
+            null,
+            status: RxStatus.error('Error occured : $err'),
+          );
+          print(err);
+          showErrorSnackBar("Terjadi kesalahan pada server : $err");
+        },
+      );
+    } else {
+      ReportsProvider()
+          .createBrokenDrainageReport(
+              reportData, box.read(Routes.TOKEN).toString())
+          .then(
+        (resp) => {
+          change(
+            resp,
+            status: RxStatus.success(),
+          ),
+          Get.offAllNamed(Routes.DETAIL, arguments: resp.data?.id.toString()),
+          showSuccessSnackBar("Laporan berhasil dibuat!"),
+        },
+        onError: (err) {
+          change(
+            null,
+            status: RxStatus.error('Error occured : $err'),
+          );
+          print(err);
+          showErrorSnackBar("Terjadi kesalahan pada server : $err");
+        },
+      );
+    }
   }
 
   Future<void> getImage(ImageSource imageSource) async {

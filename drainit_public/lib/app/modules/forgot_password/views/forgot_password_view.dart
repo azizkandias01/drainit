@@ -7,7 +7,6 @@ import 'package:drainit_flutter/app/modules/forgot_password/controllers/forgot_p
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
 
 class ForgotPasswordView extends GetView<ForgotPasswordController> {
@@ -15,7 +14,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         backgroundColor: kBackgroundInput,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(

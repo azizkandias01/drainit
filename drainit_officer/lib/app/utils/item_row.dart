@@ -12,7 +12,7 @@ class ItemRow extends StatelessWidget {
     return report.tipePengaduan == "banjir"
         ? ScreenUtilInit(
             designSize: Size(325, 122),
-            builder: () => Stack(
+            builder: (context) => Stack(
               children: [
                 SvgPicture.asset("assets/svg/bg_banjir.svg"),
                 Row(
@@ -23,7 +23,7 @@ class ItemRow extends StatelessWidget {
           )
         : ScreenUtilInit(
             designSize: Size(325, 122),
-            builder: () => Padding(
+            builder: (context) => Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 child: Stack(

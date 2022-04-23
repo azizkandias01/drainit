@@ -1,9 +1,93 @@
 // ignore_for_file: file_names
 
+import 'dart:async';
+
+import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:photo_view/photo_view.dart';
 
-import '../components/text_poppins.dart';
+Color getStatusColor(String status) {
+  switch (status) {
+    case "NOT_YET_VERIFIED":
+      return Colors.orange.shade300;
+    case "ON_PROGRESS":
+      return Colors.purple.shade300;
+    case "COMPLETED":
+      return Colors.green.shade300;
+    case "REFUSED":
+      return Colors.red.shade300;
+    case "Banjir":
+      return Colors.blue.shade300;
+    case "Drainase Rusak":
+      return Colors.brown.shade300;
+    default:
+      return Colors.grey.shade300;
+  }
+}
+
+Future<LatLng> getPosition() async {
+  final Location location = Location();
+  if (!await location.serviceEnabled()) {
+    if (!await location.requestService()) throw 'GPS service is disabled';
+    await getPosition();
+  }
+  if (await location.hasPermission() == PermissionStatus.denied) {
+    if (await location.requestPermission() != PermissionStatus.granted) {
+      throw 'No GPS permissions';
+    }
+    await getPosition();
+  }
+  final LocationData data = await location.getLocation();
+  return LatLng(data.latitude!, data.longitude!);
+}
+
+class HeroPhotoViewRouteWrapper extends StatelessWidget {
+  const HeroPhotoViewRouteWrapper({
+    required this.imageProvider,
+    this.backgroundDecoration,
+    this.minScale,
+    this.maxScale,
+  });
+
+  final ImageProvider imageProvider;
+  final BoxDecoration? backgroundDecoration;
+  final dynamic minScale;
+  final dynamic maxScale;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Foto Laporan',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.black,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: Container(
+        constraints: BoxConstraints.expand(
+          height: MediaQuery.of(context).size.height,
+        ),
+        child: PhotoView(
+          imageProvider: imageProvider,
+          backgroundDecoration: backgroundDecoration,
+          minScale: minScale,
+          maxScale: maxScale,
+          heroAttributes: const PhotoViewHeroAttributes(tag: "image"),
+        ),
+      ),
+    );
+  }
+}
 
 String timeAgoSinceDate(String dateString, {bool numericDates = true}) {
   final DateTime reportDate = DateTime.parse(dateString);

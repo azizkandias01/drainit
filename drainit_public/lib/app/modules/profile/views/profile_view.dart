@@ -16,7 +16,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: designSize,
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -35,15 +35,20 @@ class ProfileView extends GetView<ProfileController> {
           actions: [
             IconButton(
               icon: const Icon(
-                Icons.more_horiz,
+                Icons.refresh,
                 color: Colors.black,
               ),
-              onPressed: () => {},
+              onPressed: () => {
+                controller.getAccountProfile(),
+              },
             ),
           ],
         ),
         body: controller.obx(
           (state) => BodyBuild(controller: controller),
+          onLoading: const Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
           onError: (err) => OnErrorBuilder(controller: controller),
         ),
       ),

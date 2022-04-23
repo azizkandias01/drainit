@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
-import 'package:line_icons/line_icons.dart';
 
 import '../controllers/timeline_controller.dart';
 
@@ -24,7 +22,7 @@ class TimelineView extends GetView<TimelineController> {
     controller.loadTimeline(type ?? 'login');
     return ScreenUtilInit(
       designSize: const Size(414, 896),
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         backgroundColor: kBackgroundInput,
         body: SafeArea(
           child: Column(
@@ -281,39 +279,39 @@ class ListviewItem extends StatelessWidget {
           SizedBox(
             height: 15.h,
           ),
-          Padding(
-            padding: EdgeInsets.only(right: 15.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(
-                  LineIcons.thumbsUp,
-                  size: 15.w,
-                ),
-                Text(
-                  upVote.toString(),
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: kColorGrey,
-                  ),
-                ),
-                SizedBox(
-                  width: 20.w,
-                ),
-                Icon(
-                  LineIcons.thumbsDown,
-                  size: 15.w,
-                ),
-                Text(
-                  downVote.toString(),
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: kColorGrey,
-                  ),
-                )
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(right: 15.h),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     children: [
+          //       Icon(
+          //         LineIcons.thumbsUp,
+          //         size: 15.w,
+          //       ),
+          //       Text(
+          //         upVote.toString(),
+          //         style: TextStyle(
+          //           fontSize: 12.sp,
+          //           color: kColorGrey,
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         width: 20.w,
+          //       ),
+          //       Icon(
+          //         LineIcons.thumbsDown,
+          //         size: 15.w,
+          //       ),
+          //       Text(
+          //         downVote.toString(),
+          //         style: TextStyle(
+          //           fontSize: 12.sp,
+          //           color: kColorGrey,
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

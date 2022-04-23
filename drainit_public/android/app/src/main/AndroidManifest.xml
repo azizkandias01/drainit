@@ -2,8 +2,9 @@
     package="com.zeekands.drainit_flutter">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="drainit_flutter"
+        android:label="Drainit"
         android:icon="@mipmap/ic_launcher">
 
         <activity
@@ -31,4 +32,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <queries>
+        <package android:name="com.google.android.apps.maps" />
+    </queries>
 </manifest>

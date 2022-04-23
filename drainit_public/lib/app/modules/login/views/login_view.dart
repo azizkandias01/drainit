@@ -17,7 +17,7 @@ class LoginView extends GetView<LoginController> {
     whiteBar();
     return ScreenUtilInit(
       designSize: designSize,
-      builder: () => Scaffold(
+      builder: (context) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
