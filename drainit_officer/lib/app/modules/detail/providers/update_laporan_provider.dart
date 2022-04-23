@@ -36,7 +36,7 @@ class UpdateLaporanProvider extends GetConnect {
 
   Future<String> notificationUpdate(Map data, String auth) async {
     final response = await post(
-      '${Routes.BASEURL}notifikasi_pembaruan',
+      'https://onesignal.com/api/v1/notifications',
       data,
       headers: {
         'Accept': 'application/json',

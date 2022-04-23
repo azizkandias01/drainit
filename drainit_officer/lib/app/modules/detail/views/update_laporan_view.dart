@@ -35,15 +35,41 @@ class UpdateLaporanView extends GetView<DetailController> {
           ),
         ),
         10.verticalSpace,
-        Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.image,
+                  color: Colors.grey,
+                ),
+                10.horizontalSpace,
+                Icon(
+                  Icons.camera_alt,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+            ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.green,
+                  ),
+                ),
                 onPressed: () {
                   controller.updateLaporan(controller.detail.id!, "update",
                       controller.updateLaporanController.text);
                   controller.notifikasi();
                 },
-                child: Text('Update'))),
+                child: Text('Update')),
+          ],
+        ),
         20.verticalSpace,
         const TextBold(text: "Riwayat Update Laporan"),
         20.verticalSpace,
@@ -62,60 +88,54 @@ class UpdateLaporanView extends GetView<DetailController> {
                 minRadius: 20.r,
               ),
               10.horizontalSpace,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.r),
-                      color: Colors.grey[200],
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        color: Colors.grey[200],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextBold(
+                            text: "${controller.listUpdate[i].namaPetugas}",
+                          ),
+                          5.verticalSpace,
+                          TextRegular(
+                            text: "Update: ${controller.listUpdate[i].judul}",
+                          ),
+                          5.verticalSpace,
+                          TextRegular(
+                            text: "${controller.listUpdate[i].deskripsi}",
+                          ),
+                        ],
+                      ).paddingAll(10.r),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${controller.listUpdate[i].namaPetugas}",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    5.verticalSpace,
+                    TextRegular(
+                      text: timeAgoSinceDate(
+                          controller.listUpdate[i].createdAt != null
+                              ? controller.listUpdate[i].createdAt.toString()
+                              : controller.listUpdate[i].waktu.toString()),
+                      fontSize: 11.sp,
+                      textColour: Colors.grey,
+                    ),
+                    5.verticalSpace,
+                    Visibility(
+                      visible: controller.listUpdate[i].foto != "tidak ada",
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.r),
+                        child: const Image(
+                          image: CachedNetworkImageProvider(
+                              "https://random.imagecdn.app/300/200"),
                         ),
-                        5.verticalSpace,
-                        Text(
-                          "Update: ${controller.listUpdate[i].judul}",
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        5.verticalSpace,
-                        TextRegular(
-                          text: "${controller.listUpdate[i].deskripsi}",
-                          fontSize: 11.sp,
-                        ),
-                      ],
-                    ).paddingAll(10.r),
-                  ),
-                  TextRegular(
-                    text: timeAgoSinceDate(
-                        controller.listUpdate[i].createdAt != null
-                            ? controller.listUpdate[i].createdAt.toString()
-                            : controller.listUpdate[i].waktu.toString()),
-                    fontSize: 11.sp,
-                    textColour: Colors.grey,
-                  ),
-                  5.verticalSpace,
-                  Visibility(
-                    visible: controller.listUpdate[i].foto != "tidak ada",
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: const Image(
-                        image: CachedNetworkImageProvider(
-                            "https://random.imagecdn.app/300/200"),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

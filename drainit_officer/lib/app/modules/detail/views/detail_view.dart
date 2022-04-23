@@ -45,7 +45,7 @@ class DetailView extends GetView<DetailController> {
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  Get.to(UpdateLaporanView());
+                  controller.onInit();
                 },
               ),
             ],
@@ -208,7 +208,7 @@ class DetailTab extends StatelessWidget {
                           vertical: 5.r,
                         ),
                         alignment: Alignment.center,
-                        height: 30.h,
+                        height: 25.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(5.r),
@@ -217,12 +217,9 @@ class DetailTab extends StatelessWidget {
                             controller.detail.tipePengaduan!,
                           ),
                         ),
-                        child: Text(
-                          controller.detail.tipePengaduan!,
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            color: white,
-                          ),
+                        child: TextMedium(
+                          text: controller.detail.tipePengaduan!,
+                          textColour: white,
                         ),
                       ),
                       10.horizontalSpace,
@@ -232,7 +229,7 @@ class DetailTab extends StatelessWidget {
                           vertical: 5.r,
                         ),
                         alignment: Alignment.center,
-                        height: 30.h,
+                        height: 25.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(5.r),
@@ -241,12 +238,9 @@ class DetailTab extends StatelessWidget {
                             controller.detail.statusPengaduan!,
                           ),
                         ),
-                        child: Text(
-                          controller.detail.statusPengaduan!,
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            color: white,
-                          ),
+                        child: TextMedium(
+                          text: controller.detail.statusPengaduan!,
+                          textColour: white,
                         ),
                       ),
                     ],

@@ -22,14 +22,15 @@ class DetailController extends GetxController with StateMixin {
 
   GetStorage box = GetStorage();
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getDetail();
-    getUpdateLaporan();
+    change(RxStatus.empty());
+    await getDetail();
+    await getUpdateLaporan();
   }
 
   // }
-  void updateLaporan(String id, String judul, String deskripsi) {
+  void updateLaporan(String id, String judul, String deskripsi) async {
     change(
       null,
       status: RxStatus.loading(),
@@ -39,7 +40,7 @@ class DetailController extends GetxController with StateMixin {
       'judul': judul,
       'deskripsi': deskripsi,
     };
-    UpdateLaporanProvider()
+    await UpdateLaporanProvider()
         .updateLaporan(updateData, box.read(Routes.TOKEN))
         .then(
       (resp) {
@@ -69,7 +70,7 @@ class DetailController extends GetxController with StateMixin {
 
   Future<void> getUpdateLaporan() async {
     change(null, status: RxStatus.loading());
-    UpdateLaporanProvider().listUpdate(Get.arguments[0].toString()).then(
+    await UpdateLaporanProvider().listUpdate(Get.arguments[0].toString()).then(
       (value) => {
         listUpdate = value,
         change(
@@ -91,11 +92,10 @@ class DetailController extends GetxController with StateMixin {
       "headings": {"en": "Update Laporan"},
       "subtitle": {
         "en": "This is a subtitle, it should only appear on iOS devices"
-      },
-      "external_id": "6c76ed65-c42a-4be1-8ecb-53a4a6761bf8"
+      }
     };
     change(null, status: RxStatus.loading());
-    UpdateLaporanProvider()
+    await UpdateLaporanProvider()
         .notificationUpdate(
             data, "MzQ2ZTY4YTQtY2EzZC00NzBmLWJkOWQtYmE2ZjY5MzYzYjgw")
         .then(
@@ -109,7 +109,11 @@ class DetailController extends GetxController with StateMixin {
   }
 
   Future<void> getDetail() async {
-    DetailProvider().getDetail(id).then(
+    change(
+      null,
+      status: RxStatus.loading(),
+    );
+    await DetailProvider().getDetail(id).then(
       (value) => {
         detail = value!,
         change(value, status: RxStatus.success()),
