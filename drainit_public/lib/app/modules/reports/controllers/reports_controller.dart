@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:drainit_flutter/app/modules/reports/providers/reports_provider.dart';
@@ -81,13 +80,11 @@ class ReportsController extends GetxController with StateMixin {
       'geometry':
           "{\"type\": \"Point\", \"coordinates\": [${geometry.longitude},${geometry.latitude}]}",
     };
-    log(reportData.toString());
     change(
       null,
       status: RxStatus.loading(),
     );
     if (tipePengaduan == "Banjir") {
-      print("Banjir");
       ReportsProvider()
           .createFloodReport(reportData, box.read(Routes.TOKEN).toString())
           .then(
@@ -96,7 +93,7 @@ class ReportsController extends GetxController with StateMixin {
             resp,
             status: RxStatus.success(),
           ),
-          Get.offAllNamed(Routes.HOME),
+          Get.offAllNamed(Routes.DETAIL, arguments: resp.data?.id.toString()),
           showSuccessSnackBar("Laporan berhasil dibuat!"),
         },
         onError: (err) {
@@ -109,8 +106,6 @@ class ReportsController extends GetxController with StateMixin {
         },
       );
     } else {
-      print("drainase");
-
       ReportsProvider()
           .createBrokenDrainageReport(
               reportData, box.read(Routes.TOKEN).toString())
@@ -120,7 +115,7 @@ class ReportsController extends GetxController with StateMixin {
             resp,
             status: RxStatus.success(),
           ),
-          Get.offAllNamed(Routes.HOME),
+          Get.offAllNamed(Routes.DETAIL, arguments: resp.data?.id.toString()),
           showSuccessSnackBar("Laporan berhasil dibuat!"),
         },
         onError: (err) {

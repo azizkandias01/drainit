@@ -11,11 +11,10 @@ class DetailController extends GetxController with StateMixin {
   Detail detail = Detail();
   RxList<UpdateReport> updateReport = <UpdateReport>[].obs;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    change(null, status: RxStatus.empty());
-    getUpdate();
-    getDetail();
+    await getUpdate();
+    await getDetail();
   }
 
   String convertDate() {
@@ -23,10 +22,10 @@ class DetailController extends GetxController with StateMixin {
     return "${date.hour}:${date.minute}:${date.second} ${date.day}/${date.month}/${date.year}";
   }
 
-  void getDetail() {
+  Future<void> getDetail() async {
     change(null, status: RxStatus.loading());
 
-    DetailProvider().getDetail(Get.arguments.toString()).then(
+    await DetailProvider().getDetail(Get.arguments.toString()).then(
       (value) => {
         change(value, status: RxStatus.success()),
         detail = value!,
@@ -37,9 +36,9 @@ class DetailController extends GetxController with StateMixin {
     );
   }
 
-  void getUpdate() {
+  Future<void> getUpdate() async {
     change(null, status: RxStatus.loading());
-    UpdateReportProvider().getUpdateReport(Get.arguments.toString()).then(
+    await UpdateReportProvider().getUpdateReport(Get.arguments.toString()).then(
       (value) => {
         updateReport.value = value,
         change(value, status: RxStatus.success()),

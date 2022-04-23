@@ -441,69 +441,76 @@ class DetailView extends GetView<DetailController> {
                                 minRadius: 20.r,
                               ),
                               10.horizontalSpace,
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.r),
-                                      color: Colors.grey[200],
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20.r),
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${controller.updateReport.value[i].namaPetugas}",
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          5.verticalSpace,
+                                          Text(
+                                            "Update: ${controller.updateReport.value[i].judul}",
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                          5.verticalSpace,
+                                          TextPoppinsRegular(
+                                            text:
+                                                "${controller.updateReport.value[i].deskripsi}",
+                                            fontSize: 11.sp,
+                                            textColour: black,
+                                          ),
+                                        ],
+                                      ).paddingAll(10.r),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${controller.updateReport.value[i].namaPetugas}",
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                    TextPoppinsRegular(
+                                      text:
+                                          "${controller.updateReport.value[i].waktu}",
+                                      fontSize: 11.sp,
+                                      textColour: Colors.grey,
+                                    ),
+                                    5.verticalSpace,
+                                    Visibility(
+                                      visible: controller
+                                              .updateReport.value[i].foto !=
+                                          "tidak ada",
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                        child: const Image(
+                                          image: CachedNetworkImageProvider(
+                                              "https://random.imagecdn.app/300/200"),
                                         ),
-                                        5.verticalSpace,
-                                        Text(
-                                          "Update: ${controller.updateReport.value[i].judul}",
-                                          style: TextStyle(
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                        5.verticalSpace,
-                                        TextPoppinsRegular(
-                                          text:
-                                              "${controller.updateReport.value[i].deskripsi}",
-                                          fontSize: 11.sp,
-                                          textColour: black,
-                                        ),
-                                      ],
-                                    ).paddingAll(10.r),
-                                  ),
-                                  TextPoppinsRegular(
-                                    text:
-                                        "${controller.updateReport.value[i].waktu}",
-                                    fontSize: 11.sp,
-                                    textColour: Colors.grey,
-                                  ),
-                                  5.verticalSpace,
-                                  Visibility(
-                                    visible:
-                                        controller.updateReport.value[i].foto !=
-                                            "tidak ada",
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      child: const Image(
-                                        image: CachedNetworkImageProvider(
-                                            "https://random.imagecdn.app/300/200"),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ).paddingOnly(left: 20.w, right: 20.w, top: 10.h),
                       ],
                     ),
                   ),
+                ),
+                onLoading: const Center(
+                  child: CircularProgressIndicator.adaptive(),
                 ),
                 onError: (err) {
                   return GestureDetector(

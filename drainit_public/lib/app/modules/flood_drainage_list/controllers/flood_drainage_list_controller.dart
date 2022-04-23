@@ -30,7 +30,6 @@ class FloodDrainageListController extends GetxController {
   ///list of markers that observable means the variable could change
   List<Marker> markers = <Marker>[].obs;
 
-  final loading = false.obs;
 
   @override
   void onInit() {
@@ -42,11 +41,9 @@ class FloodDrainageListController extends GetxController {
 
   ///function for load flood points from API
   Future<void> loadFloodPoint() async {
-    loading.value = true;
     final List<FloodModel> result =
         await FloodModelProvider().loadFloodPoint() as List<FloodModel>;
     floodPoint = result;
-    loading.value = false;
   }
 
   ///function for load broken drainage points from API
@@ -76,8 +73,7 @@ class FloodDrainageListController extends GetxController {
             ),
           ),
         );
-        Polyline polyline;
-        polyline = Polyline(
+        final Polyline polyline = Polyline(
           polylineId: const PolylineId(''),
           color: primary,
           width: 3,
