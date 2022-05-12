@@ -1,35 +1,35 @@
+import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'constant.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
   final void Function()? press;
-  final Color color, textColor;
+  final Color color;
+  final Color? textColor;
   final double? borderRadius;
   final double? elevation;
   final double? width;
   final double? height;
   final double? fontSize;
   final FontWeight? fontWeight;
-  const RoundedButton(
-      {Key? key,
-      required this.text,
-      this.press,
-      this.fontSize,
-      this.fontWeight,
-      this.height,
-      this.width,
-      this.elevation = 0,
-      this.color = primary,
-      this.textColor = textPrimary,
-      this.borderRadius = 29})
-      : super(key: key);
+  const RoundedButton({
+    Key? key,
+    required this.text,
+    this.press,
+    this.fontSize,
+    this.fontWeight,
+    this.height,
+    this.width,
+    this.elevation = 0,
+    this.color = primary,
+    this.textColor = textPrimary,
+    this.borderRadius = 29,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: press,
       child: SizedBox(

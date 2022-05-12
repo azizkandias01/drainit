@@ -16,7 +16,7 @@ class LoginView extends GetView<LoginController> {
       statusBarIconBrightness: Brightness.dark,
     ));
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: ScreenUtilInit(
         designSize: Size(375, 812),
         builder: (context) => Center(

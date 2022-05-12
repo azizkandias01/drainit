@@ -164,6 +164,7 @@ class Map extends GetView<FloodDrainageListController> {
           initialCameraPosition: _kGooglePlex,
           markers: Set<Marker>.of(controller.markers),
           polylines: controller.polylines,
+          myLocationButtonEnabled: false,
           onMapCreated: (GoogleMapController controller) {
             if (!_controller.isCompleted) {
               _controller.complete(controller);

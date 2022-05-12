@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
@@ -195,7 +196,11 @@ class ReportsView extends GetView<ReportsController> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                controller.getImage(ImageSource.gallery);
+                                if (Platform.isIOS) {
+                                  controller.openFilePicker();
+                                } else {
+                                  controller.getImage(ImageSource.gallery);
+                                }
                               },
                               child: Row(
                                 children: [
