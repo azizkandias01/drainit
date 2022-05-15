@@ -2,7 +2,6 @@ import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
 import 'package:drainit_flutter/app/modules/history/providers/history_provider.dart';
 import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,16 +56,15 @@ class HistoryController extends GetxController with StateMixin {
     List<HistoryModel> filteredList = list;
     if (filter == "semua") {
       filteredList = list;
-    } else if (filter == "terbaru") {
-      filteredList.sort((a, b) => timeAgoSinceDate(a.createdAt!)
-          .compareTo(timeAgoSinceDate(b.createdAt!)));
     } else if (filter == "terlama") {
-      filteredList.sort((a, b) => timeAgoSinceDate(a.createdAt!)
-          .compareTo(timeAgoSinceDate(b.createdAt!)));
+      filteredList.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+    } else if (filter == "terbaru") {
+      filteredList.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
       filteredList = filteredList.reversed.toList();
     } else if (filter == "status") {
       filteredList
           .sort((a, b) => a.statusPengaduan!.compareTo(b.statusPengaduan!));
+      filteredList = filteredList.reversed.toList();
     } else if (filter == "jenis") {
       filteredList.sort((a, b) => a.tipePengaduan!.compareTo(b.tipePengaduan!));
     }

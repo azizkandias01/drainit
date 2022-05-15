@@ -20,124 +20,118 @@ class TimelineView extends GetView<TimelineController> {
   @override
   Widget build(BuildContext context) {
     controller.loadTimeline(type ?? 'login');
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      builder: (context) => Scaffold(
-        backgroundColor: kBackgroundInput,
-        body: SafeArea(
-          child: Column(
-            children: [
-              const TopMenu(),
-              SizedBox(
-                height: 20.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Sort By :'),
-                  SizedBox(
-                    width: 4.w,
+    return Scaffold(
+      backgroundColor: kBackgroundInput,
+      body: SafeArea(
+        child: Column(
+          children: [
+            const TopMenu(),
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Sort By :'),
+                SizedBox(
+                  width: 4.w,
+                ),
+                Container(
+                  width: 183.w,
+                  height: 33.h,
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
-                  Container(
-                    width: 183.w,
-                    height: 33.h,
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: DropdownButton(
-                      alignment: Alignment.bottomCenter,
-                      items: const [
-                        DropdownMenuItem(
-                          child: Text('Date'),
-                          value: 1,
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Name'),
-                          value: 2,
-                        ),
-                      ],
-                      onChanged: (value) {
-                        print(value);
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 21.w,
-                  ),
-                  Container(
-                    width: 110.w,
-                    height: 33.h,
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: const Center(child: Text('Filter')),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 24.h,
-              ),
-              controller.obx(
-                (state) => SingleChildScrollView(
-                  child: SizedBox(
-                    width: 374.w,
-                    height: 676.h,
-                    child: RefreshIndicator(
-                      onRefresh: () =>
-                          controller.loadTimeline(Get.arguments as String),
-                      child: ListView.separated(
-                        itemCount: Get.arguments == 'anonymouse'
-                            ? controller.timelineAnonymouse.length
-                            : controller.timeline.length,
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            height: 14.h,
-                          );
-                        },
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () => print(
-                              'timelineFiltered filtered length :${controller.timeline[index].id}',
-                            ),
-                            child: Get.arguments == 'anonymouse'
-                                ? ListviewItem(
-                                    name: controller
-                                        .timelineAnonymouse[index].namaPelapor,
-                                    foto: controller
-                                        .timelineAnonymouse[index].foto,
-                                    description: controller
-                                        .timelineAnonymouse[index]
-                                        .deskripsiPengaduan,
-                                    tanggal: controller
-                                        .timelineAnonymouse[index].createdAt,
-                                    upVote: controller
-                                        .timelineAnonymouse[index].upvote,
-                                    downVote: controller
-                                        .timelineAnonymouse[index].downvote,
-                                  )
-                                : ListviewItem(
-                                    name:
-                                        controller.timeline[index].namaPelapor,
-                                    foto: controller.timeline[index].foto,
-                                    description: controller
-                                        .timeline[index].deskripsiPengaduan,
-                                    tanggal:
-                                        controller.timeline[index].createdAt,
-                                    upVote: controller.timeline[index].upvote,
-                                    downVote:
-                                        controller.timeline[index].downvote,
-                                  ),
-                          );
-                        },
+                  child: DropdownButton(
+                    alignment: Alignment.bottomCenter,
+                    items: const [
+                      DropdownMenuItem(
+                        child: Text('Date'),
+                        value: 1,
                       ),
+                      DropdownMenuItem(
+                        child: Text('Name'),
+                        value: 2,
+                      ),
+                    ],
+                    onChanged: (value) {
+                      print(value);
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 21.w,
+                ),
+                Container(
+                  width: 110.w,
+                  height: 33.h,
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: const Center(child: Text('Filter')),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 24.h,
+            ),
+            controller.obx(
+              (state) => SingleChildScrollView(
+                child: SizedBox(
+                  width: 374.w,
+                  height: 676.h,
+                  child: RefreshIndicator(
+                    onRefresh: () =>
+                        controller.loadTimeline(Get.arguments as String),
+                    child: ListView.separated(
+                      itemCount: Get.arguments == 'anonymouse'
+                          ? controller.timelineAnonymouse.length
+                          : controller.timeline.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: 14.h,
+                        );
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () => print(
+                            'timelineFiltered filtered length :${controller.timeline[index].id}',
+                          ),
+                          child: Get.arguments == 'anonymouse'
+                              ? ListviewItem(
+                                  name: controller
+                                      .timelineAnonymouse[index].namaPelapor,
+                                  foto:
+                                      controller.timelineAnonymouse[index].foto,
+                                  description: controller
+                                      .timelineAnonymouse[index]
+                                      .deskripsiPengaduan,
+                                  tanggal: controller
+                                      .timelineAnonymouse[index].createdAt,
+                                  upVote: controller
+                                      .timelineAnonymouse[index].upvote,
+                                  downVote: controller
+                                      .timelineAnonymouse[index].downvote,
+                                )
+                              : ListviewItem(
+                                  name: controller.timeline[index].namaPelapor,
+                                  foto: controller.timeline[index].foto,
+                                  description: controller
+                                      .timeline[index].deskripsiPengaduan,
+                                  tanggal: controller.timeline[index].createdAt,
+                                  upVote: controller.timeline[index].upvote,
+                                  downVote: controller.timeline[index].downvote,
+                                ),
+                        );
+                      },
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

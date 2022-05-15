@@ -18,79 +18,76 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
   @override
   Widget build(BuildContext context) {
     loadFloodMarker(controller);
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Peta titik',
-            style: TextStyle(color: Colors.black),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Peta titik',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        elevation: 1,
+        leading: PopupMenuButton(
+          icon: const Icon(Icons.filter_list, color: black),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          centerTitle: true,
-          elevation: 1,
-          leading: PopupMenuButton(
-            icon: const Icon(Icons.filter_list, color: black),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+          onSelected: (value) {
+            if (value == 'rusak') {
+              if (controller.markers.isNotEmpty) {
+                controller.markers.clear();
+                loadDrainageMarker(controller);
+              } else {
+                loadDrainageMarker(controller);
+              }
+            }
+            if (value == 'banjir') {
+              if (controller.markers.isNotEmpty) {
+                controller.markers.clear();
+                loadFloodMarker(controller);
+              } else {
+                loadFloodMarker(controller);
+              }
+            }
+          },
+          itemBuilder: (context) => const [
+            PopupMenuItem(
+              value: 'semua',
+              child: Text('Semua'),
             ),
-            onSelected: (value) {
-              if (value == 'rusak') {
-                if (controller.markers.isNotEmpty) {
-                  controller.markers.clear();
-                  loadDrainageMarker(controller);
-                } else {
-                  loadDrainageMarker(controller);
-                }
-              }
-              if (value == 'banjir') {
-                if (controller.markers.isNotEmpty) {
-                  controller.markers.clear();
-                  loadFloodMarker(controller);
-                } else {
-                  loadFloodMarker(controller);
-                }
-              }
-            },
-            itemBuilder: (context) => const [
-              PopupMenuItem(
-                value: 'semua',
-                child: Text('Semua'),
-              ),
-              PopupMenuItem(
-                value: 'banjir',
-                child: Text('Titik banjir'),
-              ),
-              PopupMenuItem(
-                value: 'rusak',
-                child: Text('Titik rusak'),
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.refresh,
-                color: black,
-              ),
-              onPressed: () {
-                Get.dialog(Container(
-                  color: Colors.white,
-                  width: ScreenUtil().setWidth(100),
-                  height: ScreenUtil().setHeight(100),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ));
-                controller.loadDrainagePoint();
-                controller.loadFloodPoint();
-                controller.loadMapDrainage();
-                Get.back();
-              },
+            PopupMenuItem(
+              value: 'banjir',
+              child: Text('Titik banjir'),
+            ),
+            PopupMenuItem(
+              value: 'rusak',
+              child: Text('Titik rusak'),
             ),
           ],
         ),
-        body: Map(),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.refresh,
+              color: black,
+            ),
+            onPressed: () {
+              Get.dialog(Container(
+                color: Colors.white,
+                width: ScreenUtil().setWidth(100),
+                height: ScreenUtil().setHeight(100),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ));
+              controller.loadDrainagePoint();
+              controller.loadFloodPoint();
+              controller.loadMapDrainage();
+              Get.back();
+            },
+          ),
+        ],
       ),
+      body: Map(),
     );
   }
 

@@ -14,43 +14,40 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: designSize,
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          title: const Text(
-            'Profile',
-            style: TextStyle(color: black),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Profile',
+          style: TextStyle(color: black),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
-          leading: IconButton(
+          onPressed: () => Get.back(),
+        ),
+        actions: [
+          IconButton(
             icon: const Icon(
-              Icons.arrow_back,
+              Icons.refresh,
               color: Colors.black,
             ),
-            onPressed: () => Get.back(),
+            onPressed: () => {
+              controller.getAccountProfile(),
+            },
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.refresh,
-                color: Colors.black,
-              ),
-              onPressed: () => {
-                controller.getAccountProfile(),
-              },
-            ),
-          ],
+        ],
+      ),
+      body: controller.obx(
+        (state) => BodyBuild(controller: controller),
+        onLoading: const Center(
+          child: CircularProgressIndicator.adaptive(),
         ),
-        body: controller.obx(
-          (state) => BodyBuild(controller: controller),
-          onLoading: const Center(
-            child: CircularProgressIndicator.adaptive(),
-          ),
-          onError: (err) => OnErrorBuilder(controller: controller),
-        ),
+        onError: (err) => OnErrorBuilder(controller: controller),
       ),
     );
   }

@@ -18,405 +18,402 @@ import '../controllers/reports_controller.dart';
 class ReportsView extends GetView<ReportsController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      builder: (context) => Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Obx(
-            () => TextBold(
-              text:
-                  'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
-              fontSize: 18.sp,
-            ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Obx(
+          () => TextBold(
+            text:
+                'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
+            fontSize: 18.sp,
           ),
-          centerTitle: true,
-          elevation: 0,
         ),
-        backgroundColor: white,
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Obx(
-              () => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.w),
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: .1.w,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 15.r,
-                          offset: Offset(0, 10.w),
-                        ),
-                      ],
+        centerTitle: true,
+        elevation: 0,
+      ),
+      backgroundColor: white,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Obx(
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.w),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: .1.w,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextBold(
-                          text: "Pilih jenis laporan",
-                          fontSize: 14.sp,
-                        ),
-                        10.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                controller.page.value = 0;
-                              },
-                              child: Container(
-                                width: 100.w,
-                                height: 40.h,
-                                decoration: BoxDecoration(
-                                  color: controller.page.value == 0
-                                      ? Colors.green
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(10.w),
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                    width: .5.w,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: TextBold(
-                                    text: "Banjir",
-                                    fontSize: 14.sp,
-                                    textColour: controller.page.value == 0
-                                        ? Colors.white
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 30.w),
-                            GestureDetector(
-                              onTap: () {
-                                controller.page.value = 1;
-                              },
-                              child: Container(
-                                width: 150.w,
-                                height: 40.h,
-                                decoration: BoxDecoration(
-                                  color: controller.page.value == 1
-                                      ? Colors.red
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(10.w),
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                    width: .5.w,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: TextBold(
-                                    text: "Drainase Rusak",
-                                    fontSize: 14.sp,
-                                    textColour: controller.page.value == 1
-                                        ? Colors.white
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ).paddingAll(20.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 15.r,
+                        offset: Offset(0, 10.w),
+                      ),
+                    ],
                   ),
-                  10.verticalSpace,
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.w),
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: .1.w,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextBold(
+                        text: "Pilih jenis laporan",
+                        fontSize: 14.sp,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 15.r,
-                          offset: Offset(0, 10.w),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextBold(
-                          text: "Pilih foto lokasi",
-                          fontSize: 14.sp,
-                        ),
-                        SizedBox(height: 10.h),
-                        if (controller.bytes64Image.value.isEmpty)
-                          const SizedBox()
-                        else
-                          Center(
+                      10.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              controller.page.value = 0;
+                            },
                             child: Container(
-                              height: Get.width / 2,
-                              width: Get.width / 2,
+                              width: 100.w,
+                              height: 40.h,
                               decoration: BoxDecoration(
+                                color: controller.page.value == 0
+                                    ? Colors.green
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(10.w),
-                                image: DecorationImage(
-                                  image: MemoryImage(
-                                    base64Decode(controller.bytes64Image.value),
-                                  ),
-                                  fit: BoxFit.cover,
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: .5.w,
+                                ),
+                              ),
+                              child: Center(
+                                child: TextBold(
+                                  text: "Banjir",
+                                  fontSize: 14.sp,
+                                  textColour: controller.page.value == 0
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                               ),
                             ),
                           ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                controller.getImage(ImageSource.camera);
-                              },
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  TextLight(
-                                    text: "Kamera",
-                                    fontSize: 12.sp,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (Platform.isIOS) {
-                                  controller.openFilePicker();
-                                } else {
-                                  controller.getImage(ImageSource.gallery);
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.image,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  TextLight(
-                                    text: "Galerry",
-                                    fontSize: 12.sp,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (controller.bytes64Image.value.isNotEmpty)
-                              GestureDetector(
-                                onTap: () {
-                                  controller.bytes64Image.value = '';
-                                },
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.delete,
-                                      color: Colors.grey,
-                                    ),
-                                    SizedBox(width: 10.w),
-                                    TextLight(
-                                      text: "Hapus",
-                                      fontSize: 12.sp,
-                                    ),
-                                  ],
+                          SizedBox(width: 30.w),
+                          GestureDetector(
+                            onTap: () {
+                              controller.page.value = 1;
+                            },
+                            child: Container(
+                              width: 150.w,
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                color: controller.page.value == 1
+                                    ? Colors.red
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(10.w),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: .5.w,
                                 ),
-                              )
-                            else
-                              const SizedBox(),
-                          ],
-                        ),
-                      ],
-                    ).paddingAll(20.r),
-                  ),
-                  10.verticalSpace,
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.w),
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: .1.w,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 15.r,
-                          offset: Offset(0, 10.w),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextBold(
-                          text: "Pilih lokasi",
-                          fontSize: 14.sp,
-                        ),
-                        SizedBox(height: 10.h),
-                        selectLocation(),
-                      ],
-                    ).paddingAll(20.r),
-                  ),
-                  10.verticalSpace,
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.w),
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: .1.w,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 15.r,
-                          offset: Offset(0, 10.w),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextBold(
-                          text: "Deskripsi laporan",
-                          fontSize: 14.sp,
-                        ),
-                        SizedBox(height: 10.h),
-                        TextFormField(
-                          maxLines: Get.height > 800 ? 4 : 2,
-                          controller: controller.deskripsiController,
-                          decoration: InputDecoration(
-                            hintText:
-                                "Masukan detail mengenai lokasi dan keadaan sekitarnya",
-                            hintStyle: TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.grey,
+                              ),
+                              child: Center(
+                                child: TextBold(
+                                  text: "Drainase Rusak",
+                                  fontSize: 14.sp,
+                                  textColour: controller.page.value == 1
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.green),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ).paddingAll(20.r),
+                ),
+                10.verticalSpace,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.w),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: .1.w,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 15.r,
+                        offset: Offset(0, 10.w),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextBold(
+                        text: "Pilih foto lokasi",
+                        fontSize: 14.sp,
+                      ),
+                      SizedBox(height: 10.h),
+                      if (controller.bytes64Image.value.isEmpty)
+                        const SizedBox()
+                      else
+                        Center(
+                          child: Container(
+                            height: Get.width / 2,
+                            width: Get.width / 2,
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.w),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.green),
-                              borderRadius: BorderRadius.circular(10.w),
+                              image: DecorationImage(
+                                image: MemoryImage(
+                                  base64Decode(controller.bytes64Image.value),
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                      ],
-                    ).paddingAll(20.r),
-                  ),
-                  10.verticalSpace,
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.w),
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: .1.w,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 15.r,
-                          offset: Offset(0, 10.w),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Obx(
-                              () => Checkbox(
-                                value: controller.isChecked.value,
-                                onChanged: (value) {
-                                  controller.isChecked.value = value!;
-                                },
-                              ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              controller.getImage(ImageSource.camera);
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(width: 10.w),
+                                TextLight(
+                                  text: "Kamera",
+                                  fontSize: 12.sp,
+                                ),
+                              ],
                             ),
-                            Flexible(
-                              child: TextThin(
-                                text:
-                                    "Saya menyatakan laporan saya benar dan dapat dipertanggung jawabkan",
-                                fontSize: 12.sp,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (Platform.isIOS) {
+                                controller.openFilePicker();
+                              } else {
+                                controller.getImage(ImageSource.gallery);
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.image,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(width: 10.w),
+                                TextLight(
+                                  text: "Galerry",
+                                  fontSize: 12.sp,
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (controller.bytes64Image.value.isNotEmpty)
+                            GestureDetector(
+                              onTap: () {
+                                controller.bytes64Image.value = '';
+                              },
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.delete,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(width: 10.w),
+                                  TextLight(
+                                    text: "Hapus",
+                                    fontSize: 12.sp,
+                                  ),
+                                ],
                               ),
                             )
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                        controller.obx(
-                          (state) => Container(),
-                          onEmpty: RoundedButton(
-                            text: 'Laporkan',
-                            textColor: white,
-                            fontSize: 14.sp,
-                            borderRadius: 12.w,
-                            height: 56.h,
-                            width: 376.w,
-                            color: controller.page.value == 1
-                                ? Colors.red
-                                : Colors.green,
-                            press: () {
-                              controller.validateReportForm(
-                                controller.latlng.value,
-                                controller.bytes64Image.value,
-                                controller.page.value == 0
-                                    ? "Banjir"
-                                    : "Drainase Tersumbat",
-                                controller.deskripsiController.text,
-                                controller.geometry,
-                              );
-                            },
+                          else
+                            const SizedBox(),
+                        ],
+                      ),
+                    ],
+                  ).paddingAll(20.r),
+                ),
+                10.verticalSpace,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.w),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: .1.w,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 15.r,
+                        offset: Offset(0, 10.w),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextBold(
+                        text: "Pilih lokasi",
+                        fontSize: 14.sp,
+                      ),
+                      SizedBox(height: 10.h),
+                      selectLocation(),
+                    ],
+                  ).paddingAll(20.r),
+                ),
+                10.verticalSpace,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.w),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: .1.w,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 15.r,
+                        offset: Offset(0, 10.w),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextBold(
+                        text: "Deskripsi laporan",
+                        fontSize: 14.sp,
+                      ),
+                      SizedBox(height: 10.h),
+                      TextFormField(
+                        maxLines: Get.height > 800 ? 4 : 2,
+                        controller: controller.deskripsiController,
+                        decoration: InputDecoration(
+                          hintText:
+                              "Masukan detail mengenai lokasi dan keadaan sekitarnya",
+                          hintStyle: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.grey,
                           ),
-                          onLoading: Center(
-                            child: CupertinoActivityIndicator(
-                              radius: 20.r,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.green),
+                            borderRadius: BorderRadius.circular(10.w),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.green),
+                            borderRadius: BorderRadius.circular(10.w),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).paddingAll(20.r),
+                ),
+                10.verticalSpace,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.w),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: .1.w,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 15.r,
+                        offset: Offset(0, 10.w),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Obx(
+                            () => Checkbox(
+                              value: controller.isChecked.value,
+                              onChanged: (value) {
+                                controller.isChecked.value = value!;
+                              },
                             ),
                           ),
-                          onError: (error) => RoundedButton(
-                            text: 'Laporkan',
-                            textColor: white,
-                            fontSize: 14.sp,
-                            borderRadius: 12.w,
-                            height: 56.h,
-                            width: Get.width,
-                            color: controller.page.value == 1
-                                ? Colors.red
-                                : Colors.green,
-                            press: () {
-                              controller.validateReportForm(
-                                controller.latlng.value,
-                                controller.bytes64Image.value,
-                                controller.page.value == 0
-                                    ? "Banjir"
-                                    : "Drainase Rusak",
-                                controller.deskripsiController.text,
-                                controller.geometry,
-                              );
-                            },
+                          Flexible(
+                            child: TextThin(
+                              text:
+                                  "Saya menyatakan laporan saya benar dan dapat dipertanggung jawabkan",
+                              fontSize: 12.sp,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+                      controller.obx(
+                        (state) => Container(),
+                        onEmpty: RoundedButton(
+                          text: 'Laporkan',
+                          textColor: white,
+                          fontSize: 14.sp,
+                          borderRadius: 12.w,
+                          height: 56.h,
+                          width: 376.w,
+                          color: controller.page.value == 1
+                              ? Colors.red
+                              : Colors.green,
+                          press: () {
+                            controller.validateReportForm(
+                              controller.latlng.value,
+                              controller.bytes64Image.value,
+                              controller.page.value == 0
+                                  ? "Banjir"
+                                  : "Drainase Tersumbat",
+                              controller.deskripsiController.text,
+                              controller.geometry,
+                            );
+                          },
+                        ),
+                        onLoading: Center(
+                          child: CupertinoActivityIndicator(
+                            radius: 20.r,
                           ),
                         ),
-                      ],
-                    ).paddingAll(20.r),
-                  ),
-                ],
-              ).paddingOnly(left: 20.w, right: 20.w, bottom: 20.h),
-            ),
+                        onError: (error) => RoundedButton(
+                          text: 'Laporkan',
+                          textColor: white,
+                          fontSize: 14.sp,
+                          borderRadius: 12.w,
+                          height: 56.h,
+                          width: Get.width,
+                          color: controller.page.value == 1
+                              ? Colors.red
+                              : Colors.green,
+                          press: () {
+                            controller.validateReportForm(
+                              controller.latlng.value,
+                              controller.bytes64Image.value,
+                              controller.page.value == 0
+                                  ? "Banjir"
+                                  : "Drainase Rusak",
+                              controller.deskripsiController.text,
+                              controller.geometry,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ).paddingAll(20.r),
+                ),
+              ],
+            ).paddingOnly(left: 20.w, right: 20.w, bottom: 20.h),
           ),
         ),
       ),

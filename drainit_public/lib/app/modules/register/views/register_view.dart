@@ -13,121 +13,118 @@ import '../controllers/register_controller.dart';
 class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      builder: (context) => Scaffold(
-        backgroundColor: white,
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Header(),
-                  TextPoppinsBold(text: "Daftar", fontSize: 24.sp),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  InputText(
-                    key: controller.nameKey,
-                    title: "Nama",
-                    hintText: "Example",
-                    controller: controller.myControllerName,
-                  ),
-                  InputText(
-                    key: controller.phoneKey,
-                    title: "Telepon",
-                    hintText: "0821000000",
-                    controller: controller.myControllerPhoneNumber,
-                  ),
-                  InputText(
-                    key: controller.emailKey,
-                    title: "Email",
-                    hintText: "Example@gmail.com",
-                    controller: controller.myControllerEmail,
-                  ),
-                  InputText(
-                    key: controller.addressKey,
-                    title: "Alamat",
-                    hintText: "Jl. Sudirman no.16",
-                    controller: controller.myControllerAddress,
-                  ),
-                  InputText(
-                    key: controller.passwordKey,
-                    title: "Password",
-                    hintText: "******",
-                    controller: controller.myControllerPassword,
-                  ),
-                  InputText(
-                    key: controller.confirmPasswordKey,
-                    title: "Password Confirmation",
-                    hintText: "******",
-                    controller: controller.myControllerPasswordConfirm,
-                  ),
-                  Row(
-                    children: [
-                      Obx(
-                        () => Checkbox(
-                          key: controller.isCheckedKey,
-                          value: controller.isChecked.value,
-                          onChanged: (value) {
-                            controller.isChecked.value = value!;
-                          },
-                        ),
+    return Scaffold(
+      backgroundColor: white,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(left: 20.w, right: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Header(),
+                TextPoppinsBold(text: "Daftar", fontSize: 24.sp),
+                SizedBox(
+                  height: 10.h,
+                ),
+                InputText(
+                  key: controller.nameKey,
+                  title: "Nama",
+                  hintText: "Example",
+                  controller: controller.myControllerName,
+                ),
+                InputText(
+                  key: controller.phoneKey,
+                  title: "Telepon",
+                  hintText: "0821000000",
+                  controller: controller.myControllerPhoneNumber,
+                ),
+                InputText(
+                  key: controller.emailKey,
+                  title: "Email",
+                  hintText: "Example@gmail.com",
+                  controller: controller.myControllerEmail,
+                ),
+                InputText(
+                  key: controller.addressKey,
+                  title: "Alamat",
+                  hintText: "Jl. Sudirman no.16",
+                  controller: controller.myControllerAddress,
+                ),
+                InputText(
+                  key: controller.passwordKey,
+                  title: "Password",
+                  hintText: "******",
+                  controller: controller.myControllerPassword,
+                ),
+                InputText(
+                  key: controller.confirmPasswordKey,
+                  title: "Password Confirmation",
+                  hintText: "******",
+                  controller: controller.myControllerPasswordConfirm,
+                ),
+                Row(
+                  children: [
+                    Obx(
+                      () => Checkbox(
+                        key: controller.isCheckedKey,
+                        value: controller.isChecked.value,
+                        onChanged: (value) {
+                          controller.isChecked.value = value!;
+                        },
                       ),
-                      TextPoppinsRegular(
-                        text: "Saya setuju dengan syarat dan ketentuan",
-                        fontSize: 12.sp,
-                      ),
-                    ],
-                  ),
-                  RoundedButton(
-                    key: controller.nextKey,
-                    text: "Lanjut",
-                    height: ScreenUtil().setHeight(50),
-                    borderRadius: 10.r,
-                    width: Get.width,
-                    color: Colors.green,
-                    textColor: Colors.white,
-                    press: () {
-                      controller.validateForm();
-                    },
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Center(
-                    child: TextPoppinsRegular(
-                      text: "Atau",
-                      fontSize: 14.sp,
-                      textColour: Colors.grey,
                     ),
+                    TextPoppinsRegular(
+                      text: "Saya setuju dengan syarat dan ketentuan",
+                      fontSize: 12.sp,
+                    ),
+                  ],
+                ),
+                RoundedButton(
+                  key: controller.nextKey,
+                  text: "Lanjut",
+                  height: ScreenUtil().setHeight(50),
+                  borderRadius: 10.r,
+                  width: Get.width,
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  press: () {
+                    controller.validateForm();
+                  },
+                ),
+                SizedBox(height: ScreenUtil().setHeight(10)),
+                Center(
+                  child: TextPoppinsRegular(
+                    text: "Atau",
+                    fontSize: 14.sp,
+                    textColour: Colors.grey,
                   ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Sudah punya akun?',
+                ),
+                SizedBox(height: ScreenUtil().setHeight(10)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Sudah punya akun?',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.LOGIN),
+                      child: Text(
+                        ' Masuk disini!',
                         style: TextStyle(
                           fontSize: 14.sp,
+                          color: Colors.green,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () => Get.toNamed(Routes.LOGIN),
-                        child: Text(
-                          ' Masuk disini!',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(20)),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: ScreenUtil().setHeight(20)),
+              ],
             ),
           ),
         ),
