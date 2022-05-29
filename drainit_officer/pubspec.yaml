@@ -8,7 +8,8 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.2
   cached_network_image: ^3.1.0
-  get: 4.6.1
+  dcdg: ^4.0.1
+  get: 4.6.3
   file_picker: ^4.5.1
   flutter_screenutil: ^5.4.0+1
   google_fonts: 2.1.1

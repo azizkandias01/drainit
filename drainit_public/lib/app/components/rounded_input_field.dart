@@ -47,16 +47,18 @@ class RoundedInputField extends StatelessWidget {
         cursorColor: kBackgroundInput,
         controller: textEditingController,
         decoration: InputDecoration(
+          fillColor: Colors.grey[100],
+          filled: true,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(roundedCorner!),
-            borderSide: const BorderSide(
-              color: Colors.grey,
+            borderSide: BorderSide(
+              color: Colors.grey[100]!,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(roundedCorner!),
-            borderSide: const BorderSide(
-              color: Colors.green,
+            borderSide: BorderSide(
+              color: Colors.grey[300]!,
             ),
           ),
           contentPadding: padding ??

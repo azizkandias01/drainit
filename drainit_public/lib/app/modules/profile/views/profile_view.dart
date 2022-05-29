@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
@@ -439,7 +440,7 @@ class OnErrorBuilder extends StatelessWidget {
               width: Get.width / 3,
             ),
             SizedBox(height: 20.h),
-            TextPoppinsBold(
+            TextBold(
               text: "Tidak dapat menjangkau internet",
               fontSize: 16.sp,
               textColour: black,
@@ -447,7 +448,7 @@ class OnErrorBuilder extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            TextPoppinsRegular(
+            TextRegular(
               text: "Ketuk untuk mencoba lagi!",
               fontSize: 12.sp,
               textColour: Colors.black38,

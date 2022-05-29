@@ -1,7 +1,7 @@
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
-import 'package:drainit_flutter/app/components/text_poppins.dart';
+import 'package:drainit_flutter/app/modules/login/controllers/login_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../controllers/login_controller.dart';
+import '../../../components/text_default.dart';
 
 class LoginView extends GetView<LoginController> {
   @override
@@ -36,12 +36,12 @@ class LoginView extends GetView<LoginController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextPoppinsBold(text: "Masuk", fontSize: 24.sp),
+                  TextBold(text: "Masuk", fontSize: 24.sp),
                   SizedBox(height: ScreenUtil().setHeight(10)),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextPoppinsRegular(text: "Email", fontSize: 14.sp),
+                      TextRegular(text: "Email", fontSize: 14.sp),
                       SizedBox(height: ScreenUtil().setHeight(10)),
                       RoundedInputField(
                         key: const Key('emailFormField'),
@@ -54,7 +54,7 @@ class LoginView extends GetView<LoginController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextPoppinsRegular(text: "Password", fontSize: 14.sp),
+                      TextRegular(text: "Password", fontSize: 14.sp),
                       SizedBox(height: ScreenUtil().setHeight(10)),
                       InputPassword(
                         key: const Key('passwordFormField'),
@@ -69,8 +69,8 @@ class LoginView extends GetView<LoginController> {
                       text: "Masuk",
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
-                      width: Get.width,
-                      color: Colors.green,
+                      width: 1.sw,
+                      color: Colors.amberAccent,
                       textColor: Colors.white,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
@@ -94,8 +94,8 @@ class LoginView extends GetView<LoginController> {
                       text: "Masuk",
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
-                      width: Get.width,
-                      color: Colors.green,
+                      width: 1.sw,
+                      color: Colors.amberAccent,
                       textColor: Colors.white,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
@@ -114,7 +114,7 @@ class LoginView extends GetView<LoginController> {
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
                       width: Get.width,
-                      color: Colors.green,
+                      color: Colors.amberAccent,
                       textColor: Colors.white,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
@@ -131,7 +131,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   SizedBox(height: ScreenUtil().setHeight(10)),
                   Center(
-                    child: TextPoppinsRegular(
+                    child: TextRegular(
                       text: "Atau",
                       fontSize: 14.sp,
                       textColour: Colors.grey,
@@ -151,7 +151,7 @@ class LoginView extends GetView<LoginController> {
                     ),
                     child: GestureDetector(
                       onTap: () => {
-                        Get.toNamed(Routes.HOME, arguments: 'anonymouse'),
+                        Get.toNamed(Routes.HOMEPAGE, arguments: 'anonymouse'),
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +161,7 @@ class LoginView extends GetView<LoginController> {
                             color: Colors.green,
                           ),
                           SizedBox(width: ScreenUtil().setWidth(10)),
-                          TextPoppinsRegular(
+                          TextRegular(
                             text: "Login tanpa akun",
                             fontSize: 14.sp,
                             textColour: Colors.green,
@@ -214,30 +214,32 @@ class InputPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => SizedBox(
-        width: 376.w,
+        width: 1.sw,
         height: 56.h,
-        child: TextField(
+        child: TextFormField(
           obscureText: controller.isPasswordHidden.value,
           cursorColor: kBackgroundInput,
           controller: controller.myControllerPassword,
           decoration: InputDecoration(
+            fillColor: Colors.grey[100],
+            filled: true,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide(
-                color: Colors.grey,
+                color: Colors.grey[100]!,
                 width: 1.w,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
-              borderSide: const BorderSide(
-                color: Colors.green,
+              borderSide: BorderSide(
+                color: Colors.grey[300]!,
               ),
             ),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             hintText: 'Password',
-            hintStyle: TextStyle(fontSize: 12.sp),
+            hintStyle: const TextStyle(fontSize: 13),
             suffixIcon: IconButton(
               color: Colors.grey,
               icon: controller.isPasswordHidden.value

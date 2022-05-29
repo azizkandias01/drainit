@@ -14,6 +14,10 @@ import '../modules/history/bindings/history_binding.dart';
 import '../modules/history/views/history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/homepage/bindings/homepage_binding.dart';
+import '../modules/homepage/views/homepage_view.dart';
+import '../modules/homepage_anonymous/bindings/homepage_anonymous_binding.dart';
+import '../modules/homepage_anonymous/views/homepage_anonymous_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
 import '../modules/introduction/views/introduction_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -28,8 +32,6 @@ import '../modules/reports/bindings/reports_binding.dart';
 import '../modules/reports/views/reports_view.dart';
 import '../modules/searchmap/bindings/searchmap_binding.dart';
 import '../modules/searchmap/views/searchmap_view.dart';
-import '../modules/splashscreen/bindings/splashscreen_binding.dart';
-import '../modules/splashscreen/views/splashscreen_view.dart';
 import '../modules/timeline/bindings/timeline_binding.dart';
 import '../modules/timeline/views/timeline_view.dart';
 import '../modules/welcome/bindings/welcome_binding.dart';
@@ -64,11 +66,6 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.SPLASHSCREEN,
-      page: () => SplashscreenView(),
-      binding: SplashscreenBinding(),
     ),
     GetPage(
       name: _Paths.SEARCHMAP,
@@ -129,6 +126,16 @@ class AppPages {
       name: _Paths.WELCOME,
       page: () => WelcomeView(),
       binding: WelcomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOMEPAGE,
+      page: () => HomepageView(),
+      binding: HomepageBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOMEPAGE_ANONYMOUS,
+      page: () => HomepageAnonymousView(),
+      binding: HomepageAnonymousBinding(),
     ),
   ];
 }

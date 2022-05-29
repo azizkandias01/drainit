@@ -12,7 +12,7 @@ import 'package:photo_view/photo_view.dart';
 Color getStatusColor(String status) {
   switch (status) {
     case "NOT_YET_VERIFIED":
-      return Colors.orange.shade300;
+      return Colors.amberAccent;
     case "ON_PROGRESS":
       return Colors.purple.shade300;
     case "COMPLETED":

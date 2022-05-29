@@ -34,6 +34,10 @@ class MapsController extends GetxController {
   final selectedIndexFilter = 0.obs;
   final List<Filter> chipsList = [
     Filter(
+      "Semua",
+      Icons.clear_all,
+    ),
+    Filter(
       "Banjir",
       Icons.water,
     ),

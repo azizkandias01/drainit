@@ -20,24 +20,52 @@ class ReportsView extends GetView<ReportsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Obx(
-          () => TextBold(
-            text:
-                'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
-            fontSize: 18.sp,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-      ),
       backgroundColor: white,
+      appBar: AppBar(
+        backgroundColor: white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: black,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        title: TextSemiBold(
+          text: 'Laporan',
+          fontSize: ScreenUtil().setSp(18),
+        ),
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Obx(
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                20.verticalSpace,
+                Obx(
+                  () => Center(
+                    child: TextBold(
+                      text:
+                          'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
+                      fontSize: 30.sp,
+                    ),
+                  ),
+                ),
+                10.verticalSpace,
+                Center(
+                  child: SizedBox(
+                    width: 0.7.sw,
+                    child: TextMedium(
+                        text:
+                            "Laporkan drainase rusak atau banjir di daerah anda dengan mudah",
+                        textColour: Colors.grey,
+                        fontSize: 15.sp),
+                  ),
+                ),
+                30.verticalSpace,
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -74,12 +102,12 @@ class ReportsView extends GetView<ReportsController> {
                               height: 40.h,
                               decoration: BoxDecoration(
                                 color: controller.page.value == 0
-                                    ? Colors.green
+                                    ? Colors.amberAccent
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(10.w),
                                 border: Border.all(
                                   color: Colors.grey,
-                                  width: .5.w,
+                                  width: .1.w,
                                 ),
                               ),
                               child: Center(
@@ -368,7 +396,7 @@ class ReportsView extends GetView<ReportsController> {
                           width: 376.w,
                           color: controller.page.value == 1
                               ? Colors.red
-                              : Colors.green,
+                              : Colors.amberAccent,
                           press: () {
                             controller.validateReportForm(
                               controller.latlng.value,
@@ -395,7 +423,7 @@ class ReportsView extends GetView<ReportsController> {
                           width: Get.width,
                           color: controller.page.value == 1
                               ? Colors.red
-                              : Colors.green,
+                              : Colors.amberAccent,
                           press: () {
                             controller.validateReportForm(
                               controller.latlng.value,
@@ -427,7 +455,9 @@ class ReportsView extends GetView<ReportsController> {
           ? ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(374.w, 50.h),
-                primary: controller.page.value == 1 ? Colors.red : Colors.green,
+                primary: controller.page.value == 1
+                    ? Colors.red
+                    : Colors.amberAccent,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.w),
@@ -455,7 +485,9 @@ class ReportsView extends GetView<ReportsController> {
           : ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(374.w, 50.h),
-                primary: controller.page.value == 1 ? Colors.red : Colors.green,
+                primary: controller.page.value == 1
+                    ? Colors.red
+                    : Colors.amberAccent,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.w),

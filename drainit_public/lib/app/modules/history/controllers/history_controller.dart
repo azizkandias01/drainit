@@ -25,6 +25,19 @@ class HistoryController extends GetxController with StateMixin {
     loadHistory();
   }
 
+  Future<List<HistoryModel>> getHistory() async {
+    var list = <HistoryModel>[];
+    await HistoryProvider().loadHistory(box.read(Routes.TOKEN) as String).then(
+      (value) => {
+        list = value,
+      },
+      onError: (err) {
+        change(err, status: RxStatus.error());
+      },
+    );
+    return list;
+  }
+
   ///load the history from api
   Future<void> loadHistory() async {
     change(null, status: RxStatus.loading());
@@ -73,8 +86,8 @@ class HistoryController extends GetxController with StateMixin {
 }
 
 class HistorySearchDelegate extends SearchDelegate {
-  final HistoryController controller;
   HistorySearchDelegate(this.controller);
+  final HistoryController controller;
 
   @override
   List<Widget> buildActions(BuildContext context) {

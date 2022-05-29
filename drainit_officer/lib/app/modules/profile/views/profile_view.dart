@@ -8,35 +8,32 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: Size(375, 812),
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          title: const Text(
-            'Profile',
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Profile',
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
-          leading: IconButton(
+          onPressed: () => Get.back(),
+        ),
+        actions: [
+          IconButton(
             icon: const Icon(
-              Icons.arrow_back,
+              Icons.refresh,
               color: Colors.black,
             ),
-            onPressed: () => Get.back(),
+            onPressed: () => {},
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.refresh,
-                color: Colors.black,
-              ),
-              onPressed: () => {},
-            ),
-          ],
-        ),
-        body: BodyBuild(controller: controller),
+        ],
       ),
+      body: BodyBuild(controller: controller),
     );
   }
 }

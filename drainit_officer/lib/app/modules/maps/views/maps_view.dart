@@ -54,53 +54,50 @@ class MapsView extends GetView<MapsController> {
       return chips;
     }
 
-    return ScreenUtilInit(
-      designSize: Size(414, 896),
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          actions: [
-            InfoWidget(),
-          ],
-          title: TextBold(
-            text: 'Peta Titik Banjir',
-            textColour: Colors.black,
-            fontSize: 18.sp,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          InfoWidget(),
+        ],
+        title: TextBold(
+          text: 'Peta Titik Banjir',
+          textColour: Colors.black,
+          fontSize: 18.sp,
         ),
-        body: Stack(
-          children: [
-            Obx(
-              () => GoogleMap(
-                initialCameraPosition: cameraPosition,
-                myLocationButtonEnabled: false,
-                markers: Set<Marker>.of(controller.markers),
-                polylines: controller.polylines,
-                onMapCreated: (GoogleMapController controller) {
-                  if (!_googleMapsController.isCompleted) {
-                    _googleMapsController.complete(controller);
-                    controller.setMapStyle(mapStyles);
-                  } else {
-                    print('completer has created');
-                    controller.setMapStyle(mapStyles);
-                  }
-                },
-              ),
+      ),
+      body: Stack(
+        children: [
+          Obx(
+            () => GoogleMap(
+              initialCameraPosition: cameraPosition,
+              myLocationButtonEnabled: false,
+              markers: Set<Marker>.of(controller.markers),
+              polylines: controller.polylines,
+              onMapCreated: (GoogleMapController controller) {
+                if (!_googleMapsController.isCompleted) {
+                  _googleMapsController.complete(controller);
+                  controller.setMapStyle(mapStyles);
+                } else {
+                  print('completer has created');
+                  controller.setMapStyle(mapStyles);
+                }
+              },
             ),
-            Obx(
-              () => SafeArea(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: filterChip(),
-                    ).paddingOnly(left: 20.w, right: 20.w),
+          ),
+          Obx(
+            () => SafeArea(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Wrap(
+                    children: filterChip(),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

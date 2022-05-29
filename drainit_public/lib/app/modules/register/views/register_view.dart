@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../components/text_default.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
@@ -23,8 +24,17 @@ class RegisterView extends GetView<RegisterController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Header(),
-                TextPoppinsBold(text: "Daftar", fontSize: 24.sp),
+                //const Header(),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: Icon(Icons.adaptive.arrow_back)),
+                    TextBold(text: "Daftar", fontSize: 24.sp),
+                  ],
+                ),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -75,7 +85,7 @@ class RegisterView extends GetView<RegisterController> {
                         },
                       ),
                     ),
-                    TextPoppinsRegular(
+                    TextRegular(
                       text: "Saya setuju dengan syarat dan ketentuan",
                       fontSize: 12.sp,
                     ),
@@ -95,7 +105,7 @@ class RegisterView extends GetView<RegisterController> {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(10)),
                 Center(
-                  child: TextPoppinsRegular(
+                  child: TextRegular(
                     text: "Atau",
                     fontSize: 14.sp,
                     textColour: Colors.grey,
@@ -149,7 +159,7 @@ class InputText extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextPoppinsRegular(text: title, fontSize: 14.sp),
+        TextRegular(text: title, fontSize: 14.sp),
         SizedBox(height: ScreenUtil().setHeight(5)),
         RoundedInputField(
           hintText: hintText,

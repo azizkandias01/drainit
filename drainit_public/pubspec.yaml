@@ -10,11 +10,6 @@ dependencies:
   get: ^4.6.2
   google_fonts: ^2.3.1
   google_maps_flutter: ^2.1.1
-  location:
-    git:
-      url: https://github.com/TabooSun/flutterlocation.git
-      path: packages/location
-      ref: flutter-3-compatibility
   flutter_native_splash: ^2.1.1
   persistent_bottom_nav_bar: 4.0.2
   flutter_svg: ^1.0.3
@@ -28,10 +23,19 @@ dependencies:
   flutter_polyline_points: 1.0.0
   geocoding: ^2.0.1
   lint: ^1.7.2
+  maps_launcher: ^2.0.1
   photo_view: 0.13.0
   onesignal_flutter: 3.3.0
   auto_size_text: 3.0.0
   file_picker: 4.5.1
+  lottie: 1.3.0
+  visibility_detector: 0.3.3
+  shimmer: 2.0.0
+  location: 
+    git: 
+      url: https://github.com/TabooSun/flutterlocation.git
+      ref: flutter-3-compatibility
+      path: packages/location
   flutter: 
     sdk: flutter
 
@@ -42,11 +46,20 @@ dev_dependencies:
   integration_test: 
     sdk: flutter
 
-flutter:
+flutter: 
   assets: 
     - assets/lottie/
     - assets/svg/
     - assets/image/
+  fonts: 
+    - family: Raleway
+      fonts: 
+        - asset: assets/fonts/raleway/Raleway-Regular.ttf
+        - asset: assets/fonts/raleway/Raleway-Bold.ttf
+        - asset: assets/fonts/raleway/Raleway-Medium.ttf
+        - asset: assets/fonts/raleway/Raleway-SemiBold.ttf
+        - asset: assets/fonts/raleway/Raleway-Light.ttf
+        - asset: assets/fonts/raleway/Raleway-ExtraBold.ttf
   uses-material-design: true
 
 flutter_native_splash: 

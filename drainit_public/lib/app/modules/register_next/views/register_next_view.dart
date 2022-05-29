@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,9 +51,9 @@ class RegisterNextView extends GetView<RegisterNextController> {
               ),
             ),
             SizedBox(height: 21.h),
-            TextPoppinsBold(text: "Selamat Datang", fontSize: 28.sp),
+            TextBold(text: "Selamat Datang", fontSize: 28.sp),
             SizedBox(height: 4.h),
-            TextPoppinsRegular(
+            TextRegular(
               text: "Masukan foto profile anda",
               fontSize: 12.sp,
             ),
@@ -135,7 +136,7 @@ class RegisterNextView extends GetView<RegisterNextController> {
                     ),
                   ),
                   SizedBox(height: 10.h),
-                  TextPoppinsRegular(
+                  TextRegular(
                     text: 'Sedang membuat akun...',
                     fontSize: 12.sp,
                   ),

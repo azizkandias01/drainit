@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
@@ -17,25 +18,28 @@ void main() {
     );
   };
   runApp(
-    GetMaterialApp(
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
+    ScreenUtilInit(
+      designSize: Size(375, 812),
+      builder: (ctx, _) => GetMaterialApp(
+        title: "Drainit Petugas",
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+            ),
+            iconTheme: IconThemeData(color: Colors.black),
+            systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: Colors.transparent,
+            ),
+            backgroundColor: Colors.white, // 2
           ),
-          iconTheme: IconThemeData(color: Colors.black),
-          systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
-            statusBarColor: Colors.transparent,
-          ),
-          backgroundColor: Colors.white, // 2
         ),
+        debugShowCheckedModeBanner: false,
       ),
-      debugShowCheckedModeBanner: false,
     ),
   );
 }
