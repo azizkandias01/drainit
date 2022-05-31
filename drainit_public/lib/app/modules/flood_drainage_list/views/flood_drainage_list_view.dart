@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../controllers/flood_drainage_list_controller.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 late LatLng _initialPosition;
@@ -24,61 +23,82 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
           'Peta titik',
           style: TextStyle(color: Colors.black),
         ),
-        centerTitle: true,
-        elevation: 1,
-        leading: PopupMenuButton(
-          icon: const Icon(Icons.filter_list, color: black),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                primary,
+                white,
+              ],
+            ),
           ),
-          onSelected: (value) {
-            if (value == 'rusak') {
-              if (controller.markers.isNotEmpty) {
-                controller.markers.clear();
-                loadDrainageMarker(controller);
-              } else {
-                loadDrainageMarker(controller);
-              }
-            }
-            if (value == 'banjir') {
-              if (controller.markers.isNotEmpty) {
-                controller.markers.clear();
-                loadFloodMarker(controller);
-              } else {
-                loadFloodMarker(controller);
-              }
-            }
-          },
-          itemBuilder: (context) => const [
-            PopupMenuItem(
-              value: 'semua',
-              child: Text('Semua'),
-            ),
-            PopupMenuItem(
-              value: 'banjir',
-              child: Text('Titik banjir'),
-            ),
-            PopupMenuItem(
-              value: 'rusak',
-              child: Text('Titik rusak'),
-            ),
-          ],
         ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Get.back(),
+        ),
+        centerTitle: true,
+        elevation: 0,
         actions: <Widget>[
+          PopupMenuButton(
+            icon: const Icon(Icons.filter_list, color: black),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            onSelected: (value) {
+              if (value == 'rusak') {
+                if (controller.markers.isNotEmpty) {
+                  controller.markers.clear();
+                  loadDrainageMarker(controller);
+                } else {
+                  loadDrainageMarker(controller);
+                }
+              }
+              if (value == 'banjir') {
+                if (controller.markers.isNotEmpty) {
+                  controller.markers.clear();
+                  loadFloodMarker(controller);
+                } else {
+                  loadFloodMarker(controller);
+                }
+              }
+            },
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: 'semua',
+                child: Text('Semua'),
+              ),
+              PopupMenuItem(
+                value: 'banjir',
+                child: Text('Titik banjir'),
+              ),
+              PopupMenuItem(
+                value: 'rusak',
+                child: Text('Titik rusak'),
+              ),
+            ],
+          ),
           IconButton(
             icon: const Icon(
               Icons.refresh,
               color: black,
             ),
             onPressed: () {
-              Get.dialog(Container(
-                color: Colors.white,
-                width: ScreenUtil().setWidth(100),
-                height: ScreenUtil().setHeight(100),
-                child: const Center(
-                  child: CircularProgressIndicator(),
+              Get.dialog(
+                Container(
+                  color: Colors.white,
+                  width: ScreenUtil().setWidth(100),
+                  height: ScreenUtil().setHeight(100),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
-              ));
+              );
               controller.loadDrainagePoint();
               controller.loadFloodPoint();
               controller.loadMapDrainage();

@@ -1,7 +1,6 @@
+import 'package:drainit_flutter/app/modules/flood_drainage_list/models/drainage_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
-
-import '../models/drainage_model.dart';
 
 class DrainageProvider extends GetConnect {
   Future loadDrainagePoint() async {

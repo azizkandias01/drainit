@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ import 'package:photo_view/photo_view.dart';
 Color getStatusColor(String status) {
   switch (status) {
     case "NOT_YET_VERIFIED":
-      return Colors.amberAccent;
+      return primary;
     case "ON_PROGRESS":
       return Colors.purple.shade300;
     case "COMPLETED":
@@ -109,19 +110,19 @@ String timeAgoSinceDate(String dateString, {bool numericDates = true}) {
   if (difference.inDays > 8) {
     return '2 weeks ago';
   } else if ((difference.inDays / 7).floor() >= 1) {
-    return (numericDates) ? '1 week ago' : 'Last week';
+    return numericDates ? '1 week ago' : 'Last week';
   } else if (difference.inDays >= 2) {
     return '${difference.inDays} days ago';
   } else if (difference.inDays >= 1) {
-    return (numericDates) ? '1 day ago' : 'Yesterday';
+    return numericDates ? '1 day ago' : 'Yesterday';
   } else if (difference.inHours >= 2) {
     return '${difference.inHours} hours ago';
   } else if (difference.inHours >= 1) {
-    return (numericDates) ? '1 hour ago' : 'An hour ago';
+    return numericDates ? '1 hour ago' : 'An hour ago';
   } else if (difference.inMinutes >= 2) {
     return '${difference.inMinutes} minutes ago';
   } else if (difference.inMinutes >= 1) {
-    return (numericDates) ? '1 minute ago' : 'A minute ago';
+    return numericDates ? '1 minute ago' : 'A minute ago';
   } else if (difference.inSeconds >= 3) {
     return '${difference.inSeconds} seconds ago';
   } else {
@@ -236,7 +237,8 @@ extension ExtendedDouble on double {
       );
 }
 
-const String mapStyles = '''[
+const String mapStyles = '''
+[
   {
     "elementType": "geometry",
     "stylers": [

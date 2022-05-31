@@ -1,15 +1,13 @@
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
-import 'package:drainit_flutter/app/components/text_poppins.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
+import 'package:drainit_flutter/app/modules/register/controllers/register_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
-import '../../../components/text_default.dart';
-import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
   @override
@@ -31,7 +29,7 @@ class RegisterView extends GetView<RegisterController> {
                         onPressed: () {
                           Get.back();
                         },
-                        icon: Icon(Icons.adaptive.arrow_back)),
+                        icon: Icon(Icons.adaptive.arrow_back),),
                     TextBold(text: "Daftar", fontSize: 24.sp),
                   ],
                 ),
@@ -144,15 +142,15 @@ class RegisterView extends GetView<RegisterController> {
 }
 
 class InputText extends StatelessWidget {
-  final String title;
-  final String hintText;
-  final TextEditingController controller;
   const InputText({
     Key? key,
     required this.title,
     required this.hintText,
     required this.controller,
   }) : super(key: key);
+  final String title;
+  final String hintText;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,4 @@
 class UpdateReport {
-  String? id;
-  String? namaPetugas;
-  String? judul;
-  String? deskripsi;
-  String? foto;
-  String? waktu;
 
   UpdateReport(
       {this.id,
@@ -12,7 +6,7 @@ class UpdateReport {
       this.judul,
       this.deskripsi,
       this.foto,
-      this.waktu});
+      this.waktu,});
 
   UpdateReport.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -22,6 +16,12 @@ class UpdateReport {
     foto = json['foto'].toString();
     waktu = json['waktu'].toString();
   }
+  String? id;
+  String? namaPetugas;
+  String? judul;
+  String? deskripsi;
+  String? foto;
+  String? waktu;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

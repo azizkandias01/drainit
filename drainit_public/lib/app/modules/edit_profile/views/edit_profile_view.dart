@@ -1,11 +1,10 @@
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/modules/edit_profile/controllers/edit_profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../controllers/edit_profile_controller.dart';
 
 class EditProfileView extends GetView<EditProfileController> {
   @override
@@ -164,7 +163,6 @@ class EditProfileView extends GetView<EditProfileController> {
                 ).paddingAll(10.r),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text("Simpan"),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
@@ -175,6 +173,7 @@ class EditProfileView extends GetView<EditProfileController> {
                         MaterialStateProperty.all(Size(Get.width, 50.h)),
                     backgroundColor: MaterialStateProperty.all(Colors.green),
                   ),
+                  child: const Text("Simpan"),
                 ).paddingAll(10.r),
               ],
             ).paddingAll(20.r),

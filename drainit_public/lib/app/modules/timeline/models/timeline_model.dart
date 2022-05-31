@@ -93,27 +93,6 @@ class TimelineModel {
 }
 
 class TimelineModelAnonymouse {
-  TimelineModelAnonymouse.fromJson(Map<String, dynamic> json) {
-    id = json['id']?.toString();
-    idMasyarakat = json['id_masyarakat']?.toString();
-    namaPelapor = json['nama_pelapor']?.toString();
-    idAdmin = json['id_admin']?.toString();
-    namaAdmin = json['nama_admin']?.toString();
-    idPetugas = json['id_petugas']?.toString();
-    namaPetugas = json['nama_petugas']?.toString();
-    namaJalan = json['nama_jalan']?.toString();
-    foto = json['foto']?.toString();
-    tipePengaduan = json['tipe_pengaduan']?.toString();
-    deskripsiPengaduan = json['deskripsi_pengaduan']?.toString();
-    statusPengaduan = json['status_pengaduan']?.toString();
-    laporanPetugas = json['laporan_petugas']?.toString();
-    feedbackMasyarakat = json['feedback_masyarakat']?.toString();
-    createdAt = json['created_at']?.toString();
-    updatedAt = json['updated_at']?.toString();
-    geometry = json['geometry']?.toString();
-    upvote = json['upvote'] as int;
-    downvote = json['downvote'] as int;
-  }
 
   TimelineModelAnonymouse({
     this.id,
@@ -136,6 +115,27 @@ class TimelineModelAnonymouse {
     this.upvote,
     this.downvote,
   });
+  TimelineModelAnonymouse.fromJson(Map<String, dynamic> json) {
+    id = json['id']?.toString();
+    idMasyarakat = json['id_masyarakat']?.toString();
+    namaPelapor = json['nama_pelapor']?.toString();
+    idAdmin = json['id_admin']?.toString();
+    namaAdmin = json['nama_admin']?.toString();
+    idPetugas = json['id_petugas']?.toString();
+    namaPetugas = json['nama_petugas']?.toString();
+    namaJalan = json['nama_jalan']?.toString();
+    foto = json['foto']?.toString();
+    tipePengaduan = json['tipe_pengaduan']?.toString();
+    deskripsiPengaduan = json['deskripsi_pengaduan']?.toString();
+    statusPengaduan = json['status_pengaduan']?.toString();
+    laporanPetugas = json['laporan_petugas']?.toString();
+    feedbackMasyarakat = json['feedback_masyarakat']?.toString();
+    createdAt = json['created_at']?.toString();
+    updatedAt = json['updated_at']?.toString();
+    geometry = json['geometry']?.toString();
+    upvote = json['upvote'] as int;
+    downvote = json['downvote'] as int;
+  }
 
   String? id;
   String? idMasyarakat;

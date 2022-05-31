@@ -79,7 +79,7 @@ class ReportsController extends GetxController with StateMixin {
       'foto': foto,
       'deskripsi_pengaduan': deskripsiPengaduan,
       'geometry':
-          "{\"type\": \"Point\", \"coordinates\": [${geometry.longitude},${geometry.latitude}]}",
+          '{"type": "Point", "coordinates": [${geometry.longitude},${geometry.latitude}]}',
     };
     change(
       null,
@@ -109,7 +109,7 @@ class ReportsController extends GetxController with StateMixin {
     } else {
       ReportsProvider()
           .createBrokenDrainageReport(
-              reportData, box.read(Routes.TOKEN).toString())
+              reportData, box.read(Routes.TOKEN).toString(),)
           .then(
         (resp) => {
           change(

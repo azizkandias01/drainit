@@ -5,20 +5,18 @@ import 'package:drainit_flutter/app/modules/detail/providers/update_report_provi
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../models/detail_model.dart';
-
 class DetailController extends GetxController with StateMixin {
   Detail detail = Detail();
   RxList<UpdateReport> updateReport = <UpdateReport>[].obs;
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
     await getUpdate();
     await getDetail();
   }
 
   String convertDate() {
-    DateTime date = DateTime.parse(detail.createdAt ?? "");
+    final DateTime date = DateTime.parse(detail.createdAt ?? "");
     return "${date.hour}:${date.minute}:${date.second} ${date.day}/${date.month}/${date.year}";
   }
 

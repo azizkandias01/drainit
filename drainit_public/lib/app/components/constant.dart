@@ -22,6 +22,7 @@ const grey300 = Color(0xFFE0E0E0);
 const grey500 = Color(0xFF9E9E9E);
 const grey600 = Color(0xFF757575);
 const grey700 = Color(0xFF616161);
+const lightYellow = Color(0xFFFEC54B);
 
 const grey = Color(0xFFEBEFF0);
 const orange = Color(0xFFFB7834);

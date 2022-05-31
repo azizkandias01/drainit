@@ -1,6 +1,5 @@
+import 'package:drainit_flutter/app/modules/welcome/controllers/welcome_controller.dart';
 import 'package:get/get.dart';
-
-import '../controllers/welcome_controller.dart';
 
 class WelcomeBinding extends Bindings {
   @override

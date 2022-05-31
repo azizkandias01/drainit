@@ -1,10 +1,8 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:flutter/cupertino.dart';
+import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController with StateMixin<String> {
   //key for test
@@ -56,7 +54,7 @@ class RegisterController extends GetxController with StateMixin<String> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         snackStyle: SnackStyle.FLOATING,
         duration: const Duration(seconds: 2),
       );
@@ -68,7 +66,7 @@ class RegisterController extends GetxController with StateMixin<String> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         snackStyle: SnackStyle.FLOATING,
         duration: const Duration(seconds: 2),
       );
@@ -80,7 +78,7 @@ class RegisterController extends GetxController with StateMixin<String> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         snackStyle: SnackStyle.FLOATING,
         duration: const Duration(seconds: 2),
       );
@@ -92,7 +90,7 @@ class RegisterController extends GetxController with StateMixin<String> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         snackStyle: SnackStyle.FLOATING,
         duration: const Duration(seconds: 2),
       );
@@ -104,7 +102,7 @@ class RegisterController extends GetxController with StateMixin<String> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         snackStyle: SnackStyle.FLOATING,
         duration: const Duration(seconds: 2),
       );

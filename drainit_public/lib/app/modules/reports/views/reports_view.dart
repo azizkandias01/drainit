@@ -4,16 +4,14 @@ import 'dart:io';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
+import 'package:drainit_flutter/app/modules/reports/controllers/reports_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../controllers/reports_controller.dart';
 
 class ReportsView extends GetView<ReportsController> {
   @override
@@ -24,8 +22,20 @@ class ReportsView extends GetView<ReportsController> {
       appBar: AppBar(
         backgroundColor: white,
         elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                primary,
+                white,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: black,
           ),
@@ -44,27 +54,15 @@ class ReportsView extends GetView<ReportsController> {
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                20.verticalSpace,
-                Obx(
-                  () => Center(
-                    child: TextBold(
-                      text:
-                          'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
-                      fontSize: 30.sp,
-                    ),
-                  ),
-                ),
-                10.verticalSpace,
-                Center(
-                  child: SizedBox(
-                    width: 0.7.sw,
-                    child: TextMedium(
-                        text:
-                            "Laporkan drainase rusak atau banjir di daerah anda dengan mudah",
-                        textColour: Colors.grey,
-                        fontSize: 15.sp),
-                  ),
-                ),
+                // Obx(
+                //   () => Center(
+                //     child: TextBold(
+                //       text:
+                //           'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
+                //       fontSize: 30.sp,
+                //     ),
+                //   ),
+                // ),
                 30.verticalSpace,
                 Container(
                   decoration: BoxDecoration(

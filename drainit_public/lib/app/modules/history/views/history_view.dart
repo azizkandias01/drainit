@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
-import 'package:drainit_flutter/app/components/text_poppins.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
 import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
@@ -20,6 +19,18 @@ class HistoryView extends GetView<HistoryController> {
     var selectedFilter = controller.selectedFilter.value;
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                primary,
+                white,
+              ],
+            ),
+          ),
+        ),
         title: TextBold(
           text: "Riwayat Laporan",
           fontSize: ScreenUtil().setSp(25),
@@ -111,7 +122,9 @@ class HistoryView extends GetView<HistoryController> {
                               child: Container(
                                 height: 20.h,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
+                                  horizontal: 10.r,
+                                  vertical: 5.r,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.r)),
@@ -134,7 +147,9 @@ class HistoryView extends GetView<HistoryController> {
                               child: Container(
                                 height: 20.h,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
+                                  horizontal: 10.r,
+                                  vertical: 5.r,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.r)),
@@ -158,7 +173,9 @@ class HistoryView extends GetView<HistoryController> {
                               child: Container(
                                 height: 20.h,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
+                                  horizontal: 10.r,
+                                  vertical: 5.r,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.r)),
@@ -182,7 +199,9 @@ class HistoryView extends GetView<HistoryController> {
                               child: Container(
                                 height: 20.h,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
+                                  horizontal: 10.r,
+                                  vertical: 5.r,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.r)),
@@ -206,7 +225,9 @@ class HistoryView extends GetView<HistoryController> {
                               child: Container(
                                 height: 20.h,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
+                                  horizontal: 10.r,
+                                  vertical: 5.r,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.r)),
@@ -271,8 +292,11 @@ class HistoryView extends GetView<HistoryController> {
                             ),
                             Row(
                               children: [
-                                Icon(Icons.sort_outlined,
-                                    size: 15.sp, color: Colors.grey[500]),
+                                Icon(
+                                  Icons.sort_outlined,
+                                  size: 15.sp,
+                                  color: Colors.grey[500],
+                                ),
                                 10.horizontalSpace,
                                 TextSemiBold(
                                   text: "Urutkan: ",
@@ -306,8 +330,11 @@ class HistoryView extends GetView<HistoryController> {
                                           width: 1.sw,
                                           height: 1.sw / 2,
                                           fit: BoxFit.cover,
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
+                                          progressIndicatorBuilder: (
+                                            context,
+                                            url,
+                                            downloadProgress,
+                                          ) =>
                                               Center(
                                             child: CircularProgressIndicator
                                                 .adaptive(
@@ -361,8 +388,9 @@ class HistoryView extends GetView<HistoryController> {
                                             fontSize: 18.sp,
                                           ),
                                           Text(
-                                            timeAgoSinceDate(snapshot
-                                                .data![index].createdAt!),
+                                            timeAgoSinceDate(
+                                              snapshot.data![index].createdAt!,
+                                            ),
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               color: Colors.grey,
@@ -415,8 +443,9 @@ class HistoryView extends GetView<HistoryController> {
                                                 onPressed: () async {
                                                   await MapsLauncher
                                                       .launchCoordinates(
-                                                          37.4220041,
-                                                          -122.0862462);
+                                                    37.4220041,
+                                                    -122.0862462,
+                                                  );
                                                 },
                                               ),
                                             ),
@@ -496,12 +525,13 @@ class BuildHistoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: controller.foundList.value.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => controller.foundList.value.isNotEmpty
           ? ListTile(
               dense: true,
               contentPadding: EdgeInsets.symmetric(
-                horizontal: 20.r,
-                vertical: 10.r,
+                vertical: 10.h,
               ),
               isThreeLine: true,
               onTap: () {
@@ -513,7 +543,9 @@ class BuildHistoryList extends StatelessWidget {
               title: Text(
                 " ${controller.foundList.value[index].namaJalan!}",
                 style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
               ).paddingAll(5.r),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -572,7 +604,8 @@ class BuildHistoryList extends StatelessWidget {
                   5.verticalSpace,
                   Text(
                     timeAgoSinceDate(
-                        controller.foundList.value[index].createdAt!),
+                      controller.foundList.value[index].createdAt!,
+                    ),
                     style: TextStyle(
                       fontSize: 11.sp,
                       color: Colors.grey,
@@ -582,7 +615,8 @@ class BuildHistoryList extends StatelessWidget {
               ).paddingAll(5.r),
               trailing: Image(
                 image: CachedNetworkImageProvider(
-                    Routes.IMAGEURL + controller.foundList.value[index].foto!),
+                  Routes.IMAGEURL + controller.foundList.value[index].foto!,
+                ),
                 height: 50,
                 width: 50,
                 fit: BoxFit.fill,
@@ -623,8 +657,10 @@ class BuildSortedHistoryList extends StatelessWidget {
               ),
               isThreeLine: true,
               onTap: () {
-                Get.offNamed(Routes.DETAIL,
-                    arguments: controller.sortedList.value[index].id);
+                Get.offNamed(
+                  Routes.DETAIL,
+                  arguments: controller.sortedList.value[index].id,
+                );
               },
               title: TextBold(
                 text: " ${controller.sortedList.value[index].namaJalan!}",
@@ -705,7 +741,8 @@ class BuildSortedHistoryList extends StatelessWidget {
                   5.verticalSpace,
                   Text(
                     timeAgoSinceDate(
-                        controller.sortedList.value[index].createdAt!),
+                      controller.sortedList.value[index].createdAt!,
+                    ),
                     style: TextStyle(
                       fontSize: 11.sp,
                       color: Colors.grey,

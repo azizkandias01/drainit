@@ -123,8 +123,4 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
     );
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

@@ -1,7 +1,6 @@
+import 'package:drainit_flutter/app/modules/detail/models/update_report_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
-
-import '../models/update_report_model.dart';
 
 class UpdateReportProvider extends GetConnect {
   Future<List<UpdateReport>> getUpdateReport(String id) async {

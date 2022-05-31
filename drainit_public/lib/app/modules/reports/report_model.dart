@@ -1,7 +1,4 @@
 class Report {
-  String? message;
-  Data? data;
-  int? statusCode;
 
   Report({this.message, this.data, this.statusCode});
 
@@ -12,29 +9,20 @@ class Report {
         : null;
     statusCode = json['status_code'] as int;
   }
+  String? message;
+  Data? data;
+  int? statusCode;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['message'] = message;
-    if (data != null) {
-      data['data'] = this.data!.toJson();
-    }
+    data['data'] = this.data!.toJson();
     data['status_code'] = statusCode;
     return data;
   }
 }
 
 class Data {
-  String? namaJalan;
-  String? foto;
-  String? deskripsiPengaduan;
-  String? geometry;
-  String? idMasyarakat;
-  String? tipePengaduan;
-  String? statusPengaduan;
-  String? id;
-  String? updatedAt;
-  String? createdAt;
 
   Data(
       {this.namaJalan,
@@ -46,7 +34,7 @@ class Data {
       this.statusPengaduan,
       this.id,
       this.updatedAt,
-      this.createdAt});
+      this.createdAt,});
 
   Data.fromJson(Map<String, dynamic> json) {
     namaJalan = json['nama_jalan'].toString();
@@ -60,6 +48,16 @@ class Data {
     updatedAt = json['updated_at'].toString();
     createdAt = json['created_at'].toString();
   }
+  String? namaJalan;
+  String? foto;
+  String? deskripsiPengaduan;
+  String? geometry;
+  String? idMasyarakat;
+  String? tipePengaduan;
+  String? statusPengaduan;
+  String? id;
+  String? updatedAt;
+  String? createdAt;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

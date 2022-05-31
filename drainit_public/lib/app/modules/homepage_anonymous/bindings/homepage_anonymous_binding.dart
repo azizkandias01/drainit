@@ -1,6 +1,5 @@
+import 'package:drainit_flutter/app/modules/homepage_anonymous/controllers/homepage_anonymous_controller.dart';
 import 'package:get/get.dart';
-
-import '../controllers/homepage_anonymous_controller.dart';
 
 class HomepageAnonymousBinding extends Bindings {
   @override

@@ -1,6 +1,7 @@
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/login/controllers/login_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
-import '../../../components/text_default.dart';
 
 class LoginView extends GetView<LoginController> {
   @override

@@ -1,13 +1,7 @@
+import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:flutter/material.dart';
-import 'constant.dart';
 
 class RoundedPasswordField extends StatelessWidget {
-  final ValueChanged<String>? onChanged;
-  final double roundedCorner;
-  final TextEditingController? textEditingController;
-  final String? hintText;
-  final bool obscureText;
-  final Function? onIconPressed;
   const RoundedPasswordField({
     Key? key,
     this.obscureText = true,
@@ -17,13 +11,19 @@ class RoundedPasswordField extends StatelessWidget {
     this.roundedCorner = 29,
     this.hintText,
   }) : super(key: key);
+  final ValueChanged<String>? onChanged;
+  final double roundedCorner;
+  final TextEditingController? textEditingController;
+  final String? hintText;
+  final bool obscureText;
+  final Function? onIconPressed;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
         color: grey,
@@ -36,15 +36,15 @@ class RoundedPasswordField extends StatelessWidget {
         controller: textEditingController,
         decoration: InputDecoration(
           hintText: hintText,
-          icon: Icon(
+          icon: const Icon(
             Icons.lock,
             color: primary,
           ),
           suffixIcon: IconButton(
             color: primary,
             icon: obscureText
-                ? Icon(Icons.remove_red_eye)
-                : Icon(Icons.remove_red_eye_outlined),
+                ? const Icon(Icons.remove_red_eye)
+                : const Icon(Icons.remove_red_eye_outlined),
             onPressed: () => onIconPressed,
           ),
           border: InputBorder.none,

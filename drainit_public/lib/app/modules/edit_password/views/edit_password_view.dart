@@ -1,10 +1,9 @@
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/modules/edit_password/controllers/edit_password_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../controllers/edit_password_controller.dart';
 
 class EditPasswordView extends GetView<EditPasswordController> {
   @override
@@ -116,7 +115,6 @@ class EditPasswordView extends GetView<EditPasswordController> {
                 ).paddingAll(10.r),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text("Simpan"),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
@@ -127,6 +125,7 @@ class EditPasswordView extends GetView<EditPasswordController> {
                         MaterialStateProperty.all(Size(Get.width, 50.h)),
                     backgroundColor: MaterialStateProperty.all(Colors.green),
                   ),
+                  child: const Text("Simpan"),
                 ).paddingAll(10.r),
               ],
             ).paddingAll(20.r),

@@ -3,19 +3,14 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
-import 'package:drainit_flutter/app/components/text_poppins.dart';
+import 'package:drainit_flutter/app/modules/detail/controllers/detail_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../controllers/detail_controller.dart';
 
 class DetailView extends GetView<DetailController> {
   @override
@@ -23,7 +18,7 @@ class DetailView extends GetView<DetailController> {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
-    ));
+    ),);
     final Completer<GoogleMapController> _googleMapsController = Completer();
     return WillPopScope(
       onWillPop: () async {
@@ -180,12 +175,12 @@ class DetailView extends GetView<DetailController> {
                                     initialCameraPosition: CameraPosition(
                                         zoom: 15,
                                         target: controller.geoToLatlong(
-                                            controller.detail.geometry!)),
+                                            controller.detail.geometry!,),),
                                     markers: <Marker>{
                                       Marker(
-                                          markerId: MarkerId("1"),
+                                          markerId: const MarkerId("1"),
                                           position: controller.geoToLatlong(
-                                              controller.detail.geometry!))
+                                              controller.detail.geometry!,),)
                                     },
                                   ),
                                 ),
@@ -359,7 +354,7 @@ class DetailView extends GetView<DetailController> {
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 10.h),
+                              horizontal: 20.w, vertical: 10.h,),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -411,7 +406,7 @@ class DetailView extends GetView<DetailController> {
                         if (controller.updateReport.value.isEmpty)
                           const Center(
                                   child:
-                                      Text("Belum ada update untuk sekarang"))
+                                      Text("Belum ada update untuk sekarang"),)
                               .paddingAll(20.r),
                         for (int i = 0;
                             i < controller.updateReport.value.length;
@@ -483,7 +478,7 @@ class DetailView extends GetView<DetailController> {
                                             BorderRadius.circular(10.r),
                                         child: const Image(
                                           image: CachedNetworkImageProvider(
-                                              "https://random.imagecdn.app/300/200"),
+                                              "https://random.imagecdn.app/300/200",),
                                         ),
                                       ),
                                     ),

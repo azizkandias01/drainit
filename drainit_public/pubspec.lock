@@ -384,12 +384,10 @@ packages:
   location:
     dependency: "direct main"
     description:
-      path: "packages/location"
-      ref: flutter-3-compatibility
-      resolved-ref: bd8fa5217d32fd22bcb31a8023e0f05a31a7253a
-      url: "https://github.com/TabooSun/flutterlocation.git"
-    source: git
-    version: "4.3.0"
+      name: location
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.4.0"
   location_platform_interface:
     dependency: transitive
     description:

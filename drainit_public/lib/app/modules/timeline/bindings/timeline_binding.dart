@@ -1,6 +1,5 @@
+import 'package:drainit_flutter/app/modules/timeline/controllers/timeline_controller.dart';
 import 'package:get/get.dart';
-
-import '../controllers/timeline_controller.dart';
 
 class TimelineBinding extends Bindings {
   @override

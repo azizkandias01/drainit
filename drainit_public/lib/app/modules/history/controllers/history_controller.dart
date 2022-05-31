@@ -2,7 +2,6 @@ import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
 import 'package:drainit_flutter/app/modules/history/providers/history_provider.dart';
 import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -59,7 +58,7 @@ class HistoryController extends GetxController with StateMixin {
     } else {
       filteredList = list
           .where((element) =>
-              element.namaJalan!.toLowerCase().contains(name.toLowerCase()))
+              element.namaJalan!.toLowerCase().contains(name.toLowerCase()),)
           .toList();
     }
     foundList.value = filteredList;

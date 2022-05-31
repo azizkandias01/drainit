@@ -2,15 +2,13 @@
 
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
+import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../../../components/text_poppins.dart';
-import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   @override
@@ -19,6 +17,18 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                primary,
+                Colors.white,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
         centerTitle: true,
         title: const Text(
           'Profile',

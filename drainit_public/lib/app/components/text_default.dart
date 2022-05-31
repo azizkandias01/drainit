@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 class TextBold extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final Color? textColour;
-  final TextOverflow? overflow;
   const TextBold({
     Key? key,
     required this.text,
@@ -12,6 +8,10 @@ class TextBold extends StatelessWidget {
     this.overflow,
     this.textColour,
   }) : super(key: key);
+  final String text;
+  final double? fontSize;
+  final Color? textColour;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +28,6 @@ class TextBold extends StatelessWidget {
 }
 
 class TextRegular extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final Color? textColour;
-  final TextOverflow? overflow;
   const TextRegular({
     Key? key,
     required this.text,
@@ -39,6 +35,10 @@ class TextRegular extends StatelessWidget {
     this.overflow,
     this.textColour,
   }) : super(key: key);
+  final String text;
+  final double? fontSize;
+  final Color? textColour;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +55,6 @@ class TextRegular extends StatelessWidget {
 }
 
 class TextMedium extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final Color? textColour;
-  final TextOverflow? overflow;
-  final TextAlign? textAlign;
   const TextMedium({
     Key? key,
     required this.text,
@@ -68,6 +63,11 @@ class TextMedium extends StatelessWidget {
     this.textColour,
     this.textAlign,
   }) : super(key: key);
+  final String text;
+  final double? fontSize;
+  final Color? textColour;
+  final TextOverflow? overflow;
+  final TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +85,6 @@ class TextMedium extends StatelessWidget {
 }
 
 class TextThin extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final Color? textColour;
-  final TextOverflow? overflow;
   const TextThin({
     Key? key,
     required this.text,
@@ -96,6 +92,10 @@ class TextThin extends StatelessWidget {
     this.overflow,
     this.textColour,
   }) : super(key: key);
+  final String text;
+  final double? fontSize;
+  final Color? textColour;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -112,10 +112,6 @@ class TextThin extends StatelessWidget {
 }
 
 class TextLight extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final Color? textColour;
-  final TextOverflow? overflow;
   const TextLight({
     Key? key,
     required this.text,
@@ -123,6 +119,10 @@ class TextLight extends StatelessWidget {
     this.overflow,
     this.textColour,
   }) : super(key: key);
+  final String text;
+  final double? fontSize;
+  final Color? textColour;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -139,11 +139,6 @@ class TextLight extends StatelessWidget {
 }
 
 class TextSemiBold extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final Color? textColour;
-  final TextOverflow? overflow;
-  final TextAlign? textAlign;
   const TextSemiBold({
     Key? key,
     required this.text,
@@ -152,6 +147,11 @@ class TextSemiBold extends StatelessWidget {
     this.overflow,
     this.textColour,
   }) : super(key: key);
+  final String text;
+  final double? fontSize;
+  final Color? textColour;
+  final TextOverflow? overflow;
+  final TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {

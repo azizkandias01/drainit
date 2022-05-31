@@ -13,7 +13,7 @@ void main() {
       "deskripsi_pengaduan":
           "banjir udh dua bulan belum ada penanganan banjir sampe masuk rumah",
       "geometry":
-          "{\"type\": \"Point\", \"coordinates\": [101.42554722726345,0.5690943750491332]}"
+          '{"type": "Point", "coordinates": [101.42554722726345,0.5690943750491332]}'
     };
     final response = await reportsProvider.createFloodReport(
       floodReport,
@@ -32,7 +32,7 @@ void main() {
       "deskripsi_pengaduan":
           "drainase rusak udh dua bulan belum ada penanganan banjir sampe masuk rumah",
       "geometry":
-          "{\"type\": \"Point\", \"coordinates\": [101.42554722726345,0.5690943750491332]}"
+          '{"type": "Point", "coordinates": [101.42554722726345,0.5690943750491332]}'
     };
     final response = await reportsProvider.createBrokenDrainageReport(
       brokenDrainageReport,

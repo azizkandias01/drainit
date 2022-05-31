@@ -64,15 +64,15 @@ class SearchmapView extends GetView<SearchmapController> {
                       child: Column(
                         children: [
                           Text(await controller.getAddress(
-                              LatLng(latLng.latitude, latLng.longitude))),
+                              LatLng(latLng.latitude, latLng.longitude),),),
                           ElevatedButton(
                             onPressed: () async {
                               Get.back();
                               Get.back(result: [
                                 await controller.getAddress(
-                                    LatLng(latLng.latitude, latLng.longitude)),
+                                    LatLng(latLng.latitude, latLng.longitude),),
                                 LatLng(latLng.latitude, latLng.longitude)
-                              ]);
+                              ],);
                             },
                             child: const Text('select this coordinate'),
                           )
@@ -124,7 +124,7 @@ class SearchmapSearchDelegate extends SearchDelegate {
 
     controller.searchSugesstion.value
         .where((element) =>
-            element.name.toLowerCase().contains(query.toLowerCase()))
+            element.name.toLowerCase().contains(query.toLowerCase()),)
         .forEach((element) {
       matchData.add(element);
     });
@@ -135,13 +135,13 @@ class SearchmapSearchDelegate extends SearchDelegate {
             onTap: () async {
               Get.back();
               controller.goToSearch(matchData.value[index].lat,
-                  matchData.value[index].long, controller.googleMapController);
+                  matchData.value[index].long, controller.googleMapController,);
               controller.myMarker.clear();
               controller.myMarker.add(Marker(
                 markerId: const MarkerId('my'),
                 position: LatLng(
-                    matchData.value[index].lat, matchData.value[index].long),
-              ));
+                    matchData.value[index].lat, matchData.value[index].long,),
+              ),);
               Get.bottomSheet(
                 Container(
                   color: Colors.white,
@@ -150,7 +150,7 @@ class SearchmapSearchDelegate extends SearchDelegate {
                     children: [
                       Text(await controller.getAddress(LatLng(
                           matchData.value[index].lat,
-                          matchData.value[index].long))),
+                          matchData.value[index].long,),),),
                       ElevatedButton(
                         onPressed: () async {
                           Get.back();
@@ -158,10 +158,10 @@ class SearchmapSearchDelegate extends SearchDelegate {
                             result: [
                               await controller.getAddress(
                                 LatLng(matchData.value[index].lat,
-                                    matchData.value[index].long),
+                                    matchData.value[index].long,),
                               ),
                               LatLng(matchData.value[index].lat,
-                                  matchData.value[index].long)
+                                  matchData.value[index].long,)
                             ],
                           );
                         },
@@ -197,7 +197,7 @@ class SearchmapSearchDelegate extends SearchDelegate {
     controller.searchLocation(query);
     controller.searchSugesstion.value
         .where((element) =>
-            element.name.toLowerCase().contains(query.toLowerCase()))
+            element.name.toLowerCase().contains(query.toLowerCase()),)
         .forEach((element) {
       matchData.add(element);
     });
@@ -208,13 +208,13 @@ class SearchmapSearchDelegate extends SearchDelegate {
             onTap: () async {
               Get.back();
               controller.goToSearch(matchData.value[index].lat,
-                  matchData.value[index].long, controller.googleMapController);
+                  matchData.value[index].long, controller.googleMapController,);
               controller.myMarker.clear();
               controller.myMarker.add(Marker(
                 markerId: const MarkerId('my'),
                 position: LatLng(
-                    matchData.value[index].lat, matchData.value[index].long),
-              ));
+                    matchData.value[index].lat, matchData.value[index].long,),
+              ),);
               Get.bottomSheet(
                 Container(
                   color: Colors.white,
@@ -223,7 +223,7 @@ class SearchmapSearchDelegate extends SearchDelegate {
                     children: [
                       Text(await controller.getAddress(LatLng(
                           matchData.value[index].lat,
-                          matchData.value[index].long))),
+                          matchData.value[index].long,),),),
                       ElevatedButton(
                         onPressed: () async {
                           Get.back();
@@ -231,10 +231,10 @@ class SearchmapSearchDelegate extends SearchDelegate {
                             result: [
                               await controller.getAddress(
                                 LatLng(matchData.value[index].lat,
-                                    matchData.value[index].long),
+                                    matchData.value[index].long,),
                               ),
                               LatLng(matchData.value[index].lat,
-                                  matchData.value[index].long)
+                                  matchData.value[index].long,)
                             ],
                           );
                         },

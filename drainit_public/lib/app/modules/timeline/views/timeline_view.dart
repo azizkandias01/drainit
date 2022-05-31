@@ -2,15 +2,13 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/modules/timeline/controllers/timeline_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../controllers/timeline_controller.dart';
 
 class TimelineView extends GetView<TimelineController> {
   const TimelineView(this.type);
@@ -47,12 +45,12 @@ class TimelineView extends GetView<TimelineController> {
                     alignment: Alignment.bottomCenter,
                     items: const [
                       DropdownMenuItem(
-                        child: Text('Date'),
                         value: 1,
+                        child: Text('Date'),
                       ),
                       DropdownMenuItem(
-                        child: Text('Name'),
                         value: 2,
+                        child: Text('Name'),
                       ),
                     ],
                     onChanged: (value) {

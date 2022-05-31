@@ -5,15 +5,13 @@ import 'dart:convert';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
-import 'package:drainit_flutter/app/components/text_poppins.dart';
+import 'package:drainit_flutter/app/modules/register_next/controllers/register_next_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../controllers/register_next_controller.dart';
 
 class RegisterNextView extends GetView<RegisterNextController> {
   @override

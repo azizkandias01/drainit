@@ -1,8 +1,6 @@
+import 'package:drainit_flutter/app/modules/introduction/controllers/introduction_controller.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import '../controllers/introduction_controller.dart';
 
 class IntroductionView extends GetView<IntroductionController> {
   @override

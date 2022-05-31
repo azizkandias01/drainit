@@ -1,20 +1,4 @@
 class Detail {
-  String? id;
-  String? idMasyarakat;
-  String? namaPelapor;
-  String? idAdmin;
-  String? namaAdmin;
-  String? idPetugas;
-  String? namaPetugas;
-  String? namaJalan;
-  String? foto;
-  String? tipePengaduan;
-  String? deskripsiPengaduan;
-  String? statusPengaduan;
-  dynamic feedbackMasyarakat;
-  String? createdAt;
-  String? updatedAt;
-  String? geometry;
 
   Detail({
     this.id,
@@ -53,6 +37,22 @@ class Detail {
     updatedAt = json['updated_at'].toString();
     geometry = json['geometry'].toString();
   }
+  String? id;
+  String? idMasyarakat;
+  String? namaPelapor;
+  String? idAdmin;
+  String? namaAdmin;
+  String? idPetugas;
+  String? namaPetugas;
+  String? namaJalan;
+  String? foto;
+  String? tipePengaduan;
+  String? deskripsiPengaduan;
+  String? statusPengaduan;
+  dynamic feedbackMasyarakat;
+  String? createdAt;
+  String? updatedAt;
+  String? geometry;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
