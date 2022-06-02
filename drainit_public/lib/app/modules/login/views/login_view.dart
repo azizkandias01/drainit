@@ -10,22 +10,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/Utils.dart';
+
 class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     whiteBar();
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                primary,
+                white,
+              ],
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: SvgPicture.asset(
-                'assets/svg/il_login.svg',
-                height: ScreenUtil().setHeight(400),
-                width: ScreenUtil().setWidth(400),
+                'assets/svg/ic_login2.svg',
+                height: ScreenUtil().setHeight(330),
                 fit: BoxFit.fitHeight,
-              ),
+              ).paddingAll(10.r),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -64,13 +80,12 @@ class LoginView extends GetView<LoginController> {
                   SizedBox(height: ScreenUtil().setHeight(20)),
                   controller.obx(
                     (state) => RoundedButton(
-                      key: const Key('loginButton'),
                       text: "Masuk",
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
-                      width: 1.sw,
-                      color: Colors.amberAccent,
-                      textColor: Colors.white,
+                      width: Get.width,
+                      color: primary,
+                      textColor: Colors.black,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
                             controller.myControllerPassword.text.isEmpty) {
@@ -89,13 +104,12 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
                     onEmpty: RoundedButton(
-                      key: const Key('loginButton'),
                       text: "Masuk",
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
-                      width: 1.sw,
-                      color: Colors.amberAccent,
-                      textColor: Colors.white,
+                      width: Get.width,
+                      color: primary,
+                      textColor: Colors.black,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
                             controller.myControllerPassword.text.isEmpty) {
@@ -113,8 +127,8 @@ class LoginView extends GetView<LoginController> {
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
                       width: Get.width,
-                      color: Colors.amberAccent,
-                      textColor: Colors.white,
+                      color: primary,
+                      textColor: Colors.black,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
                             controller.myControllerPassword.text.isEmpty) {
@@ -144,26 +158,28 @@ class LoginView extends GetView<LoginController> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(
-                        color: Colors.green,
+                        color: primary,
                         width: 1.w,
                       ),
                     ),
                     child: GestureDetector(
                       onTap: () => {
-                        Get.toNamed(Routes.HOMEPAGE, arguments: 'anonymouse'),
+                        showInfoSnackBar(
+                          "Masih dalam tahap pengembangan!",
+                        ),
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             CupertinoIcons.person,
-                            color: Colors.green,
+                            color: black,
                           ),
                           SizedBox(width: ScreenUtil().setWidth(10)),
                           TextRegular(
                             text: "Login tanpa akun",
                             fontSize: 14.sp,
-                            textColour: Colors.green,
+                            textColour: black,
                           ),
                         ],
                       ),
@@ -186,7 +202,7 @@ class LoginView extends GetView<LoginController> {
                           ' Daftar Disini!',
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: Colors.green,
+                            color: primary,
                           ),
                         ),
                       ),

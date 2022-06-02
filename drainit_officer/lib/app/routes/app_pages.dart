@@ -8,6 +8,8 @@ import '../modules/done_reports/bindings/done_reports_binding.dart';
 import '../modules/done_reports/views/done_reports_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/homepage/bindings/homepage_binding.dart';
+import '../modules/homepage/views/homepage_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/maps/bindings/maps_binding.dart';
@@ -80,6 +82,11 @@ class AppPages {
       name: _Paths.UPDATE_LAPORAN,
       page: () => UpdateLaporanView(),
       binding: UpdateLaporanBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOMEPAGE,
+      page: () => HomepageView(),
+      binding: HomepageBinding(),
     ),
   ];
 }

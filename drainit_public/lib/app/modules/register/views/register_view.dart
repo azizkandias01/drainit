@@ -4,6 +4,7 @@ import 'package:drainit_flutter/app/components/rounded_input_field.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/register/controllers/register_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +14,24 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: appBarGradient(),
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Register',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Get.back(),
+        ),
+      ),
       backgroundColor: white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -22,17 +41,6 @@ class RegisterView extends GetView<RegisterController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //const Header(),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: Icon(Icons.adaptive.arrow_back),),
-                    TextBold(text: "Daftar", fontSize: 24.sp),
-                  ],
-                ),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -89,14 +97,14 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                   ],
                 ),
+                20.verticalSpace,
                 RoundedButton(
                   key: controller.nextKey,
                   text: "Lanjut",
                   height: ScreenUtil().setHeight(50),
                   borderRadius: 10.r,
                   width: Get.width,
-                  color: Colors.green,
-                  textColor: Colors.white,
+                  textColor: black,
                   press: () {
                     controller.validateForm();
                   },
@@ -125,7 +133,7 @@ class RegisterView extends GetView<RegisterController> {
                         ' Masuk disini!',
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: Colors.green,
+                          color: primary,
                         ),
                       ),
                     ),

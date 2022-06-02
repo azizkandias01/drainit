@@ -15,10 +15,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class DetailView extends GetView<DetailController> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ),);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
     final Completer<GoogleMapController> _googleMapsController = Completer();
     return WillPopScope(
       onWillPop: () async {
@@ -86,6 +88,7 @@ class DetailView extends GetView<DetailController> {
               ),
             ),
             appBar: AppBar(
+              flexibleSpace: appBarGradient(),
               backgroundColor: white,
               elevation: 0,
               title: TextMedium(
@@ -173,14 +176,18 @@ class DetailView extends GetView<DetailController> {
                                   height: 300.w,
                                   child: GoogleMap(
                                     initialCameraPosition: CameraPosition(
-                                        zoom: 15,
-                                        target: controller.geoToLatlong(
-                                            controller.detail.geometry!,),),
+                                      zoom: 15,
+                                      target: controller.geoToLatlong(
+                                        controller.detail.geometry!,
+                                      ),
+                                    ),
                                     markers: <Marker>{
                                       Marker(
-                                          markerId: const MarkerId("1"),
-                                          position: controller.geoToLatlong(
-                                              controller.detail.geometry!,),)
+                                        markerId: const MarkerId("1"),
+                                        position: controller.geoToLatlong(
+                                          controller.detail.geometry!,
+                                        ),
+                                      )
                                     },
                                   ),
                                 ),
@@ -354,7 +361,9 @@ class DetailView extends GetView<DetailController> {
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 10.h,),
+                            horizontal: 20.w,
+                            vertical: 10.h,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -405,9 +414,8 @@ class DetailView extends GetView<DetailController> {
                         ),
                         if (controller.updateReport.value.isEmpty)
                           const Center(
-                                  child:
-                                      Text("Belum ada update untuk sekarang"),)
-                              .paddingAll(20.r),
+                            child: Text("Belum ada update untuk sekarang"),
+                          ).paddingAll(20.r),
                         for (int i = 0;
                             i < controller.updateReport.value.length;
                             i++)
@@ -478,7 +486,8 @@ class DetailView extends GetView<DetailController> {
                                             BorderRadius.circular(10.r),
                                         child: const Image(
                                           image: CachedNetworkImageProvider(
-                                              "https://random.imagecdn.app/300/200",),
+                                            "https://random.imagecdn.app/300/200",
+                                          ),
                                         ),
                                       ),
                                     ),

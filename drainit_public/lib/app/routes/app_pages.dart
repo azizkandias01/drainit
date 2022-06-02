@@ -14,8 +14,6 @@ import 'package:drainit_flutter/app/modules/homepage/bindings/homepage_binding.d
 import 'package:drainit_flutter/app/modules/homepage/views/homepage_view.dart';
 import 'package:drainit_flutter/app/modules/homepage_anonymous/bindings/homepage_anonymous_binding.dart';
 import 'package:drainit_flutter/app/modules/homepage_anonymous/views/homepage_anonymous_view.dart';
-import 'package:drainit_flutter/app/modules/introduction/bindings/introduction_binding.dart';
-import 'package:drainit_flutter/app/modules/introduction/views/introduction_view.dart';
 import 'package:drainit_flutter/app/modules/login/bindings/login_binding.dart';
 import 'package:drainit_flutter/app/modules/login/views/login_view.dart';
 import 'package:drainit_flutter/app/modules/profile/bindings/profile_binding.dart';
@@ -28,10 +26,6 @@ import 'package:drainit_flutter/app/modules/reports/bindings/reports_binding.dar
 import 'package:drainit_flutter/app/modules/reports/views/reports_view.dart';
 import 'package:drainit_flutter/app/modules/searchmap/bindings/searchmap_binding.dart';
 import 'package:drainit_flutter/app/modules/searchmap/views/searchmap_view.dart';
-import 'package:drainit_flutter/app/modules/timeline/bindings/timeline_binding.dart';
-import 'package:drainit_flutter/app/modules/timeline/views/timeline_view.dart';
-import 'package:drainit_flutter/app/modules/welcome/bindings/welcome_binding.dart';
-import 'package:drainit_flutter/app/modules/welcome/views/welcome_view.dart';
 import 'package:get/get.dart';
 
 // ignore_for_file: constant_identifier_names
@@ -85,16 +79,6 @@ class AppPages {
       binding: EditPasswordBinding(),
     ),
     GetPage(
-      name: _Paths.INTRODUCTION,
-      page: () => IntroductionView(),
-      binding: IntroductionBinding(),
-    ),
-    GetPage(
-      name: _Paths.TIMELINE,
-      page: () => const TimelineView("login"),
-      binding: TimelineBinding(),
-    ),
-    GetPage(
       name: _Paths.FLOOD_DRAINAGE_LIST,
       page: () => FloodDrainageListView(),
       binding: FloodDrainageListBinding(),
@@ -113,11 +97,6 @@ class AppPages {
       name: _Paths.DETAIL,
       page: () => DetailView(),
       binding: DetailBinding(),
-    ),
-    GetPage(
-      name: _Paths.WELCOME,
-      page: () => WelcomeView(),
-      binding: WelcomeBinding(),
     ),
     GetPage(
       name: _Paths.HOMEPAGE,

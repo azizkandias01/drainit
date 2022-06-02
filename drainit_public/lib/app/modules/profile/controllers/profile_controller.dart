@@ -43,4 +43,8 @@ class ProfileController extends GetxController with StateMixin {
       },
     );
   }
+
+  Future<Profile?> getAccountData() async {
+    return ProfileProvider().geProfile(box.read(Routes.TOKEN) as String);
+  }
 }

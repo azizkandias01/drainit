@@ -9,45 +9,41 @@ import 'package:drainit_flutter/app/modules/register_next/controllers/register_n
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../utils/Utils.dart';
 
 class RegisterNextView extends GetView<RegisterNextController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: appBarGradient(),
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Unggah Foto',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Get.back(),
+        ),
+      ),
       backgroundColor: white,
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 60.h),
+        padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 10.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 200.h,
-              width: 414.w,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      onTap: () => Get.back(),
-                      child: const Icon(
-                        Icons.arrow_back_ios_new,
-                      ),
-                    ),
-                  ),
-                  SvgPicture.asset(
-                    'assets/svg/il_signup_next.svg',
-                    height: 200.h,
-                    width: 188.w,
-                  ),
-                ],
-              ),
-            ),
             SizedBox(height: 21.h),
             TextBold(text: "Selamat Datang", fontSize: 28.sp),
             SizedBox(height: 4.h),

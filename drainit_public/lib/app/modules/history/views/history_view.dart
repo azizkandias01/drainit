@@ -12,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HistoryView extends GetView<HistoryController> {
   @override
@@ -33,7 +34,6 @@ class HistoryView extends GetView<HistoryController> {
         ),
         title: TextBold(
           text: "Riwayat Laporan",
-          fontSize: ScreenUtil().setSp(25),
           textColour: black,
         ),
         elevation: 0,
@@ -632,6 +632,171 @@ class BuildHistoryList extends StatelessWidget {
                 ),
               ),
             ),
+    );
+  }
+}
+
+class BuildHistoryListFuture extends StatelessWidget {
+  const BuildHistoryListFuture({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final HistoryController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<HistoryModel>>(
+      initialData: const [],
+      future: controller.getHistory(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final data = snapshot.data!;
+          return ListView.builder(
+            itemCount: data.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 10.h,
+                ),
+                isThreeLine: true,
+                onTap: () {
+                  Get.toNamed(
+                    Routes.DETAIL,
+                    arguments: data[index].id,
+                  );
+                },
+                title: Text(
+                  " ${data[index].namaJalan!}",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ).paddingAll(5.r),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.r,
+                            vertical: 5.r,
+                          ),
+                          height: 20.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.r),
+                            ),
+                            color: data[index].tipePengaduan! == "Banjir"
+                                ? Colors.lightBlue
+                                : Colors.brown,
+                          ),
+                          child: Text(
+                            data[index].tipePengaduan!,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: white,
+                            ),
+                          ),
+                        ),
+                        10.horizontalSpace,
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.r,
+                            vertical: 5.r,
+                          ),
+                          height: 20.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.r),
+                            ),
+                            color: getStatusColor(
+                              data[index].statusPengaduan!,
+                            ),
+                          ),
+                          child: Text(
+                            data[index].statusPengaduan!,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    5.verticalSpace,
+                    Text(
+                      timeAgoSinceDate(
+                        data[index].createdAt!,
+                      ),
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ).paddingAll(5.r),
+                trailing: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.r),
+                  child: Image(
+                    image: CachedNetworkImageProvider(
+                      Routes.IMAGEURL + data[index].foto!,
+                    ),
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              );
+            },
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Shimmer.fromColors(
+                baseColor: grey,
+                highlightColor: grey300,
+                child: Container(
+                  height: 60.h,
+                  width: 0.6.sw,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: grey,
+                  ),
+                ),
+              ),
+              Shimmer.fromColors(
+                baseColor: grey,
+                highlightColor: grey300,
+                child: Container(
+                  height: 60.h,
+                  width: 0.2.sw,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: grey,
+                  ),
+                ),
+              ),
+            ],
+          ).paddingSymmetric(horizontal: 10.w, vertical: 20.h);
+        } else {
+          return Center(
+            child: Text(
+              "Tidak ada laporan yang ditemukan",
+              style: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.black54,
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }

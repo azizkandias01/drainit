@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
+  GetStorage box = GetStorage();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return const Scaffold(
       backgroundColor: Colors.white,
@@ -22,7 +28,8 @@ void main() {
       designSize: Size(375, 812),
       builder: (ctx, _) => GetMaterialApp(
         title: "Drainit Petugas",
-        initialRoute: AppPages.INITIAL,
+        initialRoute:
+            box.read(Routes.TOKEN) != null ? Routes.HOMEPAGE : Routes.LOGIN,
         getPages: AppPages.routes,
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,

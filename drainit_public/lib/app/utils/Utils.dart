@@ -29,6 +29,19 @@ Color getStatusColor(String status) {
   }
 }
 
+Container appBarGradient() => Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            primary,
+            white,
+          ],
+        ),
+      ),
+    );
+
 Future<LatLng> getPosition() async {
   final Location location = Location();
   if (!await location.serviceEnabled()) {
