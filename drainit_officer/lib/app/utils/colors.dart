@@ -6,3 +6,5 @@ final white = Colors.white;
 final black = Colors.black;
 final grey = Colors.grey;
 final red = Colors.red;
+const primary = Color(0xFFFFD200);
+const orange = Color(0xFFFF9100);

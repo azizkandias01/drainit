@@ -33,11 +33,13 @@ class MapsView extends GetView<MapsController> {
           labelPadding: EdgeInsets.only(right: 10.w),
           label: TextMedium(
             text: controller.chipsList[i].label,
+            fontSize: 10.sp,
             textColour:
                 controller.selectedIndexFilter.value == i ? Colors.white : grey,
           ),
           avatar: Icon(
             controller.chipsList[i].icon,
+            size: 18.r,
             color:
                 controller.selectedIndexFilter.value == i ? Colors.white : grey,
           ),
@@ -92,7 +94,7 @@ class MapsView extends GetView<MapsController> {
                   scrollDirection: Axis.horizontal,
                   child: Wrap(
                     children: filterChip(),
-                  ),
+                  ).paddingSymmetric(horizontal: 20.r),
                 ),
               ),
             ),

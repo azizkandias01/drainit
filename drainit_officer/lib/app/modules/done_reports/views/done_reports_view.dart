@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_petugas/app/routes/app_pages.dart';
+import 'package:drainit_petugas/app/utils/colors.dart';
 import 'package:drainit_petugas/app/utils/text_default.dart';
 import 'package:drainit_petugas/app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,10 +15,22 @@ class DoneReportsView extends GetView<DoneReportsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                primary,
+                Colors.white,
+              ],
+            ),
+          ),
+        ),
         title: TextBold(
-          text: 'Laporan Diproses',
+          text: 'Laporan Selesai',
           fontSize: 20.sp,
-        ).paddingOnly(left: 10.r),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.filter_list),

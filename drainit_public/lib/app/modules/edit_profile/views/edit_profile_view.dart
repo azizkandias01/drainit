@@ -64,7 +64,7 @@ class EditProfileView extends GetView<EditProfileController> {
                         height: 20.h,
                         width: 20.w,
                         decoration: const BoxDecoration(
-                          color: green,
+                          color: primary,
                           shape: BoxShape.circle,
                         ),
                         child: Center(
@@ -176,7 +176,7 @@ class EditProfileView extends GetView<EditProfileController> {
                     ),
                   ),
                   minimumSize: MaterialStateProperty.all(Size(Get.width, 50.h)),
-                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  backgroundColor: MaterialStateProperty.all(primary),
                 ),
                 child: const Text("Simpan"),
               ).paddingAll(10.r),

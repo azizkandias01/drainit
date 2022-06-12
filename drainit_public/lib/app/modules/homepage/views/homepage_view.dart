@@ -9,6 +9,7 @@ import 'package:drainit_flutter/app/modules/profile/models/profile_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,10 @@ import 'package:shimmer/shimmer.dart';
 class HomepageView extends GetView<HomepageController> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ));
     return Scaffold(
       appBar: buildAppBar(),
       body: ListView(
