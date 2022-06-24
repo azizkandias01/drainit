@@ -1,9 +1,166 @@
 // ignore_for_file: file_names
 
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/text_poppins.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
+import 'package:photo_view/photo_view.dart';
 
-import '../components/text_poppins.dart';
+Future<void> getImage(
+  ImageSource imageSource,
+  RxString selectedImagePath,
+  RxString selectedImageSize,
+  RxString cropImagePath,
+  RxString cropImageSize,
+  RxString bytes64Image,
+) async {
+  try {
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    if (pickedFile != null) {
+      selectedImagePath.value = pickedFile.path;
+      selectedImageSize.value =
+          '${(File(selectedImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
+
+      // Crop
+      final cropImageFile = await ImageCropper().cropImage(
+        sourcePath: selectedImagePath.value,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        maxWidth: 512,
+        maxHeight: 512,
+      );
+      cropImagePath.value = cropImageFile!.path;
+      cropImageSize.value =
+          '${(File(cropImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
+      final _bytes = File(cropImagePath.value).readAsBytesSync();
+      bytes64Image.value = base64Encode(_bytes);
+    } else {
+      showErrorSnackBar("Gagal mengambil gambar!");
+    }
+  } catch (e) {
+    showErrorSnackBar("Terjadi kesalahan saat mengambil gambar!");
+  }
+}
+
+Future<void> openFilePickerImage(
+  RxString selectedImagePath,
+  RxString bytes64Image,
+) async {
+  final FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.image,
+  );
+
+  if (result != null) {
+    final File file = File(result.files.single.path.toString());
+    selectedImagePath.value = file.path;
+    final _bytes = File(selectedImagePath.value).readAsBytesSync();
+    bytes64Image.value = base64Encode(_bytes);
+  } else {
+    // User canceled the picker
+    return;
+  }
+}
+
+Color getStatusColor(String status) {
+  switch (status) {
+    case "NOT_YET_VERIFIED":
+      return primary;
+    case "ON_PROGRESS":
+      return Colors.purple.shade300;
+    case "COMPLETED":
+      return Colors.green.shade300;
+    case "REFUSED":
+      return Colors.red.shade300;
+    case "Banjir":
+      return Colors.blue.shade300;
+    case "Drainase Rusak":
+      return Colors.brown.shade300;
+    default:
+      return Colors.grey.shade300;
+  }
+}
+
+Container appBarGradient() => Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            primary,
+            white,
+          ],
+        ),
+      ),
+    );
+
+Future<LatLng> getPosition() async {
+  final Location location = Location();
+  if (!await location.serviceEnabled()) {
+    if (!await location.requestService()) throw 'GPS service is disabled';
+    await getPosition();
+  }
+  if (await location.hasPermission() == PermissionStatus.denied) {
+    if (await location.requestPermission() != PermissionStatus.granted) {
+      throw 'No GPS permissions';
+    }
+    await getPosition();
+  }
+  final LocationData data = await location.getLocation();
+  return LatLng(data.latitude!, data.longitude!);
+}
+
+class HeroPhotoViewRouteWrapper extends StatelessWidget {
+  const HeroPhotoViewRouteWrapper({
+    required this.imageProvider,
+    this.backgroundDecoration,
+    this.minScale,
+    this.maxScale,
+  });
+
+  final ImageProvider imageProvider;
+  final BoxDecoration? backgroundDecoration;
+  final dynamic minScale;
+  final dynamic maxScale;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Foto Laporan',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.black,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: Container(
+        constraints: BoxConstraints.expand(
+          height: MediaQuery.of(context).size.height,
+        ),
+        child: PhotoView(
+          imageProvider: imageProvider,
+          backgroundDecoration: backgroundDecoration,
+          minScale: minScale,
+          maxScale: maxScale,
+          heroAttributes: const PhotoViewHeroAttributes(tag: "image"),
+        ),
+      ),
+    );
+  }
+}
 
 String timeAgoSinceDate(String dateString, {bool numericDates = true}) {
   final DateTime reportDate = DateTime.parse(dateString);
@@ -25,19 +182,19 @@ String timeAgoSinceDate(String dateString, {bool numericDates = true}) {
   if (difference.inDays > 8) {
     return '2 weeks ago';
   } else if ((difference.inDays / 7).floor() >= 1) {
-    return (numericDates) ? '1 week ago' : 'Last week';
+    return numericDates ? '1 week ago' : 'Last week';
   } else if (difference.inDays >= 2) {
     return '${difference.inDays} days ago';
   } else if (difference.inDays >= 1) {
-    return (numericDates) ? '1 day ago' : 'Yesterday';
+    return numericDates ? '1 day ago' : 'Yesterday';
   } else if (difference.inHours >= 2) {
     return '${difference.inHours} hours ago';
   } else if (difference.inHours >= 1) {
-    return (numericDates) ? '1 hour ago' : 'An hour ago';
+    return numericDates ? '1 hour ago' : 'An hour ago';
   } else if (difference.inMinutes >= 2) {
     return '${difference.inMinutes} minutes ago';
   } else if (difference.inMinutes >= 1) {
-    return (numericDates) ? '1 minute ago' : 'A minute ago';
+    return numericDates ? '1 minute ago' : 'A minute ago';
   } else if (difference.inSeconds >= 3) {
     return '${difference.inSeconds} seconds ago';
   } else {
@@ -152,7 +309,8 @@ extension ExtendedDouble on double {
       );
 }
 
-const String mapStyles = '''[
+const String mapStyles = '''
+[
   {
     "elementType": "geometry",
     "stylers": [

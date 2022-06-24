@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
+import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
@@ -8,44 +10,55 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../components/text_poppins.dart';
-import '../controllers/profile_controller.dart';
-
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: designSize,
-      builder: () => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          title: const Text(
-            'Profile',
-            style: TextStyle(color: black),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                primary,
+                Colors.white,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
-          leading: IconButton(
+        ),
+        centerTitle: true,
+        title: const Text(
+          'Profile',
+          style: TextStyle(color: black),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Get.back(),
+        ),
+        actions: [
+          IconButton(
             icon: const Icon(
-              Icons.arrow_back,
+              Icons.refresh,
               color: Colors.black,
             ),
-            onPressed: () => Get.back(),
+            onPressed: () => {
+              controller.getAccountProfile(),
+            },
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.more_horiz,
-                color: Colors.black,
-              ),
-              onPressed: () => {},
-            ),
-          ],
+        ],
+      ),
+      body: controller.obx(
+        (state) => BodyBuild(controller: controller),
+        onLoading: const Center(
+          child: CircularProgressIndicator.adaptive(),
         ),
-        body: controller.obx(
-          (state) => BodyBuild(controller: controller),
-          onError: (err) => OnErrorBuilder(controller: controller),
-        ),
+        onError: (err) => OnErrorBuilder(controller: controller),
       ),
     );
   }
@@ -437,7 +450,7 @@ class OnErrorBuilder extends StatelessWidget {
               width: Get.width / 3,
             ),
             SizedBox(height: 20.h),
-            TextPoppinsBold(
+            TextBold(
               text: "Tidak dapat menjangkau internet",
               fontSize: 16.sp,
               textColour: black,
@@ -445,7 +458,7 @@ class OnErrorBuilder extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            TextPoppinsRegular(
+            TextRegular(
               text: "Ketuk untuk mencoba lagi!",
               fontSize: 12.sp,
               textColour: Colors.black38,

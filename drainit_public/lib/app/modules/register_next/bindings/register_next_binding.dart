@@ -1,6 +1,5 @@
+import 'package:drainit_flutter/app/modules/register_next/controllers/register_next_controller.dart';
 import 'package:get/get.dart';
-
-import '../controllers/register_next_controller.dart';
 
 class RegisterNextBinding extends Bindings {
   @override

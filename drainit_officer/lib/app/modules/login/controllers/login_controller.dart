@@ -1,6 +1,7 @@
 import 'package:drainit_petugas/app/modules/login/providers/login_provider.dart';
 import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -12,6 +13,7 @@ class LoginController extends GetxController with StateMixin {
   @override
   void onInit() {
     super.onInit();
+    FlutterNativeSplash.remove();
     box = GetStorage();
     change(
       null,
@@ -39,7 +41,7 @@ class LoginController extends GetxController with StateMixin {
         ),
         // box.write(Routes.TOKEN, resp.accessToken),
         box.write(Routes.TOKEN, resp.accessToken),
-        Get.offAllNamed(Routes.HOME, arguments: 'login')
+        Get.offAllNamed(Routes.HOMEPAGE, arguments: 'login')
       },
       //if error happens then catch the error and show to user
       onError: (err) {

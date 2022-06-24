@@ -2,55 +2,45 @@ import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dar
 import 'package:drainit_flutter/app/modules/searchmap/providers/searchmap_provider.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SearchmapController extends GetxController {
-  RxBool isLoading = false.obs;
   Rx<LatLng> data = const LatLng(0.0, 0.0).obs;
-  RxList myMarker = [].obs;
-  List<Place> _suggestions = history;
-  List<Place> get suggestions => _suggestions;
+  List<Marker> myMarker = <Marker>[].obs;
 
-  String _query = '';
-  String get query => _query;
+  RxList<Place> searchSugesstion = <Place>[].obs;
+  late GoogleMapController googleMapController;
 
-  Future<void> onQueryChanged(String query) async {
-    if (query == _query) return;
+  final debouncer = Debouncer(
+    delay: const Duration(milliseconds: 500),
+  );
 
-    _query = query;
-    isLoading.value = true;
-
-    if (query.isEmpty) {
-      _suggestions = history;
-    } else {
-      await SearchmapProvider().loadSearch(query).then(
+  void searchLocation(String query) {
+    debouncer.call(() {
+      SearchmapProvider().loadSearch(query).then(
             (value) => {
-              _suggestions = value
+              searchSugesstion.value = value
                   .map((e) => Place.fromJson(e as Map<String, dynamic>))
                   .toSet()
                   .toList()
             },
           );
-    }
-    isLoading.value = false;
+    });
   }
 
-  // void goToSearch(
-  //   double lat,
-  //   double long,
-  //   MapboxMapController mapboxMapController,
-  // ) {
-  //   final CameraPosition cameraPosition = CameraPosition(
-  //     target: LatLng(lat, long),
-  //     zoom: 18.151926040649414,
-  //   );
-  //   mapboxMapController.animateCamera(
-  //     CameraUpdate.newCameraPosition(cameraPosition),
-  //   );
-  // }
-
-  void clear() {
-    _suggestions = history;
+  void goToSearch(
+    double lat,
+    double long,
+    GoogleMapController googleMapController,
+  ) {
+    final CameraPosition cameraPosition = CameraPosition(
+      target: LatLng(lat, long),
+      zoom: 18.151926040649414,
+    );
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(cameraPosition),
+    );
   }
 
   Future<String> getAddress(LatLng coordinate) async {
@@ -64,37 +54,9 @@ class SearchmapController extends GetxController {
     final subLocality = first.subLocality ?? '';
     final subAdministrativeArea = first.subAdministrativeArea ?? '';
     final street = first.street ?? '';
-    final name = first.name ?? '';
-    final thoroughfare = first.thoroughfare ?? '';
-    final subThoroughfare = first.subThoroughfare ?? '';
     final addressLine =
-        '$street,$locality,$subLocality,$subAdministrativeArea,$administrativeArea';
+        '$street, $locality, $subLocality, $subAdministrativeArea, $administrativeArea';
     return addressLine;
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-
-    print("close map");
-  }
-
-  @override
-  void refresh() {
-    super.refresh();
-    print("refresh map");
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    print("strart map");
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    print("dispose map");
   }
 }
 

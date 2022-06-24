@@ -3,12 +3,11 @@ import 'package:drainit_petugas/app/modules/done_reports/providers/done_reports_
 import 'package:get/get.dart';
 
 class DoneReportsController extends GetxController with StateMixin {
-  late List<Report> list;
+  List<Report> list = [];
 
   @override
   void onInit() {
     super.onInit();
-    list = [];
     change(null, status: RxStatus.empty());
     loadReports();
   }
@@ -25,5 +24,9 @@ class DoneReportsController extends GetxController with StateMixin {
         change(err, status: RxStatus.error());
       },
     );
+  }
+
+  Future<List<Report>> getDoneReports() async {
+    return await ReportProvider().reportList();
   }
 }

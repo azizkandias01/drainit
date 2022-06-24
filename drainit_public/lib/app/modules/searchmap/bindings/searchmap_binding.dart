@@ -1,6 +1,5 @@
+import 'package:drainit_flutter/app/modules/searchmap/controllers/searchmap_controller.dart';
 import 'package:get/get.dart';
-
-import '../controllers/searchmap_controller.dart';
 
 class SearchmapBinding extends Bindings {
   @override

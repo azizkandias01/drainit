@@ -27,6 +27,10 @@ abstract class Routes {
   static const IMAGEURL =
       "https://drainit.pocari.id/storage/app/public/images/";
   static const BASEURL = "https://drainit.pocari.id/api/";
+  static const ONE_SIGNAL_APP_ID = "366b7e82-ce68-488b-8394-4374e0783cc6";
+  static const USER_ID = _Paths.USER_ID;
+  static const HOMEPAGE = _Paths.HOMEPAGE;
+  static const HOMEPAGE_ANONYMOUS = _Paths.HOMEPAGE_ANONYMOUS;
 }
 
 abstract class _Paths {
@@ -48,4 +52,7 @@ abstract class _Paths {
   static const DETAIL = '/detail';
   static const SPLASHSCREEN = '/splashscreen';
   static const WELCOME = '/welcome';
+  static const USER_ID = 'user_id';
+  static const HOMEPAGE = '/homepage';
+  static const HOMEPAGE_ANONYMOUS = '/homepage-anonymous';
 }

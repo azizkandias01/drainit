@@ -1,6 +1,5 @@
+import 'package:drainit_flutter/app/modules/edit_profile/controllers/edit_profile_controller.dart';
 import 'package:get/get.dart';
-
-import '../controllers/edit_profile_controller.dart';
 
 class EditProfileBinding extends Bindings {
   @override

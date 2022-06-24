@@ -1,0 +1,16 @@
+{
+  "message": "Added Successfully!",
+  "data": {
+    "nama_jalan": "Jl. Rowo Sari No.15,Kecamatan Rumbai,Riau,Umban Sari,Kota Pekanbaru",
+    "foto": "6263e9386d428.jpeg",
+    "deskripsi_pengaduan": "banjir udh dua bulan belum ada penanganan banjir sampe masuk rumah",
+    "geometry": "{\"type\": \"Point\", \"coordinates\": [101.42554722726345,0.5690943750491332]}",
+    "id_masyarakat": "6c76ed65-c42a-4be1-8ecb-53a4a6761bf8",
+    "tipe_pengaduan": "Banjir",
+    "status_pengaduan": "NOT_YET_VERIFIED",
+    "id": "e11baf69-59d9-4e0a-ab34-76f0d1905e35",
+    "updated_at": "2022-04-23T11:55:36.000000Z",
+    "created_at": "2022-04-23T11:55:36.000000Z"
+  },
+  "status_code": 201
+}

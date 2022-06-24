@@ -7,7 +7,6 @@ import 'package:drainit_flutter/app/modules/flood_drainage_list/models/flood_mod
 import 'package:drainit_flutter/app/modules/flood_drainage_list/providers/drainage_map_provider.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/providers/drainage_provider.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/providers/flood_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -37,15 +36,6 @@ class FloodDrainageListController extends GetxController {
     loadDrainagePoint();
     loadFloodPoint();
     loadMapDrainage();
-  }
-
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-
-    (context as Element).visitChildren(rebuild);
   }
 
   ///function for load flood points from API
@@ -82,8 +72,7 @@ class FloodDrainageListController extends GetxController {
             ),
           ),
         );
-        Polyline polyline;
-        polyline = Polyline(
+        final Polyline polyline = Polyline(
           polylineId: const PolylineId(''),
           color: primary,
           width: 3,

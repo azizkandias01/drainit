@@ -18,6 +18,7 @@ abstract class Routes {
   static const IMAGEURL = _Paths.IMAGEURL;
   static const MAPS = _Paths.MAPS;
   static const UPDATE_LAPORAN = _Paths.UPDATE_LAPORAN;
+  static const HOMEPAGE = _Paths.HOMEPAGE;
 }
 
 abstract class _Paths {
@@ -36,4 +37,5 @@ abstract class _Paths {
       "https://drainit.pocari.id/storage/app/public/images/";
   static const MAPS = '/maps';
   static const UPDATE_LAPORAN = '/update-laporan';
+  static const HOMEPAGE = '/homepage';
 }

@@ -1,8 +1,4 @@
 class LoginReponse {
-  String? message;
-  User? user;
-  String? accessToken;
-  int? statusCode;
 
   LoginReponse({this.message, this.user, this.accessToken, this.statusCode});
 
@@ -14,6 +10,10 @@ class LoginReponse {
     accessToken = json['access_token'].toString();
     statusCode = json['status_code'] as int;
   }
+  String? message;
+  User? user;
+  String? accessToken;
+  int? statusCode;
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['message'] = message;

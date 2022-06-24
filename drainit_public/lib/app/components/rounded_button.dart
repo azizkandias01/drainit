@@ -1,35 +1,35 @@
+import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'constant.dart';
-
 class RoundedButton extends StatelessWidget {
+  const RoundedButton({
+    Key? key,
+    required this.text,
+    this.press,
+    this.fontSize,
+    this.fontWeight,
+    this.height,
+    this.width,
+    this.elevation = 0,
+    this.color = primary,
+    this.textColor = textPrimary,
+    this.borderRadius = 29,
+  }) : super(key: key);
   final String text;
   final void Function()? press;
-  final Color color, textColor;
+  final Color color;
+  final Color? textColor;
   final double? borderRadius;
   final double? elevation;
   final double? width;
   final double? height;
   final double? fontSize;
   final FontWeight? fontWeight;
-  const RoundedButton(
-      {Key? key,
-      required this.text,
-      this.press,
-      this.fontSize,
-      this.fontWeight,
-      this.height,
-      this.width,
-      this.elevation = 0,
-      this.color = primary,
-      this.textColor = textPrimary,
-      this.borderRadius = 29})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: press,
       child: SizedBox(
@@ -47,9 +47,9 @@ class RoundedButton extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                  color: textColor, fontSize: fontSize, fontWeight: fontWeight),
+                  color: textColor, fontSize: fontSize, fontWeight: fontWeight,),
             ),
-          ]),
+          ],),
         ),
       ),
     );
@@ -57,18 +57,6 @@ class RoundedButton extends StatelessWidget {
 }
 
 class LoginWithButton extends StatelessWidget {
-  final String? iconPath;
-  final double? width;
-  final double? height;
-  final String? text;
-  final Color? backgroundColor;
-  final Color? textColor;
-  final double? borderRadius;
-  final double? spaceBetweenIconAndText;
-  final double? fontSize;
-  final double? iconWidth;
-  final double? iconHeight;
-  final void Function()? onClick;
   const LoginWithButton({
     Key? key,
     this.iconPath,
@@ -84,6 +72,18 @@ class LoginWithButton extends StatelessWidget {
     this.iconHeight,
     this.onClick,
   }) : super(key: key);
+  final String? iconPath;
+  final double? width;
+  final double? height;
+  final String? text;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final double? borderRadius;
+  final double? spaceBetweenIconAndText;
+  final double? fontSize;
+  final double? iconWidth;
+  final double? iconHeight;
+  final void Function()? onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,7 @@ class LoginWithButton extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius ?? 0)),
+            borderRadius: BorderRadius.circular(borderRadius ?? 0),),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -121,23 +121,11 @@ class LoginWithButton extends StatelessWidget {
           ),
         ],
       ),
-    ]);
+    ],);
   }
 }
 
 class ProfileMenuButton extends StatelessWidget {
-  final String? iconPath;
-  final double? width;
-  final double? height;
-  final String? text;
-  final Color? backgroundColor;
-  final Color? textColor;
-  final double? borderRadius;
-  final double? spaceBetweenIconAndText;
-  final double? fontSize;
-  final double? iconWidth;
-  final double? iconHeight;
-  final Function()? onPressed;
   const ProfileMenuButton({
     Key? key,
     this.iconPath,
@@ -153,6 +141,18 @@ class ProfileMenuButton extends StatelessWidget {
     this.iconHeight,
     this.onPressed,
   }) : super(key: key);
+  final String? iconPath;
+  final double? width;
+  final double? height;
+  final String? text;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final double? borderRadius;
+  final double? spaceBetweenIconAndText;
+  final double? fontSize;
+  final double? iconWidth;
+  final double? iconHeight;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +195,6 @@ class ProfileMenuButton extends StatelessWidget {
           ),
         ],
       ),
-    ]);
+    ],);
   }
 }

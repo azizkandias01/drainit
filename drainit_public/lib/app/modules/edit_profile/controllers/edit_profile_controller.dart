@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class EditProfileController extends GetxController {
-  final count = 0.obs;
-
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  RxString selectedImagePath = ''.obs;
+  RxString bytes64Image = ''.obs;
 
   Profile profile = Get.arguments as Profile;
 

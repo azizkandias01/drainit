@@ -45,5 +45,9 @@
 		<false/>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>Shows your location on the map and helps improve the map</string>
-	</dict>
+		<key>NSPhotoLibraryUsageDescription</key>
+        <string>Using gallery feature to get image for improving application</string>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+</dict>
 </plist>

@@ -47,8 +47,9 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
           status: RxStatus.success(),
         ),
         box.write(Routes.TOKEN, resp.accessToken),
+        box.write(Routes.USER_ID, resp.user?.id),
 
-        Get.offAllNamed(Routes.HOME, arguments: 'login')
+        Get.offAllNamed(Routes.HOMEPAGE, arguments: 'login')
       },
       //if error happens then catch the error and show to user
       onError: (err) {
@@ -121,10 +122,5 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
         ),
       ),
     );
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

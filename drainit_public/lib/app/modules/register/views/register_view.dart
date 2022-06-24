@@ -1,133 +1,146 @@
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
-import 'package:drainit_flutter/app/components/text_poppins.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
+import 'package:drainit_flutter/app/modules/register/controllers/register_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../controllers/register_controller.dart';
-
 class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(414, 896),
-      builder: () => Scaffold(
-        backgroundColor: white,
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Header(),
-                  TextPoppinsBold(text: "Daftar", fontSize: 24.sp),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  InputText(
-                    key: controller.nameKey,
-                    title: "Nama",
-                    hintText: "Example",
-                    controller: controller.myControllerName,
-                  ),
-                  InputText(
-                    key: controller.phoneKey,
-                    title: "Telepon",
-                    hintText: "0821000000",
-                    controller: controller.myControllerPhoneNumber,
-                  ),
-                  InputText(
-                    key: controller.emailKey,
-                    title: "Email",
-                    hintText: "Example@gmail.com",
-                    controller: controller.myControllerEmail,
-                  ),
-                  InputText(
-                    key: controller.addressKey,
-                    title: "Alamat",
-                    hintText: "Jl. Sudirman no.16",
-                    controller: controller.myControllerAddress,
-                  ),
-                  InputText(
-                    key: controller.passwordKey,
-                    title: "Password",
-                    hintText: "******",
-                    controller: controller.myControllerPassword,
-                  ),
-                  InputText(
-                    key: controller.confirmPasswordKey,
-                    title: "Password Confirmation",
-                    hintText: "******",
-                    controller: controller.myControllerPasswordConfirm,
-                  ),
-                  Row(
-                    children: [
-                      Obx(
-                        () => Checkbox(
-                          key: controller.isCheckedKey,
-                          value: controller.isChecked.value,
-                          onChanged: (value) {
-                            controller.isChecked.value = value!;
-                          },
-                        ),
+    return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: appBarGradient(),
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Register',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Get.back(),
+        ),
+      ),
+      backgroundColor: white,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(left: 20.w, right: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10.h,
+                ),
+                InputText(
+                  key: controller.nameKey,
+                  title: "Nama",
+                  hintText: "Example",
+                  controller: controller.myControllerName,
+                ),
+                InputText(
+                  key: controller.phoneKey,
+                  title: "Telepon",
+                  hintText: "0821000000",
+                  controller: controller.myControllerPhoneNumber,
+                ),
+                InputText(
+                  key: controller.emailKey,
+                  title: "Email",
+                  hintText: "Example@gmail.com",
+                  controller: controller.myControllerEmail,
+                ),
+                InputText(
+                  key: controller.addressKey,
+                  title: "Alamat",
+                  hintText: "Jl. Sudirman no.16",
+                  controller: controller.myControllerAddress,
+                ),
+                InputText(
+                  key: controller.passwordKey,
+                  title: "Password",
+                  hintText: "******",
+                  controller: controller.myControllerPassword,
+                ),
+                InputText(
+                  key: controller.confirmPasswordKey,
+                  title: "Password Confirmation",
+                  hintText: "******",
+                  controller: controller.myControllerPasswordConfirm,
+                ),
+                Row(
+                  children: [
+                    Obx(
+                      () => Checkbox(
+                        key: controller.isCheckedKey,
+                        value: controller.isChecked.value,
+                        onChanged: (value) {
+                          controller.isChecked.value = value!;
+                        },
                       ),
-                      TextPoppinsRegular(
-                        text: "Saya setuju dengan syarat dan ketentuan",
-                        fontSize: 12.sp,
-                      ),
-                    ],
-                  ),
-                  RoundedButton(
-                    key: controller.nextKey,
-                    text: "Lanjut",
-                    height: ScreenUtil().setHeight(50),
-                    borderRadius: 10.r,
-                    width: Get.width,
-                    color: Colors.green,
-                    textColor: Colors.white,
-                    press: () {
-                      controller.validateForm();
-                    },
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Center(
-                    child: TextPoppinsRegular(
-                      text: "Atau",
-                      fontSize: 14.sp,
-                      textColour: Colors.grey,
                     ),
+                    TextRegular(
+                      text: "Saya setuju dengan syarat dan ketentuan",
+                      fontSize: 12.sp,
+                    ),
+                  ],
+                ),
+                20.verticalSpace,
+                RoundedButton(
+                  key: controller.nextKey,
+                  text: "Lanjut",
+                  height: ScreenUtil().setHeight(50),
+                  borderRadius: 10.r,
+                  width: Get.width,
+                  textColor: black,
+                  press: () {
+                    controller.validateForm();
+                  },
+                ),
+                SizedBox(height: ScreenUtil().setHeight(10)),
+                Center(
+                  child: TextRegular(
+                    text: "Atau",
+                    fontSize: 14.sp,
+                    textColour: Colors.grey,
                   ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Sudah punya akun?',
+                ),
+                SizedBox(height: ScreenUtil().setHeight(10)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Sudah punya akun?',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.LOGIN),
+                      child: Text(
+                        ' Masuk disini!',
                         style: TextStyle(
                           fontSize: 14.sp,
+                          color: primary,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () => Get.toNamed(Routes.LOGIN),
-                        child: Text(
-                          ' Masuk disini!',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(20)),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: ScreenUtil().setHeight(20)),
+              ],
             ),
           ),
         ),
@@ -137,22 +150,22 @@ class RegisterView extends GetView<RegisterController> {
 }
 
 class InputText extends StatelessWidget {
-  final String title;
-  final String hintText;
-  final TextEditingController controller;
   const InputText({
     Key? key,
     required this.title,
     required this.hintText,
     required this.controller,
   }) : super(key: key);
+  final String title;
+  final String hintText;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextPoppinsRegular(text: title, fontSize: 14.sp),
+        TextRegular(text: title, fontSize: 14.sp),
         SizedBox(height: ScreenUtil().setHeight(5)),
         RoundedInputField(
           hintText: hintText,

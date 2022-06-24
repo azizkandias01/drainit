@@ -1,20 +1,7 @@
+import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
-import 'constant.dart';
 
 class RoundedInputField extends StatelessWidget {
-  final String? hintText;
-  final IconData? icon;
-  final double? roundedCorner;
-  final ValueChanged<String>? onChanged;
-  final TextEditingController? textEditingController;
-  final double? width;
-  final double? height;
-  final double? textSize;
-  final Color? backgroundColor;
-  final EdgeInsetsGeometry? padding;
-  final Color? borderColor;
   const RoundedInputField({
     Key? key,
     this.hintText,
@@ -29,6 +16,17 @@ class RoundedInputField extends StatelessWidget {
     this.padding,
     this.borderColor,
   }) : super(key: key);
+  final String? hintText;
+  final IconData? icon;
+  final double? roundedCorner;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? textEditingController;
+  final double? width;
+  final double? height;
+  final double? textSize;
+  final Color? backgroundColor;
+  final EdgeInsetsGeometry? padding;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +45,18 @@ class RoundedInputField extends StatelessWidget {
         cursorColor: kBackgroundInput,
         controller: textEditingController,
         decoration: InputDecoration(
+          fillColor: Colors.grey[100],
+          filled: true,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(roundedCorner!),
-            borderSide: const BorderSide(
-              color: Colors.grey,
+            borderSide: BorderSide(
+              color: Colors.grey[100]!,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(roundedCorner!),
-            borderSide: const BorderSide(
-              color: Colors.green,
+            borderSide: BorderSide(
+              color: Colors.grey[300]!,
             ),
           ),
           contentPadding: padding ??
