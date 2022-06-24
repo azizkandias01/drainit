@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 
 import '../modules/detail/bindings/detail_binding.dart';
-import '../modules/detail/bindings/update_laporan_binding.dart';
 import '../modules/detail/views/detail_view.dart';
-import '../modules/detail/views/update_laporan_view.dart';
 import '../modules/done_reports/bindings/done_reports_binding.dart';
 import '../modules/done_reports/views/done_reports_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -77,11 +75,6 @@ class AppPages {
       name: _Paths.MAPS,
       page: () => MapsView(),
       binding: MapsBinding(),
-    ),
-    GetPage(
-      name: _Paths.UPDATE_LAPORAN,
-      page: () => UpdateLaporanView(),
-      binding: UpdateLaporanBinding(),
     ),
     GetPage(
       name: _Paths.HOMEPAGE,

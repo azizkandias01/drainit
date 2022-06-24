@@ -4,13 +4,12 @@ import 'package:drainit_flutter/app/components/rounded_input_field.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/login/controllers/login_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
-import '../../../utils/Utils.dart';
 
 class LoginView extends GetView<LoginController> {
   @override
@@ -84,7 +83,6 @@ class LoginView extends GetView<LoginController> {
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
                       width: Get.width,
-                      color: primary,
                       textColor: Colors.black,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
@@ -108,7 +106,6 @@ class LoginView extends GetView<LoginController> {
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
                       width: Get.width,
-                      color: primary,
                       textColor: Colors.black,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||
@@ -127,7 +124,6 @@ class LoginView extends GetView<LoginController> {
                       height: ScreenUtil().setHeight(50),
                       borderRadius: 10.r,
                       width: Get.width,
-                      color: primary,
                       textColor: Colors.black,
                       press: () async {
                         if (controller.myControllerEmail.text.isEmpty ||

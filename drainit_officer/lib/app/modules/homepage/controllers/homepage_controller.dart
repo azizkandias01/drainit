@@ -16,10 +16,6 @@ class HomepageController extends GetxController {
     FlutterNativeSplash.remove();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {}

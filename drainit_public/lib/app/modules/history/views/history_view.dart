@@ -20,19 +20,18 @@ class HistoryView extends GetView<HistoryController> {
     var selectedFilter = controller.selectedFilter.value;
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[
-                primary,
-                white,
-              ],
-            ),
+        flexibleSpace: appBarGradient(),
+        leading: IconButton(
+          iconSize: 24.sp,
+          icon: Icon(
+            Icons.adaptive.arrow_back_outlined,
+            color: black,
           ),
+          onPressed: () {
+            Get.offAllNamed(Routes.HOMEPAGE);
+          },
         ),
-        title: TextBold(
+        title: const TextBold(
           text: "Riwayat Laporan",
           textColour: black,
         ),
@@ -41,472 +40,687 @@ class HistoryView extends GetView<HistoryController> {
         centerTitle: false,
       ),
       backgroundColor: Colors.white,
-      body: RefreshIndicator(
-        onRefresh: () => controller.getHistory(),
-        child: Column(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () => showSearch(
-                        context: context,
-                        delegate: HistorySearchDelegate(controller),
+      body: WillPopScope(
+        onWillPop: () async {
+          Get.offAllNamed(Routes.HOMEPAGE);
+          return false;
+        },
+        child: RefreshIndicator(
+          onRefresh: () => controller.loadHistory(),
+          child: Column(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () => showSearch(
+                          context: context,
+                          delegate: HistorySearchDelegate(controller),
+                        ),
+                        child: Container(
+                          width: 0.6.sw,
+                          height: ScreenUtil().setHeight(50),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(
+                              ScreenUtil().setWidth(10),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Cari",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(15),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const Icon(Icons.search),
+                            ],
+                          ).paddingAll(10.r),
+                        ),
                       ),
-                      child: Container(
-                        width: 0.6.sw,
+                      Container(
                         height: ScreenUtil().setHeight(50),
+                        width: 0.15.sw,
                         decoration: BoxDecoration(
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(
-                            ScreenUtil().setWidth(10),
+                            ScreenUtil().setWidth(15),
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Cari",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(15),
-                                fontWeight: FontWeight.w500,
-                              ),
+                        child: Center(
+                          child: PopupMenuButton(
+                            icon: const Icon(Icons.sort_outlined, color: black),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                             ),
-                            const Icon(Icons.search),
-                          ],
-                        ).paddingAll(10.r),
-                      ),
-                    ),
-                    Container(
-                      height: ScreenUtil().setHeight(50),
-                      width: 0.15.sw,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(
-                          ScreenUtil().setWidth(15),
-                        ),
-                      ),
-                      child: Center(
-                        child: PopupMenuButton(
-                          icon: const Icon(Icons.sort_outlined, color: black),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          onSelected: (value) {
-                            if (value == "semua") {
-                              selectedFilter = "semua";
-                              controller.sortHistory(value.toString());
-                            } else if (value == "terbaru") {
-                              selectedFilter = "terbaru";
+                            onSelected: (value) {
+                              if (value == "semua") {
+                                selectedFilter = "semua";
+                                controller.sortHistory(value.toString());
+                              } else if (value == "terbaru") {
+                                selectedFilter = "terbaru";
 
-                              controller.sortHistory(value.toString());
-                            } else if (value == "terlama") {
-                              selectedFilter = "terlama";
+                                controller.sortHistory(value.toString());
+                              } else if (value == "terlama") {
+                                selectedFilter = "terlama";
 
-                              controller.sortHistory(value.toString());
-                            } else if (value == "status") {
-                              selectedFilter = "status";
+                                controller.sortHistory(value.toString());
+                              } else if (value == "status") {
+                                selectedFilter = "status";
 
-                              controller.sortHistory(value.toString());
-                            } else if (value == "jenis") {
-                              selectedFilter = "jenis";
-                              controller.sortHistory(value.toString());
-                            }
-                          },
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: 'semua',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10.r,
-                                  vertical: 5.r,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  color:
-                                      selectedFilter == "semua" ? green : white,
-                                ),
-                                child: Text(
-                                  'Semua',
-                                  style: TextStyle(
+                                controller.sortHistory(value.toString());
+                              } else if (value == "jenis") {
+                                selectedFilter = "jenis";
+                                controller.sortHistory(value.toString());
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: 'semua',
+                                child: Container(
+                                  height: 20.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.r,
+                                    vertical: 5.r,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.r)),
                                     color: selectedFilter == "semua"
-                                        ? white
-                                        : black,
-                                    fontSize: 10.sp,
+                                        ? green
+                                        : white,
+                                  ),
+                                  child: Text(
+                                    'Semua',
+                                    style: TextStyle(
+                                      color: selectedFilter == "semua"
+                                          ? white
+                                          : black,
+                                      fontSize: 10.sp,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            PopupMenuItem(
-                              value: 'terbaru',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10.r,
-                                  vertical: 5.r,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  color: selectedFilter == "terbaru"
-                                      ? green
-                                      : white,
-                                ),
-                                child: Text(
-                                  'Terbaru',
-                                  style: TextStyle(
+                              PopupMenuItem(
+                                value: 'terbaru',
+                                child: Container(
+                                  height: 20.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.r,
+                                    vertical: 5.r,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.r)),
                                     color: selectedFilter == "terbaru"
-                                        ? white
-                                        : black,
-                                    fontSize: 10.sp,
+                                        ? green
+                                        : white,
+                                  ),
+                                  child: Text(
+                                    'Terbaru',
+                                    style: TextStyle(
+                                      color: selectedFilter == "terbaru"
+                                          ? white
+                                          : black,
+                                      fontSize: 10.sp,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            PopupMenuItem(
-                              value: 'terlama',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10.r,
-                                  vertical: 5.r,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  color: selectedFilter == "terlama"
-                                      ? green
-                                      : white,
-                                ),
-                                child: Text(
-                                  'Terlama',
-                                  style: TextStyle(
+                              PopupMenuItem(
+                                value: 'terlama',
+                                child: Container(
+                                  height: 20.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.r,
+                                    vertical: 5.r,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.r)),
                                     color: selectedFilter == "terlama"
-                                        ? white
-                                        : black,
-                                    fontSize: 10.sp,
+                                        ? green
+                                        : white,
+                                  ),
+                                  child: Text(
+                                    'Terlama',
+                                    style: TextStyle(
+                                      color: selectedFilter == "terlama"
+                                          ? white
+                                          : black,
+                                      fontSize: 10.sp,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            PopupMenuItem(
-                              value: 'status',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10.r,
-                                  vertical: 5.r,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  color: selectedFilter == "status"
-                                      ? green
-                                      : white,
-                                ),
-                                child: Text(
-                                  'Status',
-                                  style: TextStyle(
+                              PopupMenuItem(
+                                value: 'status',
+                                child: Container(
+                                  height: 20.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.r,
+                                    vertical: 5.r,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.r)),
                                     color: selectedFilter == "status"
-                                        ? white
-                                        : black,
-                                    fontSize: 10.sp,
+                                        ? green
+                                        : white,
+                                  ),
+                                  child: Text(
+                                    'Status',
+                                    style: TextStyle(
+                                      color: selectedFilter == "status"
+                                          ? white
+                                          : black,
+                                      fontSize: 10.sp,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            PopupMenuItem(
-                              value: 'jenis',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10.r,
-                                  vertical: 5.r,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  color:
-                                      selectedFilter == "jenis" ? green : white,
-                                ),
-                                child: Text(
-                                  'Jenis',
-                                  style: TextStyle(
+                              PopupMenuItem(
+                                value: 'jenis',
+                                child: Container(
+                                  height: 20.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.r,
+                                    vertical: 5.r,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.r)),
                                     color: selectedFilter == "jenis"
-                                        ? white
-                                        : black,
-                                    fontSize: 10.sp,
+                                        ? green
+                                        : white,
+                                  ),
+                                  child: Text(
+                                    'Jenis',
+                                    style: TextStyle(
+                                      color: selectedFilter == "jenis"
+                                          ? white
+                                          : black,
+                                      fontSize: 10.sp,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: ScreenUtil().setHeight(50),
+                        width: 0.15.sw,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(
+                            ScreenUtil().setWidth(15),
+                          ),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.info_outline,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  15.verticalSpace,
+                  Divider(
+                    height: 1.h,
+                    color: Colors.grey[500],
+                  ),
+                  15.verticalSpace,
+                ],
+              ).paddingAll(10.r),
+              Flexible(
+                child: buildHistoryReactive(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<FutureBuilder<List<HistoryModel>>> buildHistoryListFuture() async {
+    return FutureBuilder<List<HistoryModel>>(
+      future: controller.getHistory(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextSemiBold(
+                    text: "${snapshot.data!.length} laporan",
+                    fontSize: 18.sp,
+                    textColour: black,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.sort_outlined,
+                        size: 15.sp,
+                        color: Colors.grey[500],
+                      ),
+                      10.horizontalSpace,
+                      TextSemiBold(
+                        text: "Urutkan: ",
+                        fontSize: 15.sp,
+                        textColour: Colors.grey[500],
+                      ),
+                      TextSemiBold(
+                        text: "Semua",
+                        fontSize: 15.sp,
+                        textColour: black,
+                      )
+                    ],
+                  ),
+                ],
+              ).paddingOnly(left: 20.r, right: 20.r),
+              Flexible(
+                child: Scrollbar(
+                  child: ListView.builder(
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context, index) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.r),
+                              child: CachedNetworkImage(
+                                imageUrl: Routes.IMAGEURL +
+                                    snapshot.data![index].foto!,
+                                width: 1.sw,
+                                height: 1.sw / 2,
+                                fit: BoxFit.cover,
+                                progressIndicatorBuilder: (
+                                  context,
+                                  url,
+                                  downloadProgress,
+                                ) =>
+                                    Center(
+                                  child: CircularProgressIndicator.adaptive(
+                                    value: downloadProgress.progress,
                                   ),
                                 ),
                               ),
                             ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.r,
+                                vertical: 5.r,
+                              ),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5.r),
+                                ),
+                                color: getStatusColor(
+                                  snapshot.data![index].statusPengaduan!,
+                                ),
+                              ),
+                              width: 100.w,
+                              height: 30.h,
+                              child: FittedBox(
+                                child: Text(
+                                  snapshot.data![index].statusPengaduan!,
+                                  style: TextStyle(
+                                    fontSize: 11.sp,
+                                    color: black,
+                                  ),
+                                ),
+                              ),
+                            ).paddingOnly(left: 20.w, top: 20.h),
+                          ],
+                        ).marginOnly(bottom: 10.r),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextBold(
+                                  text: snapshot.data![index].tipePengaduan ??
+                                      "no data",
+                                  fontSize: 18.sp,
+                                ),
+                                Text(
+                                  timeAgoSinceDate(
+                                    snapshot.data![index].createdAt!,
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ).paddingOnly(left: 10.w, right: 10.w),
+                            10.verticalSpace,
+                            TextSemiBold(
+                              text: snapshot.data![index].namaJalan!
+                                  .split(",")[0],
+                              textColour: Colors.grey,
+                            ).paddingOnly(left: 10.w, right: 10.w),
+                            10.verticalSpace,
+                            Row(
+                              children: [
+                                RoundedButton(
+                                  text: "Lihat Detail",
+                                  textColor: black,
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp,
+                                  press: () {
+                                    Get.toNamed(
+                                      Routes.DETAIL,
+                                      arguments: snapshot.data![index].id,
+                                    );
+                                  },
+                                  height: 50.h,
+                                  width: 0.7.sw,
+                                  borderRadius: 10.r,
+                                ),
+                                10.horizontalSpace,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    color: Colors.amberAccent,
+                                  ),
+                                  height: 50.h,
+                                  width: 0.2.sw,
+                                  child: Center(
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.map_outlined,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () async {
+                                        await MapsLauncher.launchCoordinates(
+                                          37.4220041,
+                                          -122.0862462,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            20.verticalSpace,
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                    Container(
-                      height: ScreenUtil().setHeight(50),
-                      width: 0.15.sw,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(
-                          ScreenUtil().setWidth(15),
+                  ),
+                ).paddingAll(15.r),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return GestureDetector(
+            onTap: () => controller.getHistory(),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/il_no_internet.svg',
+                    height: Get.height / 3,
+                    width: Get.width / 3,
+                  ),
+                  SizedBox(height: 20.h),
+                  TextBold(
+                    text: "Tidak dapat menjangkau internet",
+                    fontSize: 16.sp,
+                    textColour: black,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  TextRegular(
+                    text: "Ketuk untuk mencoba lagi!",
+                    fontSize: 12.sp,
+                    textColour: Colors.black38,
+                  )
+                ],
+              ),
+            ),
+          );
+        } else {
+          return Center(
+            child: SizedBox(
+              height: 300.h,
+              width: 300.w,
+              child: Lottie.asset(
+                "assets/lottie/loading_animation.json",
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget buildHistoryReactive() {
+    return controller.obx(
+      (state) => Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextSemiBold(
+                text: "${controller.list.length} laporan",
+                fontSize: 18.sp,
+                textColour: black,
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.sort_outlined,
+                    size: 15.sp,
+                    color: Colors.grey[500],
+                  ),
+                  10.horizontalSpace,
+                  TextSemiBold(
+                    text: "Urutkan: ",
+                    fontSize: 15.sp,
+                    textColour: Colors.grey[500],
+                  ),
+                  TextSemiBold(
+                    text: "Semua",
+                    fontSize: 15.sp,
+                    textColour: black,
+                  )
+                ],
+              ),
+            ],
+          ).paddingOnly(left: 20.r, right: 20.r),
+          Flexible(
+            child: Scrollbar(
+              child: ListView.builder(
+                itemCount: controller.list.length,
+                itemBuilder: (context, index) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.r),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                Routes.IMAGEURL + controller.list[index].foto!,
+                            width: 1.sw,
+                            height: 1.sw / 2,
+                            fit: BoxFit.cover,
+                            progressIndicatorBuilder: (
+                              context,
+                              url,
+                              downloadProgress,
+                            ) =>
+                                Center(
+                              child: CircularProgressIndicator.adaptive(
+                                value: downloadProgress.progress,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.info_outline,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                15.verticalSpace,
-                Divider(
-                  height: 1.h,
-                  color: Colors.grey[500],
-                ),
-                15.verticalSpace,
-              ],
-            ).paddingAll(10.r),
-            Flexible(
-              child: FutureBuilder<List<HistoryModel>>(
-                future: controller.getHistory(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.r,
+                            vertical: 5.r,
+                          ),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.r),
+                            ),
+                            color: getStatusColor(
+                              controller.list[index].statusPengaduan!,
+                            ),
+                          ),
+                          width: 100.w,
+                          height: 30.h,
+                          child: FittedBox(
+                            child: Text(
+                              controller.list[index].statusPengaduan!,
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                                color: black,
+                              ),
+                            ),
+                          ),
+                        ).paddingOnly(left: 20.w, top: 20.h),
+                      ],
+                    ).marginOnly(bottom: 10.r),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextSemiBold(
-                              text: "${snapshot.data!.length} laporan",
+                            TextBold(
+                              text: controller.list[index].tipePengaduan ??
+                                  "no data",
                               fontSize: 18.sp,
-                              textColour: black,
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.sort_outlined,
-                                  size: 15.sp,
-                                  color: Colors.grey[500],
-                                ),
-                                10.horizontalSpace,
-                                TextSemiBold(
-                                  text: "Urutkan: ",
-                                  fontSize: 15.sp,
-                                  textColour: Colors.grey[500],
-                                ),
-                                TextSemiBold(
-                                  text: "Semua",
-                                  fontSize: 15.sp,
-                                  textColour: black,
-                                )
-                              ],
-                            ),
-                          ],
-                        ).paddingOnly(left: 20.r, right: 20.r),
-                        Flexible(
-                          child: Scrollbar(
-                            child: ListView.builder(
-                              itemCount: snapshot.data?.length,
-                              itemBuilder: (context, index) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(15.r),
-                                        child: CachedNetworkImage(
-                                          imageUrl: Routes.IMAGEURL +
-                                              snapshot.data![index].foto!,
-                                          width: 1.sw,
-                                          height: 1.sw / 2,
-                                          fit: BoxFit.cover,
-                                          progressIndicatorBuilder: (
-                                            context,
-                                            url,
-                                            downloadProgress,
-                                          ) =>
-                                              Center(
-                                            child: CircularProgressIndicator
-                                                .adaptive(
-                                              value: downloadProgress.progress,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 5.r,
-                                          vertical: 5.r,
-                                        ),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(5.r),
-                                          ),
-                                          color: getStatusColor(
-                                            snapshot
-                                                .data![index].statusPengaduan!,
-                                          ),
-                                        ),
-                                        width: 100.w,
-                                        height: 30.h,
-                                        child: FittedBox(
-                                          child: Text(
-                                            snapshot
-                                                .data![index].statusPengaduan!,
-                                            style: TextStyle(
-                                              fontSize: 11.sp,
-                                              color: black,
-                                            ),
-                                          ),
-                                        ),
-                                      ).paddingOnly(left: 20.w, top: 20.h),
-                                    ],
-                                  ).marginOnly(bottom: 10.r),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextBold(
-                                            text: snapshot.data![index]
-                                                    .tipePengaduan ??
-                                                "no data",
-                                            fontSize: 18.sp,
-                                          ),
-                                          Text(
-                                            timeAgoSinceDate(
-                                              snapshot.data![index].createdAt!,
-                                            ),
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ).paddingOnly(left: 10.w, right: 10.w),
-                                      10.verticalSpace,
-                                      TextSemiBold(
-                                        text: snapshot.data![index].namaJalan!
-                                                .split(",")[0] ??
-                                            "no data",
-                                        textColour: Colors.grey,
-                                      ).paddingOnly(left: 10.w, right: 10.w),
-                                      10.verticalSpace,
-                                      Row(
-                                        children: [
-                                          RoundedButton(
-                                            text: "Lihat Detail",
-                                            textColor: black,
-                                            color: Colors.amber,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp,
-                                            press: () {
-                                              Get.toNamed(
-                                                Routes.DETAIL,
-                                                arguments:
-                                                    snapshot.data![index].id,
-                                              );
-                                            },
-                                            height: 50.h,
-                                            width: 0.7.sw,
-                                            borderRadius: 10.r,
-                                          ),
-                                          10.horizontalSpace,
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
-                                              color: Colors.amberAccent,
-                                            ),
-                                            height: 50.h,
-                                            width: 0.2.sw,
-                                            child: Center(
-                                              child: IconButton(
-                                                icon: const Icon(
-                                                  Icons.map_outlined,
-                                                  color: Colors.black,
-                                                ),
-                                                onPressed: () async {
-                                                  await MapsLauncher
-                                                      .launchCoordinates(
-                                                    37.4220041,
-                                                    -122.0862462,
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      20.verticalSpace,
-                                    ],
-                                  ),
-                                ],
+                            Text(
+                              timeAgoSinceDate(
+                                controller.list[index].createdAt!,
+                              ),
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.grey,
                               ),
                             ),
-                          ).paddingAll(15.r),
-                        ),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return GestureDetector(
-                      onTap: () => controller.getHistory(),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          ],
+                        ).paddingOnly(left: 10.w, right: 10.w),
+                        10.verticalSpace,
+                        TextSemiBold(
+                          text: controller.list[index].namaJalan!.split(",")[0],
+                          textColour: Colors.grey,
+                        ).paddingOnly(left: 10.w, right: 10.w),
+                        10.verticalSpace,
+                        Row(
                           children: [
-                            SvgPicture.asset(
-                              'assets/svg/il_no_internet.svg',
-                              height: Get.height / 3,
-                              width: Get.width / 3,
+                            RoundedButton(
+                              text: "Lihat Detail",
+                              textColor: black,
+                              color: Colors.amber,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.sp,
+                              press: () {
+                                Get.toNamed(
+                                  Routes.DETAIL,
+                                  arguments: controller.list[index].id,
+                                );
+                              },
+                              height: 50.h,
+                              width: 0.7.sw,
+                              borderRadius: 10.r,
                             ),
-                            SizedBox(height: 20.h),
-                            TextBold(
-                              text: "Tidak dapat menjangkau internet",
-                              fontSize: 16.sp,
-                              textColour: black,
+                            10.horizontalSpace,
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                color: Colors.amberAccent,
+                              ),
+                              height: 50.h,
+                              width: 0.2.sw,
+                              child: Center(
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.map_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () async {
+                                    await MapsLauncher.launchCoordinates(
+                                      37.4220041,
+                                      -122.0862462,
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            TextRegular(
-                              text: "Ketuk untuk mencoba lagi!",
-                              fontSize: 12.sp,
-                              textColour: Colors.black38,
-                            )
                           ],
                         ),
-                      ),
-                    );
-                  } else {
-                    return Center(
-                      child: SizedBox(
-                        height: 300.h,
-                        width: 300.w,
-                        child: Lottie.asset(
-                          "assets/lottie/loading_animation.json",
-                        ),
-                      ),
-                    );
-                  }
-                },
+                        20.verticalSpace,
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ).paddingAll(15.r),
+          ),
+        ],
+      ),
+      onError: (err) => GestureDetector(
+        onTap: () => controller.getHistory(),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/svg/il_no_internet.svg',
+                height: Get.height / 3,
+                width: Get.width / 3,
+              ),
+              SizedBox(height: 20.h),
+              TextBold(
+                text: "Tidak dapat menjangkau internet",
+                fontSize: 16.sp,
+                textColour: black,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              TextRegular(
+                text: "Ketuk untuk mencoba lagi!",
+                fontSize: 12.sp,
+                textColour: Colors.black38,
+              )
+            ],
+          ),
+        ),
+      ),
+      onLoading: Center(
+        child: SizedBox(
+          height: 300.h,
+          width: 300.w,
+          child: Lottie.asset(
+            "assets/lottie/loading_animation.json",
+          ),
         ),
       ),
     );

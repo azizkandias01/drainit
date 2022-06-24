@@ -26,6 +26,18 @@ class DetailView extends GetView<DetailController> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  primary,
+                  Colors.white,
+                ],
+              ),
+            ),
+          ),
           elevation: 0,
           leading: IconButton(
             icon: Icon(
@@ -51,9 +63,14 @@ class DetailView extends GetView<DetailController> {
             text: 'Detail Laporan',
           ),
           bottom: TabBar(
-            indicatorColor: Colors.black,
+            padding: EdgeInsets.all(5.r),
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                30.r,
+              ),
+              color: primary,
+            ),
             labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey,
             tabs: [
               Tab(
                 child: TextRegular(
@@ -62,12 +79,12 @@ class DetailView extends GetView<DetailController> {
               ),
               Tab(
                 child: TextRegular(
-                  text: 'Update Laporan',
+                  text: 'Update',
                 ),
               ),
               Tab(
                 child: TextRegular(
-                  text: 'Review Laporan',
+                  text: 'Komentar',
                 ),
               ),
             ],
@@ -78,48 +95,7 @@ class DetailView extends GetView<DetailController> {
             children: [
               DetailTab(controller: controller),
               SingleChildScrollView(child: UpdateLaporanView()),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TextBold(
-                      text: "Tanggapan Masyarakat",
-                    ),
-                    20.verticalSpace,
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: const CachedNetworkImageProvider(
-                            "https://i.pravatar.cc/300",
-                          ),
-                          backgroundColor: Colors.amber,
-                          minRadius: 20.r,
-                        ),
-                        10.horizontalSpace,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextBold(
-                              text: controller.detail.namaPelapor!,
-                              fontSize: 16.sp,
-                            ),
-                            TextRegular(
-                              text: timeAgoSinceDate(
-                                  controller.detail.createdAt!),
-                              textColour: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    10.verticalSpace,
-                    Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    ),
-                  ],
-                ),
-              ),
+              PublicCommunityReview(),
             ],
           ),
           onLoading: Center(
@@ -133,6 +109,50 @@ class DetailView extends GetView<DetailController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Container PublicCommunityReview() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TextBold(
+            text: "Tanggapan Masyarakat",
+          ),
+          20.verticalSpace,
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: const CachedNetworkImageProvider(
+                  "https://i.pravatar.cc/300",
+                ),
+                backgroundColor: Colors.amber,
+                minRadius: 20.r,
+              ),
+              10.horizontalSpace,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextBold(
+                    text: controller.detail.namaPelapor!,
+                    fontSize: 16.sp,
+                  ),
+                  TextRegular(
+                    text: timeAgoSinceDate(controller.detail.createdAt!),
+                    textColour: Colors.grey,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          10.verticalSpace,
+          Text(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          ),
+        ],
       ),
     );
   }

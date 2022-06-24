@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:drainit_petugas/app/modules/detail/models/detail_model.dart';
 import 'package:drainit_petugas/app/modules/detail/models/update_laporan_model.dart';
@@ -9,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DetailController extends GetxController with StateMixin {
   final id = Get.arguments[0].toString();
@@ -21,6 +25,14 @@ class DetailController extends GetxController with StateMixin {
   TextEditingController updateLaporanController = TextEditingController();
 
   GetStorage box = GetStorage();
+  RxString selectedImagePath = ''.obs;
+  RxString selectedImageSize = ''.obs;
+
+  // Crop code
+  RxString cropImagePath = ''.obs;
+  RxString cropImageSize = ''.obs;
+
+  RxString bytes64Image = ''.obs;
   @override
   void onInit() async {
     super.onInit();
@@ -30,7 +42,8 @@ class DetailController extends GetxController with StateMixin {
   }
 
   // }
-  void updateLaporan(String id, String judul, String deskripsi) async {
+  void updateLaporan(
+      String id, String judul, String deskripsi, String foto) async {
     change(
       null,
       status: RxStatus.loading(),
@@ -39,6 +52,7 @@ class DetailController extends GetxController with StateMixin {
       'id_pengaduan': id,
       'judul': judul,
       'deskripsi': deskripsi,
+      'foto': foto,
     };
     await UpdateLaporanProvider()
         .updateLaporan(updateData, box.read(Routes.TOKEN))
@@ -46,6 +60,7 @@ class DetailController extends GetxController with StateMixin {
       (resp) {
         getUpdateLaporan();
         updateLaporanController.clear();
+        bytes64Image.value = '';
         Get.dialog(
           AlertDialog(
             title: Text('Update Laporan'),
@@ -132,5 +147,29 @@ class DetailController extends GetxController with StateMixin {
       double.parse(latlong[0]),
     );
     return latLng;
+  }
+
+  Future<void> getImage(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    if (pickedFile != null) {
+      selectedImagePath.value = pickedFile.path;
+      selectedImageSize.value =
+          '${(File(selectedImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
+
+      // Crop
+      final cropImageFile = await ImageCropper().cropImage(
+        sourcePath: selectedImagePath.value,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        maxWidth: 512,
+        maxHeight: 512,
+      );
+      cropImagePath.value = cropImageFile!.path;
+      cropImageSize.value =
+          '${(File(cropImagePath.value).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb';
+      final _bytes = File(cropImagePath.value).readAsBytesSync();
+      bytes64Image.value = base64Encode(_bytes);
+    } else {
+      print("error");
+    }
   }
 }

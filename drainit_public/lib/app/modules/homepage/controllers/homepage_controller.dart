@@ -85,10 +85,6 @@ class HomepageController extends GetxController
     super.onInit();
     //remove the splash screen
     FlutterNativeSplash.remove();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollController.position.isScrollingNotifier
-          .addListener(_handleScrollingActivity);
-    });
     getPosition();
   }
 }

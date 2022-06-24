@@ -96,7 +96,7 @@ class SearchmapView extends GetView<SearchmapController> {
           } else if (snapshot.hasError) {
             return const Center(
                 child: TextSemiBold(
-                    text: "Terjadi Kesalahan, Cobalah beberapa saat lagi!"));
+                    text: "Terjadi Kesalahan, Cobalah beberapa saat lagi!",),);
           } else {
             return const Center(child: CircularProgressIndicator());
           }

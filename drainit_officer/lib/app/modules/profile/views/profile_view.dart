@@ -3,37 +3,78 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/text_default.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'Profile',
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () => Get.back(),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.refresh,
-              color: Colors.black,
+      body: Stack(
+        children: [
+          Container(
+            height: 0.5.sh,
+            width: 1.sw,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  primary,
+                  orange,
+                  primary,
+                ],
+              ),
             ),
-            onPressed: () => {},
+            child: Container(
+              height: Get.statusBarHeight,
+              width: 1.sw,
+              child: SafeArea(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.adaptive.arrow_back_outlined,
+                            color: white,
+                          ),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                        TextBold(
+                          text: 'Profile',
+                          fontSize: 16.sp,
+                          textColour: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 0.88.sh,
+              width: 1.sw,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.w),
+                  topRight: Radius.circular(30.w),
+                ),
+              ),
+              child: BodyBuild(controller: controller)
+                  .paddingSymmetric(horizontal: 5.w),
+            ),
           ),
         ],
       ),
-      body: BodyBuild(controller: controller),
     );
   }
 }
@@ -55,7 +96,7 @@ class BodyBuild extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfileTopBar(controller: controller),
-            10.verticalSpace,
+            20.verticalSpace,
             Text(
               'My Profile',
               style: TextStyle(
@@ -65,14 +106,6 @@ class BodyBuild extends StatelessWidget {
             ).paddingOnly(left: 20.r),
             PersonInfo(controller: controller).paddingAll(10.r),
             10.verticalSpace,
-            Text(
-              'Jumlah laporan',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ).paddingOnly(left: 20.r),
-            const PersonReport().paddingAll(10.r),
             Text(
               'Keluar',
               style: TextStyle(
@@ -92,11 +125,12 @@ class BodyBuild extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.normal,
+                        color: red,
                       ),
                     ),
-                    const Icon(
+                    Icon(
                       Icons.arrow_forward,
-                      color: Colors.black,
+                      color: red,
                     ),
                   ],
                 ).paddingAll(20.r),
@@ -105,104 +139,6 @@ class BodyBuild extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class PersonReport extends StatelessWidget {
-  const PersonReport({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.report,
-                  color: Colors.black,
-                ),
-                10.horizontalSpace,
-                Text(
-                  'Total laporan',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              '10',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ).paddingAll(10.r),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.hourglass_bottom,
-                  color: Colors.black,
-                ),
-                10.horizontalSpace,
-                Text(
-                  'Laporan diproses',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              '2',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ).paddingAll(10.r),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.check_circle,
-                  color: Colors.black,
-                ),
-                10.horizontalSpace,
-                Text(
-                  'Laporan selesai',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              '8',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ).paddingAll(10.r),
-      ],
     );
   }
 }
@@ -218,123 +154,156 @@ class PersonInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.phone,
-                  color: Colors.black,
-                ),
-                10.horizontalSpace,
-                Text(
-                  'Nomor Telepon',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(10.w),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.phone,
+                    color: Colors.black,
                   ),
-                ),
-              ],
-            ),
-            Text(
-              '',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ).paddingAll(10.r),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.mail,
-                  color: Colors.black,
-                ),
-                10.horizontalSpace,
-                Text(
-                  'Email',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
+                  10.horizontalSpace,
+                  Text(
+                    'Nomor Telepon',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Text(
-              '',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
+                ],
               ),
-            ),
-          ],
-        ).paddingAll(10.r),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.place,
-                  color: Colors.black,
+              Text(
+                '081255621447',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
                 ),
-                10.horizontalSpace,
-                Text(
-                  'Alamat',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
+              ),
+            ],
+          ).paddingAll(10.r),
+        ),
+        10.verticalSpace,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(10.w),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.mail,
+                    color: Colors.black,
                   ),
-                ),
-              ],
-            ),
-            Text(
-              '',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ).paddingAll(10.r),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.today,
-                  color: Colors.black,
-                ),
-                10.horizontalSpace,
-                Text(
-                  'Akun dibuat',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
+                  10.horizontalSpace,
+                  Text(
+                    'Email',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Text(
-              "",
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
+                ],
               ),
-            ),
-          ],
-        ).paddingAll(10.r),
+              Text(
+                'Petugas@gmail.com  ',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ).paddingAll(10.r),
+        ),
+        10.verticalSpace,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(10.w),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.place,
+                    color: Colors.black,
+                  ),
+                  10.horizontalSpace,
+                  Text(
+                    'Alamat',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                '',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ).paddingAll(10.r),
+        ),
+        10.verticalSpace,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(10.w),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.today,
+                    color: Colors.black,
+                  ),
+                  10.horizontalSpace,
+                  Text(
+                    'Akun dibuat',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                "",
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ).paddingAll(10.r),
+        ),
+        10.verticalSpace,
         GestureDetector(
           onTap: () {},
           child: Container(
-            color: white,
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(10.w),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -346,7 +315,7 @@ class PersonInfo extends StatelessWidget {
                     ),
                     10.horizontalSpace,
                     Text(
-                      'Edit Profil',
+                      'Edit Status',
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.normal,
@@ -362,10 +331,14 @@ class PersonInfo extends StatelessWidget {
             ).paddingAll(10.r),
           ),
         ),
+        10.verticalSpace,
         GestureDetector(
           onTap: () {},
           child: Container(
-            color: white,
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(10.w),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -411,10 +384,8 @@ class ProfileTopBar extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          20.verticalSpace,
           CircleAvatar(
             maxRadius: ScreenUtil().setWidth(40),
-            minRadius: ScreenUtil().setWidth(40),
             backgroundImage: NetworkImage(
               'https://random.imagecdn.app/500/150',
             ),
@@ -422,14 +393,15 @@ class ProfileTopBar extends StatelessWidget {
           ),
           20.verticalSpace,
           Text(
-            '',
+            'Petugas',
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
+          5.verticalSpace,
           Text(
-            '',
+            'Petugas@gmail.com',
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.normal,

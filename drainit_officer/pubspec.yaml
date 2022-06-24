@@ -24,6 +24,8 @@ dependencies:
   timeline_tile: 2.0.0
   flutter_native_splash: 2.2.2
   shimmer: 2.0.0
+  image_picker: 0.8.5+3
+  image_cropper: 2.0.3
   flutter: 
     sdk: flutter
 

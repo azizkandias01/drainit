@@ -6,6 +6,7 @@ import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/reports/controllers/reports_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,15 +55,6 @@ class ReportsView extends GetView<ReportsController> {
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Obx(
-                //   () => Center(
-                //     child: TextBold(
-                //       text:
-                //           'Laporkan ${controller.page.value == 0 ? 'Banjir' : 'Drainase Rusak'}',
-                //       fontSize: 30.sp,
-                //     ),
-                //   ),
-                // ),
                 30.verticalSpace,
                 Container(
                   decoration: BoxDecoration(
@@ -202,7 +194,14 @@ class ReportsView extends GetView<ReportsController> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              controller.getImage(ImageSource.camera);
+                              getImage(
+                                ImageSource.camera,
+                                controller.selectedImagePath,
+                                controller.selectedImageSize,
+                                controller.cropImagePath,
+                                controller.cropImageSize,
+                                controller.bytes64Image,
+                              );
                             },
                             child: Row(
                               children: [
@@ -221,9 +220,19 @@ class ReportsView extends GetView<ReportsController> {
                           GestureDetector(
                             onTap: () {
                               if (Platform.isIOS) {
-                                controller.openFilePicker();
+                                openFilePickerImage(
+                                  controller.selectedImagePath,
+                                  controller.bytes64Image,
+                                );
                               } else {
-                                controller.getImage(ImageSource.gallery);
+                                getImage(
+                                  ImageSource.gallery,
+                                  controller.selectedImagePath,
+                                  controller.selectedImageSize,
+                                  controller.cropImagePath,
+                                  controller.cropImageSize,
+                                  controller.bytes64Image,
+                                );
                               }
                             },
                             child: Row(

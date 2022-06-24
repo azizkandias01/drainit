@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/edit_profile/controllers/edit_profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -46,38 +49,56 @@ class EditProfileView extends GetView<EditProfileController> {
             child: SizedBox(
               width: 100.w,
               height: 100.h,
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  CircleAvatar(
-                    maxRadius: 60.w,
-                    minRadius: 60.w,
-                    backgroundImage: NetworkImage(
-                      '${Routes.IMAGEURL}${controller.profile.foto}',
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      onTap: () => {},
-                      child: Container(
-                        height: 20.h,
-                        width: 20.w,
-                        decoration: const BoxDecoration(
-                          color: primary,
-                          shape: BoxShape.circle,
+              child: Obx(
+                () => Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    if (controller.bytes64Image.value.isNotEmpty)
+                      CircleAvatar(
+                        maxRadius: 60.w,
+                        minRadius: 60.w,
+                        backgroundColor: primary,
+                        backgroundImage: MemoryImage(
+                          base64Decode(
+                            controller.bytes64Image.value,
+                          ),
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.edit,
-                            color: white,
-                            size: 15.r,
+                      )
+                    else
+                      CircleAvatar(
+                        maxRadius: 60.w,
+                        minRadius: 60.w,
+                        backgroundColor: primary,
+                        backgroundImage: NetworkImage(
+                          '${Routes.IMAGEURL}${controller.profile.foto}',
+                        ),
+                      ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: GestureDetector(
+                        onTap: () => openFilePickerImage(
+                          controller.selectedImagePath,
+                          controller.bytes64Image,
+                        ),
+                        child: Container(
+                          height: 20.h,
+                          width: 20.w,
+                          decoration: const BoxDecoration(
+                            color: primary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.edit,
+                              color: white,
+                              size: 15.r,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ).paddingOnly(top: 20.h),

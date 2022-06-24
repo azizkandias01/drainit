@@ -66,6 +66,18 @@ class MapsView extends GetView<MapsController> {
           textColour: Colors.black,
           fontSize: 18.sp,
         ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                primary,
+                Colors.white,
+              ],
+            ),
+          ),
+        ),
       ),
       body: Stack(
         children: [
@@ -109,10 +121,8 @@ class MapsView extends GetView<MapsController> {
       controller.markers.add(
         Marker(
           markerId: MarkerId(item.id!),
-          // icon: BitmapDescriptor.fromBytes(
-          //     Uint8List.fromList(base64.decode(controller.floodIcon))),
           icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueCyan,
+            BitmapDescriptor.hueBlue,
           ),
           position: controller.geoToLatlong(item.geometry!),
           onTap: () {
@@ -125,74 +135,77 @@ class MapsView extends GetView<MapsController> {
                     topRight: Radius.circular(10),
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Divider(
-                      thickness: 3,
-                      color: Colors.grey,
-                      endIndent: 170.w,
-                      indent: 170.w,
-                    ),
-                    TextMedium(
-                      text: item.namaJalan.toString(),
-                      fontSize: 18.sp,
-                    ),
-                    10.verticalSpace,
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.r,
-                            vertical: 5.r,
-                          ),
-                          alignment: Alignment.center,
-                          height: 25.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.r),
-                            ),
-                            color: getStatusColor(
-                              "Banjir",
-                            ),
-                          ),
-                          child: TextMedium(
-                            text: "Banjir",
-                            textColour: white,
-                          ),
-                        ),
-                        10.horizontalSpace,
-                        TextThin(
-                          text: "Kerusakan " + item.kondisiKerusakan.toString(),
-                          textColour: Colors.grey,
-                        ),
-                      ],
-                    ),
-                    10.verticalSpace,
-                    TextMedium(
-                      text:
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                      textColour: Colors.grey,
-                    ),
-                    10.verticalSpace,
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: CachedNetworkImage(
-                        imageUrl: "https://picsum.photos/200",
-                        placeholder: (_, __) {
-                          return const Center(
-                              child: CircularProgressIndicator.adaptive());
-                        },
-                        width: Get.width,
-                        height: 200.h,
-                        fit: BoxFit.fitWidth,
-                        errorWidget: (_, __, ___) {
-                          return const Text('data cannot be loaded!');
-                        },
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Divider(
+                        thickness: 3,
+                        color: Colors.grey,
+                        endIndent: 170.w,
+                        indent: 170.w,
                       ),
-                    ),
-                  ],
-                ).paddingOnly(top: 10.h, left: 20.w, right: 20.w),
+                      TextMedium(
+                        text: item.namaJalan.toString(),
+                        fontSize: 18.sp,
+                      ),
+                      10.verticalSpace,
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5.r,
+                              vertical: 5.r,
+                            ),
+                            alignment: Alignment.center,
+                            height: 25.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(5.r),
+                              ),
+                              color: getStatusColor(
+                                "Banjir",
+                              ),
+                            ),
+                            child: TextMedium(
+                              text: "Banjir",
+                              textColour: white,
+                            ),
+                          ),
+                          10.horizontalSpace,
+                          TextThin(
+                            text:
+                                "Kerusakan " + item.kondisiKerusakan.toString(),
+                            textColour: Colors.grey,
+                          ),
+                        ],
+                      ),
+                      20.verticalSpace,
+                      TextMedium(
+                        text:
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                        textColour: Colors.grey,
+                      ),
+                      20.verticalSpace,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.r),
+                        child: CachedNetworkImage(
+                          imageUrl: "https://picsum.photos/200",
+                          placeholder: (_, __) {
+                            return const Center(
+                                child: CircularProgressIndicator.adaptive());
+                          },
+                          width: Get.width,
+                          height: 200.h,
+                          fit: BoxFit.fitWidth,
+                          errorWidget: (_, __, ___) {
+                            return const Text('data cannot be loaded!');
+                          },
+                        ),
+                      ),
+                    ],
+                  ).paddingAll(20.r),
+                ),
               ),
             );
           },

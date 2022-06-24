@@ -57,8 +57,10 @@ class HistoryController extends GetxController with StateMixin {
       filteredList = list;
     } else {
       filteredList = list
-          .where((element) =>
-              element.namaJalan!.toLowerCase().contains(name.toLowerCase()),)
+          .where(
+            (element) =>
+                element.namaJalan!.toLowerCase().contains(name.toLowerCase()),
+          )
           .toList();
     }
     foundList.value = filteredList;

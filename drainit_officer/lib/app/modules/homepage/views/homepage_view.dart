@@ -32,29 +32,45 @@ class HomepageView extends GetView<HomepageController> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return loadingPlaceholder();
+        } else if (snapshot.hasData) {
+          return bottomWidget(snapshot);
         } else {
-          return listReportWidget(snapshot);
+          return Center(
+            child: TextMedium(
+              text: "Tidak ada pengaduan",
+              fontSize: 20.sp,
+            ),
+          );
         }
       },
     );
   }
 
-  Align listReportWidget(AsyncSnapshot<List<Report>> snapshot) {
+  Align bottomWidget(AsyncSnapshot<List<Report>> snapshot) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 0.51.sh,
+        height: 0.75.sh,
         width: 1.sw,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+            topLeft: Radius.circular(20.r),
+            topRight: Radius.circular(20.r),
           ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            10.verticalSpace,
+            TextBold(
+              text: "OVERVIEW",
+              fontSize: 14.sp,
+              textColour: black,
+            ),
+            10.verticalSpace,
+            overviewCard(),
+            20.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -67,12 +83,13 @@ class HomepageView extends GetView<HomepageController> {
                   ),
                 ),
               ],
-            ).paddingOnly(bottom: 20.h, top: 10.h),
-            Flexible(
+            ),
+            15.verticalSpace,
+            Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data!.length,
+                itemCount: 5,
+                addAutomaticKeepAlives: true,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () => Get.toNamed(Routes.DETAIL, arguments: [
@@ -82,10 +99,10 @@ class HomepageView extends GetView<HomepageController> {
                     child: Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.r),
+                        borderRadius: BorderRadius.circular(25.r),
                       ),
                       child: SizedBox(
-                        width: 0.6.sw,
+                        width: 0.55.sw,
                         child: Column(
                           children: [
                             Stack(
@@ -94,8 +111,8 @@ class HomepageView extends GetView<HomepageController> {
                                   width: 0.6.sw,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
+                                      topLeft: Radius.circular(20.r),
+                                      topRight: Radius.circular(20.r),
                                     ),
                                     child: CachedNetworkImage(
                                       imageUrl: Routes.IMAGEURL +
@@ -113,7 +130,7 @@ class HomepageView extends GetView<HomepageController> {
                                         horizontal: 5.r,
                                         vertical: 5.r,
                                       ),
-                                      height: 25.h,
+                                      height: 20.h,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(5.r),
@@ -121,13 +138,11 @@ class HomepageView extends GetView<HomepageController> {
                                         color: Colors.amber,
                                       ),
                                       child: Center(
-                                        child: Text(
-                                          snapshot
+                                        child: TextBold(
+                                          text: snapshot
                                               .data![index].statusPengaduan!,
-                                          style: TextStyle(
-                                            fontSize: 10.sp,
-                                            color: white,
-                                          ),
+                                          fontSize: 7.sp,
+                                          textColour: white,
                                         ),
                                       ),
                                     ),
@@ -137,7 +152,7 @@ class HomepageView extends GetView<HomepageController> {
                                         horizontal: 5.r,
                                         vertical: 5.r,
                                       ),
-                                      height: 25.h,
+                                      height: 20.h,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(5.r),
@@ -145,24 +160,28 @@ class HomepageView extends GetView<HomepageController> {
                                         color: Colors.blue,
                                       ),
                                       child: Center(
-                                        child: Text(
-                                          snapshot.data![index].tipePengaduan!,
-                                          style: TextStyle(
-                                            fontSize: 10.sp,
-                                            color: white,
-                                          ),
+                                        child: TextBold(
+                                          text: snapshot
+                                              .data![index].tipePengaduan!
+                                              .toUpperCase(),
+                                          textColour: white,
+                                          fontSize: 7.sp,
                                         ),
                                       ),
                                     ),
                                   ],
-                                ).paddingOnly(top: 12.h, left: 10.w),
+                                ).paddingOnly(top: 15.h, left: 15.w),
                                 Positioned(
                                   bottom: 10.h,
                                   left: 10.w,
                                   child: TextMedium(
                                     text: snapshot.data![index].namaJalan!
-                                        .split(",")[0],
+                                            .split(",")[0] +
+                                        ", " +
+                                        snapshot.data![index].namaJalan!
+                                            .split(",")[1],
                                     textColour: white,
+                                    fontSize: 10.sp,
                                   ),
                                 )
                               ],
@@ -186,10 +205,11 @@ class HomepageView extends GetView<HomepageController> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       TextMedium(
                                           text: "Deskripsi", fontSize: 10.sp),
-                                      10.verticalSpace,
                                       TextRegular(
                                           overflow: TextOverflow.ellipsis,
                                           text: snapshot
@@ -212,7 +232,7 @@ class HomepageView extends GetView<HomepageController> {
               ),
             ),
           ],
-        ).paddingSymmetric(horizontal: 20.w, vertical: 15.h),
+        ).paddingSymmetric(horizontal: 20.w, vertical: 10.h),
       ),
     );
   }
@@ -221,7 +241,7 @@ class HomepageView extends GetView<HomepageController> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 0.51.sh,
+        height: 0.75.sh,
         width: 1.sw,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -233,6 +253,32 @@ class HomepageView extends GetView<HomepageController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Shimmer.fromColors(
+              highlightColor: Colors.grey[300]!,
+              baseColor: Colors.grey[100]!,
+              child: Container(
+                width: 0.9.sw,
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: grey,
+                  borderRadius: BorderRadius.circular(15.r),
+                ),
+              ),
+            ),
+            20.verticalSpace,
+            Shimmer.fromColors(
+              highlightColor: Colors.grey[300]!,
+              baseColor: Colors.grey[100]!,
+              child: Container(
+                width: 0.9.sw,
+                height: 0.2.sh,
+                decoration: BoxDecoration(
+                  color: grey,
+                  borderRadius: BorderRadius.circular(15.r),
+                ),
+              ),
+            ),
+            20.verticalSpace,
             Shimmer.fromColors(
               highlightColor: Colors.grey[300]!,
               baseColor: Colors.grey[100]!,
@@ -297,7 +343,7 @@ class HomepageView extends GetView<HomepageController> {
 
   Container topMenu() {
     return Container(
-      height: 0.6.sh,
+      height: 0.55.sh,
       width: 1.sw,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -316,133 +362,125 @@ class HomepageView extends GetView<HomepageController> {
           children: [
             headerProfile().paddingSymmetric(vertical: 10.h),
             menuRow().paddingOnly(bottom: 15.h, top: 10.h),
-            TextBold(
-              text: "OVERVIEW",
-              fontSize: 14.sp,
-              textColour: white,
-            ).paddingOnly(bottom: 10.h),
-            overviewCard().paddingOnly(bottom: 20.h),
           ],
         ).paddingSymmetric(horizontal: 20.w),
       ),
     );
   }
 
-  Card overviewCard() {
-    return Card(
-      elevation: 15,
-      shape: RoundedRectangleBorder(
+  Container overviewCard() {
+    return Container(
+      width: 1.sw,
+      height: 0.2.sh,
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
+        color: white,
+        border: Border.all(
+          color: Colors.grey[300]!,
+          width: 1.w,
+        ),
       ),
-      child: Container(
-        width: 1.sw,
-        height: 0.2.sh,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: white,
-        ),
-        child: Column(
-          children: [
-            10.verticalSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextBold(text: "Laporan Aktif", fontSize: 14.sp)
-                        .paddingOnly(bottom: 7.h),
-                    SizedBox(
-                      width: 0.6.sw,
-                      child: LinearProgressIndicator(
-                        value: 0.7,
-                        backgroundColor: grey[300],
-                        valueColor: AlwaysStoppedAnimation(Colors.orange),
-                      ),
-                    ).paddingOnly(bottom: 7.h),
-                    TextMedium(
-                        text: "16 Diproses",
-                        fontSize: 14.sp,
-                        textColour: Colors.orange),
-                  ],
-                ),
-                Container(
-                  width: 50.w,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.amber,
-                        Colors.orange,
-                      ],
+      child: Column(
+        children: [
+          10.verticalSpace,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextBold(text: "Laporan Aktif", fontSize: 14.sp)
+                      .paddingOnly(bottom: 7.h),
+                  SizedBox(
+                    width: 0.6.sw,
+                    child: LinearProgressIndicator(
+                      value: 0.7,
+                      backgroundColor: grey[300],
+                      valueColor: AlwaysStoppedAnimation(Colors.orange),
                     ),
-                  ),
-                  child: Center(
-                    child: TextMedium(
-                      text: "60%",
+                  ).paddingOnly(bottom: 7.h),
+                  TextMedium(
+                      text: "16 Diproses",
                       fontSize: 14.sp,
-                      textColour: white,
-                    ),
+                      textColour: Colors.orange),
+                ],
+              ),
+              Container(
+                width: 50.w,
+                height: 50.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.amber,
+                      Colors.orange,
+                    ],
                   ),
                 ),
-              ],
-            ).paddingSymmetric(horizontal: 20.w, vertical: 10.h),
-            Divider(
-              color: grey[300],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextBold(text: "Laporan Selesai", fontSize: 14.sp)
-                        .paddingOnly(bottom: 7.h),
-                    SizedBox(
-                      width: 0.6.sw,
-                      child: LinearProgressIndicator(
-                        value: 0.3,
-                        backgroundColor: grey[300],
-                        valueColor: AlwaysStoppedAnimation(Colors.blue),
-                      ),
-                    ).paddingOnly(bottom: 7.h),
-                    TextMedium(
-                        text: "4 Selesai",
-                        fontSize: 14.sp,
-                        textColour: Colors.blue),
-                  ],
-                ),
-                Container(
-                  width: 50.w,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.lightBlue,
-                        Colors.blueAccent,
-                      ],
-                    ),
+                child: Center(
+                  child: TextMedium(
+                    text: "60%",
+                    fontSize: 14.sp,
+                    textColour: white,
                   ),
-                  child: Center(
-                    child: TextBold(
-                      text: "30%",
+                ),
+              ),
+            ],
+          ).paddingSymmetric(horizontal: 20.w, vertical: 10.h),
+          Divider(
+            color: grey[300],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextBold(text: "Laporan Selesai", fontSize: 14.sp)
+                      .paddingOnly(bottom: 7.h),
+                  SizedBox(
+                    width: 0.6.sw,
+                    child: LinearProgressIndicator(
+                      value: 0.3,
+                      backgroundColor: grey[300],
+                      valueColor: AlwaysStoppedAnimation(Colors.blue),
+                    ),
+                  ).paddingOnly(bottom: 7.h),
+                  TextMedium(
+                      text: "4 Selesai",
                       fontSize: 14.sp,
-                      textColour: white,
-                    ),
+                      textColour: Colors.blue),
+                ],
+              ),
+              Container(
+                width: 50.w,
+                height: 50.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.lightBlue,
+                      Colors.blueAccent,
+                    ],
                   ),
                 ),
-              ],
-            ).paddingSymmetric(
-              horizontal: 20.w,
-            ),
-          ],
-        ),
+                child: Center(
+                  child: TextBold(
+                    text: "30%",
+                    fontSize: 14.sp,
+                    textColour: white,
+                  ),
+                ),
+              ),
+            ],
+          ).paddingSymmetric(
+            horizontal: 20.w,
+          ),
+        ],
       ),
     );
   }
@@ -555,19 +593,22 @@ class HomepageView extends GetView<HomepageController> {
                     text: "David Alexander", fontSize: 20.sp, textColour: white)
                 .paddingOnly(bottom: 5.h),
             TextMedium(
-              text: "PUPR (Petugas)",
+              text: "PUPR (Available)",
               fontSize: 12.sp,
               textColour: white,
             ),
           ],
         ),
-        CircleAvatar(
-          radius: 28,
-          backgroundColor: white,
+        GestureDetector(
+          onTap: () => Get.toNamed(Routes.PROFILE),
           child: CircleAvatar(
-            radius: 25,
-            backgroundImage:
-                Image.network("https://picsum.photos/250?image=9").image,
+            radius: 28,
+            backgroundColor: white,
+            child: CircleAvatar(
+              radius: 25,
+              backgroundImage:
+                  Image.network("https://picsum.photos/250?image=9").image,
+            ),
           ),
         ),
       ],

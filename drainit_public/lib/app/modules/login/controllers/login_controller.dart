@@ -47,6 +47,7 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
           status: RxStatus.success(),
         ),
         box.write(Routes.TOKEN, resp.accessToken),
+        box.write(Routes.USER_ID, resp.user?.id),
 
         Get.offAllNamed(Routes.HOMEPAGE, arguments: 'login')
       },
@@ -122,5 +123,4 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
       ),
     );
   }
-
 }
