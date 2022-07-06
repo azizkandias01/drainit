@@ -37,19 +37,24 @@ class RoundedButton extends StatelessWidget {
         height: height,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius!),
-          child:
-              Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(color: color),
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(color: color),
+                ),
               ),
-            ),
-            Text(
-              text,
-              style: TextStyle(
-                  color: textColor, fontSize: fontSize, fontWeight: fontWeight,),
-            ),
-          ],),
+              Text(
+                text,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: fontSize,
+                  fontWeight: fontWeight,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -87,41 +92,45 @@ class LoginWithButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-      Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: <Widget>[
+        Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius ?? 0),),
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            iconPath ?? "",
-            height: iconHeight,
-            width: iconWidth,
+            borderRadius: BorderRadius.circular(borderRadius ?? 0),
           ),
-          SizedBox(
-            width: spaceBetweenIconAndText,
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              primary: textColor,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              iconPath ?? "",
+              height: iconHeight,
+              width: iconWidth,
             ),
-            onPressed: onClick,
-            child: Text(
-              text ?? "not defined",
-              style: TextStyle(
-                color: textColor,
-                fontSize: fontSize,
+            SizedBox(
+              width: spaceBetweenIconAndText,
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: textColor,
+              ),
+              onPressed: onClick,
+              child: Text(
+                text ?? "not defined",
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: fontSize,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    ],);
+          ],
+        ),
+      ],
+    );
   }
 }
 
@@ -156,45 +165,48 @@ class ProfileMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-      Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(borderRadius ?? 0),
-        ),
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SvgPicture.asset(
-            iconPath ?? "",
-            height: iconHeight,
-            width: iconWidth,
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: <Widget>[
+        Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(borderRadius ?? 0),
           ),
-          TextButton(
-            style: TextButton.styleFrom(
-              primary: textColor,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SvgPicture.asset(
+              iconPath ?? "",
+              height: iconHeight,
+              width: iconWidth,
             ),
-            onPressed: onPressed,
-            child: Text(
-              text ?? "not defined",
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: textColor,
-                fontSize: fontSize,
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: textColor,
+              ),
+              onPressed: onPressed,
+              child: Text(
+                text ?? "not defined",
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: fontSize,
+                ),
               ),
             ),
-          ),
-          SvgPicture.asset(
-            "assets/svg/arrow_right.svg",
-            height: iconHeight,
-            width: iconWidth,
-          ),
-        ],
-      ),
-    ],);
+            SvgPicture.asset(
+              "assets/svg/arrow_right.svg",
+              height: iconHeight,
+              width: iconWidth,
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }

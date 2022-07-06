@@ -311,6 +311,17 @@ class ProcessedReportsView extends GetView<ProcessedReportsController> {
                                 ],
                               ),
                               20.verticalSpace,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15.w),
+                                child: CachedNetworkImage(
+                                  imageUrl: Routes.IMAGEURL +
+                                      controller.list[index].foto!,
+                                  fit: BoxFit.cover,
+                                  width: 1.sw,
+                                  height: 150.h,
+                                ),
+                              ),
+                              20.verticalSpace,
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

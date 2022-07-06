@@ -952,6 +952,34 @@ class BuildHistoryListFuture extends StatelessWidget {
                         color: Colors.grey,
                       ),
                     ),
+                    5.verticalSpace,
+                    Row(
+                      children: [
+                        GestureDetector(
+                          child: Icon(
+                            Icons.thumb_up_off_alt_rounded,
+                            color: index.isEven ? green2 : Colors.grey,
+                            size: 16.sp,
+                          ),
+                        ),
+                        10.horizontalSpace,
+                        const TextSemiBold(
+                          text: "40",
+                          textColour: black,
+                        ),
+                        20.horizontalSpace,
+                        Icon(
+                          Icons.thumb_down_alt_rounded,
+                          color: index.isOdd ? red : Colors.grey,
+                          size: 16.sp,
+                        ),
+                        10.horizontalSpace,
+                        const TextSemiBold(
+                          text: "5",
+                          textColour: black,
+                        ),
+                      ],
+                    ),
                   ],
                 ).paddingAll(5.r),
                 trailing: ClipRRect(

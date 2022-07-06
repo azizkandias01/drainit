@@ -226,6 +226,33 @@ class DetailView extends GetView<DetailController> {
                             ).paddingOnly(left: 20.w, right: 20.w),
                           ),
                           Row(
+                            children: [
+                              GestureDetector(
+                                child: Icon(
+                                  Icons.thumb_up_off_alt_rounded,
+                                  color: green2,
+                                  size: 16.sp,
+                                ),
+                              ),
+                              10.horizontalSpace,
+                              const TextSemiBold(
+                                text: "40",
+                                textColour: black,
+                              ),
+                              20.horizontalSpace,
+                              Icon(
+                                Icons.thumb_down_alt_rounded,
+                                color: Colors.grey,
+                                size: 16.sp,
+                              ),
+                              10.horizontalSpace,
+                              const TextSemiBold(
+                                text: "5",
+                                textColour: black,
+                              ),
+                            ],
+                          ).paddingOnly(left: 20.w, right: 20.w, top: 10.h),
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
