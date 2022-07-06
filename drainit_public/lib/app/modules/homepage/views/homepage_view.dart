@@ -102,8 +102,10 @@ class HomepageView extends GetView<HomepageController> {
               itemBuilder: (ctx, id) {
                 return GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.DETAIL,
-                        arguments: snapshot.data![id].id,);
+                    Get.toNamed(
+                      Routes.DETAIL,
+                      arguments: snapshot.data![id].id,
+                    );
                   },
                   child: Stack(
                     children: [
@@ -302,6 +304,36 @@ class HomepageView extends GetView<HomepageController> {
                       ),
                     ],
                   ).paddingOnly(left: 20.w, top: 20.h),
+                  Positioned(
+                    bottom: 0,
+                    child: FittedBox(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.thumb_up_off_alt_rounded,
+                            color: green2,
+                            size: 16.sp,
+                          ),
+                          10.horizontalSpace,
+                          const TextSemiBold(
+                            text: "40",
+                            textColour: white,
+                          ),
+                          20.horizontalSpace,
+                          Icon(
+                            Icons.thumb_down_alt_rounded,
+                            color: red,
+                            size: 16.sp,
+                          ),
+                          10.horizontalSpace,
+                          const TextSemiBold(
+                            text: "5",
+                            textColour: white,
+                          ),
+                        ],
+                      ),
+                    ).paddingOnly(left: 20.w, top: 20.h, bottom: 45.h),
+                  ),
                   Positioned(
                     bottom: 0,
                     child: FittedBox(
@@ -630,183 +662,183 @@ class HomepageView extends GetView<HomepageController> {
 
   Widget buildHeader() {
     return FutureBuilder<Profile?>(
-        future: controller.profileC.getAccountData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [primary, white],
-                ),
+      future: controller.profileC.getAccountData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [primary, white],
               ),
-              child: SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Shimmer.fromColors(
-                            baseColor: grey,
-                            highlightColor: grey300,
-                            child: SizedBox(
-                              height: ScreenUtil().setHeight(10),
-                              width: ScreenUtil().setWidth(50),
-                              child: Container(
-                                color: grey,
-                                height: 10.h,
-                                width: 0.3.sw,
-                              ),
+            ),
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FittedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Shimmer.fromColors(
+                          baseColor: grey,
+                          highlightColor: grey300,
+                          child: SizedBox(
+                            height: ScreenUtil().setHeight(10),
+                            width: ScreenUtil().setWidth(50),
+                            child: Container(
+                              color: grey,
+                              height: 10.h,
+                              width: 0.3.sw,
                             ),
                           ),
-                          10.verticalSpace,
-                          Shimmer.fromColors(
-                            baseColor: grey,
-                            highlightColor: grey300,
-                            child: SizedBox(
-                              height: ScreenUtil().setHeight(10),
-                              width: ScreenUtil().setWidth(70),
-                              child: Container(
-                                color: grey,
-                                height: 10.h,
-                                width: 0.2.sw,
-                              ),
+                        ),
+                        10.verticalSpace,
+                        Shimmer.fromColors(
+                          baseColor: grey,
+                          highlightColor: grey300,
+                          child: SizedBox(
+                            height: ScreenUtil().setHeight(10),
+                            width: ScreenUtil().setWidth(70),
+                            child: Container(
+                              color: grey,
+                              height: 10.h,
+                              width: 0.2.sw,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Shimmer.fromColors(
-                      baseColor: grey,
-                      highlightColor: grey300,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          ScreenUtil().setWidth(50),
                         ),
-                        child: Container(
-                          width: ScreenUtil().setWidth(50),
-                          height: ScreenUtil().setHeight(50),
-                          color: Colors.grey[100],
+                      ],
+                    ),
+                  ),
+                  Shimmer.fromColors(
+                    baseColor: grey,
+                    highlightColor: grey300,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                        ScreenUtil().setWidth(50),
+                      ),
+                      child: Container(
+                        width: ScreenUtil().setWidth(50),
+                        height: ScreenUtil().setHeight(50),
+                        color: Colors.grey[100],
+                      ),
+                    ),
+                  ),
+                ],
+              ).paddingOnly(
+                left: 20.w,
+                right: 20.w,
+                top: 10.h,
+                bottom: 10.h,
+              ),
+            ),
+          );
+        } else if (snapshot.hasData) {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [primary, white],
+              ),
+            ),
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FittedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextMedium(
+                          text: "Halo,",
+                          textColour: black,
+                          fontSize: 17.sp,
                         ),
-                      ),
-                    ),
-                  ],
-                ).paddingOnly(
-                  left: 20.w,
-                  right: 20.w,
-                  top: 10.h,
-                  bottom: 10.h,
-                ),
-              ),
-            );
-          } else if (snapshot.hasData) {
-            return Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [primary, white],
-                ),
-              ),
-              child: SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextMedium(
-                            text: "Halo,",
-                            textColour: black,
-                            fontSize: 17.sp,
-                          ),
-                          TextSemiBold(
-                            text:
-                                controller.profileC.dataProfile.nama.toString(),
-                            fontSize: 18.sp,
-                            textColour: grey700,
-                          ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.PROFILE);
-                      },
-                      child: CircleAvatar(
-                        radius: 25.r,
-                        backgroundImage: CachedNetworkImageProvider(
-                          Routes.IMAGEURL +
-                              controller.profileC.dataProfile.foto.toString(),
+                        TextSemiBold(
+                          text: controller.profileC.dataProfile.nama.toString(),
+                          fontSize: 18.sp,
+                          textColour: grey700,
                         ),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.PROFILE);
+                    },
+                    child: CircleAvatar(
+                      radius: 25.r,
+                      backgroundImage: CachedNetworkImageProvider(
+                        Routes.IMAGEURL +
+                            controller.profileC.dataProfile.foto.toString(),
                       ),
                     ),
-                  ],
-                ).paddingOnly(
-                  left: 20.w,
-                  right: 20.w,
-                  top: 10.h,
-                  bottom: 10.h,
-                ),
+                  ),
+                ],
+              ).paddingOnly(
+                left: 20.w,
+                right: 20.w,
+                top: 10.h,
+                bottom: 10.h,
               ),
-            );
-          } else {
-            return Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [primary, white],
-                ),
+            ),
+          );
+        } else {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [primary, white],
               ),
-              child: SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FittedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextMedium(
-                            text: "no data",
-                            textColour: black,
-                            fontSize: 17.sp,
-                          ),
-                          TextSemiBold(
-                            text: "no data",
-                            fontSize: 18.sp,
-                            textColour: grey700,
-                          ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.PROFILE);
-                      },
-                      child: CircleAvatar(
-                        radius: 25.r,
-                        backgroundImage: CachedNetworkImageProvider(
-                          Routes.IMAGEURL +
-                              controller.profileC.dataProfile.foto.toString(),
+            ),
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FittedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextMedium(
+                          text: "no data",
+                          textColour: black,
+                          fontSize: 17.sp,
                         ),
+                        TextSemiBold(
+                          text: "no data",
+                          fontSize: 18.sp,
+                          textColour: grey700,
+                        ),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.PROFILE);
+                    },
+                    child: CircleAvatar(
+                      radius: 25.r,
+                      backgroundImage: CachedNetworkImageProvider(
+                        Routes.IMAGEURL +
+                            controller.profileC.dataProfile.foto.toString(),
                       ),
                     ),
-                  ],
-                ).paddingOnly(
-                  left: 20.w,
-                  right: 20.w,
-                  top: 10.h,
-                  bottom: 10.h,
-                ),
+                  ),
+                ],
+              ).paddingOnly(
+                left: 20.w,
+                right: 20.w,
+                top: 10.h,
+                bottom: 10.h,
               ),
-            );
-          }
-        },);
+            ),
+          );
+        }
+      },
+    );
   }
 
   Widget buildHeaderReactive() {

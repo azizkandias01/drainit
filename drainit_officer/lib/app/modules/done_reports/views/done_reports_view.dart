@@ -309,6 +309,17 @@ class DoneReportsView extends GetView<DoneReportsController> {
                                 ],
                               ),
                               20.verticalSpace,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15.w),
+                                child: CachedNetworkImage(
+                                  imageUrl: Routes.IMAGEURL +
+                                      controller.list[index].foto!,
+                                  fit: BoxFit.cover,
+                                  width: 1.sw,
+                                  height: 150.h,
+                                ),
+                              ),
+                              20.verticalSpace,
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -360,7 +371,7 @@ class DoneReportsView extends GetView<DoneReportsController> {
                                       ),
                                       child: Center(
                                         child: TextMedium(
-                                          text: "Lihat Foto",
+                                          text: "Ke Lokasi",
                                           fontSize: 12.sp,
                                           textColour: white,
                                         ),

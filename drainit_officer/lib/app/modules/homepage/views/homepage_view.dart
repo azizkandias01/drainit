@@ -59,180 +59,280 @@ class HomepageView extends GetView<HomepageController> {
             topRight: Radius.circular(20.r),
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            10.verticalSpace,
-            TextBold(
-              text: "OVERVIEW",
-              fontSize: 14.sp,
-              textColour: black,
-            ),
-            10.verticalSpace,
-            overviewCard(),
-            20.verticalSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextBold(text: "Pengaduan Baru", fontSize: 16.sp),
-                GestureDetector(
-                  onTap: () => Get.toNamed(Routes.DONE_REPORTS),
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: Colors.amber,
-                  ),
+                10.verticalSpace,
+                TextBold(
+                  text: "OVERVIEW",
+                  fontSize: 14.sp,
+                  textColour: black,
                 ),
+                10.verticalSpace,
+                overviewCard(),
+                20.verticalSpace,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextBold(text: "Pengaduan Baru", fontSize: 16.sp),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.DONE_REPORTS),
+                      child: Icon(
+                        Icons.arrow_forward,
+                        color: Colors.amber,
+                      ),
+                    ),
+                  ],
+                ),
+                15.verticalSpace,
               ],
             ),
-            15.verticalSpace,
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                addAutomaticKeepAlives: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => Get.toNamed(Routes.DETAIL, arguments: [
-                      snapshot.data![index].id,
-                      snapshot.data![index].geometry,
-                    ]),
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.r),
+            GridView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.w,
+                crossAxisSpacing: 10.h,
+                childAspectRatio: (1 / 1.4),
+              ),
+              itemBuilder: (_, index) => GestureDetector(
+                onTap: () => Get.toNamed(Routes.DETAIL, arguments: [
+                  snapshot.data![index].id,
+                  snapshot.data![index].geometry,
+                ]),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15.r),
+                      child: CachedNetworkImage(
+                        imageUrl: Routes.IMAGEURL + snapshot.data![index].foto!,
+                        fit: BoxFit.cover,
+                        width: 1.sw,
+                        height: 1.sh,
                       ),
-                      child: SizedBox(
-                        width: 0.55.sw,
-                        child: Column(
-                          children: [
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  width: 0.6.sw,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20.r),
-                                      topRight: Radius.circular(20.r),
-                                    ),
-                                    child: CachedNetworkImage(
-                                      imageUrl: Routes.IMAGEURL +
-                                          snapshot.data![index].foto!,
-                                      fit: BoxFit.fill,
-                                      width: 0.6.sw,
-                                      height: 0.29.sh,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 5.r,
-                                        vertical: 5.r,
-                                      ),
-                                      height: 20.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5.r),
-                                        ),
-                                        color: Colors.amber,
-                                      ),
-                                      child: Center(
-                                        child: TextBold(
-                                          text: snapshot
-                                              .data![index].statusPengaduan!,
-                                          fontSize: 7.sp,
-                                          textColour: white,
-                                        ),
-                                      ),
-                                    ),
-                                    5.horizontalSpace,
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 5.r,
-                                        vertical: 5.r,
-                                      ),
-                                      height: 20.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5.r),
-                                        ),
-                                        color: Colors.blue,
-                                      ),
-                                      child: Center(
-                                        child: TextBold(
-                                          text: snapshot
-                                              .data![index].tipePengaduan!
-                                              .toUpperCase(),
-                                          textColour: white,
-                                          fontSize: 7.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ).paddingOnly(top: 15.h, left: 15.w),
-                                Positioned(
-                                  bottom: 10.h,
-                                  left: 10.w,
-                                  child: TextMedium(
-                                    text: snapshot.data![index].namaJalan!
-                                            .split(",")[0] +
-                                        ", " +
-                                        snapshot.data![index].namaJalan!
-                                            .split(",")[1],
-                                    textColour: white,
-                                    fontSize: 10.sp,
-                                  ),
-                                )
-                              ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.r,
+                            vertical: 5.r,
+                          ),
+                          height: 20.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.r),
                             ),
-                            Flexible(
-                              child: Container(
-                                width: 0.6.sw,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20),
-                                  ),
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: white,
-                                      borderRadius: BorderRadius.circular(
-                                        10.r,
-                                      )),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      TextMedium(
-                                          text: "Deskripsi", fontSize: 10.sp),
-                                      TextRegular(
-                                          overflow: TextOverflow.ellipsis,
-                                          text: snapshot
-                                              .data![index].deskripsiPengaduan!,
-                                          fontSize: 10.sp),
-                                    ],
-                                  ).paddingSymmetric(
-                                    horizontal: 10.w,
-                                    vertical: 10.h,
-                                  ),
-                                ).paddingAll(15.r),
-                              ),
-                            )
+                            color: Colors.amber,
+                          ),
+                          child: Center(
+                            child: TextBold(
+                              text: snapshot.data![index].statusPengaduan!,
+                              fontSize: 7.sp,
+                              textColour: white,
+                            ),
+                          ),
+                        ),
+                        5.horizontalSpace,
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.r,
+                            vertical: 5.r,
+                          ),
+                          height: 20.h,
+                          width: 50.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.r),
+                            ),
+                            color: Colors.blue,
+                          ),
+                          child: Center(
+                            child: TextBold(
+                              text: snapshot.data![index].tipePengaduan!,
+                              textColour: white,
+                              fontSize: 7.sp,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ).paddingOnly(top: 15.h, left: 15.w),
+                    Positioned(
+                      bottom: 0,
+                      child: FittedBox(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.thumb_up_off_alt_rounded,
+                              color: Colors.greenAccent,
+                              size: 10.sp,
+                            ),
+                            10.horizontalSpace,
+                            TextBold(
+                              text: "40",
+                              textColour: white,
+                            ),
+                            20.horizontalSpace,
+                            Icon(
+                              Icons.thumb_down_alt_rounded,
+                              color: red,
+                              size: 10.sp,
+                            ),
+                            10.horizontalSpace,
+                            TextBold(
+                              text: "5",
+                              textColour: white,
+                            ),
                           ],
                         ),
+                      ).paddingOnly(left: 15.w, top: 20.h, bottom: 40.h),
+                    ),
+                    Positioned(
+                      bottom: 20.h,
+                      left: 15.w,
+                      child: TextMedium(
+                        text: snapshot.data![index].namaJalan!.split(",")[0],
+                        textColour: white,
+                        fontSize: 10.sp,
                       ),
-                    ).paddingOnly(right: 10.w, bottom: 5.h),
-                  );
-                },
+                    )
+                  ],
+                ),
               ),
+              itemCount: 10,
             ),
           ],
         ).paddingSymmetric(horizontal: 20.w, vertical: 10.h),
+      ),
+    );
+  }
+
+  Card cardItem(AsyncSnapshot<List<Report>> snapshot, int index) {
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25.r),
+      ),
+      child: SizedBox(
+        width: 0.55.sw,
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                SizedBox(
+                  width: 0.6.sw,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.r),
+                      topRight: Radius.circular(20.r),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: Routes.IMAGEURL + snapshot.data![index].foto!,
+                      fit: BoxFit.fill,
+                      width: 0.6.sw,
+                      height: 0.29.sh,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 5.r,
+                        vertical: 5.r,
+                      ),
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.r),
+                        ),
+                        color: Colors.amber,
+                      ),
+                      child: Center(
+                        child: TextBold(
+                          text: snapshot.data![index].statusPengaduan!,
+                          fontSize: 7.sp,
+                          textColour: white,
+                        ),
+                      ),
+                    ),
+                    5.horizontalSpace,
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 5.r,
+                        vertical: 5.r,
+                      ),
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.r),
+                        ),
+                        color: Colors.blue,
+                      ),
+                      child: Center(
+                        child: TextBold(
+                          text: snapshot.data![index].tipePengaduan!
+                              .toUpperCase(),
+                          textColour: white,
+                          fontSize: 7.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ).paddingOnly(top: 15.h, left: 15.w),
+                Positioned(
+                  bottom: 10.h,
+                  left: 10.w,
+                  child: TextMedium(
+                    text: snapshot.data![index].namaJalan!.split(",")[0] +
+                        ", " +
+                        snapshot.data![index].namaJalan!.split(",")[1],
+                    textColour: white,
+                    fontSize: 10.sp,
+                  ),
+                )
+              ],
+            ),
+            Flexible(
+              child: Container(
+                width: 0.6.sw,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(
+                        10.r,
+                      )),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextMedium(text: "Deskripsi", fontSize: 10.sp),
+                      TextRegular(
+                          overflow: TextOverflow.ellipsis,
+                          text: snapshot.data![index].deskripsiPengaduan!,
+                          fontSize: 10.sp),
+                    ],
+                  ).paddingSymmetric(
+                    horizontal: 10.w,
+                    vertical: 10.h,
+                  ),
+                ).paddingAll(15.r),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
