@@ -1,6 +1,8 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:drainit_flutter/app/modules/register/providers/register_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +24,7 @@ class RegisterController extends GetxController with StateMixin<String> {
   late TextEditingController myControllerName;
   late TextEditingController myControllerPhoneNumber;
   late TextEditingController myControllerAddress;
+  var dateOfBirth = "";
 
   //controller for hide show password
   final isPasswordHidden = true.obs;
@@ -106,19 +109,80 @@ class RegisterController extends GetxController with StateMixin<String> {
         snackStyle: SnackStyle.FLOATING,
         duration: const Duration(seconds: 2),
       );
+    } else if (dateOfBirth.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Perlu mengisi tangal lahir!',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        borderRadius: 10,
+        margin: const EdgeInsets.all(10),
+        snackStyle: SnackStyle.FLOATING,
+        duration: const Duration(seconds: 2),
+      );
     } else {
-      Get.toNamed(
-        Routes.REGISTER_NEXT,
-        arguments: [
-          myControllerName.text,
-          myControllerPhoneNumber.text,
-          myControllerEmail.text,
-          myControllerAddress.text,
-          myControllerPassword.text,
-          myControllerPasswordConfirm.text,
-        ],
+      print(dateOfBirth);
+      registerUser(
+        myControllerName.text,
+        myControllerPhoneNumber.text,
+        myControllerEmail.text,
+        myControllerAddress.text,
+        myControllerPassword.text,
+        dateOfBirth,
       );
     }
+  }
+
+  void registerUser(
+    String name,
+    String phone,
+    String email,
+    String alamat,
+    String password,
+    String tanggalLahir,
+  ) {
+    final registerData = {
+      'nama': name,
+      'telepon': phone,
+      'alamat': alamat,
+      'email': email,
+      'password': password,
+      'tanggal_lahir': tanggalLahir,
+    };
+
+    change(
+      null,
+      status: RxStatus.loading(),
+    );
+
+    RegisterProvider().registerUser(registerData).then(
+      (resp) => {
+        change(
+          resp,
+          status: RxStatus.success(),
+        ),
+        Get.snackbar(
+          'Berhasil',
+          'Akun anda sudah berhasil dibuat',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: const EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: const Duration(seconds: 2),
+        ),
+        Get.offAllNamed(Routes.LOGIN)
+      },
+      onError: (err) {
+        change(
+          null,
+          status: RxStatus.error('Error occured : $err'),
+        );
+        showErrorSnackBar("Error occured : $err");
+      },
+    );
   }
 
   @override

@@ -43,11 +43,11 @@ class LoginController extends GetxController with StateMixin<LoginReponse> {
       (resp) => {
         //if the result is ok then change the status to success and move the page to home page
         change(
-          resp,
+          null,
           status: RxStatus.success(),
         ),
-        box.write(Routes.TOKEN, resp.accessToken),
-        box.write(Routes.USER_ID, resp.user?.id),
+        box.write(Routes.TOKEN, resp.token),
+        box.write(Routes.USER_ID, resp.idMasyarakat),
 
         Get.offAllNamed(Routes.HOMEPAGE, arguments: 'login')
       },

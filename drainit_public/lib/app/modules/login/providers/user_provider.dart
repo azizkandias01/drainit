@@ -3,7 +3,7 @@ import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class UserProvider extends GetConnect {
-  Future<LoginReponse> loginUser(Map data) async {
+  Future<LoginResponse> loginUser(Map data) async {
     final response =
         await post('${Routes.BASEURL}login/masyarakat', data).timeout(
       const Duration(
@@ -13,7 +13,7 @@ class UserProvider extends GetConnect {
     if (response.status.hasError) {
       return Future.error(response.statusCode.toString());
     } else {
-      return LoginReponse.fromJson(response.body as Map<String, dynamic>);
+      return LoginResponse.fromJson(response.body as Map<String, dynamic>);
     }
   }
 }

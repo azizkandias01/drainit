@@ -39,7 +39,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     namaJalan = json['nama_jalan'].toString();
     foto = json['foto'].toString();
-    deskripsiPengaduan = json['deskripsi_pengaduan'].toString();
+    deskripsiPengaduan = json['deskripsi'].toString();
     geometry = json['geometry'].toString();
     idMasyarakat = json['id_masyarakat'].toString();
     tipePengaduan = json['tipe_pengaduan'].toString();

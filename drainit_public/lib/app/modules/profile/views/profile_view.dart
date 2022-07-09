@@ -4,7 +4,6 @@ import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -265,7 +264,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              '${controller.dataProfile.noHp}',
+              '${controller.dataProfile.data!.telepon}',
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -293,7 +292,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              '${controller.dataProfile.email}',
+              '${controller.dataProfile.data!.email}',
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -321,7 +320,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              '${controller.dataProfile.alamat}',
+              '${controller.dataProfile.data!.alamat}',
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -340,7 +339,7 @@ class PersonInfo extends StatelessWidget {
                 ),
                 10.horizontalSpace,
                 Text(
-                  'Akun dibuat',
+                  'Tanggal Lahir',
                   style: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.normal,
@@ -349,7 +348,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              timeAgoSinceDate(controller.dataProfile.createdAt!),
+              controller.dataProfile.data!.tanggalLahir!,
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -488,22 +487,22 @@ class ProfileTopBar extends StatelessWidget {
             maxRadius: ScreenUtil().setWidth(40),
             minRadius: ScreenUtil().setWidth(40),
             backgroundImage: NetworkImage(
-              controller.dataProfile.foto!.contains('.jp')
-                  ? Routes.IMAGEURL + controller.dataProfile.foto!
+              controller.dataProfile.data!.foto!.contains('.jp')
+                  ? Routes.IMAGEURL + controller.dataProfile.data!.foto!
                   : 'https://random.imagecdn.app/500/150',
             ),
             backgroundColor: green,
           ),
           20.verticalSpace,
           Text(
-            controller.dataProfile.nama!,
+            controller.dataProfile.data!.nama!,
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
-            controller.dataProfile.email!,
+            controller.dataProfile.data!.email!,
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.normal,

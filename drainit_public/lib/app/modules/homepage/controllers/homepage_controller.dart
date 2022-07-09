@@ -1,6 +1,8 @@
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
+import 'package:drainit_flutter/app/modules/homepage/models/timeline_model.dart';
+import 'package:drainit_flutter/app/modules/homepage/providers/timeline_provider.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
@@ -9,14 +11,14 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class HomepageController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class HomepageController extends GetxController with StateMixin {
   GetStorage box = GetStorage();
   final String arguments = Get.arguments.toString();
   final visible = 0.obs;
   final profileC = Get.find<ProfileController>();
   final historyC = Get.find<HistoryController>();
   final floodListC = Get.find<FloodDrainageListController>();
+  List<Timeline> timelineList = <Timeline>[].obs;
   final dataButton = [
     HomeButtonCustom(
       Routes.REPORTS,
@@ -38,54 +40,29 @@ class HomepageController extends GetxController
     ),
   ];
 
-  static const double initialScrollOffset = 250.0;
-  static const Duration duration = Duration(milliseconds: 100);
-  static const double scrollDesiredPercent = 0.65;
-
-  ScrollController scrollController =
-      ScrollController(initialScrollOffset: initialScrollOffset);
-
-  void animateToMaxExtent() {
-    scrollController.animateTo(
-      50,
-      duration: duration,
-      curve: Curves.linear,
-    );
-  }
-
-  void animateToNormalExtent() {
-    scrollController.animateTo(
-      initialScrollOffset,
-      duration: duration,
-      curve: Curves.linear,
-    );
-  }
-
-  bool get scrollStopped =>
-      !scrollController.position.isScrollingNotifier.value;
-
-  bool get mustExpand =>
-      scrollController.offset < initialScrollOffset * scrollDesiredPercent;
-
-  bool get mustRetract =>
-      !mustExpand && scrollController.offset < initialScrollOffset;
-
-  void _handleScrollingActivity() {
-    if (scrollStopped) {
-      if (mustRetract) {
-        animateToNormalExtent();
-      } else if (mustExpand) {
-        animateToMaxExtent();
-      }
-    }
-  }
-
   @override
   Future<void> onInit() async {
     super.onInit();
     //remove the splash screen
     FlutterNativeSplash.remove();
+    change(null, status: RxStatus.empty());
+    loadTimeline();
     getPosition();
+  }
+
+  Future<void> loadTimeline() async {
+    change(null, status: RxStatus.loading());
+    await TimelineProvider()
+        .loadTimeline(box.read(Routes.TOKEN) as String)
+        .then(
+      (value) => {
+        timelineList = value,
+        change(null, status: RxStatus.success()),
+      },
+      onError: (err) {
+        change(err, status: RxStatus.error());
+      },
+    );
   }
 }
 

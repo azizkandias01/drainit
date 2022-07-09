@@ -32,6 +32,7 @@ dependencies:
   visibility_detector: 0.3.3
   shimmer: 2.0.0
   location: 4.4.0
+  date_time_picker: 2.1.0
   flutter: 
     sdk: flutter
 
@@ -57,7 +58,7 @@ flutter:
         - asset: assets/fonts/raleway/Raleway-Light.ttf
         - asset: assets/fonts/raleway/Raleway-ExtraBold.ttf
     - family: Poppins
-      fonts:
+      fonts: 
         - asset: assets/fonts/poppins/Poppins-Regular.ttf
         - asset: assets/fonts/poppins/Poppins-Bold.ttf
         - asset: assets/fonts/poppins/Poppins-Medium.ttf

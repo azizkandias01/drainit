@@ -5,16 +5,17 @@ import 'package:get/get.dart';
 class ReportsProvider extends GetConnect {
   Future<Report> createFloodReport(Map data, String auth) async {
     final response = await post(
-      '${Routes.BASEURL}pengaduan/banjir',
+      '${Routes.BASEURL_SYSTEM}pengaduan/banjir',
       data,
       headers: {
-        'Accept': 'application/geo+json',
         'Authorization': 'Bearer $auth',
       },
     ).timeout(const Duration(seconds: 10));
     if (response.status.hasError) {
-      return Future.error(response.statusText!);
+      print("error laporan banjir $response");
+      return Future.error(response);
     } else {
+      print("ok laporan banjir");
       return Report.fromJson(response.body as Map<String, dynamic>);
     }
   }

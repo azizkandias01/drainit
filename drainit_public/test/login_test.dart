@@ -9,7 +9,7 @@ void main() {
       'password': "12345678",
     };
     final response = await login.loginUser(dataLogin);
-    expect(response.user?.nama, "azka");
+    expect(response.idMasyarakat, isNotNull);
   });
   test("api login with wrong username and password should unsuccess", () async {
     try {

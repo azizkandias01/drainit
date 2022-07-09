@@ -38,7 +38,7 @@ class DetailView extends GetView<DetailController> {
             () => Scaffold(
               bottomNavigationBar:
                   //check if the user is the one who reported the laporan and if the status is done
-                  controller.detail.value.statusPengaduan == ReportTypes.DONE &&
+                  controller.detail.value.status == ReportTypes.DONE &&
                           controller.detail.value.idMasyarakat ==
                               controller.box.read(Routes.USER_ID)
                       ? Container(
@@ -220,7 +220,7 @@ class DetailView extends GetView<DetailController> {
                                 ),
                                 10.verticalSpace,
                                 Text(
-                                  '${controller.detail.value.deskripsiPengaduan}',
+                                  '${controller.detail.value.deskripsi}',
                                 )
                               ],
                             ).paddingOnly(left: 20.w, right: 20.w),
@@ -311,12 +311,11 @@ class DetailView extends GetView<DetailController> {
                                           Radius.circular(5.r),
                                         ),
                                         color: getStatusColor(
-                                          controller
-                                              .detail.value.tipePengaduan!,
+                                          controller.detail.value.tipe!,
                                         ),
                                       ),
                                       child: Text(
-                                        controller.detail.value.tipePengaduan!,
+                                        controller.detail.value.tipe!,
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           color: white,
@@ -336,13 +335,11 @@ class DetailView extends GetView<DetailController> {
                                           Radius.circular(5.r),
                                         ),
                                         color: getStatusColor(
-                                          controller
-                                              .detail.value.statusPengaduan!,
+                                          controller.detail.value.status!,
                                         ),
                                       ),
                                       child: Text(
-                                        controller
-                                            .detail.value.statusPengaduan!,
+                                        controller.detail.value.status!,
                                         style: TextStyle(
                                           fontSize: 13.sp,
                                           color: white,
@@ -378,7 +375,7 @@ class DetailView extends GetView<DetailController> {
                             ).paddingAll(20.r),
                           ),
                           Visibility(
-                            visible: controller.detail.value.statusPengaduan !=
+                            visible: controller.detail.value.status !=
                                 "NOT_YET_VERIFIED",
                             child: Container(
                               width: Get.width,
@@ -398,7 +395,7 @@ class DetailView extends GetView<DetailController> {
                                   ),
                                   10.verticalSpace,
                                   Text(
-                                    '${controller.detail.value.namaPetugas}',
+                                    '${controller.detail.value.namaPelapor}',
                                   )
                                 ],
                               ).paddingAll(20.r),

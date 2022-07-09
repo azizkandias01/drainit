@@ -1,3 +1,4 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/rounded_input_field.dart';
@@ -80,6 +81,16 @@ class RegisterView extends GetView<RegisterController> {
                   hintText: "******",
                   controller: controller.myControllerPasswordConfirm,
                 ),
+                DateTimePicker(
+                  initialValue: '',
+                  dateMask: 'yyyy-MM-dd',
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                  dateLabelText: 'Tanggal Lahir',
+                  onChanged: (date) {
+                    controller.dateOfBirth = date;
+                  },
+                ),
                 Row(
                   children: [
                     Obx(
@@ -98,15 +109,44 @@ class RegisterView extends GetView<RegisterController> {
                   ],
                 ),
                 20.verticalSpace,
-                RoundedButton(
-                  key: controller.nextKey,
-                  text: "Lanjut",
-                  height: ScreenUtil().setHeight(50),
-                  borderRadius: 10.r,
-                  width: Get.width,
-                  textColor: black,
-                  press: () {
-                    controller.validateForm();
+                controller.obx(
+                  (state) => RoundedButton(
+                    key: controller.nextKey,
+                    text: "Daftar",
+                    height: ScreenUtil().setHeight(50),
+                    borderRadius: 10.r,
+                    width: Get.width,
+                    textColor: black,
+                    press: () {
+                      controller.validateForm();
+                    },
+                  ),
+                  onLoading: const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                  onEmpty: RoundedButton(
+                    key: controller.nextKey,
+                    text: "Daftar",
+                    height: ScreenUtil().setHeight(50),
+                    borderRadius: 10.r,
+                    width: Get.width,
+                    textColor: black,
+                    press: () {
+                      controller.validateForm();
+                    },
+                  ),
+                  onError: (err) {
+                    return RoundedButton(
+                      key: controller.nextKey,
+                      text: "Daftar",
+                      height: ScreenUtil().setHeight(50),
+                      borderRadius: 10.r,
+                      width: Get.width,
+                      textColor: black,
+                      press: () {
+                        controller.validateForm();
+                      },
+                    );
                   },
                 ),
                 SizedBox(height: ScreenUtil().setHeight(10)),
@@ -170,6 +210,7 @@ class InputText extends StatelessWidget {
         RoundedInputField(
           hintText: hintText,
           textEditingController: controller,
+          borderColor: primary,
         ),
         SizedBox(height: ScreenUtil().setHeight(15)),
       ],

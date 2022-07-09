@@ -2,10 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
-import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
-import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
 import 'package:drainit_flutter/app/modules/homepage/controllers/homepage_controller.dart';
-import 'package:drainit_flutter/app/modules/profile/models/profile_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
@@ -83,146 +80,15 @@ class HomepageView extends GetView<HomepageController> {
                 ),
               ],
             ),
-            BuildHistoryListFuture(controller: controller.historyC),
+            // BuildHistoryListFuture(controller: controller.historyC),
           ],
         ).paddingAll(20.r),
       ),
     );
   }
 
-  FutureBuilder<List<HistoryModel>> buildNewReportWidget() {
-    return FutureBuilder<List<HistoryModel>>(
-      future: controller.historyC.getHistory(),
-      builder: (ctx, snapshot) {
-        if (snapshot.hasData) {
-          return SizedBox(
-            height: 272.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx, id) {
-                return GestureDetector(
-                  onTap: () {
-                    Get.toNamed(
-                      Routes.DETAIL,
-                      arguments: snapshot.data![id].id,
-                    );
-                  },
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10.r),
-                        child: CachedNetworkImage(
-                          width: 222.w,
-                          height: 272.h,
-                          fit: BoxFit.cover,
-                          imageUrl: Routes.IMAGEURL +
-                              snapshot.data![id].foto.toString(),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.r,
-                              vertical: 5.r,
-                            ),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(5.r),
-                              ),
-                              color: getStatusColor(
-                                snapshot.data![id].statusPengaduan!,
-                              ),
-                            ),
-                            width: 100.w,
-                            height: 30.h,
-                            child: FittedBox(
-                              child: Text(
-                                snapshot.data![id].statusPengaduan!,
-                                style: TextStyle(
-                                  fontSize: 11.sp,
-                                  color: black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          10.horizontalSpace,
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.r,
-                              vertical: 5.r,
-                            ),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(5.r),
-                              ),
-                              color: getStatusColor(
-                                snapshot.data![id].tipePengaduan!,
-                              ),
-                            ),
-                            width: 60.w,
-                            height: 30.h,
-                            child: FittedBox(
-                              child: Text(
-                                snapshot.data![id].tipePengaduan!,
-                                style: TextStyle(
-                                  fontSize: 11.sp,
-                                  color: black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ).paddingOnly(left: 20.w, top: 20.h),
-                      Positioned(
-                        bottom: 0,
-                        child: FittedBox(
-                          child: TextSemiBold(
-                            text: snapshot.data![id].namaJalan!.split(",")[0],
-                            textColour: white,
-                          ),
-                        ).paddingOnly(left: 20.w, top: 20.h, bottom: 20.h),
-                      ),
-                    ],
-                  ).marginOnly(right: 15.w),
-                );
-              },
-              itemCount: snapshot.data!.length,
-            ),
-          );
-        } else {
-          return Shimmer.fromColors(
-            baseColor: grey,
-            highlightColor: grey300,
-            child: SizedBox(
-              height: 272.h,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (ctx, id) {
-                  return Container(
-                    width: 222.w,
-                    height: 272.h,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(
-                        20.r,
-                      ),
-                    ),
-                  ).marginOnly(right: 24.w);
-                },
-                itemCount: 10,
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
-
   Widget buildNewReportsReactive() {
-    return controller.historyC.obx(
+    return controller.obx(
       (state) => SizedBox(
         height: 272.h,
         child: ListView.builder(
@@ -232,7 +98,7 @@ class HomepageView extends GetView<HomepageController> {
               onTap: () {
                 Get.toNamed(
                   Routes.DETAIL,
-                  arguments: controller.historyC.list[id].id,
+                  arguments: controller.timelineList[id].id,
                 );
               },
               child: Stack(
@@ -244,7 +110,7 @@ class HomepageView extends GetView<HomepageController> {
                       height: 272.h,
                       fit: BoxFit.cover,
                       imageUrl: Routes.IMAGEURL +
-                          controller.historyC.list[id].foto.toString(),
+                          controller.timelineList[id].foto.toString(),
                     ),
                   ),
                   Row(
@@ -260,14 +126,14 @@ class HomepageView extends GetView<HomepageController> {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            controller.historyC.list[id].statusPengaduan!,
+                            controller.timelineList[id].status!,
                           ),
                         ),
                         width: 100.w,
                         height: 30.h,
                         child: FittedBox(
                           child: Text(
-                            controller.historyC.list[id].statusPengaduan!,
+                            controller.timelineList[id].status!,
                             style: TextStyle(
                               fontSize: 11.sp,
                               color: black,
@@ -287,14 +153,14 @@ class HomepageView extends GetView<HomepageController> {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            controller.historyC.list[id].tipePengaduan!,
+                            controller.timelineList[id].tipe!,
                           ),
                         ),
                         width: 60.w,
                         height: 30.h,
                         child: FittedBox(
                           child: Text(
-                            controller.historyC.list[id].tipePengaduan!,
+                            controller.timelineList[id].tipe!,
                             style: TextStyle(
                               fontSize: 11.sp,
                               color: black,
@@ -338,7 +204,7 @@ class HomepageView extends GetView<HomepageController> {
                     bottom: 0,
                     child: FittedBox(
                       child: TextSemiBold(
-                        text: controller.historyC.list[id].namaJalan!
+                        text: controller.timelineList[id].namaJalan!
                             .split(",")[0],
                         textColour: white,
                       ),
@@ -348,7 +214,7 @@ class HomepageView extends GetView<HomepageController> {
               ).marginOnly(right: 15.w),
             );
           },
-          itemCount: controller.historyC.list.length,
+          itemCount: controller.timelineList.length,
         ),
       ),
       onLoading: Shimmer.fromColors(
@@ -371,6 +237,198 @@ class HomepageView extends GetView<HomepageController> {
               ).marginOnly(right: 24.w);
             },
             itemCount: 10,
+          ),
+        ),
+      ),
+      onError: (e) => Center(
+        child: Text(
+          e.toString(),
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: Colors.red,
+          ),
+        ),
+      ),
+      onEmpty: Center(
+        child: Text(
+          "Tidak ada laporan",
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: Colors.grey,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildAllReportsReactive() {
+    return controller.obx(
+      (state) => SizedBox(
+        height: 272.h,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (ctx, id) {
+            return GestureDetector(
+              onTap: () {
+                Get.toNamed(
+                  Routes.DETAIL,
+                  arguments: controller.timelineList[id].id,
+                );
+              },
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10.r),
+                    child: CachedNetworkImage(
+                      width: 222.w,
+                      height: 272.h,
+                      fit: BoxFit.cover,
+                      imageUrl: Routes.IMAGEURL +
+                          controller.timelineList[id].foto.toString(),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: getStatusColor(
+                            controller.timelineList[id].status!,
+                          ),
+                        ),
+                        width: 100.w,
+                        height: 30.h,
+                        child: FittedBox(
+                          child: Text(
+                            controller.timelineList[id].status!,
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      10.horizontalSpace,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: getStatusColor(
+                            controller.timelineList[id].tipe!,
+                          ),
+                        ),
+                        width: 60.w,
+                        height: 30.h,
+                        child: FittedBox(
+                          child: Text(
+                            controller.timelineList[id].tipe!,
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).paddingOnly(left: 20.w, top: 20.h),
+                  Positioned(
+                    bottom: 0,
+                    child: FittedBox(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.thumb_up_off_alt_rounded,
+                            color: green2,
+                            size: 16.sp,
+                          ),
+                          10.horizontalSpace,
+                          const TextSemiBold(
+                            text: "40",
+                            textColour: white,
+                          ),
+                          20.horizontalSpace,
+                          Icon(
+                            Icons.thumb_down_alt_rounded,
+                            color: red,
+                            size: 16.sp,
+                          ),
+                          10.horizontalSpace,
+                          const TextSemiBold(
+                            text: "5",
+                            textColour: white,
+                          ),
+                        ],
+                      ),
+                    ).paddingOnly(left: 20.w, top: 20.h, bottom: 45.h),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: FittedBox(
+                      child: TextSemiBold(
+                        text: controller.timelineList[id].namaJalan!
+                            .split(",")[0],
+                        textColour: white,
+                      ),
+                    ).paddingOnly(left: 20.w, top: 20.h, bottom: 20.h),
+                  ),
+                ],
+              ).marginOnly(right: 15.w),
+            );
+          },
+          itemCount: controller.timelineList.length,
+        ),
+      ),
+      onLoading: Shimmer.fromColors(
+        baseColor: grey,
+        highlightColor: grey300,
+        child: SizedBox(
+          height: 272.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (ctx, id) {
+              return Container(
+                width: 222.w,
+                height: 272.h,
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(
+                    20.r,
+                  ),
+                ),
+              ).marginOnly(right: 24.w);
+            },
+            itemCount: 10,
+          ),
+        ),
+      ),
+      onError: (e) => Center(
+        child: Text(
+          e.toString(),
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: Colors.red,
+          ),
+        ),
+      ),
+      onEmpty: Center(
+        child: Text(
+          "Tidak ada laporan",
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: Colors.grey,
           ),
         ),
       ),
@@ -660,187 +718,6 @@ class HomepageView extends GetView<HomepageController> {
     );
   }
 
-  Widget buildHeader() {
-    return FutureBuilder<Profile?>(
-      future: controller.profileC.getAccountData(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [primary, white],
-              ),
-            ),
-            child: SafeArea(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FittedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Shimmer.fromColors(
-                          baseColor: grey,
-                          highlightColor: grey300,
-                          child: SizedBox(
-                            height: ScreenUtil().setHeight(10),
-                            width: ScreenUtil().setWidth(50),
-                            child: Container(
-                              color: grey,
-                              height: 10.h,
-                              width: 0.3.sw,
-                            ),
-                          ),
-                        ),
-                        10.verticalSpace,
-                        Shimmer.fromColors(
-                          baseColor: grey,
-                          highlightColor: grey300,
-                          child: SizedBox(
-                            height: ScreenUtil().setHeight(10),
-                            width: ScreenUtil().setWidth(70),
-                            child: Container(
-                              color: grey,
-                              height: 10.h,
-                              width: 0.2.sw,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Shimmer.fromColors(
-                    baseColor: grey,
-                    highlightColor: grey300,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        ScreenUtil().setWidth(50),
-                      ),
-                      child: Container(
-                        width: ScreenUtil().setWidth(50),
-                        height: ScreenUtil().setHeight(50),
-                        color: Colors.grey[100],
-                      ),
-                    ),
-                  ),
-                ],
-              ).paddingOnly(
-                left: 20.w,
-                right: 20.w,
-                top: 10.h,
-                bottom: 10.h,
-              ),
-            ),
-          );
-        } else if (snapshot.hasData) {
-          return Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [primary, white],
-              ),
-            ),
-            child: SafeArea(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FittedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextMedium(
-                          text: "Halo,",
-                          textColour: black,
-                          fontSize: 17.sp,
-                        ),
-                        TextSemiBold(
-                          text: controller.profileC.dataProfile.nama.toString(),
-                          fontSize: 18.sp,
-                          textColour: grey700,
-                        ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.PROFILE);
-                    },
-                    child: CircleAvatar(
-                      radius: 25.r,
-                      backgroundImage: CachedNetworkImageProvider(
-                        Routes.IMAGEURL +
-                            controller.profileC.dataProfile.foto.toString(),
-                      ),
-                    ),
-                  ),
-                ],
-              ).paddingOnly(
-                left: 20.w,
-                right: 20.w,
-                top: 10.h,
-                bottom: 10.h,
-              ),
-            ),
-          );
-        } else {
-          return Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [primary, white],
-              ),
-            ),
-            child: SafeArea(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FittedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextMedium(
-                          text: "no data",
-                          textColour: black,
-                          fontSize: 17.sp,
-                        ),
-                        TextSemiBold(
-                          text: "no data",
-                          fontSize: 18.sp,
-                          textColour: grey700,
-                        ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.PROFILE);
-                    },
-                    child: CircleAvatar(
-                      radius: 25.r,
-                      backgroundImage: CachedNetworkImageProvider(
-                        Routes.IMAGEURL +
-                            controller.profileC.dataProfile.foto.toString(),
-                      ),
-                    ),
-                  ),
-                ],
-              ).paddingOnly(
-                left: 20.w,
-                right: 20.w,
-                top: 10.h,
-                bottom: 10.h,
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
-
   Widget buildHeaderReactive() {
     return controller.profileC.obx(
       (state) => Container(
@@ -865,7 +742,8 @@ class HomepageView extends GetView<HomepageController> {
                       fontSize: 17.sp,
                     ),
                     TextSemiBold(
-                      text: controller.profileC.dataProfile.nama.toString(),
+                      text:
+                          controller.profileC.dataProfile.data!.nama.toString(),
                       fontSize: 18.sp,
                       textColour: grey700,
                     ),
@@ -880,7 +758,7 @@ class HomepageView extends GetView<HomepageController> {
                   radius: 25.r,
                   backgroundImage: CachedNetworkImageProvider(
                     Routes.IMAGEURL +
-                        controller.profileC.dataProfile.foto.toString(),
+                        controller.profileC.dataProfile.data!.foto.toString(),
                   ),
                 ),
               ),
@@ -999,7 +877,7 @@ class HomepageView extends GetView<HomepageController> {
                   radius: 25.r,
                   backgroundImage: CachedNetworkImageProvider(
                     Routes.IMAGEURL +
-                        controller.profileC.dataProfile.foto.toString(),
+                        "controller.profileC.dataProfile.data!.foto.toString()",
                   ),
                 ),
               ),
@@ -1048,8 +926,7 @@ class HomepageView extends GetView<HomepageController> {
                 child: CircleAvatar(
                   radius: 25.r,
                   backgroundImage: CachedNetworkImageProvider(
-                    Routes.IMAGEURL +
-                        controller.profileC.dataProfile.foto.toString(),
+                    Routes.IMAGEURL + "",
                   ),
                 ),
               ),
