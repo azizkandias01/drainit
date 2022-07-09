@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/edit_profile/controllers/edit_profile_controller.dart';
-import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,9 +68,9 @@ class EditProfileView extends GetView<EditProfileController> {
                         CircleAvatar(
                           maxRadius: 60.w,
                           minRadius: 60.w,
-                          backgroundColor: primary,
+                          backgroundColor: Colors.transparent,
                           backgroundImage: NetworkImage(
-                            '${Routes.IMAGEURL}${controller.profile.foto}',
+                            '${controller.profile.data!.foto}',
                           ),
                         ),
                       Align(

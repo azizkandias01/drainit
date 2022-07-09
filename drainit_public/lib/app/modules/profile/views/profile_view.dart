@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
@@ -484,14 +485,12 @@ class ProfileTopBar extends StatelessWidget {
         children: [
           20.verticalSpace,
           CircleAvatar(
-            maxRadius: ScreenUtil().setWidth(40),
-            minRadius: ScreenUtil().setWidth(40),
-            backgroundImage: NetworkImage(
-              controller.dataProfile.data!.foto!.contains('.jp')
-                  ? Routes.IMAGEURL + controller.dataProfile.data!.foto!
-                  : 'https://random.imagecdn.app/500/150',
+            maxRadius: 40.w,
+            minRadius: 40.w,
+            backgroundImage: CachedNetworkImageProvider(
+              controller.dataProfile.data!.foto.toString(),
             ),
-            backgroundColor: green,
+            backgroundColor: Colors.transparent,
           ),
           20.verticalSpace,
           Text(

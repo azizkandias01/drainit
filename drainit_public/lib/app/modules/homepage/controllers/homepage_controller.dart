@@ -19,6 +19,7 @@ class HomepageController extends GetxController with StateMixin {
   final historyC = Get.find<HistoryController>();
   final floodListC = Get.find<FloodDrainageListController>();
   List<Timeline> timelineList = <Timeline>[].obs;
+  List<Timeline> allTimelineList = <Timeline>[].obs;
   final dataButton = [
     HomeButtonCustom(
       Routes.REPORTS,
@@ -47,6 +48,7 @@ class HomepageController extends GetxController with StateMixin {
     FlutterNativeSplash.remove();
     change(null, status: RxStatus.empty());
     loadTimeline();
+    loadAllTimeline();
     getPosition();
   }
 
@@ -57,6 +59,22 @@ class HomepageController extends GetxController with StateMixin {
         .then(
       (value) => {
         timelineList = value,
+        change(null, status: RxStatus.success()),
+      },
+      onError: (err) {
+        change(err, status: RxStatus.error());
+      },
+    );
+  }
+
+  Future<void> loadAllTimeline() async {
+    change(null, status: RxStatus.loading());
+    await TimelineProvider()
+        .loadAllimeline(box.read(Routes.TOKEN) as String,
+            box.read(Routes.USER_ID) as String,)
+        .then(
+      (value) => {
+        allTimelineList = value,
         change(null, status: RxStatus.success()),
       },
       onError: (err) {

@@ -1,21 +1,4 @@
 class Detail {
-  String? id;
-  String? idMasyarakat;
-  String? namaPelapor;
-  String? idAdmin;
-  String? namaAdmin;
-  String? namaJalan;
-  String? foto;
-  String? tipe;
-  String? deskripsi;
-  String? status;
-  String? feedbackMasyarakat;
-  String? createdAt;
-  String? updatedAt;
-  String? geometry;
-  List<Null>? petugas;
-  int? upvote;
-  int? downvote;
 
   Detail(
       {this.id,
@@ -34,7 +17,7 @@ class Detail {
       this.geometry,
       this.petugas,
       this.upvote,
-      this.downvote});
+      this.downvote,});
 
   Detail.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -60,28 +43,45 @@ class Detail {
     upvote = json['upvote'] as int;
     downvote = json['downvote'] as int;
   }
+  String? id;
+  String? idMasyarakat;
+  String? namaPelapor;
+  String? idAdmin;
+  String? namaAdmin;
+  String? namaJalan;
+  String? foto;
+  String? tipe;
+  String? deskripsi;
+  String? status;
+  String? feedbackMasyarakat;
+  String? createdAt;
+  String? updatedAt;
+  String? geometry;
+  List<void>? petugas;
+  int? upvote;
+  int? downvote;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['id_masyarakat'] = this.idMasyarakat;
-    data['nama_pelapor'] = this.namaPelapor;
-    data['id_admin'] = this.idAdmin;
-    data['nama_admin'] = this.namaAdmin;
-    data['nama_jalan'] = this.namaJalan;
-    data['foto'] = this.foto;
-    data['tipe'] = this.tipe;
-    data['deskripsi'] = this.deskripsi;
-    data['status'] = this.status;
-    data['feedback_masyarakat'] = this.feedbackMasyarakat;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['geometry'] = this.geometry;
-    if (this.petugas != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['id_masyarakat'] = idMasyarakat;
+    data['nama_pelapor'] = namaPelapor;
+    data['id_admin'] = idAdmin;
+    data['nama_admin'] = namaAdmin;
+    data['nama_jalan'] = namaJalan;
+    data['foto'] = foto;
+    data['tipe'] = tipe;
+    data['deskripsi'] = deskripsi;
+    data['status'] = status;
+    data['feedback_masyarakat'] = feedbackMasyarakat;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['geometry'] = geometry;
+    if (petugas != null) {
       //data['petugas'] = this.petugas!.map((v) => v.toJson()).toList();
     }
-    data['upvote'] = this.upvote;
-    data['downvote'] = this.downvote;
+    data['upvote'] = upvote;
+    data['downvote'] = downvote;
     return data;
   }
 }

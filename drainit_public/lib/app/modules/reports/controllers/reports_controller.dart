@@ -71,7 +71,7 @@ class ReportsController extends GetxController with StateMixin {
     //TODO: create report still error with foto
     final reportData = {
       'nama_jalan': namaJalan,
-      'foto': null,
+      'foto': foto,
       'deskripsi': deskripsiPengaduan,
       'geometry':
           '{"type": "Point", "coordinates": [${geometry.longitude},${geometry.latitude}]}',

@@ -26,11 +26,12 @@ class HomepageView extends GetView<HomepageController> {
       body: RefreshIndicator(
         onRefresh: () async {
           controller.profileC.getAccountProfile();
-          controller.historyC.loadHistory();
+          controller.loadTimeline();
+          controller.loadAllTimeline();
         },
         child: ListView(
           children: [
-            buildSearchBar2(context).paddingOnly(bottom: 20.h),
+            buildSearchBar(context).paddingOnly(bottom: 20.h),
             Column(
               children: [
                 TextSemiBold(
@@ -80,7 +81,7 @@ class HomepageView extends GetView<HomepageController> {
                 ),
               ],
             ),
-            // BuildHistoryListFuture(controller: controller.historyC),
+            buildAllReportsReactive()
           ],
         ).paddingAll(20.r),
       ),
@@ -109,180 +110,14 @@ class HomepageView extends GetView<HomepageController> {
                       width: 222.w,
                       height: 272.h,
                       fit: BoxFit.cover,
-                      imageUrl: Routes.IMAGEURL +
-                          controller.timelineList[id].foto.toString(),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5.r,
-                          vertical: 5.r,
-                        ),
-                        alignment: Alignment.center,
+                      errorWidget: (ctx, url, error) => Container(
+                        height: 272.h,
+                        width: 222.w,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5.r),
-                          ),
-                          color: getStatusColor(
-                            controller.timelineList[id].status!,
-                          ),
-                        ),
-                        width: 100.w,
-                        height: 30.h,
-                        child: FittedBox(
-                          child: Text(
-                            controller.timelineList[id].status!,
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              color: black,
-                            ),
-                          ),
+                          borderRadius: BorderRadius.circular(10.r),
+                          color: Colors.grey[200],
                         ),
                       ),
-                      10.horizontalSpace,
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5.r,
-                          vertical: 5.r,
-                        ),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5.r),
-                          ),
-                          color: getStatusColor(
-                            controller.timelineList[id].tipe!,
-                          ),
-                        ),
-                        width: 60.w,
-                        height: 30.h,
-                        child: FittedBox(
-                          child: Text(
-                            controller.timelineList[id].tipe!,
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              color: black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ).paddingOnly(left: 20.w, top: 20.h),
-                  Positioned(
-                    bottom: 0,
-                    child: FittedBox(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.thumb_up_off_alt_rounded,
-                            color: green2,
-                            size: 16.sp,
-                          ),
-                          10.horizontalSpace,
-                          const TextSemiBold(
-                            text: "40",
-                            textColour: white,
-                          ),
-                          20.horizontalSpace,
-                          Icon(
-                            Icons.thumb_down_alt_rounded,
-                            color: red,
-                            size: 16.sp,
-                          ),
-                          10.horizontalSpace,
-                          const TextSemiBold(
-                            text: "5",
-                            textColour: white,
-                          ),
-                        ],
-                      ),
-                    ).paddingOnly(left: 20.w, top: 20.h, bottom: 45.h),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: FittedBox(
-                      child: TextSemiBold(
-                        text: controller.timelineList[id].namaJalan!
-                            .split(",")[0],
-                        textColour: white,
-                      ),
-                    ).paddingOnly(left: 20.w, top: 20.h, bottom: 20.h),
-                  ),
-                ],
-              ).marginOnly(right: 15.w),
-            );
-          },
-          itemCount: controller.timelineList.length,
-        ),
-      ),
-      onLoading: Shimmer.fromColors(
-        baseColor: grey,
-        highlightColor: grey300,
-        child: SizedBox(
-          height: 272.h,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (ctx, id) {
-              return Container(
-                width: 222.w,
-                height: 272.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(
-                    20.r,
-                  ),
-                ),
-              ).marginOnly(right: 24.w);
-            },
-            itemCount: 10,
-          ),
-        ),
-      ),
-      onError: (e) => Center(
-        child: Text(
-          e.toString(),
-          style: TextStyle(
-            fontSize: 16.sp,
-            color: Colors.red,
-          ),
-        ),
-      ),
-      onEmpty: Center(
-        child: Text(
-          "Tidak ada laporan",
-          style: TextStyle(
-            fontSize: 16.sp,
-            color: Colors.grey,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildAllReportsReactive() {
-    return controller.obx(
-      (state) => SizedBox(
-        height: 272.h,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (ctx, id) {
-            return GestureDetector(
-              onTap: () {
-                Get.toNamed(
-                  Routes.DETAIL,
-                  arguments: controller.timelineList[id].id,
-                );
-              },
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.r),
-                    child: CachedNetworkImage(
-                      width: 222.w,
-                      height: 272.h,
-                      fit: BoxFit.cover,
                       imageUrl: Routes.IMAGEURL +
                           controller.timelineList[id].foto.toString(),
                     ),
@@ -607,7 +442,7 @@ class HomepageView extends GetView<HomepageController> {
     );
   }
 
-  Row buildSearchBar2(BuildContext context) {
+  Row buildSearchBar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       //search bar
@@ -657,67 +492,6 @@ class HomepageView extends GetView<HomepageController> {
     );
   }
 
-  Container buildSearchBar(BuildContext context, HistoryController historyC) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [primary, white],
-        ),
-      ),
-      child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //search bar
-          children: [
-            Container(
-              width: 0.73.sw,
-              height: 48.h,
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(
-                  ScreenUtil().setWidth(10),
-                ),
-              ),
-              child: GestureDetector(
-                onTap: () => showSearch(
-                  context: context,
-                  delegate: HistorySearchDelegate(historyC),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 24.r,
-                      color: grey500,
-                    ),
-                    20.horizontalSpace,
-                    TextMedium(
-                      text: "Cari laporan",
-                      fontSize: 12.sp,
-                      textColour: grey500,
-                    ),
-                  ],
-                ).paddingAll(10.r),
-              ),
-            ),
-            Image.asset(
-              "assets/image/ic_filter.png",
-              height: ScreenUtil().setHeight(48),
-              width: ScreenUtil().setWidth(48),
-            ),
-          ],
-        ).paddingOnly(
-          left: 20.w,
-          right: 20.w,
-          top: 10.h,
-          bottom: 10.h,
-        ),
-      ),
-    );
-  }
-
   Widget buildHeaderReactive() {
     return controller.profileC.obx(
       (state) => Container(
@@ -756,9 +530,9 @@ class HomepageView extends GetView<HomepageController> {
                 },
                 child: CircleAvatar(
                   radius: 25.r,
+                  backgroundColor: Colors.transparent,
                   backgroundImage: CachedNetworkImageProvider(
-                    Routes.IMAGEURL +
-                        controller.profileC.dataProfile.data!.foto.toString(),
+                    controller.profileC.dataProfile.data!.foto.toString(),
                   ),
                 ),
               ),
@@ -875,9 +649,8 @@ class HomepageView extends GetView<HomepageController> {
                 },
                 child: CircleAvatar(
                   radius: 25.r,
-                  backgroundImage: CachedNetworkImageProvider(
-                    Routes.IMAGEURL +
-                        "controller.profileC.dataProfile.data!.foto.toString()",
+                  backgroundImage: const CachedNetworkImageProvider(
+                    "${Routes.IMAGEURL}controller.profileC.dataProfile.data!.foto.toString()",
                   ),
                 ),
               ),
@@ -925,8 +698,8 @@ class HomepageView extends GetView<HomepageController> {
                 },
                 child: CircleAvatar(
                   radius: 25.r,
-                  backgroundImage: CachedNetworkImageProvider(
-                    Routes.IMAGEURL + "",
+                  backgroundImage: const CachedNetworkImageProvider(
+                    Routes.IMAGEURL,
                   ),
                 ),
               ),
@@ -936,6 +709,200 @@ class HomepageView extends GetView<HomepageController> {
             right: 20.w,
             top: 10.h,
             bottom: 10.h,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildAllReportsReactive() {
+    return controller.obx(
+      (state) {
+        final data = controller.allTimelineList;
+        return ListView.builder(
+          itemCount: data.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 10.h,
+              ),
+              isThreeLine: true,
+              onTap: () {
+                Get.toNamed(
+                  Routes.DETAIL,
+                  arguments: data[index].id,
+                );
+              },
+              title: Text(
+                " ${data[index].namaJalan}",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              ).paddingAll(5.r),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        height: 20.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: data[index].tipe! == "Banjir"
+                              ? Colors.lightBlue
+                              : Colors.brown,
+                        ),
+                        child: Text(
+                          data[index].tipe!,
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: white,
+                          ),
+                        ),
+                      ),
+                      10.horizontalSpace,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        height: 20.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: getStatusColor(
+                            data[index].tipe!,
+                          ),
+                        ),
+                        child: Text(
+                          data[index].tipe!,
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  5.verticalSpace,
+                  Text(
+                    timeAgoSinceDate(
+                      data[index].createdAt!,
+                    ),
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  5.verticalSpace,
+                  Row(
+                    children: [
+                      GestureDetector(
+                        child: Icon(
+                          Icons.thumb_up_off_alt_rounded,
+                          color: index.isEven ? green2 : Colors.grey,
+                          size: 16.sp,
+                        ),
+                      ),
+                      10.horizontalSpace,
+                      const TextSemiBold(
+                        text: "40",
+                        textColour: black,
+                      ),
+                      20.horizontalSpace,
+                      Icon(
+                        Icons.thumb_down_alt_rounded,
+                        color: index.isOdd ? red : Colors.grey,
+                        size: 16.sp,
+                      ),
+                      10.horizontalSpace,
+                      const TextSemiBold(
+                        text: "5",
+                        textColour: black,
+                      ),
+                    ],
+                  ),
+                ],
+              ).paddingAll(5.r),
+              trailing: ClipRRect(
+                borderRadius: BorderRadius.circular(5.r),
+                child: Image(
+                  image: CachedNetworkImageProvider(
+                    Routes.IMAGEURL + data[index].foto!,
+                  ),
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                      ),
+                    );
+                  },
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            );
+          },
+        );
+      },
+      onLoading: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Shimmer.fromColors(
+            baseColor: grey,
+            highlightColor: grey300,
+            child: Container(
+              height: 60.h,
+              width: 0.6.sw,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.r),
+                color: grey,
+              ),
+            ),
+          ),
+          Shimmer.fromColors(
+            baseColor: grey,
+            highlightColor: grey300,
+            child: Container(
+              height: 60.h,
+              width: 0.2.sw,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.r),
+                color: grey,
+              ),
+            ),
+          ),
+        ],
+      ).paddingSymmetric(horizontal: 10.w, vertical: 20.h),
+      onEmpty: Center(
+        child: Text(
+          "no data",
+          style: TextStyle(
+            fontSize: 20.sp,
+            color: grey700,
+          ),
+        ),
+      ),
+      onError: (err) => Center(
+        child: Text(
+          "error",
+          style: TextStyle(
+            fontSize: 20.sp,
+            color: grey700,
           ),
         ),
       ),

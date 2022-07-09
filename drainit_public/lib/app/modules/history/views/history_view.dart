@@ -3,7 +3,7 @@ import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
-import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
+import 'package:drainit_flutter/app/modules/homepage/models/timeline_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HistoryView extends GetView<HistoryController> {
   @override
@@ -292,8 +291,8 @@ class HistoryView extends GetView<HistoryController> {
     );
   }
 
-  Future<FutureBuilder<List<HistoryModel>>> buildHistoryListFuture() async {
-    return FutureBuilder<List<HistoryModel>>(
+  Future<FutureBuilder<List<Timeline>>> buildHistoryListFuture() async {
+    return FutureBuilder<List<Timeline>>(
       future: controller.getHistory(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -369,14 +368,14 @@ class HistoryView extends GetView<HistoryController> {
                                   Radius.circular(5.r),
                                 ),
                                 color: getStatusColor(
-                                  snapshot.data![index].statusPengaduan!,
+                                  snapshot.data![index].status!,
                                 ),
                               ),
                               width: 100.w,
                               height: 30.h,
                               child: FittedBox(
                                 child: Text(
-                                  snapshot.data![index].statusPengaduan!,
+                                  snapshot.data![index].status!,
                                   style: TextStyle(
                                     fontSize: 11.sp,
                                     color: black,
@@ -393,8 +392,7 @@ class HistoryView extends GetView<HistoryController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextBold(
-                                  text: snapshot.data![index].tipePengaduan ??
-                                      "no data",
+                                  text: snapshot.data![index].tipe ?? "no data",
                                   fontSize: 18.sp,
                                 ),
                                 Text(
@@ -561,6 +559,12 @@ class HistoryView extends GetView<HistoryController> {
                           child: CachedNetworkImage(
                             imageUrl:
                                 Routes.IMAGEURL + controller.list[index].foto!,
+                            errorWidget: (context, url, error) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.grey[300],
+                              ),
+                            ),
                             width: 1.sw,
                             height: 1.sw / 2,
                             fit: BoxFit.cover,
@@ -587,14 +591,14 @@ class HistoryView extends GetView<HistoryController> {
                               Radius.circular(5.r),
                             ),
                             color: getStatusColor(
-                              controller.list[index].statusPengaduan!,
+                              controller.list[index].status!,
                             ),
                           ),
                           width: 100.w,
                           height: 30.h,
                           child: FittedBox(
                             child: Text(
-                              controller.list[index].statusPengaduan!,
+                              controller.list[index].status!,
                               style: TextStyle(
                                 fontSize: 11.sp,
                                 color: black,
@@ -611,8 +615,7 @@ class HistoryView extends GetView<HistoryController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextBold(
-                              text: controller.list[index].tipePengaduan ??
-                                  "no data",
+                              text: controller.list[index].tipe ?? "no data",
                               fontSize: 18.sp,
                             ),
                             Text(
@@ -776,14 +779,13 @@ class BuildHistoryList extends StatelessWidget {
                           borderRadius: BorderRadius.all(
                             Radius.circular(5.r),
                           ),
-                          color: controller
-                                      .foundList.value[index].tipePengaduan! ==
+                          color: controller.foundList.value[index].tipe! ==
                                   "Banjir"
                               ? Colors.lightBlue
                               : Colors.brown,
                         ),
                         child: Text(
-                          controller.foundList.value[index].tipePengaduan!,
+                          controller.foundList.value[index].tipe!,
                           style: TextStyle(
                             fontSize: 10.sp,
                             color: white,
@@ -802,11 +804,11 @@ class BuildHistoryList extends StatelessWidget {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            controller.foundList.value[index].statusPengaduan!,
+                            controller.foundList.value[index].status!,
                           ),
                         ),
                         child: Text(
-                          controller.foundList.value[index].statusPengaduan!,
+                          controller.foundList.value[index].status!,
                           style: TextStyle(
                             fontSize: 10.sp,
                             color: white,
@@ -850,198 +852,198 @@ class BuildHistoryList extends StatelessWidget {
   }
 }
 
-class BuildHistoryListFuture extends StatelessWidget {
-  const BuildHistoryListFuture({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  final HistoryController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<HistoryModel>>(
-      initialData: const [],
-      future: controller.getHistory(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          final data = snapshot.data!;
-          return ListView.builder(
-            itemCount: data.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return ListTile(
-                dense: true,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 10.h,
-                ),
-                isThreeLine: true,
-                onTap: () {
-                  Get.toNamed(
-                    Routes.DETAIL,
-                    arguments: data[index].id,
-                  );
-                },
-                title: Text(
-                  " ${data[index].namaJalan!}",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ).paddingAll(5.r),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.r,
-                            vertical: 5.r,
-                          ),
-                          height: 20.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.r),
-                            ),
-                            color: data[index].tipePengaduan! == "Banjir"
-                                ? Colors.lightBlue
-                                : Colors.brown,
-                          ),
-                          child: Text(
-                            data[index].tipePengaduan!,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: white,
-                            ),
-                          ),
-                        ),
-                        10.horizontalSpace,
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.r,
-                            vertical: 5.r,
-                          ),
-                          height: 20.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.r),
-                            ),
-                            color: getStatusColor(
-                              data[index].statusPengaduan!,
-                            ),
-                          ),
-                          child: Text(
-                            data[index].statusPengaduan!,
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    5.verticalSpace,
-                    Text(
-                      timeAgoSinceDate(
-                        data[index].createdAt!,
-                      ),
-                      style: TextStyle(
-                        fontSize: 11.sp,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    5.verticalSpace,
-                    Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
-                            Icons.thumb_up_off_alt_rounded,
-                            color: index.isEven ? green2 : Colors.grey,
-                            size: 16.sp,
-                          ),
-                        ),
-                        10.horizontalSpace,
-                        const TextSemiBold(
-                          text: "40",
-                          textColour: black,
-                        ),
-                        20.horizontalSpace,
-                        Icon(
-                          Icons.thumb_down_alt_rounded,
-                          color: index.isOdd ? red : Colors.grey,
-                          size: 16.sp,
-                        ),
-                        10.horizontalSpace,
-                        const TextSemiBold(
-                          text: "5",
-                          textColour: black,
-                        ),
-                      ],
-                    ),
-                  ],
-                ).paddingAll(5.r),
-                trailing: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.r),
-                  child: Image(
-                    image: CachedNetworkImageProvider(
-                      Routes.IMAGEURL + data[index].foto!,
-                    ),
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              );
-            },
-          );
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Shimmer.fromColors(
-                baseColor: grey,
-                highlightColor: grey300,
-                child: Container(
-                  height: 60.h,
-                  width: 0.6.sw,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    color: grey,
-                  ),
-                ),
-              ),
-              Shimmer.fromColors(
-                baseColor: grey,
-                highlightColor: grey300,
-                child: Container(
-                  height: 60.h,
-                  width: 0.2.sw,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    color: grey,
-                  ),
-                ),
-              ),
-            ],
-          ).paddingSymmetric(horizontal: 10.w, vertical: 20.h);
-        } else {
-          return Center(
-            child: Text(
-              "Tidak ada laporan yang ditemukan",
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black54,
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
-}
+// class BuildHistoryListFuture extends StatelessWidget {
+//   const BuildHistoryListFuture({
+//     Key? key,
+//     required this.controller,
+//   }) : super(key: key);
+//
+//   final HistoryController controller;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder<List<HistoryModel>>(
+//       initialData: const [],
+//       future: controller.getHistory(),
+//       builder: (context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.done) {
+//           final data = snapshot.data!;
+//           return ListView.builder(
+//             itemCount: data.length,
+//             shrinkWrap: true,
+//             physics: const NeverScrollableScrollPhysics(),
+//             itemBuilder: (context, index) {
+//               return ListTile(
+//                 dense: true,
+//                 contentPadding: EdgeInsets.symmetric(
+//                   vertical: 10.h,
+//                 ),
+//                 isThreeLine: true,
+//                 onTap: () {
+//                   Get.toNamed(
+//                     Routes.DETAIL,
+//                     arguments: data[index].id,
+//                   );
+//                 },
+//                 title: Text(
+//                   " ${data[index].namaJalan!}",
+//                   style: const TextStyle(
+//                     color: Colors.black,
+//                     fontWeight: FontWeight.w500,
+//                   ),
+//                 ).paddingAll(5.r),
+//                 subtitle: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Row(
+//                       children: [
+//                         Container(
+//                           padding: EdgeInsets.symmetric(
+//                             horizontal: 5.r,
+//                             vertical: 5.r,
+//                           ),
+//                           height: 20.h,
+//                           decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.all(
+//                               Radius.circular(5.r),
+//                             ),
+//                             color: data[index].tipePengaduan! == "Banjir"
+//                                 ? Colors.lightBlue
+//                                 : Colors.brown,
+//                           ),
+//                           child: Text(
+//                             data[index].tipePengaduan!,
+//                             style: TextStyle(
+//                               fontSize: 10.sp,
+//                               color: white,
+//                             ),
+//                           ),
+//                         ),
+//                         10.horizontalSpace,
+//                         Container(
+//                           padding: EdgeInsets.symmetric(
+//                             horizontal: 5.r,
+//                             vertical: 5.r,
+//                           ),
+//                           height: 20.h,
+//                           decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.all(
+//                               Radius.circular(5.r),
+//                             ),
+//                             color: getStatusColor(
+//                               data[index].statusPengaduan!,
+//                             ),
+//                           ),
+//                           child: Text(
+//                             data[index].statusPengaduan!,
+//                             style: TextStyle(
+//                               fontSize: 10.sp,
+//                               color: white,
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     5.verticalSpace,
+//                     Text(
+//                       timeAgoSinceDate(
+//                         data[index].createdAt!,
+//                       ),
+//                       style: TextStyle(
+//                         fontSize: 11.sp,
+//                         color: Colors.grey,
+//                       ),
+//                     ),
+//                     5.verticalSpace,
+//                     Row(
+//                       children: [
+//                         GestureDetector(
+//                           child: Icon(
+//                             Icons.thumb_up_off_alt_rounded,
+//                             color: index.isEven ? green2 : Colors.grey,
+//                             size: 16.sp,
+//                           ),
+//                         ),
+//                         10.horizontalSpace,
+//                         const TextSemiBold(
+//                           text: "40",
+//                           textColour: black,
+//                         ),
+//                         20.horizontalSpace,
+//                         Icon(
+//                           Icons.thumb_down_alt_rounded,
+//                           color: index.isOdd ? red : Colors.grey,
+//                           size: 16.sp,
+//                         ),
+//                         10.horizontalSpace,
+//                         const TextSemiBold(
+//                           text: "5",
+//                           textColour: black,
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ).paddingAll(5.r),
+//                 trailing: ClipRRect(
+//                   borderRadius: BorderRadius.circular(5.r),
+//                   child: Image(
+//                     image: CachedNetworkImageProvider(
+//                       Routes.IMAGEURL + data[index].foto!,
+//                     ),
+//                     height: 50,
+//                     width: 50,
+//                     fit: BoxFit.fill,
+//                   ),
+//                 ),
+//               );
+//             },
+//           );
+//         } else if (snapshot.connectionState == ConnectionState.waiting) {
+//           return Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               Shimmer.fromColors(
+//                 baseColor: grey,
+//                 highlightColor: grey300,
+//                 child: Container(
+//                   height: 60.h,
+//                   width: 0.6.sw,
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(10.r),
+//                     color: grey,
+//                   ),
+//                 ),
+//               ),
+//               Shimmer.fromColors(
+//                 baseColor: grey,
+//                 highlightColor: grey300,
+//                 child: Container(
+//                   height: 60.h,
+//                   width: 0.2.sw,
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(10.r),
+//                     color: grey,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ).paddingSymmetric(horizontal: 10.w, vertical: 20.h);
+//         } else {
+//           return Center(
+//             child: Text(
+//               "Tidak ada laporan yang ditemukan",
+//               style: TextStyle(
+//                 fontSize: 20.sp,
+//                 fontWeight: FontWeight.bold,
+//                 color: Colors.black54,
+//               ),
+//             ),
+//           );
+//         }
+//       },
+//     );
+//   }
+// }
 
 class BuildSortedHistoryList extends StatelessWidget {
   const BuildSortedHistoryList({
@@ -1089,11 +1091,11 @@ class BuildSortedHistoryList extends StatelessWidget {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            controller.sortedList.value[index].tipePengaduan!,
+                            controller.sortedList.value[index].tipe!,
                           ),
                         ),
                         child: Text(
-                          controller.sortedList.value[index].tipePengaduan!,
+                          controller.sortedList.value[index].tipe!,
                           style: TextStyle(
                             fontSize: 13.sp,
                             color: white,
@@ -1113,11 +1115,11 @@ class BuildSortedHistoryList extends StatelessWidget {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            controller.sortedList.value[index].statusPengaduan!,
+                            controller.sortedList.value[index].status!,
                           ),
                         ),
                         child: Text(
-                          controller.sortedList.value[index].statusPengaduan!,
+                          controller.sortedList.value[index].status!,
                           style: TextStyle(
                             fontSize: 13.sp,
                             color: white,

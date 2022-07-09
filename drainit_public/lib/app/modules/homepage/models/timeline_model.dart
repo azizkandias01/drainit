@@ -1,17 +1,4 @@
 class Timeline {
-  String? id;
-  String? idMasyarakat;
-  String? namaPelapor;
-  String? namaJalan;
-  String? foto;
-  String? tipe;
-  String? deskripsi;
-  String? status;
-  String? createdAt;
-  String? updatedAt;
-  String? geometry;
-  int? upvote;
-  int? downvote;
 
   Timeline(
       {this.id,
@@ -26,7 +13,7 @@ class Timeline {
       this.updatedAt,
       this.geometry,
       this.upvote,
-      this.downvote});
+      this.downvote,});
 
   Timeline.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -43,22 +30,35 @@ class Timeline {
     upvote = json['upvote'] as int;
     downvote = json['downvote'] as int;
   }
+  String? id;
+  String? idMasyarakat;
+  String? namaPelapor;
+  String? namaJalan;
+  String? foto;
+  String? tipe;
+  String? deskripsi;
+  String? status;
+  String? createdAt;
+  String? updatedAt;
+  String? geometry;
+  int? upvote;
+  int? downvote;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['id_masyarakat'] = this.idMasyarakat;
-    data['nama_pelapor'] = this.namaPelapor;
-    data['nama_jalan'] = this.namaJalan;
-    data['foto'] = this.foto;
-    data['tipe'] = this.tipe;
-    data['deskripsi'] = this.deskripsi;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['geometry'] = this.geometry;
-    data['upvote'] = this.upvote;
-    data['downvote'] = this.downvote;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['id_masyarakat'] = idMasyarakat;
+    data['nama_pelapor'] = namaPelapor;
+    data['nama_jalan'] = namaJalan;
+    data['foto'] = foto;
+    data['tipe'] = tipe;
+    data['deskripsi'] = deskripsi;
+    data['status'] = status;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['geometry'] = geometry;
+    data['upvote'] = upvote;
+    data['downvote'] = downvote;
     return data;
   }
 }

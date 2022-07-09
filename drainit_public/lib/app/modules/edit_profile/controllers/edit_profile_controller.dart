@@ -10,15 +10,15 @@ class EditProfileController extends GetxController with StateMixin {
   RxString selectedImagePath = ''.obs;
   RxString bytes64Image = ''.obs;
 
-  Profile profile = Get.arguments as Profile;
+  ProfileResponse profile = Get.arguments as ProfileResponse;
 
   @override
   void onInit() {
     super.onInit();
-    nameController.text = profile.nama!;
-    emailController.text = profile.email!;
-    phoneController.text = profile.noHp!;
-    addressController.text = profile.alamat!;
+    nameController.text = profile.data!.nama!;
+    emailController.text = profile.data!.email!;
+    phoneController.text = profile.data!.telepon!;
+    addressController.text = profile.data!.alamat!;
   }
 
   void updateProfile(

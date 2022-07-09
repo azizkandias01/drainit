@@ -1,6 +1,6 @@
-import 'package:drainit_flutter/app/modules/history/models/history_model.dart';
 import 'package:drainit_flutter/app/modules/history/providers/history_provider.dart';
 import 'package:drainit_flutter/app/modules/history/views/history_view.dart';
+import 'package:drainit_flutter/app/modules/homepage/models/timeline_model.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,9 +9,9 @@ import 'package:get_storage/get_storage.dart';
 ///controller for handling history
 class HistoryController extends GetxController with StateMixin {
   ///list of history that user has reported to system
-  List<HistoryModel> list = [];
-  RxList<HistoryModel> sortedList = <HistoryModel>[].obs;
-  RxList<HistoryModel> foundList = <HistoryModel>[].obs;
+  RxList<Timeline> list = <Timeline>[].obs;
+  RxList<Timeline> sortedList = <Timeline>[].obs;
+  RxList<Timeline> foundList = <Timeline>[].obs;
   late GetStorage box;
   TextEditingController searchController = TextEditingController();
   final selectedFilter = "semua".obs;
@@ -24,8 +24,8 @@ class HistoryController extends GetxController with StateMixin {
     loadHistory();
   }
 
-  Future<List<HistoryModel>> getHistory() async {
-    var list = <HistoryModel>[];
+  Future<List<Timeline>> getHistory() async {
+    var list = <Timeline>[];
     await HistoryProvider().loadHistory(box.read(Routes.TOKEN) as String).then(
       (value) => {
         list = value,
@@ -42,7 +42,7 @@ class HistoryController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     await HistoryProvider().loadHistory(box.read(Routes.TOKEN) as String).then(
       (value) => {
-        list = value,
+        list.value = value,
         change(null, status: RxStatus.success()),
       },
       onError: (err) {
@@ -52,7 +52,7 @@ class HistoryController extends GetxController with StateMixin {
   }
 
   void searchHistory(String name) {
-    List<HistoryModel> filteredList = [];
+    List<Timeline> filteredList = [];
     if (name == "") {
       filteredList = list;
     } else {
@@ -67,7 +67,7 @@ class HistoryController extends GetxController with StateMixin {
   }
 
   void sortHistory(String filter) {
-    List<HistoryModel> filteredList = list;
+    List<Timeline> filteredList = list;
     if (filter == "semua") {
       filteredList = list;
     } else if (filter == "terlama") {
@@ -76,11 +76,10 @@ class HistoryController extends GetxController with StateMixin {
       filteredList.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
       filteredList = filteredList.reversed.toList();
     } else if (filter == "status") {
-      filteredList
-          .sort((a, b) => a.statusPengaduan!.compareTo(b.statusPengaduan!));
+      filteredList.sort((a, b) => a.status!.compareTo(b.status!));
       filteredList = filteredList.reversed.toList();
     } else if (filter == "jenis") {
-      filteredList.sort((a, b) => a.tipePengaduan!.compareTo(b.tipePengaduan!));
+      filteredList.sort((a, b) => a.tipe!.compareTo(b.tipe!));
     }
     sortedList.value = filteredList;
   }

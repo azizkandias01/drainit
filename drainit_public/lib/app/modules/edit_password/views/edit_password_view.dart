@@ -53,20 +53,41 @@ class EditPasswordView extends GetView<EditPasswordController> {
                     style: TextStyle(color: black, fontSize: 11.sp),
                   ),
                   10.verticalSpace,
-                  TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.remove_red_eye,
-                          color: black,
+                  Builder(
+                    builder: (context) {
+                      final isVisible = true.obs;
+                      return Obx(
+                        () => TextField(
+                          obscureText: isVisible.value,
+                          controller: controller.oldPassword,
+                          decoration: InputDecoration(
+                            suffixIcon: isVisible.value
+                                ? IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_red_eye,
+                                      color: black,
+                                    ),
+                                    onPressed: () => {
+                                      isVisible.toggle(),
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: black,
+                                    ),
+                                    onPressed: () => {
+                                      isVisible.toggle(),
+                                    },
+                                  ),
+                            hintText: '********',
+                            hintStyle: TextStyle(
+                              fontSize: 12.sp,
+                            ),
+                          ),
                         ),
-                        onPressed: () => {},
-                      ),
-                      hintText: '********',
-                      hintStyle: TextStyle(
-                        fontSize: 12.sp,
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ).paddingAll(10.r),
@@ -78,20 +99,41 @@ class EditPasswordView extends GetView<EditPasswordController> {
                     style: TextStyle(color: black, fontSize: 11.sp),
                   ),
                   10.verticalSpace,
-                  TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.remove_red_eye,
-                          color: black,
+                  Builder(
+                    builder: (context) {
+                      final isVisible = true.obs;
+                      return Obx(
+                        () => TextField(
+                          obscureText: isVisible.value,
+                          controller: controller.newPasswordController,
+                          decoration: InputDecoration(
+                            suffixIcon: isVisible.value
+                                ? IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_red_eye,
+                                      color: black,
+                                    ),
+                                    onPressed: () => {
+                                      isVisible.toggle(),
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: black,
+                                    ),
+                                    onPressed: () => {
+                                      isVisible.toggle(),
+                                    },
+                                  ),
+                            hintText: '********',
+                            hintStyle: TextStyle(
+                              fontSize: 12.sp,
+                            ),
+                          ),
                         ),
-                        onPressed: () => {},
-                      ),
-                      hintText: '********',
-                      hintStyle: TextStyle(
-                        fontSize: 12.sp,
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ).paddingAll(10.r),
@@ -103,42 +145,80 @@ class EditPasswordView extends GetView<EditPasswordController> {
                     style: TextStyle(color: black, fontSize: 11.sp),
                   ),
                   10.verticalSpace,
-                  TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.remove_red_eye,
-                          color: black,
+                  Builder(
+                    builder: (context) {
+                      final isVisible = true.obs;
+                      return Obx(
+                        () => TextField(
+                          controller: controller.confirmPasswordController,
+                          obscureText: isVisible.value,
+                          decoration: InputDecoration(
+                            suffixIcon: isVisible.value
+                                ? IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_red_eye,
+                                      color: black,
+                                    ),
+                                    onPressed: () => {
+                                      isVisible.toggle(),
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: black,
+                                    ),
+                                    onPressed: () => {
+                                      isVisible.toggle(),
+                                    },
+                                  ),
+                            hintText: '********',
+                            hintStyle: TextStyle(
+                              fontSize: 12.sp,
+                            ),
+                          ),
                         ),
-                        onPressed: () => {},
-                      ),
-                      hintText: '********',
-                      hintStyle: TextStyle(
-                        fontSize: 12.sp,
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ).paddingAll(10.r),
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
-                  ),
-                  minimumSize: MaterialStateProperty.all(Size(Get.width, 50.h)),
-                  backgroundColor: MaterialStateProperty.all(primary),
+              controller.obx(
+                (state) => editPasswordButton().paddingAll(10.r),
+                onEmpty: editPasswordButton().paddingAll(10.r),
+                onLoading: const Center(
+                  child: CircularProgressIndicator.adaptive(),
                 ),
-                child: TextSemiBold(
-                  text: 'Ubah Password',
-                  fontSize: 16.sp,
-                ),
-              ).paddingAll(10.r),
+                onError: (err) => editPasswordButton().paddingAll(10.r),
+              ),
             ],
           ).paddingAll(20.r),
         ],
+      ),
+    );
+  }
+
+  Widget editPasswordButton() {
+    return ElevatedButton(
+      onPressed: () {
+        controller.editPassword(
+          controller.oldPassword.text,
+          controller.newPasswordController.text,
+          controller.confirmPasswordController.text,
+        );
+      },
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.r),
+          ),
+        ),
+        minimumSize: MaterialStateProperty.all(Size(Get.width, 50.h)),
+        backgroundColor: MaterialStateProperty.all(primary),
+      ),
+      child: TextSemiBold(
+        text: 'Ubah Password',
+        fontSize: 16.sp,
       ),
     );
   }

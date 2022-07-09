@@ -25,7 +25,7 @@ abstract class Routes {
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const WELCOME = _Paths.WELCOME;
   static const IMAGEURL =
-      "https://drainit.pocari.id/storage/app/public/images/";
+      "https://drainit-backend-2w9s8.ondigitalocean.app/storage/images/";
   static const BASEURL = "https://king-prawn-app-hxran.ondigitalocean.app/";
   static const BASEURL_SYSTEM =
       "https://drainit-backend-2w9s8.ondigitalocean.app/api/";

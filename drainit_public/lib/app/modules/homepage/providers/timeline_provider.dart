@@ -7,7 +7,7 @@ class TimelineProvider extends GetConnect {
     final header = {'Authorization': 'Bearer $token'};
 
     final response = await get(
-      '${Routes.BASEURL_SYSTEM}pengaduan',
+      '${Routes.BASEURL_SYSTEM}pengaduan_sortedup',
       headers: header,
     ).timeout(const Duration(seconds: 10));
 
@@ -15,6 +15,26 @@ class TimelineProvider extends GetConnect {
       return Future.error(response.statusText.toString());
     } else {
       // print(response.body);
+      final dataRaw = (response.body as List)
+          .map(
+            (e) => Timeline.fromJson(e as Map<String, dynamic>),
+          )
+          .toList();
+      return dataRaw;
+    }
+  }
+
+  Future<List<Timeline>> loadAllimeline(String token, String userId) async {
+    final header = {'Authorization': 'Bearer $token'};
+
+    final response = await get(
+      '${Routes.BASEURL_SYSTEM}pengaduan',
+      headers: header,
+    ).timeout(const Duration(seconds: 10));
+
+    if (response.status.hasError) {
+      return Future.error(response.statusText.toString());
+    } else {
       final dataRaw = (response.body as List)
           .map(
             (e) => Timeline.fromJson(e as Map<String, dynamic>),

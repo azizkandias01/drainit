@@ -12,8 +12,7 @@ class ReportsProvider extends GetConnect {
       },
     ).timeout(const Duration(seconds: 10));
     if (response.status.hasError) {
-      print("error laporan banjir $response");
-      return Future.error(response);
+      return Future.error(response.bodyString!);
     } else {
       print("ok laporan banjir");
       return Report.fromJson(response.body as Map<String, dynamic>);
@@ -22,10 +21,9 @@ class ReportsProvider extends GetConnect {
 
   Future<Report> createBrokenDrainageReport(Map data, String auth) async {
     final response = await post(
-      '${Routes.BASEURL}pengaduan/drainase_rusak',
+      '${Routes.BASEURL_SYSTEM}pengaduan/drainase_rusak',
       data,
       headers: {
-        'Accept': 'application/geo+json',
         'Authorization': 'Bearer $auth',
       },
     ).timeout(const Duration(seconds: 10));

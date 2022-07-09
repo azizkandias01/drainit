@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class FloodModelProvider extends GetConnect {
   Future loadFloodPoint() async {
     final response = await get(
-      '${Routes.BASEURL}titik_banjir',
+      '${Routes.BASEURL_SYSTEM}titik_banjir',
     );
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());

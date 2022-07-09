@@ -44,6 +44,8 @@ class Profile {
 }
 
 class ProfileResponse {
+
+  ProfileResponse({this.status, this.message, this.data});
   ProfileResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'] as int;
     message = json['message'].toString();
@@ -51,16 +53,14 @@ class ProfileResponse {
         ? Data.fromJson(json['data'] as Map<String, dynamic>)
         : null;
   }
-
-  ProfileResponse({this.status, this.message, this.data});
   int? status;
   String? message;
   Data? data;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -76,7 +76,7 @@ class Data {
       this.telepon,
       this.alamat,
       this.tanggalLahir,
-      this.foto});
+      this.foto,});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -96,14 +96,14 @@ class Data {
   String? foto;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama'] = this.nama;
-    data['email'] = this.email;
-    data['telepon'] = this.telepon;
-    data['alamat'] = this.alamat;
-    data['tanggal_lahir'] = this.tanggalLahir;
-    data['foto'] = this.foto;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama'] = nama;
+    data['email'] = email;
+    data['telepon'] = telepon;
+    data['alamat'] = alamat;
+    data['tanggal_lahir'] = tanggalLahir;
+    data['foto'] = foto;
     return data;
   }
 }

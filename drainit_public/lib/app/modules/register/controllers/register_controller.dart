@@ -24,7 +24,7 @@ class RegisterController extends GetxController with StateMixin<String> {
   late TextEditingController myControllerName;
   late TextEditingController myControllerPhoneNumber;
   late TextEditingController myControllerAddress;
-  var dateOfBirth = "";
+  String dateOfBirth = "";
 
   //controller for hide show password
   final isPasswordHidden = true.obs;
