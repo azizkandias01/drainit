@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/modules/edit_profile/controllers/edit_profile_controller.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
@@ -188,37 +189,54 @@ class EditProfileView extends GetView<EditProfileController> {
                     ),
                   ],
                 ).paddingAll(10.r),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.r),
-                      ),
-                    ),
-                    minimumSize:
-                        MaterialStateProperty.all(Size(Get.width, 50.h)),
-                    backgroundColor: MaterialStateProperty.all(primary),
-                  ),
-                  child: const Text("Simpan"),
+                DateTimePicker(
+                  initialValue: '',
+                  dateMask: 'yyyy-MM-dd',
+                  firstDate: DateTime(1940),
+                  lastDate: DateTime(2100),
+                  dateLabelText: 'Tanggal Lahir',
+                  onChanged: (date) {
+                    controller.dateOfBirth = date;
+                  },
                 ).paddingAll(10.r),
+                controller.obx(
+                  (state) => editButton().paddingAll(10.r),
+                  onEmpty: editButton().paddingAll(10.r),
+                  onError: (err) => editButton().paddingAll(10.r),
+                  onLoading: const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                ),
               ],
             ).paddingAll(20.r),
-
-            // RoundedButton(
-            //   text: 'Next',
-            //   fontSize: 16.sp,
-            //   borderRadius: 12.w,
-            //   height: 56.h,
-            //   width: 376.w,
-            //   color: kIconColor,
-            //   press: () {
-            //     //Get.toNamed(Routes.REGISTER_NEXT);
-            //   },
-            // ),
           ],
         ),
       ),
+    );
+  }
+
+  ElevatedButton editButton() {
+    return ElevatedButton(
+      onPressed: () {
+        controller.updateProfile(
+          controller.nameController.text,
+          controller.phoneController.text,
+          controller.emailController.text,
+          controller.addressController.text,
+          controller.dateOfBirth,
+          controller.bytes64Image.value,
+        );
+      },
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.r),
+          ),
+        ),
+        minimumSize: MaterialStateProperty.all(Size(Get.width, 50.h)),
+        backgroundColor: MaterialStateProperty.all(primary),
+      ),
+      child: const Text("Simpan"),
     );
   }
 }

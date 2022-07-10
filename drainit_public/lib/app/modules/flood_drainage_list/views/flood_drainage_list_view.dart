@@ -110,46 +110,6 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
       body: Map(),
     );
   }
-
-  // Widget chipAction() {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       ActionChip(
-  //         label: const Text('Flood'),
-  //         onPressed: () {
-  //           if (controller.markers.isNotEmpty) {
-  //             controller.markers.clear();
-  //             loadFloodMarker(controller);
-  //           } else {
-  //             loadFloodMarker(controller);
-  //           }
-  //         },
-  //       ),
-  //       const SizedBox(
-  //         width: 10,
-  //       ),
-  //       ActionChip(
-  //         label: const Text('Drainage'),
-  //         onPressed: () {
-  //           if (controller.markers.isNotEmpty) {
-  //             controller.markers.clear();
-  //             loadDrainageMarker(controller);
-  //           } else {
-  //             loadDrainageMarker(controller);
-  //           }
-  //         },
-  //       ),
-  //       SizedBox(
-  //         width: 10.w,
-  //       ),
-  //       ActionChip(
-  //         label: const Text('Current Location'),
-  //         onPressed: () => Map._goToCurrentLocation(),
-  //       ),
-  //     ],
-  //   );
-  // }
 }
 
 class Map extends GetView<FloodDrainageListController> {

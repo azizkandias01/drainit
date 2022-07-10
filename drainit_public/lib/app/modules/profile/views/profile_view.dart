@@ -39,7 +39,7 @@ class ProfileView extends GetView<ProfileController> {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () => Get.back(),
+          onPressed: () => Get.offAndToNamed(Routes.HOMEPAGE),
         ),
         actions: [
           IconButton(

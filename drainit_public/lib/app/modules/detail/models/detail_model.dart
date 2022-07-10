@@ -1,23 +1,24 @@
 class Detail {
-
-  Detail(
-      {this.id,
-      this.idMasyarakat,
-      this.namaPelapor,
-      this.idAdmin,
-      this.namaAdmin,
-      this.namaJalan,
-      this.foto,
-      this.tipe,
-      this.deskripsi,
-      this.status,
-      this.feedbackMasyarakat,
-      this.createdAt,
-      this.updatedAt,
-      this.geometry,
-      this.petugas,
-      this.upvote,
-      this.downvote,});
+  Detail({
+    this.id,
+    this.idMasyarakat,
+    this.namaPelapor,
+    this.idAdmin,
+    this.namaAdmin,
+    this.namaJalan,
+    this.foto,
+    this.tipe,
+    this.deskripsi,
+    this.status,
+    this.feedbackMasyarakat,
+    this.createdAt,
+    this.updatedAt,
+    this.geometry,
+    this.petugas,
+    this.upvote,
+    this.downvote,
+    this.vote,
+  });
 
   Detail.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -35,13 +36,14 @@ class Detail {
     updatedAt = json['updated_at'].toString();
     geometry = json['geometry'].toString();
     if (json['petugas'] != null) {
-      petugas = <Null>[];
+      petugas = <Petugas>[];
       json['petugas'].forEach((v) {
-        //petugas!.add(new Null.fromJson(v));
+        petugas?.add(Petugas.fromJson(v as Map<String, dynamic>));
       });
     }
     upvote = json['upvote'] as int;
     downvote = json['downvote'] as int;
+    vote = json['vote'].toString();
   }
   String? id;
   String? idMasyarakat;
@@ -57,9 +59,10 @@ class Detail {
   String? createdAt;
   String? updatedAt;
   String? geometry;
-  List<void>? petugas;
+  List<Petugas>? petugas;
   int? upvote;
   int? downvote;
+  dynamic vote;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -78,10 +81,32 @@ class Detail {
     data['updated_at'] = updatedAt;
     data['geometry'] = geometry;
     if (petugas != null) {
-      //data['petugas'] = this.petugas!.map((v) => v.toJson()).toList();
+      data['petugas'] = petugas?.map((v) => v.toJson()).toList();
     }
     data['upvote'] = upvote;
     data['downvote'] = downvote;
+    data['vote'] = vote;
+    return data;
+  }
+}
+
+class Petugas {
+  Petugas({this.id, this.idPetugas, this.namaPetugas});
+
+  Petugas.fromJson(Map<String, dynamic> json) {
+    id = json['id'].toString();
+    idPetugas = json['id_petugas'].toString();
+    namaPetugas = json['nama_petugas'].toString();
+  }
+  String? id;
+  String? idPetugas;
+  String? namaPetugas;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['id_petugas'] = idPetugas;
+    data['nama_petugas'] = namaPetugas;
     return data;
   }
 }

@@ -1,25 +1,32 @@
 class UpdateProfileRequest {
-  UpdateProfileRequest(
-    this.name,
-    this.phone,
-    this.email,
+  UpdateProfileRequest({
+    this.id,
+    this.nama,
+    this.telepon,
     this.alamat,
-    this.foto,
-  );
+    this.tanggalLahir,
+  });
 
-  String name;
-  String phone;
-  String email;
-  String alamat;
-  String? foto;
+  UpdateProfileRequest.fromJson(Map<String, dynamic> json) {
+    id = json['id'].toString();
+    nama = json['nama'].toString();
+    telepon = json['telepon'].toString();
+    alamat = json['alamat'].toString();
+    tanggalLahir = json['tanggal_lahir'].toString();
+  }
+  String? id;
+  String? nama;
+  String? telepon;
+  String? alamat;
+  String? tanggalLahir;
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['name'] = name;
-    data['foto'] = foto;
-    data['telepon'] = phone;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama'] = nama;
+    data['telepon'] = telepon;
     data['alamat'] = alamat;
-    data['email'] = email;
+    data['tanggal_lahir'] = tanggalLahir;
     return data;
   }
 }

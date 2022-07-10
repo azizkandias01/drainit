@@ -552,13 +552,10 @@ class DetailView extends GetView<DetailController> {
                 onError: (err) {
                   return GestureDetector(
                     onTap: () {
-                      Get.offNamedUntil(
-                        Routes.HOME,
-                        ModalRoute.withName(Routes.DETAIL),
-                      );
+                      Get.back();
                     },
-                    child: const Center(
-                      child: Text("Kembali"),
+                    child: Center(
+                      child: Text(err.toString()),
                     ),
                   );
                 },

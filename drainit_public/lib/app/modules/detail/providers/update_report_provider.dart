@@ -3,9 +3,13 @@ import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class UpdateReportProvider extends GetConnect {
-  Future<List<UpdateReport>> getUpdateReport(String id) async {
+  Future<List<UpdateReport>> getUpdateReport(String id, String bearer) async {
+    final headers = {
+      'Authorization': 'Bearer $bearer',
+    };
     final response = await get(
-      '${Routes.BASEURL}pembaruan_pengaduan/$id',
+      '${Routes.BASEURL_SYSTEM}pembaruan_pengaduan/$id',
+      headers: headers,
     ).timeout(const Duration(seconds: 10));
 
     if (response.status.hasError) {

@@ -1,9 +1,11 @@
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/rounded_button.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/searchmap/controllers/searchmap_controller.dart';
 import 'package:drainit_flutter/app/modules/searchmap/models/searchmap_model.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -47,47 +49,11 @@ class SearchmapView extends GetView<SearchmapController> {
                         Marker(
                           markerId: const MarkerId('my'),
                           position: snapshot.data!,
+                          onTap: () => onMarkerClickHandler(snapshot.data!),
                         ),
                       );
                 },
-                onTap: (latLng) async {
-                  controller.myMarker.clear();
-                  controller.myMarker.add(
-                    Marker(
-                      markerId: const MarkerId('my'),
-                      position: LatLng(latLng.latitude, latLng.longitude),
-                    ),
-                  );
-                  Get.bottomSheet(
-                    Container(
-                      color: Colors.white,
-                      height: 300,
-                      child: Column(
-                        children: [
-                          Text(
-                            await controller.getAddress(
-                              LatLng(latLng.latitude, latLng.longitude),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              Get.back();
-                              Get.back(
-                                result: [
-                                  await controller.getAddress(
-                                    LatLng(latLng.latitude, latLng.longitude),
-                                  ),
-                                  LatLng(latLng.latitude, latLng.longitude)
-                                ],
-                              );
-                            },
-                            child: const Text('select this coordinate'),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
+                onTap: onTapMapHandler,
                 markers: Set<Marker>.of(controller.myMarker),
               ),
             );
@@ -95,12 +61,75 @@ class SearchmapView extends GetView<SearchmapController> {
             return const Center(child: CircularProgressIndicator.adaptive());
           } else if (snapshot.hasError) {
             return const Center(
-                child: TextSemiBold(
-                    text: "Terjadi Kesalahan, Cobalah beberapa saat lagi!",),);
+              child: TextSemiBold(
+                text: "Terjadi Kesalahan, Cobalah beberapa saat lagi!",
+              ),
+            );
           } else {
             return const Center(child: CircularProgressIndicator());
           }
         },
+      ),
+    );
+  }
+
+  Future<void> onTapMapHandler(LatLng latLng) async {
+    controller.myMarker.clear();
+    controller.myMarker.add(
+      Marker(
+        markerId: const MarkerId('my'),
+        position: LatLng(latLng.latitude, latLng.longitude),
+        onTap: () => onMarkerClickHandler(latLng),
+      ),
+    );
+    onMarkerClickHandler(latLng);
+  }
+
+  Future<void> onMarkerClickHandler(LatLng latLng) async {
+    Get.bottomSheet(
+      Container(
+        height: 300.h,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.place_rounded,
+              size: 100.h,
+              color: primary,
+            ),
+            10.verticalSpace,
+            TextMedium(
+              text: await controller.getAddress(
+                LatLng(latLng.latitude, latLng.longitude),
+              ),
+              fontSize: 16.sp,
+            ),
+            20.verticalSpace,
+            RoundedButton(
+              text: "Pilih Lokasi",
+              height: 30.h,
+              width: 100.w,
+              press: () async {
+                Get.back();
+                Get.back(
+                  result: [
+                    await controller.getAddress(
+                      LatLng(latLng.latitude, latLng.longitude),
+                    ),
+                    LatLng(latLng.latitude, latLng.longitude)
+                  ],
+                );
+              },
+            ),
+          ],
+        ).paddingSymmetric(horizontal: 20.w),
       ),
     );
   }
