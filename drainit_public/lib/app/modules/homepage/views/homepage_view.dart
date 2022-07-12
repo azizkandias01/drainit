@@ -43,24 +43,14 @@ class HomepageView extends GetView<HomepageController> {
               ],
             ),
             buildHomeMenu().paddingOnly(bottom: 20.h),
-            TextSemiBold(
-              text: "Total laporan anda",
-              fontSize: 16.sp,
-            ).paddingOnly(bottom: 10.h),
-            buildUserTotalReport().paddingOnly(bottom: 20.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 TextSemiBold(
-                  text: "Laporan terbaru",
+                  text: "Laporan Populer",
                   fontSize: 16.sp,
                   textColour: Colors.black,
-                ),
-                TextMedium(
-                  text: "lihat semua",
-                  fontSize: 12.sp,
-                  textColour: textGrey,
                 ),
               ],
             ).paddingOnly(bottom: 24.h),
@@ -73,11 +63,6 @@ class HomepageView extends GetView<HomepageController> {
                   text: "Semua laporan",
                   fontSize: 16.sp,
                   textColour: Colors.black,
-                ),
-                TextMedium(
-                  text: "lihat semua",
-                  fontSize: 12.sp,
-                  textColour: textGrey,
                 ),
               ],
             ),
@@ -257,126 +242,6 @@ class HomepageView extends GetView<HomepageController> {
           ),
         ),
       ),
-    );
-  }
-
-  Row buildUserTotalReport() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          flex: 2,
-          child: Container(
-            height: 80.h,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: primary,
-                width: 2.r,
-              ),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextSemiBold(text: "20", fontSize: 30.sp)
-                    .paddingOnly(top: 10.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.send_rounded,
-                      color: black,
-                      size: 13.r,
-                    ),
-                    3.horizontalSpace,
-                    TextSemiBold(
-                      text: "total laporan",
-                      textColour: black,
-                      textAlign: TextAlign.center,
-                      fontSize: 12.sp,
-                    ),
-                  ],
-                ),
-                spacer,
-              ],
-            ),
-          ).paddingOnly(left: 10.w, top: 10.h),
-        ),
-        Container(
-          height: 80.h,
-          width: 0.25.sw,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: primary,
-              width: 2.r,
-            ),
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextSemiBold(text: "10", fontSize: 30.sp).paddingOnly(top: 10.h),
-              FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.history_rounded,
-                      color: black,
-                      size: 13.r,
-                    ),
-                    3.horizontalSpace,
-                    TextSemiBold(
-                      text: "Diproses",
-                      textColour: black,
-                      textAlign: TextAlign.center,
-                      fontSize: 12.sp,
-                    ),
-                  ],
-                ),
-              ).paddingOnly(left: 3.w, right: 3.w),
-              spacer,
-            ],
-          ),
-        ).paddingOnly(left: 10.w, top: 10.h),
-        Container(
-          height: 80.h,
-          width: 0.25.sw,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: primary,
-              width: 2.r,
-            ),
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextSemiBold(text: "10", fontSize: 30.sp).paddingOnly(top: 10.h),
-              FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.check_circle_outline,
-                      color: black,
-                      size: 13.r,
-                    ),
-                    3.horizontalSpace,
-                    TextSemiBold(
-                      text: "Selesai",
-                      textColour: black,
-                      textAlign: TextAlign.center,
-                      fontSize: 12.sp,
-                    ),
-                  ],
-                ),
-              ).paddingOnly(left: 3.w, right: 3.w),
-              spacer,
-            ],
-          ),
-        ).paddingOnly(left: 10.w, top: 10.h),
-      ],
     );
   }
 
@@ -750,9 +615,9 @@ class HomepageView extends GetView<HomepageController> {
                           borderRadius: BorderRadius.all(
                             Radius.circular(5.r),
                           ),
-                          color: data[index].tipe! == "Banjir"
-                              ? Colors.lightBlue
-                              : Colors.brown,
+                          color: getStatusColor(
+                            data[index].tipe!,
+                          ),
                         ),
                         child: Text(
                           data[index].tipe!,
@@ -774,11 +639,11 @@ class HomepageView extends GetView<HomepageController> {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            data[index].tipe!,
+                            data[index].status!,
                           ),
                         ),
                         child: Text(
-                          data[index].tipe!,
+                          data[index].status!,
                           style: TextStyle(
                             fontSize: 10.sp,
                             color: white,

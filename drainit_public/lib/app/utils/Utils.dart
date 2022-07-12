@@ -15,6 +15,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:photo_view/photo_view.dart';
 
+List<double> geoToLatlong(String string) {
+  final String substring = string.substring(34, string.length - 2);
+  final List<String> latlong = substring.split(',');
+  return [
+    double.parse(latlong[1]),
+    double.parse(
+      latlong[0],
+    ),
+  ];
+}
+
 Future<void> getImage(
   ImageSource imageSource,
   RxString selectedImagePath,
@@ -76,13 +87,13 @@ Color getStatusColor(String status) {
       return primary;
     case "ON_PROGRESS":
       return Colors.purple.shade300;
-    case "COMPLETED":
-      return Colors.green.shade300;
     case "REFUSED":
       return Colors.red.shade300;
-    case "Banjir":
+    case "DONE":
+      return Colors.green.shade300;
+    case "BANJIR":
       return Colors.blue.shade300;
-    case "Drainase Rusak":
+    case "DRAINASE RUSAK":
       return Colors.brown.shade300;
     default:
       return Colors.grey.shade300;

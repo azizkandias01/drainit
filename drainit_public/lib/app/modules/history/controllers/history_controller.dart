@@ -22,6 +22,7 @@ class HistoryController extends GetxController with StateMixin {
     box = GetStorage();
     change(null, status: RxStatus.empty());
     loadHistory();
+    sortHistory("semua");
   }
 
   Future<List<Timeline>> getHistory() async {

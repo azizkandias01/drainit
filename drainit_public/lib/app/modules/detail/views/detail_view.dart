@@ -32,15 +32,14 @@ class DetailView extends GetView<DetailController> {
       },
       child: SafeArea(
         top: false,
-        //double scaffold to make bottomNavigationBar stick to keyboard when appearing
         child: Scaffold(
           body: Obx(
             () => Scaffold(
               bottomNavigationBar:
-                  //check if the user is the one who reported the laporan and if the status is done
                   controller.detail.value.status == ReportTypes.DONE &&
                           controller.detail.value.idMasyarakat ==
-                              controller.box.read(Routes.USER_ID)
+                              controller.box.read(Routes.USER_ID) &&
+                          controller.detail.value.feedbackMasyarakat!.isEmpty
                       ? Container(
                           height: ScreenUtil().setHeight(50),
                           decoration: const BoxDecoration(
@@ -58,6 +57,7 @@ class DetailView extends GetView<DetailController> {
                             children: [
                               Flexible(
                                 child: TextField(
+                                  controller: controller.feedbackController,
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
                                       vertical: 10,
@@ -78,7 +78,14 @@ class DetailView extends GetView<DetailController> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  //TODO test this
+                                  controller.feedbackMasyarakat(
+                                    controller.feedbackController.text,
+                                  );
+                                  Get.back();
+                                  controller.feedbackController.clear();
+                                },
                                 child: Container(
                                   height: ScreenUtil().setHeight(50),
                                   width: ScreenUtil().setWidth(50),
@@ -241,50 +248,72 @@ class DetailView extends GetView<DetailController> {
                               GestureDetector(
                                 child: Icon(
                                   Icons.thumb_up_off_alt_rounded,
-                                  color: green2,
-                                  size: 16.sp,
+                                  color: Colors.blue,
+                                  size: 24.sp,
                                 ),
                               ),
                               10.horizontalSpace,
-                              const TextSemiBold(
-                                text: "40",
-                                textColour: black,
-                              ),
-                              20.horizontalSpace,
-                              Icon(
-                                Icons.thumb_down_alt_rounded,
-                                color: Colors.grey,
-                                size: 16.sp,
-                              ),
-                              10.horizontalSpace,
-                              const TextSemiBold(
-                                text: "5",
+                              TextSemiBold(
+                                text: "${controller.detail.value.upvote}",
                                 textColour: black,
                               ),
                             ],
                           ).paddingOnly(left: 20.w, right: 20.w, top: 10.h),
+                          if (controller.detail.value.petugas!.isNotEmpty)
+                            Builder(
+                              builder: (context) {
+                                final petugas =
+                                    controller.detail.value.petugas!.length;
+                                var namaPetugas = "";
+                                for (var i = 0; i < petugas; i++) {
+                                  namaPetugas +=
+                                      "${controller.detail.value.petugas![i].namaPetugas}";
+                                  if (i < petugas - 1) {
+                                    namaPetugas += ", ";
+                                  }
+                                }
+                                return Row(
+                                  children: [
+                                    const TextRegular(
+                                      text: "Ditangani oleh",
+                                      textColour: Colors.grey,
+                                    ),
+                                    10.horizontalSpace,
+                                    TextSemiBold(
+                                      text: namaPetugas,
+                                      textColour: Colors.grey,
+                                    ),
+                                  ],
+                                ).paddingSymmetric(
+                                  horizontal: 20.w,
+                                  vertical: 10.h,
+                                );
+                              },
+                            )
+                          else
+                            const SizedBox(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        const CachedNetworkImageProvider(
-                                      "https://i.pravatar.cc/300",
-                                    ),
-                                    backgroundColor: Colors.amber,
-                                    minRadius: 20.r,
-                                  ),
-                                  10.horizontalSpace,
+                                  // CircleAvatar(
+                                  //   backgroundImage: NetworkImage(
+                                  //     controller.dataProfile.data!.foto!,
+                                  //   ),
+                                  //   backgroundColor: Colors.amber,
+                                  //   minRadius: 20.r,
+                                  // ),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       TextBold(
-                                        text: "Aziz Kandias",
+                                        text: controller
+                                            .detail.value.namaPelapor
+                                            .toString(),
                                       ),
-                                      TextRegular(
+                                      const TextRegular(
                                         text: "Pelapor",
                                         textColour: Colors.grey,
                                       ),
@@ -376,7 +405,7 @@ class DetailView extends GetView<DetailController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const TextBold(
-                                  text: "Nama Jalan",
+                                  text: "Lokasi Laporan",
                                 ),
                                 10.verticalSpace,
                                 Text(
@@ -412,53 +441,53 @@ class DetailView extends GetView<DetailController> {
                               ).paddingAll(20.r),
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 10.h,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const TextBold(
-                                  text: "Tanggapan Anda",
-                                ),
-                                20.verticalSpace,
-                                Row(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundImage:
-                                          const CachedNetworkImageProvider(
-                                        "https://i.pravatar.cc/300",
+                          if (controller.detail.value.feedbackMasyarakat! !=
+                              "null")
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 10.h,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const TextBold(
+                                    text: "Tanggapan Pelapor",
+                                  ),
+                                  20.verticalSpace,
+                                  Row(
+                                    children: [
+                                      //FIXME: FOTO PELAPOR HARUS DIKIRIM DARI SERVER DAN HARUS BERUPA IMAGE tapi auth tidak memungkinkan
+                                      // CircleAvatar(
+                                      //   backgroundImage: NetworkImage(
+                                      //     controller.dataProfile.data!.foto!,
+                                      //   ),
+                                      //   backgroundColor: Colors.amber,
+                                      //   minRadius: 20.r,
+                                      // ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          TextBold(
+                                            text: controller
+                                                .detail.value.namaPelapor!,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ],
                                       ),
-                                      backgroundColor: Colors.amber,
-                                      minRadius: 20.r,
-                                    ),
-                                    10.horizontalSpace,
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        TextBold(
-                                          text: controller
-                                              .detail.value.namaPelapor!,
-                                          fontSize: 16.sp,
-                                        ),
-                                        TextRegular(
-                                          text: controller
-                                              .detail.value.createdAt!,
-                                          fontSize: 14.sp,
-                                          textColour: Colors.grey,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                10.verticalSpace,
-                                const Text("Anda belum memberikan tanggapan"),
-                              ],
-                            ),
-                          ),
+                                    ],
+                                  ),
+                                  10.verticalSpace,
+                                  Text(
+                                    controller.detail.value.feedbackMasyarakat
+                                        .toString(),
+                                  ),
+                                ],
+                              ),
+                            )
+                          else
+                            const SizedBox(),
                           const Divider(
                             height: .3,
                             color: Colors.grey,

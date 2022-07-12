@@ -23,4 +23,27 @@ class UpdateReportProvider extends GetConnect {
       return dataRaw;
     }
   }
+
+  Future<String> masyarakatFeedback(
+    Map data,
+    String bearer,
+    String idPengaduan,
+  ) async {
+    final headers = {
+      'Authorization': 'Bearer $bearer',
+    };
+    final response = await put(
+      '${Routes.BASEURL_SYSTEM}pengaduan/feedback/$idPengaduan',
+      data,
+      headers: headers,
+    ).timeout(const Duration(seconds: 10));
+
+    if (response.status.hasError) {
+      print(response.bodyString.toString());
+      return Future.error(response.statusText.toString());
+    } else {
+      print(response.bodyString.toString());
+      return Future.value(response.body.toString());
+    }
+  }
 }
