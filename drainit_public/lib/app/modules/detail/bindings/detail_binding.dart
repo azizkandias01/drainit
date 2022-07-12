@@ -1,6 +1,5 @@
+import 'package:drainit_flutter/app/modules/detail/controllers/detail_controller.dart';
 import 'package:get/get.dart';
-
-import '../controllers/detail_controller.dart';
 
 class DetailBinding extends Bindings {
   @override

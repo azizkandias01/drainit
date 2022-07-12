@@ -8,6 +8,7 @@ import 'package:drainit_petugas/app/modules/profile/controllers/profile_controll
 import 'package:drainit_petugas/app/modules/profile/views/profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -56,4 +57,10 @@ class HomeController extends GetxController {
   PersistentTabController tabController = PersistentTabController(
     initialIndex: 0,
   );
+
+  @override
+  void onInit() {
+    super.onInit();
+    FlutterNativeSplash.remove();
+  }
 }

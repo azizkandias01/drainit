@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "694057812385",
+    "project_id": "drainit-notification",
+    "storage_bucket": "drainit-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694057812385:android:cc233aca78a04c68aecbe0",
+        "android_client_info": {
+          "package_name": "com.zeekands.drainit_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694057812385-ougoqm2a8c2v3v6rg886mcm9dlvn21fb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHb9Y3pZ0Mt-fcOBpY5vfUXjN_LAeEjwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694057812385-ougoqm2a8c2v3v6rg886mcm9dlvn21fb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

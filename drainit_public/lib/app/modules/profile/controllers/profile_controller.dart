@@ -6,15 +6,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ProfileController extends GetxController with StateMixin {
-  final count = 0.obs;
   late GetStorage box;
-  late Profile dataProfile;
+  late ProfileResponse dataProfile;
 
   @override
   void onInit() {
     super.onInit();
     box = GetStorage();
-    dataProfile = Profile();
+    dataProfile = ProfileResponse();
     change(null, status: RxStatus.empty());
     getAccountProfile();
   }
@@ -45,7 +44,7 @@ class ProfileController extends GetxController with StateMixin {
     );
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  Future<ProfileResponse?> getAccountData() async {
+    return ProfileProvider().geProfile(box.read(Routes.TOKEN) as String);
+  }
 }

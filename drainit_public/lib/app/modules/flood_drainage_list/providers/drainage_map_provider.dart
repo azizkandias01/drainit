@@ -1,7 +1,6 @@
+import 'package:drainit_flutter/app/modules/flood_drainage_list/models/drainage_map.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:get/get.dart';
-
-import '../models/drainage_map.dart';
 
 class DrainageMapProvider extends GetConnect {
   @override
@@ -13,7 +12,7 @@ class DrainageMapProvider extends GetConnect {
 
   Future loadMapDrainage() async {
     final response = await get(
-      '${Routes.BASEURL}drainase',
+      '${Routes.BASEURL_SYSTEM}drainase',
     );
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());

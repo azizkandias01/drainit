@@ -1,25 +1,38 @@
 // ignore_for_file: avoid_print
 
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
+import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../components/text_poppins.dart';
-import '../controllers/profile_controller.dart';
-
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: designSize,
-      builder: (context) => Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        Get.offAndToNamed(Routes.HOMEPAGE);
+        return false;
+      },
+      child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  primary,
+                  Colors.white,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
           centerTitle: true,
           title: const Text(
             'Profile',
@@ -30,7 +43,7 @@ class ProfileView extends GetView<ProfileController> {
               Icons.arrow_back,
               color: Colors.black,
             ),
-            onPressed: () => Get.back(),
+            onPressed: () => Get.offAndToNamed(Routes.HOMEPAGE),
           ),
           actions: [
             IconButton(
@@ -83,14 +96,14 @@ class BodyBuild extends StatelessWidget {
             ).paddingOnly(left: 20.r),
             PersonInfo(controller: controller).paddingAll(10.r),
             10.verticalSpace,
-            Text(
-              'Jumlah laporan',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ).paddingOnly(left: 20.r),
-            const PersonReport().paddingAll(10.r),
+            // Text(
+            //   'Jumlah laporan',
+            //   style: TextStyle(
+            //     fontSize: 12.sp,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ).paddingOnly(left: 20.r),
+            // const PersonReport().paddingAll(10.r),
             Text(
               'Keluar',
               style: TextStyle(
@@ -110,11 +123,12 @@ class BodyBuild extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.normal,
+                        color: red,
                       ),
                     ),
                     const Icon(
                       Icons.arrow_forward,
-                      color: Colors.black,
+                      color: red,
                     ),
                   ],
                 ).paddingAll(20.r),
@@ -257,7 +271,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              '${controller.dataProfile.noHp}',
+              '${controller.dataProfile.data!.telepon}',
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -285,7 +299,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              '${controller.dataProfile.email}',
+              '${controller.dataProfile.data!.email}',
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -313,7 +327,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              '${controller.dataProfile.alamat}',
+              '${controller.dataProfile.data!.alamat}',
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -332,7 +346,7 @@ class PersonInfo extends StatelessWidget {
                 ),
                 10.horizontalSpace,
                 Text(
-                  'Akun dibuat',
+                  'Tanggal Lahir',
                   style: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.normal,
@@ -341,7 +355,7 @@ class PersonInfo extends StatelessWidget {
               ],
             ),
             Text(
-              timeAgoSinceDate(controller.dataProfile.createdAt!),
+              controller.dataProfile.data!.tanggalLahir!,
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
@@ -442,7 +456,7 @@ class OnErrorBuilder extends StatelessWidget {
               width: Get.width / 3,
             ),
             SizedBox(height: 20.h),
-            TextPoppinsBold(
+            TextBold(
               text: "Tidak dapat menjangkau internet",
               fontSize: 16.sp,
               textColour: black,
@@ -450,7 +464,7 @@ class OnErrorBuilder extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            TextPoppinsRegular(
+            TextRegular(
               text: "Ketuk untuk mencoba lagi!",
               fontSize: 12.sp,
               textColour: Colors.black38,
@@ -477,25 +491,23 @@ class ProfileTopBar extends StatelessWidget {
         children: [
           20.verticalSpace,
           CircleAvatar(
-            maxRadius: ScreenUtil().setWidth(40),
-            minRadius: ScreenUtil().setWidth(40),
+            maxRadius: 40.w,
+            minRadius: 40.w,
             backgroundImage: NetworkImage(
-              controller.dataProfile.foto!.contains('.jp')
-                  ? Routes.IMAGEURL + controller.dataProfile.foto!
-                  : 'https://random.imagecdn.app/500/150',
+              controller.dataProfile.data!.foto.toString(),
             ),
-            backgroundColor: green,
+            backgroundColor: Colors.transparent,
           ),
           20.verticalSpace,
           Text(
-            controller.dataProfile.nama!,
+            controller.dataProfile.data!.nama!,
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
-            controller.dataProfile.email!,
+            controller.dataProfile.data!.email!,
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.normal,

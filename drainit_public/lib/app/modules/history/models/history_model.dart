@@ -1,21 +1,4 @@
 class HistoryModel {
-  String? id;
-  String? idMasyarakat;
-  String? namaPelapor;
-  String? idAdmin;
-  String? namaAdmin;
-  String? idPetugas;
-  String? namaPetugas;
-  String? namaJalan;
-  String? foto;
-  String? tipePengaduan;
-  String? deskripsiPengaduan;
-  String? statusPengaduan;
-  String? laporanPetugas;
-  dynamic feedbackMasyarakat;
-  String? createdAt;
-  String? updatedAt;
-  String? geometry;
 
   HistoryModel({
     this.id,
@@ -37,11 +20,6 @@ class HistoryModel {
     this.geometry,
   });
 
-  @override
-  String toString() {
-    return 'History(id: $id, idMasyarakat: $idMasyarakat, namaPelapor: $namaPelapor, idAdmin: $idAdmin, namaAdmin: $namaAdmin, idPetugas: $idPetugas, namaPetugas: $namaPetugas, namaJalan: $namaJalan, foto: $foto, tipePengaduan: $tipePengaduan, deskripsiPengaduan: $deskripsiPengaduan, statusPengaduan: $statusPengaduan, laporanPetugas: $laporanPetugas, feedbackMasyarakat: $feedbackMasyarakat, createdAt: $createdAt, updatedAt: $updatedAt, geometry: $geometry)';
-  }
-
   factory HistoryModel.fromJson(Map<String, dynamic> json) => HistoryModel(
         id: json['id'] as String?,
         idMasyarakat: json['id_masyarakat'] as String?,
@@ -61,6 +39,28 @@ class HistoryModel {
         updatedAt: json['updated_at'] as String?,
         geometry: json['geometry'] as String?,
       );
+  String? id;
+  String? idMasyarakat;
+  String? namaPelapor;
+  String? idAdmin;
+  String? namaAdmin;
+  String? idPetugas;
+  String? namaPetugas;
+  String? namaJalan;
+  String? foto;
+  String? tipePengaduan;
+  String? deskripsiPengaduan;
+  String? statusPengaduan;
+  String? laporanPetugas;
+  dynamic feedbackMasyarakat;
+  String? createdAt;
+  String? updatedAt;
+  String? geometry;
+
+  @override
+  String toString() {
+    return 'History(id: $id, idMasyarakat: $idMasyarakat, namaPelapor: $namaPelapor, idAdmin: $idAdmin, namaAdmin: $namaAdmin, idPetugas: $idPetugas, namaPetugas: $namaPetugas, namaJalan: $namaJalan, foto: $foto, tipePengaduan: $tipePengaduan, deskripsiPengaduan: $deskripsiPengaduan, statusPengaduan: $statusPengaduan, laporanPetugas: $laporanPetugas, feedbackMasyarakat: $feedbackMasyarakat, createdAt: $createdAt, updatedAt: $updatedAt, geometry: $geometry)';
+  }
 
   Map<String, dynamic> toJson() => {
         'id': id,

@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:drainit_flutter/app/modules/register/providers/register_provider.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../register/providers/register_provider.dart';
 
 class RegisterNextController extends GetxController with StateMixin {
   RxString selectedImagePath = ''.obs;

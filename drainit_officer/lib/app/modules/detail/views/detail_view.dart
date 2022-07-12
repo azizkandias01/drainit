@@ -23,120 +23,136 @@ class DetailView extends GetView<DetailController> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: ScreenUtilInit(
-        designSize: Size(375, 812),
-        builder: (_) => Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            leading: IconButton(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  primary,
+                  Colors.white,
+                ],
+              ),
+            ),
+          ),
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.adaptive.arrow_back_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          actions: [
+            IconButton(
               icon: Icon(
-                Icons.adaptive.arrow_back_outlined,
+                Icons.refresh,
                 color: Colors.black,
               ),
               onPressed: () {
-                Get.back();
+                controller.onInit();
               },
             ),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.refresh,
-                  color: Colors.black,
+          ],
+          title: TextMedium(
+            text: 'Detail Laporan',
+          ),
+          bottom: TabBar(
+            padding: EdgeInsets.all(5.r),
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                30.r,
+              ),
+              color: primary,
+            ),
+            labelColor: Colors.black,
+            tabs: [
+              Tab(
+                child: TextRegular(
+                  text: 'Detail',
                 ),
-                onPressed: () {
-                  controller.onInit();
-                },
+              ),
+              Tab(
+                child: TextRegular(
+                  text: 'Update',
+                ),
+              ),
+              Tab(
+                child: TextRegular(
+                  text: 'Komentar',
+                ),
               ),
             ],
-            title: TextMedium(
-              text: 'Detail Laporan',
-            ),
-            bottom: TabBar(
-              indicatorColor: Colors.black,
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey,
-              tabs: [
-                Tab(
-                  child: TextRegular(
-                    text: 'Detail',
-                  ),
-                ),
-                Tab(
-                  child: TextRegular(
-                    text: 'Update Laporan',
-                  ),
-                ),
-                Tab(
-                  child: TextRegular(
-                    text: 'Review Laporan',
-                  ),
-                ),
-              ],
+          ),
+        ),
+        body: controller.obx(
+          (state) => TabBarView(
+            children: [
+              DetailTab(controller: controller),
+              SingleChildScrollView(child: UpdateLaporanView()),
+              PublicCommunityReview(),
+            ],
+          ),
+          onLoading: Center(
+            child: CircularProgressIndicator.adaptive(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
             ),
           ),
-          body: controller.obx(
-            (state) => TabBarView(
-              children: [
-                DetailTab(controller: controller),
-                SingleChildScrollView(child: UpdateLaporanView()),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const TextBold(
-                        text: "Tanggapan Masyarakat",
-                      ),
-                      20.verticalSpace,
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: const CachedNetworkImageProvider(
-                              "https://i.pravatar.cc/300",
-                            ),
-                            backgroundColor: Colors.amber,
-                            minRadius: 20.r,
-                          ),
-                          10.horizontalSpace,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextBold(
-                                text: controller.detail.namaPelapor!,
-                                fontSize: 16.sp,
-                              ),
-                              TextRegular(
-                                text: timeAgoSinceDate(
-                                    controller.detail.createdAt!),
-                                textColour: Colors.grey,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      10.verticalSpace,
-                      Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            onLoading: Center(
-              child: CircularProgressIndicator.adaptive(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              ),
-            ),
-            onError: (err) => Center(
-              child: TextBold(
-                text: "Terjadi kesalahan",
-              ),
+          onError: (err) => Center(
+            child: TextBold(
+              text: "Terjadi kesalahan",
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Container PublicCommunityReview() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TextBold(
+            text: "Tanggapan Masyarakat",
+          ),
+          20.verticalSpace,
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: const CachedNetworkImageProvider(
+                  "https://i.pravatar.cc/300",
+                ),
+                backgroundColor: Colors.amber,
+                minRadius: 20.r,
+              ),
+              10.horizontalSpace,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextBold(
+                    text: controller.detail.namaPelapor!,
+                    fontSize: 16.sp,
+                  ),
+                  TextRegular(
+                    text: timeAgoSinceDate(controller.detail.createdAt!),
+                    textColour: Colors.grey,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          10.verticalSpace,
+          Text(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          ),
+        ],
       ),
     );
   }
@@ -533,6 +549,7 @@ class DetailWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.w),
             child: GoogleMap(
               mapToolbarEnabled: false,
+              myLocationButtonEnabled: false,
               initialCameraPosition: cameraPosition,
               markers: Set.from(markers),
               onMapCreated: (GoogleMapController controller) {
@@ -553,68 +570,6 @@ class DetailWidget extends StatelessWidget {
     );
   }
 }
-
-// class AppBar extends StatelessWidget {
-//   final DetailController controller;
-//
-//   const AppBar({
-//     Key? key,
-//     required this.controller,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.all(8),
-//       color: Colors.white,
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Obx(
-//             () => Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceAround,
-//               children: [
-//                 GestureDetector(
-//                   onTap: () {
-//                     controller.page.value = 0;
-//                   },
-//                   child: TabItemChip(
-//                     isSelected: controller.page.value == 0,
-//                     text: "Detail",
-//                     width: 90.w,
-//                     height: 40.h,
-//                   ),
-//                 ),
-//                 GestureDetector(
-//                   onTap: () {
-//                     controller.page.value = 1;
-//                   },
-//                   child: TabItemChip(
-//                     isSelected: controller.page.value == 1,
-//                     text: "Update Laporan",
-//                     width: 120.w,
-//                     height: 40.h,
-//                   ),
-//                 ),
-//                 GestureDetector(
-//                   onTap: () {
-//                     controller.page.value = 2;
-//                   },
-//                   child: TabItemChip(
-//                     isSelected: controller.page.value == 2,
-//                     text: "Feedback",
-//                     width: 90.w,
-//                     height: 40.h,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class TabItemChip extends StatelessWidget {
   final bool isSelected;

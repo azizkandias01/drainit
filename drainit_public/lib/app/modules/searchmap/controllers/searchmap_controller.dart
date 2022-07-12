@@ -16,6 +16,11 @@ class SearchmapController extends GetxController {
     delay: const Duration(milliseconds: 500),
   );
 
+  Future<void> getMarker(Marker marker) async {
+    myMarker.clear();
+    myMarker.add(marker);
+  }
+
   void searchLocation(String query) {
     debouncer.call(() {
       SearchmapProvider().loadSearch(query).then(
@@ -59,34 +64,3 @@ class SearchmapController extends GetxController {
     return addressLine;
   }
 }
-
-const List<Place> history = [
-  Place(
-    name: 'San Fracisco',
-    country: 'United States of America',
-    state: 'California',
-    lat: 50.4,
-    long: 23.1,
-  ),
-  Place(
-    name: 'Singapore',
-    country: 'Singapore',
-    state: '',
-    lat: 50.4,
-    long: 23.1,
-  ),
-  Place(
-    name: 'Munich',
-    state: 'Bavaria',
-    country: 'Germany',
-    lat: 50.4,
-    long: 23.1,
-  ),
-  Place(
-    name: 'London',
-    country: 'United Kingdom',
-    state: '',
-    lat: 50.4,
-    long: 23.1,
-  ),
-];

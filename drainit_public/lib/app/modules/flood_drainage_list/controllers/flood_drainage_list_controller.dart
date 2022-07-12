@@ -30,7 +30,6 @@ class FloodDrainageListController extends GetxController {
   ///list of markers that observable means the variable could change
   List<Marker> markers = <Marker>[].obs;
 
-
   @override
   void onInit() {
     super.onInit();

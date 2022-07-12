@@ -72,6 +72,7 @@ class TextMedium extends StatelessWidget {
     return Text(
       text,
       overflow: overflow,
+      textAlign: TextAlign.justify,
       style: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: fontSize,

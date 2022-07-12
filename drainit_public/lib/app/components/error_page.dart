@@ -10,8 +10,11 @@ class ErrorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Error'),
-          ElevatedButton(onPressed: () => Get.back(), child: Text('Back')),
+          const Text('Error'),
+          ElevatedButton(
+            onPressed: () => Get.back(),
+            child: const Text('Back'),
+          ),
         ],
       ),
     );
