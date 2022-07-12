@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
+import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/flood_drainage_list/controllers/flood_drainage_list_controller.dart';
-import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -164,34 +164,77 @@ void loadFloodMarker(FloodDrainageListController controller) {
         markerId: MarkerId(item.id!),
         position: controller.geoToLatlong(item.geometry!),
         onTap: () {
-          Get.bottomSheet(
-            Container(
-              height: 300.h,
-              color: white,
+          showModalBottomSheet(
+            isScrollControlled: true,
+            context: Get.context!,
+            backgroundColor: Colors.transparent,
+            builder: (ctx) => Container(
+              height: 0.5.sh,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25.0),
+                  topRight: Radius.circular(25.0),
+                ),
+              ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CachedNetworkImage(
-                      imageUrl: Routes.IMAGEURL + item.foto!,
-                      placeholder: (_, __) {
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                      height: 150.h,
-                      width: 300.w,
-                      fit: BoxFit.cover,
-                      errorWidget: (_, __, ___) {
-                        return const Text('data cannot be loaded!');
-                      },
+                  TextBold(
+                    text: "${item.namaJalan}",
+                    fontSize: 18.sp,
+                  ),
+                  10.verticalSpace,
+                  TextBold(text: "${item.status}"),
+                  10.verticalSpace,
+                  TextMedium(text: "${item.keterangan}"),
+                  20.verticalSpace,
+                  CachedNetworkImage(
+                    imageUrl: item.foto ?? "",
+                    height: 0.3.sh,
+                    width: 1.sw,
+                    errorWidget: (context, url, error) => Container(
+                      height: 0.3.sh,
+                      width: 1.sw,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: grey300,
+                      ),
                     ),
                   ),
-                  Text(item.namaJalan!),
-                  Text(item.keterangan!),
                 ],
-              ),
+              ).paddingAll(20.r),
             ),
           );
         },
+        //   Get.bottomSheet(
+        //     Container(
+        //       height: 300.h,
+        //       color: white,
+        //       child: Column(
+        //         children: [
+        //           Padding(
+        //             padding: const EdgeInsets.all(8.0),
+        //             child: CachedNetworkImage(
+        //               imageUrl: Routes.IMAGEURL + item.foto!,
+        //               placeholder: (_, __) {
+        //                 return const Center(child: CircularProgressIndicator());
+        //               },
+        //               height: 150.h,
+        //               width: 300.w,
+        //               fit: BoxFit.cover,
+        //               errorWidget: (_, __, ___) {
+        //                 return const Text('data cannot be loaded!');
+        //               },
+        //             ),
+        //           ),
+        //           Text(item.namaJalan!),
+        //           Text(item.keterangan!),
+        //         ],
+        //       ),
+        //     ),
+        //   );
+        // },
       ),
     );
   }

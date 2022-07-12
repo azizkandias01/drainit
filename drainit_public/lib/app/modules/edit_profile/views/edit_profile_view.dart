@@ -136,25 +136,6 @@ class EditProfileView extends GetView<EditProfileController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Email",
-                      style: TextStyle(color: black, fontSize: 11.sp),
-                    ),
-                    10.verticalSpace,
-                    TextField(
-                      controller: controller.emailController,
-                      decoration: InputDecoration(
-                        hintText: 'Email',
-                        hintStyle: TextStyle(
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ),
-                  ],
-                ).paddingAll(10.r),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
                       "Nomor telepon",
                       style: TextStyle(color: black, fontSize: 11.sp),
                     ),
@@ -190,7 +171,7 @@ class EditProfileView extends GetView<EditProfileController> {
                   ],
                 ).paddingAll(10.r),
                 DateTimePicker(
-                  initialValue: '',
+                  initialValue: controller.profile.data!.tanggalLahir,
                   dateMask: 'yyyy-MM-dd',
                   firstDate: DateTime(1940),
                   lastDate: DateTime(2100),
@@ -218,13 +199,14 @@ class EditProfileView extends GetView<EditProfileController> {
   ElevatedButton editButton() {
     return ElevatedButton(
       onPressed: () {
+        if (controller.bytes64Image.value.isNotEmpty) {
+          controller.updateProfilePicture(controller.bytes64Image.value);
+        }
         controller.updateProfile(
           controller.nameController.text,
           controller.phoneController.text,
-          controller.emailController.text,
           controller.addressController.text,
           controller.dateOfBirth,
-          controller.bytes64Image.value,
         );
       },
       style: ButtonStyle(

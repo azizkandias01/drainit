@@ -31,13 +31,10 @@ class EditProfileController extends GetxController with StateMixin {
   void updateProfile(
     String name,
     String phone,
-    String email,
     String alamat,
     String tanggalLahir,
-    String? foto,
   ) {
     change(null, status: RxStatus.loading());
-    //TODO update profile with email!!!
 
     final dataRequest = {
       "id": profile.data!.id,
@@ -59,6 +56,30 @@ class EditProfileController extends GetxController with StateMixin {
           "Berhasil update profile",
         );
         Get.offAllNamed(Routes.PROFILE);
+      },
+      onError: (err) {
+        change(err, status: RxStatus.error());
+        showErrorSnackBar(
+          err.toString(),
+        );
+      },
+    );
+  }
+
+  void updateProfilePicture(String foto) {
+    change(null, status: RxStatus.loading());
+    final dataRequest = {
+      "foto_profil": "data:image/jpeg;base64,$foto",
+    };
+
+    UpdateProvider()
+        .updateProfilePicture(
+      dataRequest,
+      box.read(Routes.TOKEN).toString(),
+    )
+        .then(
+      (value) {
+        change(value, status: RxStatus.success());
       },
       onError: (err) {
         change(err, status: RxStatus.error());

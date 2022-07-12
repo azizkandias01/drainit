@@ -156,8 +156,7 @@ class DetailView extends GetView<DetailController> {
                                         minScale: 0.5,
                                         imageProvider:
                                             CachedNetworkImageProvider(
-                                          Routes.IMAGEURL +
-                                              controller.detail.value.foto!,
+                                          controller.detail.value.foto!,
                                         ),
                                       ),
                                     );
@@ -170,9 +169,21 @@ class DetailView extends GetView<DetailController> {
                                       tag: "image",
                                       child: Image(
                                         image: CachedNetworkImageProvider(
-                                          Routes.IMAGEURL +
-                                              controller.detail.value.foto!,
+                                          controller.detail.value.foto!,
                                         ),
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            width: 0.9.sw,
+                                            height: 300.w,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10.r),
+                                              ),
+                                              color: Colors.grey,
+                                            ),
+                                          );
+                                        },
                                         width: 0.9.sw,
                                         height: 300.w,
                                         fit: BoxFit.fitWidth,

@@ -1,19 +1,20 @@
 class Timeline {
-
-  Timeline(
-      {this.id,
-      this.idMasyarakat,
-      this.namaPelapor,
-      this.namaJalan,
-      this.foto,
-      this.tipe,
-      this.deskripsi,
-      this.status,
-      this.createdAt,
-      this.updatedAt,
-      this.geometry,
-      this.upvote,
-      this.downvote,});
+  Timeline({
+    this.id,
+    this.idMasyarakat,
+    this.namaPelapor,
+    this.namaJalan,
+    this.foto,
+    this.tipe,
+    this.deskripsi,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.geometry,
+    this.upvote,
+    this.downvote,
+    this.vote,
+  });
 
   Timeline.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -29,6 +30,7 @@ class Timeline {
     geometry = json['geometry'].toString();
     upvote = json['upvote'] as int;
     downvote = json['downvote'] as int;
+    vote = json['vote'].toString();
   }
   String? id;
   String? idMasyarakat;
@@ -43,6 +45,7 @@ class Timeline {
   String? geometry;
   int? upvote;
   int? downvote;
+  String? vote;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -59,6 +62,7 @@ class Timeline {
     data['geometry'] = geometry;
     data['upvote'] = upvote;
     data['downvote'] = downvote;
+    data['vote'] = vote;
     return data;
   }
 }

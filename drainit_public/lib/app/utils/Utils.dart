@@ -55,7 +55,8 @@ Future<void> openFilePickerImage(
   RxString bytes64Image,
 ) async {
   final FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.image,
+    type: FileType.custom,
+    allowedExtensions: ['jpeg'],
   );
 
   if (result != null) {

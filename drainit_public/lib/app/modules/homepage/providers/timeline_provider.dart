@@ -43,4 +43,34 @@ class TimelineProvider extends GetConnect {
       return dataRaw;
     }
   }
+
+  Future<String> vote(Map data, String bearer) async {
+    final headers = {'Authorization': 'Bearer $bearer'};
+
+    final response = await post(
+      '${Routes.BASEURL_SYSTEM}vote',
+      data,
+      headers: headers,
+    ).timeout(const Duration(seconds: 10));
+
+    if (response.hasError) {
+      return Future.error(response.statusText.toString());
+    } else {
+      return "success";
+    }
+  }
+
+  Future<String> deleteVote(String idPengaduan, String bearer) async {
+    final headers = {'Authorization': 'Bearer $bearer'};
+    final response = await delete(
+      '${Routes.BASEURL_SYSTEM}vote/$idPengaduan',
+      headers: headers,
+    ).timeout(const Duration(seconds: 10));
+
+    if (response.hasError) {
+      return Future.error(response.bodyString.toString());
+    } else {
+      return "success";
+    }
+  }
 }

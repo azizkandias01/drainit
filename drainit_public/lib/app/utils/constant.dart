@@ -1,0 +1,2 @@
+const UPVOTE = 'UPVOTE';
+const DOWNVOTE = 'DOWNVOTE';

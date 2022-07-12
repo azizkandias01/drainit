@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
-import 'package:drainit_flutter/app/modules/history/controllers/history_controller.dart';
 import 'package:drainit_flutter/app/modules/homepage/controllers/homepage_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
+import 'package:drainit_flutter/app/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -118,8 +118,7 @@ class HomepageView extends GetView<HomepageController> {
                           color: Colors.grey[200],
                         ),
                       ),
-                      imageUrl: Routes.IMAGEURL +
-                          controller.timelineList[id].foto.toString(),
+                      imageUrl: controller.timelineList[id].foto.toString(),
                     ),
                   ),
                   Row(
@@ -190,19 +189,8 @@ class HomepageView extends GetView<HomepageController> {
                             size: 16.sp,
                           ),
                           10.horizontalSpace,
-                          const TextSemiBold(
-                            text: "40",
-                            textColour: white,
-                          ),
-                          20.horizontalSpace,
-                          Icon(
-                            Icons.thumb_down_alt_rounded,
-                            color: red,
-                            size: 16.sp,
-                          ),
-                          10.horizontalSpace,
-                          const TextSemiBold(
-                            text: "5",
+                          TextSemiBold(
+                            text: "${controller.timelineList[id].upvote}",
                             textColour: white,
                           ),
                         ],
@@ -223,7 +211,9 @@ class HomepageView extends GetView<HomepageController> {
               ).marginOnly(right: 15.w),
             );
           },
-          itemCount: controller.timelineList.length,
+          itemCount: controller.timelineList.length > 5
+              ? 4
+              : controller.timelineList.length,
         ),
       ),
       onLoading: Shimmer.fromColors(
@@ -442,24 +432,24 @@ class HomepageView extends GetView<HomepageController> {
     );
   }
 
-  Row buildSearchBar(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //search bar
-      children: [
-        Container(
-          width: 0.9.sw,
-          height: 48.h,
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(
-              ScreenUtil().setWidth(10),
-            ),
-          ),
-          child: GestureDetector(
-            onTap: () => showSearch(
-              context: context,
-              delegate: HistorySearchDelegate(controller.historyC),
+  Widget buildSearchBar(BuildContext context) {
+    return GestureDetector(
+      onTap: () => showSearch(
+        context: context,
+        delegate: HomeSearchDelegate(controller),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //search bar
+        children: [
+          Container(
+            width: 0.9.sw,
+            height: 48.h,
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              borderRadius: BorderRadius.circular(
+                ScreenUtil().setWidth(10),
+              ),
             ),
             child: Row(
               children: [
@@ -477,8 +467,8 @@ class HomepageView extends GetView<HomepageController> {
               ],
             ).paddingAll(10.r),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -531,7 +521,7 @@ class HomepageView extends GetView<HomepageController> {
                 child: CircleAvatar(
                   radius: 25.r,
                   backgroundColor: Colors.transparent,
-                  backgroundImage: CachedNetworkImageProvider(
+                  backgroundImage: NetworkImage(
                     controller.profileC.dataProfile.data!.foto.toString(),
                   ),
                 ),
@@ -718,12 +708,14 @@ class HomepageView extends GetView<HomepageController> {
   Widget buildAllReportsReactive() {
     return controller.obx(
       (state) {
-        final data = controller.allTimelineList;
+        final data = controller.timelineList;
         return ListView.builder(
           itemCount: data.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
+            final vote = data[index].vote.obs;
+            final upVote = data[index].upvote.obs;
             return ListTile(
               dense: true,
               contentPadding: EdgeInsets.symmetric(
@@ -806,32 +798,42 @@ class HomepageView extends GetView<HomepageController> {
                     ),
                   ),
                   5.verticalSpace,
-                  Row(
-                    children: [
-                      GestureDetector(
-                        child: Icon(
-                          Icons.thumb_up_off_alt_rounded,
-                          color: index.isEven ? green2 : Colors.grey,
-                          size: 16.sp,
+                  Obx(
+                    () => Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (vote.value == UPVOTE) {
+                              controller.downvote(
+                                data[index].id!,
+                              );
+                              upVote.value = data[index].upvote! - 1;
+
+                              vote.value = DOWNVOTE;
+                            } else {
+                              controller.upvote(
+                                data[index].id!,
+                              );
+                              upVote.value = data[index].upvote! + 1;
+                              vote.value = UPVOTE;
+                            }
+                          },
+                          child: Icon(
+                            Icons.thumb_up_off_alt_rounded,
+                            size: 24.sp,
+                            color: vote.value == UPVOTE
+                                ? Colors.blue
+                                : Colors.grey,
+                          ),
                         ),
-                      ),
-                      10.horizontalSpace,
-                      const TextSemiBold(
-                        text: "40",
-                        textColour: black,
-                      ),
-                      20.horizontalSpace,
-                      Icon(
-                        Icons.thumb_down_alt_rounded,
-                        color: index.isOdd ? red : Colors.grey,
-                        size: 16.sp,
-                      ),
-                      10.horizontalSpace,
-                      const TextSemiBold(
-                        text: "5",
-                        textColour: black,
-                      ),
-                    ],
+                        10.horizontalSpace,
+                        TextSemiBold(
+                          text: "${upVote.value}",
+                          textColour: black,
+                        ),
+                        20.horizontalSpace,
+                      ],
+                    ),
                   ),
                 ],
               ).paddingAll(5.r),
@@ -839,7 +841,7 @@ class HomepageView extends GetView<HomepageController> {
                 borderRadius: BorderRadius.circular(5.r),
                 child: Image(
                   image: CachedNetworkImageProvider(
-                    Routes.IMAGEURL + data[index].foto!,
+                    data[index].foto!,
                   ),
                   errorBuilder: (context, error, stackTrace) {
                     return Container(

@@ -340,8 +340,7 @@ class HistoryView extends GetView<HistoryController> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15.r),
                               child: CachedNetworkImage(
-                                imageUrl: Routes.IMAGEURL +
-                                    snapshot.data![index].foto!,
+                                imageUrl: snapshot.data![index].foto!,
                                 width: 1.sw,
                                 height: 1.sw / 2,
                                 fit: BoxFit.cover,
@@ -557,8 +556,7 @@ class HistoryView extends GetView<HistoryController> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15.r),
                           child: CachedNetworkImage(
-                            imageUrl:
-                                Routes.IMAGEURL + controller.list[index].foto!,
+                            imageUrl: controller.list[index].foto!,
                             errorWidget: (context, url, error) => Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.r),
@@ -831,13 +829,15 @@ class BuildHistoryList extends StatelessWidget {
               ).paddingAll(5.r),
               trailing: Image(
                 image: CachedNetworkImageProvider(
-                  Routes.IMAGEURL + controller.foundList.value[index].foto!,
+                  controller.foundList.value[index].foto!,
                 ),
                 height: 50,
                 width: 50,
                 fit: BoxFit.fill,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.error),
               ),
-            )
+            ).paddingSymmetric(horizontal: 10.w)
           : Center(
               child: Text(
                 "Tidak ada laporan yang ditemukan",
@@ -1134,8 +1134,7 @@ class BuildSortedHistoryList extends StatelessWidget {
                       Radius.circular(10.r),
                     ),
                     child: CachedNetworkImage(
-                      imageUrl: Routes.IMAGEURL +
-                          controller.sortedList.value[index].foto!,
+                      imageUrl: controller.sortedList.value[index].foto!,
                       fit: BoxFit.cover,
                       width: 1.sw,
                       height: 1.sw / 2,

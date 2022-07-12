@@ -16,6 +16,11 @@ class SearchmapController extends GetxController {
     delay: const Duration(milliseconds: 500),
   );
 
+  Future<void> getMarker(Marker marker) async {
+    myMarker.clear();
+    myMarker.add(marker);
+  }
+
   void searchLocation(String query) {
     debouncer.call(() {
       SearchmapProvider().loadSearch(query).then(

@@ -26,7 +26,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SPLASHSCREEN = '/splashscreen';
-  static const BASEURL = "https://drainit.pocari.id/api/";
+  static const BASEURL = "https://king-prawn-app-hxran.ondigitalocean.app/";
   static const NEW_REPORTS = '/new-reports';
   static const PROCESSED_REPORTS = '/processed-reports';
   static const DONE_REPORTS = '/done-reports';

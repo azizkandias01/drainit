@@ -68,7 +68,6 @@ class ReportsController extends GetxController with StateMixin {
     String deskripsiPengaduan,
     LatLng geometry,
   ) {
-    //TODO: create report still error with foto
     final reportData = {
       'nama_jalan': namaJalan,
       'foto': foto,
@@ -118,7 +117,13 @@ class ReportsController extends GetxController with StateMixin {
             resp,
             status: RxStatus.success(),
           ),
-          Get.offAllNamed(Routes.DETAIL, arguments: resp.data?.id.toString()),
+          Get.offAllNamed(
+            Routes.DETAIL,
+            arguments: resp.data?.id.toString(),
+            parameters: {
+              'type': 'report',
+            },
+          ),
           showSuccessSnackBar("Laporan berhasil dibuat!"),
         },
         onError: (err) {

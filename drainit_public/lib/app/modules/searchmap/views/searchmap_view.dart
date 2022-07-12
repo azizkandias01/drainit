@@ -74,15 +74,13 @@ class SearchmapView extends GetView<SearchmapController> {
   }
 
   Future<void> onTapMapHandler(LatLng latLng) async {
-    controller.myMarker.clear();
-    controller.myMarker.add(
-      Marker(
-        markerId: const MarkerId('my'),
-        position: LatLng(latLng.latitude, latLng.longitude),
-        onTap: () => onMarkerClickHandler(latLng),
-      ),
-    );
     onMarkerClickHandler(latLng);
+    final marker = Marker(
+      markerId: const MarkerId('my'),
+      position: LatLng(latLng.latitude, latLng.longitude),
+      onTap: () => onMarkerClickHandler(latLng),
+    );
+    await controller.getMarker(marker);
   }
 
   Future<void> onMarkerClickHandler(LatLng latLng) async {

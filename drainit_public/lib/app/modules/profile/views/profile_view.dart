@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_flutter/app/components/constant.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
@@ -13,52 +12,58 @@ import 'package:get/get.dart';
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                primary,
-                Colors.white,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+    return WillPopScope(
+      onWillPop: () async {
+        Get.offAndToNamed(Routes.HOMEPAGE);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  primary,
+                  Colors.white,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
           ),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'Profile',
-          style: TextStyle(color: black),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
+          centerTitle: true,
+          title: const Text(
+            'Profile',
+            style: TextStyle(color: black),
           ),
-          onPressed: () => Get.offAndToNamed(Routes.HOMEPAGE),
-        ),
-        actions: [
-          IconButton(
+          leading: IconButton(
             icon: const Icon(
-              Icons.refresh,
+              Icons.arrow_back,
               color: Colors.black,
             ),
-            onPressed: () => {
-              controller.getAccountProfile(),
-            },
+            onPressed: () => Get.offAndToNamed(Routes.HOMEPAGE),
           ),
-        ],
-      ),
-      body: controller.obx(
-        (state) => BodyBuild(controller: controller),
-        onLoading: const Center(
-          child: CircularProgressIndicator.adaptive(),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.refresh,
+                color: Colors.black,
+              ),
+              onPressed: () => {
+                controller.getAccountProfile(),
+              },
+            ),
+          ],
         ),
-        onError: (err) => OnErrorBuilder(controller: controller),
+        body: controller.obx(
+          (state) => BodyBuild(controller: controller),
+          onLoading: const Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
+          onError: (err) => OnErrorBuilder(controller: controller),
+        ),
       ),
     );
   }
@@ -91,14 +96,14 @@ class BodyBuild extends StatelessWidget {
             ).paddingOnly(left: 20.r),
             PersonInfo(controller: controller).paddingAll(10.r),
             10.verticalSpace,
-            Text(
-              'Jumlah laporan',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ).paddingOnly(left: 20.r),
-            const PersonReport().paddingAll(10.r),
+            // Text(
+            //   'Jumlah laporan',
+            //   style: TextStyle(
+            //     fontSize: 12.sp,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ).paddingOnly(left: 20.r),
+            // const PersonReport().paddingAll(10.r),
             Text(
               'Keluar',
               style: TextStyle(
@@ -118,11 +123,12 @@ class BodyBuild extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.normal,
+                        color: red,
                       ),
                     ),
                     const Icon(
                       Icons.arrow_forward,
-                      color: Colors.black,
+                      color: red,
                     ),
                   ],
                 ).paddingAll(20.r),
@@ -487,7 +493,7 @@ class ProfileTopBar extends StatelessWidget {
           CircleAvatar(
             maxRadius: 40.w,
             minRadius: 40.w,
-            backgroundImage: CachedNetworkImageProvider(
+            backgroundImage: NetworkImage(
               controller.dataProfile.data!.foto.toString(),
             ),
             backgroundColor: Colors.transparent,

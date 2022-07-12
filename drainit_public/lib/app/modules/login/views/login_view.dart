@@ -4,7 +4,6 @@ import 'package:drainit_flutter/app/components/rounded_input_field.dart';
 import 'package:drainit_flutter/app/components/text_default.dart';
 import 'package:drainit_flutter/app/modules/login/controllers/login_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -147,23 +146,21 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                   SizedBox(height: ScreenUtil().setHeight(10)),
-                  Container(
-                    width: Get.width,
-                    height: ScreenUtil().setHeight(50),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
-                        color: primary,
-                        width: 1.w,
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () => {
-                        showInfoSnackBar(
-                          "Masih dalam tahap pengembangan!",
+                  GestureDetector(
+                    onTap: () => {
+                      Get.toNamed(Routes.HOMEPAGE_ANONYMOUS),
+                    },
+                    child: Container(
+                      width: Get.width,
+                      height: ScreenUtil().setHeight(50),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: primary,
+                          width: 1.w,
                         ),
-                      },
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

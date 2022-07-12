@@ -40,7 +40,7 @@ class LoginController extends GetxController with StateMixin {
           status: RxStatus.success(),
         ),
         // box.write(Routes.TOKEN, resp.accessToken),
-        box.write(Routes.TOKEN, resp.accessToken),
+        box.write(Routes.TOKEN, resp.token),
         Get.offAllNamed(Routes.HOMEPAGE, arguments: 'login')
       },
       //if error happens then catch the error and show to user
