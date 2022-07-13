@@ -128,7 +128,7 @@ class DetailController extends GetxController with StateMixin {
       null,
       status: RxStatus.loading(),
     );
-    await DetailProvider().getDetail(id).then(
+    await DetailProvider().getDetail(id, box.read(Routes.TOKEN)).then(
       (value) => {
         detail = value!,
         change(value, status: RxStatus.success()),

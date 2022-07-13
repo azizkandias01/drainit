@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_petugas/app/modules/detail/controllers/detail_controller.dart';
+import 'package:drainit_petugas/app/utils/constant.dart';
 import 'package:drainit_petugas/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -105,12 +106,46 @@ class UpdateLaporanView extends GetView<DetailController> {
                       ),
                     ),
                     onPressed: () {
-                      controller.updateLaporan(
-                          controller.detail.id!,
-                          "update",
-                          controller.updateLaporanController.text,
-                          controller.bytes64Image.value);
-                      controller.notifikasi();
+                      if (controller.detail.status == done) {
+                        Get.dialog(
+                          AlertDialog(
+                            title: Text('Laporan Sudah Selesai'),
+                            content: Text(
+                                'Laporan sudah selesai, tidak dapat diupdate'),
+                            actions: [
+                              FlatButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  Get.back();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (controller
+                          .updateLaporanController.text.isEmpty) {
+                        Get.dialog(
+                          AlertDialog(
+                            title: Text('Update Laporan'),
+                            content: Text('Laporan tidak boleh kosong'),
+                            actions: [
+                              FlatButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  Get.back();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        controller.updateLaporan(
+                            controller.detail.id!,
+                            "update",
+                            controller.updateLaporanController.text,
+                            controller.bytes64Image.value);
+                        controller.notifikasi();
+                      }
                     },
                     child: Text('Update')),
               ],
@@ -159,11 +194,6 @@ class UpdateLaporanView extends GetView<DetailController> {
                             children: [
                               TextBold(
                                 text: "${controller.listUpdate[i].namaPetugas}",
-                              ),
-                              5.verticalSpace,
-                              TextRegular(
-                                text:
-                                    "Update: ${controller.listUpdate[i].judul}",
                               ),
                               5.verticalSpace,
                               TextRegular(

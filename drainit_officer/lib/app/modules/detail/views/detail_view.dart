@@ -64,12 +64,8 @@ class DetailView extends GetView<DetailController> {
           ),
           bottom: TabBar(
             padding: EdgeInsets.all(5.r),
-            indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                30.r,
-              ),
-              color: primary,
-            ),
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorColor: primary,
             labelColor: Colors.black,
             tabs: [
               Tab(
@@ -230,11 +226,11 @@ class DetailTab extends StatelessWidget {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            controller.detail.tipePengaduan!,
+                            controller.detail.tipe!,
                           ),
                         ),
                         child: TextMedium(
-                          text: controller.detail.tipePengaduan!,
+                          text: controller.detail.tipe!,
                           textColour: white,
                         ),
                       ),
@@ -251,11 +247,11 @@ class DetailTab extends StatelessWidget {
                             Radius.circular(5.r),
                           ),
                           color: getStatusColor(
-                            controller.detail.statusPengaduan!,
+                            controller.detail.status!,
                           ),
                         ),
                         child: TextMedium(
-                          text: controller.detail.statusPengaduan!,
+                          text: controller.detail.status!,
                           textColour: white,
                         ),
                       ),
@@ -282,7 +278,7 @@ class DetailTab extends StatelessWidget {
                   ),
                   10.verticalSpace,
                   Text(
-                    '${controller.detail.deskripsiPengaduan}',
+                    '${controller.detail.deskripsi}',
                   )
                 ],
               ).paddingAll(20.r),
@@ -327,8 +323,28 @@ class DetailTab extends StatelessWidget {
                     text: "Laporan Ditangani Oleh",
                   ),
                   10.verticalSpace,
-                  Text(
-                    '${controller.detail.namaPetugas}',
+                  Builder(
+                    builder: (context) {
+                      final petugas = controller.detail.petugas!.length;
+                      var namaPetugas = "";
+                      for (var i = 0; i < petugas; i++) {
+                        namaPetugas +=
+                            "${controller.detail.petugas![i].namaPetugas}";
+                        if (i < petugas - 1) {
+                          namaPetugas += ", ";
+                        }
+                      }
+                      return Row(
+                        children: [
+                          TextMedium(
+                            text: namaPetugas,
+                            textColour: Colors.grey,
+                          ),
+                        ],
+                      ).paddingSymmetric(
+                        vertical: 10.h,
+                      );
+                    },
                   )
                 ],
               ).paddingAll(20.r),
@@ -374,6 +390,17 @@ class DetailTab extends StatelessWidget {
                           width: Get.width,
                           height: 200.w,
                           fit: BoxFit.fitWidth,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              height: 200.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.r),
+                                ),
+                                color: Colors.grey,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -478,8 +505,7 @@ class DetailWidget extends StatelessWidget {
                         height: 9.h,
                       ),
                       ReadMoreText(
-                        controller.detail.deskripsiPengaduan ??
-                            "no description",
+                        controller.detail.deskripsi ?? "no description",
                         trimLines: 2,
                         colorClickableText: Colors.pink,
                         trimMode: TrimMode.Line,

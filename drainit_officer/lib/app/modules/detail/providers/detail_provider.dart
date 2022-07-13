@@ -13,9 +13,12 @@ class DetailProvider extends GetConnect {
     httpClient.baseUrl = 'YOUR-API-URL';
   }
 
-  Future<Detail?> getDetail(String id) async {
-    final response = await get(Routes.BASEURL + 'pengaduan/$id');
+  Future<Detail?> getDetail(String id, String bearer) async {
+    final response = await get(Routes.BASEURL + 'pengaduan/$id', headers: {
+      'Authorization': 'Bearer $bearer',
+    });
     if (response.status.hasError) {
+      print(response.bodyString);
       return Future.error(response.statusCode.toString());
     } else {
       return Detail.fromJson(response.body);

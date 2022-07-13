@@ -21,8 +21,8 @@ class HomepageBinding extends Bindings {
     Get.put<DoneReportsController>(
       DoneReportsController(),
     );
-    Get.put<MapsController>(
-      MapsController(),
+    Get.lazyPut<MapsController>(
+      () => MapsController(),
     );
   }
 }

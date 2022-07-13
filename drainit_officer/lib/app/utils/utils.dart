@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
@@ -49,13 +48,13 @@ Color getStatusColor(String status) {
       return Colors.orange.shade300;
     case "ON_PROGRESS":
       return Colors.purple.shade300;
-    case "COMPLETED":
+    case "DONE":
       return Colors.green.shade300;
     case "REFUSED":
       return Colors.red.shade300;
-    case "Banjir":
+    case "BANJIR":
       return Colors.blue.shade300;
-    case "Drainase Rusak":
+    case "DRAINASE RUSAK":
       return Colors.brown.shade300;
     default:
       return Colors.grey.shade300;

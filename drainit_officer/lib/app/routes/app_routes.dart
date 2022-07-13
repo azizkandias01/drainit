@@ -9,6 +9,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const BASEURL = _Paths.BASEURL;
+  static const BASEURL_USER = _Paths.BASEURL_USER;
   static const NEW_REPORTS = _Paths.NEW_REPORTS;
   static const PROCESSED_REPORTS = _Paths.PROCESSED_REPORTS;
   static const DONE_REPORTS = _Paths.DONE_REPORTS;
@@ -26,7 +27,10 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SPLASHSCREEN = '/splashscreen';
-  static const BASEURL = "https://king-prawn-app-hxran.ondigitalocean.app/";
+  static const BASEURL_USER =
+      "https://king-prawn-app-hxran.ondigitalocean.app/";
+  static const BASEURL =
+      "https://drainit-backend-2w9s8.ondigitalocean.app/api/";
   static const NEW_REPORTS = '/new-reports';
   static const PROCESSED_REPORTS = '/processed-reports';
   static const DONE_REPORTS = '/done-reports';
@@ -34,7 +38,7 @@ abstract class _Paths {
   static const TOKEN = '/token';
   static const DETAIL = '/detail';
   static const IMAGEURL =
-      "https://drainit.pocari.id/storage/app/public/images/";
+      "https://drainit-backend-2w9s8.ondigitalocean.app/storage/images/";
   static const MAPS = '/maps';
   static const UPDATE_LAPORAN = '/update-laporan';
   static const HOMEPAGE = '/homepage';

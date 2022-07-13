@@ -1,23 +1,37 @@
-import 'package:drainit_petugas/app/modules/done_reports/controllers/done_reports_controller.dart';
+import 'package:drainit_petugas/app/modules/homepage/models/report_model.dart';
+import 'package:drainit_petugas/app/modules/homepage/providers/report_provider.dart';
+import 'package:drainit_petugas/app/modules/maps/controllers/maps_controller.dart';
+import 'package:drainit_petugas/app/modules/profile/controllers/profile_controller.dart';
+import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class HomepageController extends GetxController {
+class HomepageController extends GetxController with StateMixin {
   GetStorage box = GetStorage();
-  final doneReportsController = DoneReportsController();
-  // final processedReportsController = Get.find<ProcessedReportsController>();
-  // final profileController = Get.find<ProfileController>();
-  // final mapController = Get.find<MapsController>();
-  final count = 0.obs;
+  List<ReportModel> allTimelineList = <ReportModel>[];
+  final mapC = Get.put(MapsController());
+  final profileC = Get.put(ProfileController());
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     FlutterNativeSplash.remove();
+    change(null, status: RxStatus.empty());
+    await loadAllTimeline();
   }
 
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  Future<void> loadAllTimeline() async {
+    change(null, status: RxStatus.loading());
+    await HomepageProvider().getLaporan(box.read(Routes.TOKEN)).then(
+      (value) => {
+        allTimelineList = value,
+        allTimelineList.sort((a, b) => b.upvote!.compareTo(a.upvote!)),
+        change(null, status: RxStatus.success()),
+      },
+      onError: (err) {
+        change(err, status: RxStatus.error());
+      },
+    );
+  }
 }

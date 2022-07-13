@@ -18,7 +18,6 @@ class DrainageMapProvider extends GetConnect {
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());
     } else {
-      print(response.body);
       final dataRaw = (response.body as List)
           .map(
             (e) => DrainageMap.fromJson(e as Map<String, dynamic>),

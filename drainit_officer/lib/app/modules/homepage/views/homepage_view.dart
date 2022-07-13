@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_petugas/app/modules/done_reports/models/report_model.dart';
+import 'package:drainit_petugas/app/modules/homepage/models/report_model.dart';
 import 'package:drainit_petugas/app/routes/app_pages.dart';
+import 'package:drainit_petugas/app/utils/constant.dart';
 import 'package:drainit_petugas/app/utils/text_default.dart';
+import 'package:drainit_petugas/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,198 +20,230 @@ class HomepageView extends GetView<HomepageController> {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
-      body: Stack(
-        children: [
-          topMenu(),
-          bottomMenu(),
-        ],
-      ),
-    );
-  }
-
-  FutureBuilder<List<Report>> bottomMenu() {
-    return FutureBuilder<List<Report>>(
-      future: controller.doneReportsController.getDoneReports(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return loadingPlaceholder();
-        } else if (snapshot.hasData) {
-          return bottomWidget(snapshot);
-        } else {
-          return Center(
-            child: TextMedium(
-              text: "Tidak ada pengaduan",
-              fontSize: 20.sp,
-            ),
-          );
-        }
-      },
-    );
-  }
-
-  Align bottomWidget(AsyncSnapshot<List<Report>> snapshot) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 0.75.sh,
-        width: 1.sw,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.r),
-            topRight: Radius.circular(20.r),
-          ),
-        ),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                10.verticalSpace,
-                TextBold(
-                  text: "OVERVIEW",
-                  fontSize: 14.sp,
-                  textColour: black,
-                ),
-                10.verticalSpace,
-                overviewCard(),
-                20.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextBold(text: "Pengaduan Baru", fontSize: 16.sp),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(Routes.DONE_REPORTS),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.amber,
-                      ),
-                    ),
-                  ],
-                ),
-                15.verticalSpace,
+      body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                primary,
+                Colors.orange,
+                primary,
               ],
             ),
-            GridView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10.w,
-                crossAxisSpacing: 10.h,
-                childAspectRatio: (1 / 1.4),
+          ),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              controller.loadAllTimeline();
+              controller.profileC.getAccountProfile();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  topMenu(),
+                  bottomMenu(),
+                ],
               ),
-              itemBuilder: (_, index) => GestureDetector(
-                onTap: () => Get.toNamed(Routes.DETAIL, arguments: [
-                  snapshot.data![index].id,
-                  snapshot.data![index].geometry,
-                ]),
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.r),
-                      child: CachedNetworkImage(
-                        imageUrl: Routes.IMAGEURL + snapshot.data![index].foto!,
-                        fit: BoxFit.cover,
-                        width: 1.sw,
-                        height: 1.sh,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.r,
-                            vertical: 5.r,
-                          ),
-                          height: 20.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.r),
-                            ),
-                            color: Colors.amber,
-                          ),
-                          child: Center(
-                            child: TextBold(
-                              text: snapshot.data![index].statusPengaduan!,
-                              fontSize: 7.sp,
-                              textColour: white,
-                            ),
-                          ),
-                        ),
-                        5.horizontalSpace,
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.r,
-                            vertical: 5.r,
-                          ),
-                          height: 20.h,
-                          width: 50.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.r),
-                            ),
-                            color: Colors.blue,
-                          ),
-                          child: Center(
-                            child: TextBold(
-                              text: snapshot.data![index].tipePengaduan!,
-                              textColour: white,
-                              fontSize: 7.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ).paddingOnly(top: 15.h, left: 15.w),
-                    Positioned(
-                      bottom: 0,
-                      child: FittedBox(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.thumb_up_off_alt_rounded,
-                              color: Colors.greenAccent,
-                              size: 10.sp,
-                            ),
-                            10.horizontalSpace,
-                            TextBold(
-                              text: "40",
-                              textColour: white,
-                            ),
-                            20.horizontalSpace,
-                            Icon(
-                              Icons.thumb_down_alt_rounded,
-                              color: red,
-                              size: 10.sp,
-                            ),
-                            10.horizontalSpace,
-                            TextBold(
-                              text: "5",
-                              textColour: white,
-                            ),
-                          ],
-                        ),
-                      ).paddingOnly(left: 15.w, top: 20.h, bottom: 40.h),
-                    ),
-                    Positioned(
-                      bottom: 20.h,
-                      left: 15.w,
-                      child: TextMedium(
-                        text: snapshot.data![index].namaJalan!.split(",")[0],
-                        textColour: white,
-                        fontSize: 10.sp,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              itemCount: 10,
             ),
+          )),
+    );
+  }
+
+  Widget bottomMenu() {
+    return controller.obx(
+      (state) {
+        return bottomWidget(controller.allTimelineList);
+      },
+      onLoading: loadingPlaceholder(),
+      onEmpty: IconButton(
+          onPressed: () async {
+            controller.loadAllTimeline();
+            controller.profileC.getAccountProfile();
+          },
+          icon: Icon(Icons.refresh)),
+      onError: (err) => IconButton(
+          onPressed: () async {
+            controller.loadAllTimeline();
+            controller.profileC.getAccountProfile();
+          },
+          icon: Icon(Icons.refresh)),
+    );
+  }
+
+  Widget topMenu() {
+    return Container(
+      width: 1.sw,
+      decoration: BoxDecoration(),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            headerProfile().paddingSymmetric(vertical: 10.h),
+            menuRow().paddingOnly(bottom: 15.h, top: 10.h),
           ],
-        ).paddingSymmetric(horizontal: 20.w, vertical: 10.h),
+        ).paddingOnly(left: 20.w, right: 20.w, bottom: 10.h),
       ),
+    );
+  }
+
+  Widget bottomWidget(List<ReportModel> snapshot) {
+    return Container(
+      width: 1.sw,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.r),
+          topRight: Radius.circular(20.r),
+        ),
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              10.verticalSpace,
+              TextBold(
+                text: "OVERVIEW",
+                fontSize: 14.sp,
+                textColour: black,
+              ),
+              10.verticalSpace,
+              overviewCard(),
+              20.verticalSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextBold(text: "Pengaduan Baru", fontSize: 16.sp),
+                  GestureDetector(
+                    onTap: () => Get.toNamed(Routes.DONE_REPORTS),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.amber,
+                    ),
+                  ),
+                ],
+              ),
+              15.verticalSpace,
+            ],
+          ),
+          GridView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10.w,
+              crossAxisSpacing: 10.h,
+              childAspectRatio: (1 / 1.4),
+            ),
+            itemBuilder: (_, index) => GestureDetector(
+              onTap: () => Get.toNamed(Routes.DETAIL, arguments: [
+                snapshot[index].id,
+                snapshot[index].geometry,
+              ]),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15.r),
+                    child: CachedNetworkImage(
+                      imageUrl: snapshot[index].foto!,
+                      fit: BoxFit.cover,
+                      width: 1.sw,
+                      height: 1.sh,
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.r),
+                          color: Colors.grey[200],
+                        ),
+                        height: 1.sh,
+                        width: 1.sw,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        height: 20.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: getStatusColor(snapshot[index].status!),
+                        ),
+                        child: Center(
+                          child: TextBold(
+                            text: snapshot[index].status!,
+                            fontSize: 7.sp,
+                            textColour: white,
+                          ),
+                        ),
+                      ),
+                      5.horizontalSpace,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.r,
+                          vertical: 5.r,
+                        ),
+                        height: 20.h,
+                        width: 50.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5.r),
+                          ),
+                          color: getStatusColor(snapshot[index].tipe!),
+                        ),
+                        child: Center(
+                          child: TextBold(
+                            text: snapshot[index].tipe!,
+                            textColour: white,
+                            fontSize: 7.sp,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).paddingOnly(top: 15.h, left: 15.w),
+                  Positioned(
+                    bottom: 0,
+                    child: FittedBox(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.thumb_up_off_alt_rounded,
+                            color: Colors.blue,
+                            size: 16.sp,
+                          ),
+                          10.horizontalSpace,
+                          TextBold(
+                            text: "${snapshot[index].upvote}",
+                            textColour: white,
+                          ),
+                        ],
+                      ),
+                    ).paddingOnly(left: 15.w, top: 20.h, bottom: 40.h),
+                  ),
+                  Positioned(
+                    bottom: 20.h,
+                    left: 15.w,
+                    child: TextMedium(
+                      text: snapshot[index].namaJalan!.split(",")[0],
+                      textColour: white,
+                      fontSize: 10.sp,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            itemCount: snapshot.length,
+          ),
+        ],
+      ).paddingSymmetric(horizontal: 20.w, vertical: 10.h),
     );
   }
 
@@ -341,7 +376,7 @@ class HomepageView extends GetView<HomepageController> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 0.75.sh,
+        height: 0.70.sh,
         width: 1.sw,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -441,34 +476,21 @@ class HomepageView extends GetView<HomepageController> {
     );
   }
 
-  Container topMenu() {
-    return Container(
-      height: 0.55.sh,
-      width: 1.sw,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            primary,
-            Colors.orange,
-            primary,
-          ],
-        ),
-      ),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            headerProfile().paddingSymmetric(vertical: 10.h),
-            menuRow().paddingOnly(bottom: 15.h, top: 10.h),
-          ],
-        ).paddingSymmetric(horizontal: 20.w),
-      ),
-    );
-  }
-
   Container overviewCard() {
+    var totalDoneReports = controller.allTimelineList
+        .where((element) => element.status == done)
+        .length;
+    var totalReports = controller.allTimelineList.length;
+    var totalDoneReportsPercentage = (totalDoneReports / totalReports) * 100;
+    var totalDoneReportsPercentageText =
+        '${totalDoneReportsPercentage.toStringAsFixed(0)}%';
+    var totalProcessesReport = controller.allTimelineList
+        .where((element) => element.status != done)
+        .length;
+    var totalProcessesReportPercentage =
+        (totalProcessesReport / totalReports) * 100;
+    var totalProcessesReportPercentageText =
+        '${totalProcessesReportPercentage.toStringAsFixed(0)}%';
     return Container(
       width: 1.sw,
       height: 0.2.sh,
@@ -481,6 +503,7 @@ class HomepageView extends GetView<HomepageController> {
         ),
       ),
       child: Column(
+        //TODO update from on progress to done
         children: [
           10.verticalSpace,
           Row(
@@ -494,13 +517,13 @@ class HomepageView extends GetView<HomepageController> {
                   SizedBox(
                     width: 0.6.sw,
                     child: LinearProgressIndicator(
-                      value: 0.7,
+                      value: totalProcessesReportPercentage / 100,
                       backgroundColor: grey[300],
                       valueColor: AlwaysStoppedAnimation(Colors.orange),
                     ),
                   ).paddingOnly(bottom: 7.h),
                   TextMedium(
-                      text: "16 Diproses",
+                      text: "$totalProcessesReport Diproses",
                       fontSize: 14.sp,
                       textColour: Colors.orange),
                 ],
@@ -521,7 +544,7 @@ class HomepageView extends GetView<HomepageController> {
                 ),
                 child: Center(
                   child: TextMedium(
-                    text: "60%",
+                    text: totalProcessesReportPercentageText,
                     fontSize: 14.sp,
                     textColour: white,
                   ),
@@ -543,13 +566,13 @@ class HomepageView extends GetView<HomepageController> {
                   SizedBox(
                     width: 0.6.sw,
                     child: LinearProgressIndicator(
-                      value: 0.3,
+                      value: totalDoneReportsPercentage / 100,
                       backgroundColor: grey[300],
                       valueColor: AlwaysStoppedAnimation(Colors.blue),
                     ),
                   ).paddingOnly(bottom: 7.h),
                   TextMedium(
-                      text: "4 Selesai",
+                      text: "$totalDoneReports Selesai",
                       fontSize: 14.sp,
                       textColour: Colors.blue),
                 ],
@@ -570,7 +593,7 @@ class HomepageView extends GetView<HomepageController> {
                 ),
                 child: Center(
                   child: TextBold(
-                    text: "30%",
+                    text: totalDoneReportsPercentageText,
                     fontSize: 14.sp,
                     textColour: white,
                   ),
@@ -681,37 +704,95 @@ class HomepageView extends GetView<HomepageController> {
     );
   }
 
-  Row headerProfile() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextMedium(
-                    text: "David Alexander", fontSize: 20.sp, textColour: white)
-                .paddingOnly(bottom: 5.h),
-            TextMedium(
-              text: "PUPR (Available)",
-              fontSize: 12.sp,
-              textColour: white,
+  Widget headerProfile() {
+    return controller.profileC.obx(
+      (state) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextMedium(
+                      text: controller.profileC.profile.data!.nama!,
+                      fontSize: 20.sp,
+                      textColour: white)
+                  .paddingOnly(bottom: 5.h),
+              TextMedium(
+                text: "Status : " + controller.profileC.profile.data!.status!,
+                fontSize: 12.sp,
+                textColour: white,
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: () => Get.toNamed(Routes.PROFILE),
+            child: CircleAvatar(
+              radius: 28,
+              backgroundColor: white,
+              child: CircleAvatar(
+                radius: 25,
+                backgroundImage:
+                    Image.network(controller.profileC.profile.data!.foto!)
+                        .image,
+              ),
             ),
-          ],
-        ),
-        GestureDetector(
-          onTap: () => Get.toNamed(Routes.PROFILE),
-          child: CircleAvatar(
+          ),
+        ],
+      ),
+      onLoading: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Shimmer.fromColors(
+                highlightColor: Colors.grey[300]!,
+                baseColor: Colors.grey[100]!,
+                child: Container(
+                  width: 0.5.sw,
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                    color: grey,
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
+                ),
+              ),
+              10.verticalSpace,
+              Shimmer.fromColors(
+                highlightColor: Colors.grey[300]!,
+                baseColor: Colors.grey[100]!,
+                child: Container(
+                  width: 0.5.sw,
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                    color: grey,
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          CircleAvatar(
             radius: 28,
             backgroundColor: white,
             child: CircleAvatar(
               radius: 25,
-              backgroundImage:
-                  Image.network("https://picsum.photos/250?image=9").image,
+              child: Shimmer.fromColors(
+                highlightColor: Colors.grey[300]!,
+                baseColor: Colors.grey[100]!,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: grey,
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

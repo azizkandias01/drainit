@@ -182,7 +182,7 @@ class PersonInfo extends StatelessWidget {
                 ],
               ),
               Text(
-                '081255621447',
+                '${controller.profile.data?.telepon}',
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
@@ -217,7 +217,7 @@ class PersonInfo extends StatelessWidget {
                 ],
               ),
               Text(
-                'Petugas@gmail.com  ',
+                '${controller.profile.data?.email}',
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
@@ -252,7 +252,7 @@ class PersonInfo extends StatelessWidget {
                 ],
               ),
               Text(
-                '',
+                '${controller.profile.data?.alamat}',
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
@@ -278,7 +278,7 @@ class PersonInfo extends StatelessWidget {
                   ),
                   10.horizontalSpace,
                   Text(
-                    'Akun dibuat',
+                    'Tanggal Lahir',
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.normal,
@@ -287,7 +287,7 @@ class PersonInfo extends StatelessWidget {
                 ],
               ),
               Text(
-                "",
+                "${controller.profile.data?.tanggalLahir!.substring(0, 10)}",
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
@@ -387,13 +387,13 @@ class ProfileTopBar extends StatelessWidget {
           CircleAvatar(
             maxRadius: ScreenUtil().setWidth(40),
             backgroundImage: NetworkImage(
-              'https://random.imagecdn.app/500/150',
+              controller.profile.data!.foto!,
             ),
             backgroundColor: black,
           ),
           20.verticalSpace,
           Text(
-            'Petugas',
+            '${controller.profile.data!.nama}',
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
@@ -401,7 +401,7 @@ class ProfileTopBar extends StatelessWidget {
           ),
           5.verticalSpace,
           Text(
-            'Petugas@gmail.com',
+            '${controller.profile.data!.status}',
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.normal,
