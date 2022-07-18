@@ -24,11 +24,9 @@ abstract class Routes {
   static const DETAIL = _Paths.DETAIL;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const WELCOME = _Paths.WELCOME;
-  static const IMAGEURL =
-      "https://drainit-backend-2w9s8.ondigitalocean.app/storage/images/";
+  static const IMAGEURL = "https://drainit.me/storage/images/";
   static const BASEURL = "https://king-prawn-app-hxran.ondigitalocean.app/";
-  static const BASEURL_SYSTEM =
-      "https://drainit-backend-2w9s8.ondigitalocean.app/api/";
+  static const BASEURL_SYSTEM = "https://drainit.me/api/";
   static const ONE_SIGNAL_APP_ID = "366b7e82-ce68-488b-8394-4374e0783cc6";
   static const USER_ID = _Paths.USER_ID;
   static const HOMEPAGE = _Paths.HOMEPAGE;

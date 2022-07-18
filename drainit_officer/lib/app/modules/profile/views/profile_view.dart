@@ -1,3 +1,4 @@
+import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:drainit_petugas/app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -298,42 +299,9 @@ class PersonInfo extends StatelessWidget {
         ),
         10.verticalSpace,
         GestureDetector(
-          onTap: () {},
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(10.w),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.edit,
-                      color: Colors.black,
-                    ),
-                    10.horizontalSpace,
-                    Text(
-                      'Edit Status',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ],
-                ),
-                const Icon(
-                  Icons.arrow_forward,
-                  color: Colors.black,
-                ),
-              ],
-            ).paddingAll(10.r),
-          ),
-        ),
-        10.verticalSpace,
-        GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.toNamed(Routes.EDIT_PASSWORD);
+          },
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey[100],

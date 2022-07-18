@@ -60,13 +60,35 @@ class HomepageView extends GetView<HomepageController> {
             controller.loadAllTimeline();
             controller.profileC.getAccountProfile();
           },
-          icon: Icon(Icons.refresh)),
-      onError: (err) => IconButton(
-          onPressed: () async {
-            controller.loadAllTimeline();
-            controller.profileC.getAccountProfile();
-          },
-          icon: Icon(Icons.refresh)),
+          icon: Icon(Icons.refresh_outlined)),
+      onError: (err) => Container(
+        width: 1.sw,
+        height: .7.sh,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.r),
+            topRight: Radius.circular(20.r),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Text(
+                err ?? "Belum ada laporan untuk saat ini",
+                style: TextStyle(color: orange),
+              ),
+            ),
+            IconButton(
+                onPressed: () async {
+                  controller.loadAllTimeline();
+                  controller.profileC.getAccountProfile();
+                },
+                icon: Icon(Icons.refresh))
+          ],
+        ),
+      ),
     );
   }
 
@@ -129,119 +151,130 @@ class HomepageView extends GetView<HomepageController> {
               15.verticalSpace,
             ],
           ),
-          GridView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10.w,
-              crossAxisSpacing: 10.h,
-              childAspectRatio: (1 / 1.4),
-            ),
-            itemBuilder: (_, index) => GestureDetector(
-              onTap: () => Get.toNamed(Routes.DETAIL, arguments: [
-                snapshot[index].id,
-                snapshot[index].geometry,
-              ]),
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15.r),
-                    child: CachedNetworkImage(
-                      imageUrl: snapshot[index].foto!,
-                      fit: BoxFit.cover,
-                      width: 1.sw,
-                      height: 1.sh,
-                      errorWidget: (context, url, error) => Container(
-                        decoration: BoxDecoration(
+          snapshot.isNotEmpty
+              ? GridView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.w,
+                    crossAxisSpacing: 10.h,
+                    childAspectRatio: (1 / 1.4),
+                  ),
+                  itemBuilder: (_, index) => GestureDetector(
+                    onTap: () => Get.toNamed(Routes.DETAIL, arguments: [
+                      snapshot[index].id,
+                      snapshot[index].geometry,
+                    ]),
+                    child: Stack(
+                      children: [
+                        ClipRRect(
                           borderRadius: BorderRadius.circular(15.r),
-                          color: Colors.grey[200],
+                          child: CachedNetworkImage(
+                            imageUrl: snapshot[index].foto.toString(),
+                            fit: BoxFit.cover,
+                            width: 1.sw,
+                            height: 1.sh,
+                            errorWidget: (context, url, error) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.grey[200],
+                              ),
+                              height: 1.sh,
+                              width: 1.sw,
+                            ),
+                          ),
                         ),
-                        height: 1.sh,
-                        width: 1.sw,
-                      ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.r,
+                                vertical: 5.r,
+                              ),
+                              height: 20.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5.r),
+                                ),
+                                color: getStatusColor(
+                                    snapshot[index].status.toString()),
+                              ),
+                              child: Center(
+                                child: TextBold(
+                                  text: snapshot[index].status.toString(),
+                                  fontSize: 7.sp,
+                                  textColour: white,
+                                ),
+                              ),
+                            ),
+                            5.horizontalSpace,
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.r,
+                                vertical: 5.r,
+                              ),
+                              height: 20.h,
+                              width: 50.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5.r),
+                                ),
+                                color: getStatusColor(
+                                    snapshot[index].tipe.toString()),
+                              ),
+                              child: Center(
+                                child: TextBold(
+                                  text: snapshot[index].tipe.toString(),
+                                  textColour: white,
+                                  fontSize: 7.sp,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ).paddingOnly(top: 15.h, left: 15.w),
+                        Positioned(
+                          bottom: 0,
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.thumb_up_off_alt_rounded,
+                                  color: Colors.blue,
+                                  size: 16.sp,
+                                ),
+                                10.horizontalSpace,
+                                TextBold(
+                                  text: "${snapshot[index].upvote}",
+                                  textColour: white,
+                                ),
+                              ],
+                            ),
+                          ).paddingOnly(left: 15.w, top: 20.h, bottom: 40.h),
+                        ),
+                        Positioned(
+                          bottom: 20.h,
+                          left: 15.w,
+                          child: TextMedium(
+                            text:
+                                snapshot[index].namaJalan?.split(",")[0] ?? "",
+                            textColour: white,
+                            fontSize: 10.sp,
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5.r,
-                          vertical: 5.r,
-                        ),
-                        height: 20.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5.r),
-                          ),
-                          color: getStatusColor(snapshot[index].status!),
-                        ),
-                        child: Center(
-                          child: TextBold(
-                            text: snapshot[index].status!,
-                            fontSize: 7.sp,
-                            textColour: white,
-                          ),
-                        ),
-                      ),
-                      5.horizontalSpace,
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5.r,
-                          vertical: 5.r,
-                        ),
-                        height: 20.h,
-                        width: 50.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5.r),
-                          ),
-                          color: getStatusColor(snapshot[index].tipe!),
-                        ),
-                        child: Center(
-                          child: TextBold(
-                            text: snapshot[index].tipe!,
-                            textColour: white,
-                            fontSize: 7.sp,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ).paddingOnly(top: 15.h, left: 15.w),
-                  Positioned(
-                    bottom: 0,
-                    child: FittedBox(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.thumb_up_off_alt_rounded,
-                            color: Colors.blue,
-                            size: 16.sp,
-                          ),
-                          10.horizontalSpace,
-                          TextBold(
-                            text: "${snapshot[index].upvote}",
-                            textColour: white,
-                          ),
-                        ],
-                      ),
-                    ).paddingOnly(left: 15.w, top: 20.h, bottom: 40.h),
+                  itemCount: snapshot.length,
+                )
+              : Center(
+                  child: TextBold(
+                    text: "Belum ada pengaduan",
+                    fontSize: 16.sp,
+                    textColour: orange,
                   ),
-                  Positioned(
-                    bottom: 20.h,
-                    left: 15.w,
-                    child: TextMedium(
-                      text: snapshot[index].namaJalan!.split(",")[0],
-                      textColour: white,
-                      fontSize: 10.sp,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            itemCount: snapshot.length,
-          ),
+                ).paddingOnly(top: 20.h, left: 20.w, right: 20.w),
         ],
       ).paddingSymmetric(horizontal: 20.w, vertical: 10.h),
     );
@@ -267,7 +300,7 @@ class HomepageView extends GetView<HomepageController> {
                       topRight: Radius.circular(20.r),
                     ),
                     child: CachedNetworkImage(
-                      imageUrl: Routes.IMAGEURL + snapshot.data![index].foto!,
+                      imageUrl: snapshot.data?[index].foto.toString() ?? "",
                       fit: BoxFit.fill,
                       width: 0.6.sw,
                       height: 0.29.sh,
@@ -290,7 +323,9 @@ class HomepageView extends GetView<HomepageController> {
                       ),
                       child: Center(
                         child: TextBold(
-                          text: snapshot.data![index].statusPengaduan!,
+                          text: snapshot.data?[index].statusPengaduan
+                                  .toString() ??
+                              "",
                           fontSize: 7.sp,
                           textColour: white,
                         ),
@@ -311,8 +346,10 @@ class HomepageView extends GetView<HomepageController> {
                       ),
                       child: Center(
                         child: TextBold(
-                          text: snapshot.data![index].tipePengaduan!
-                              .toUpperCase(),
+                          text: snapshot.data?[index].tipePengaduan
+                                  .toString()
+                                  .toUpperCase() ??
+                              "",
                           textColour: white,
                           fontSize: 7.sp,
                         ),
@@ -324,9 +361,9 @@ class HomepageView extends GetView<HomepageController> {
                   bottom: 10.h,
                   left: 10.w,
                   child: TextMedium(
-                    text: snapshot.data![index].namaJalan!.split(",")[0] +
-                        ", " +
-                        snapshot.data![index].namaJalan!.split(",")[1],
+                    text: "${snapshot.data?[index].namaJalan?.split(",")[0]} "
+                        ", "
+                        "${snapshot.data?[index].namaJalan?.split(",")[1]}",
                     textColour: white,
                     fontSize: 10.sp,
                   ),
@@ -356,7 +393,9 @@ class HomepageView extends GetView<HomepageController> {
                       TextMedium(text: "Deskripsi", fontSize: 10.sp),
                       TextRegular(
                           overflow: TextOverflow.ellipsis,
-                          text: snapshot.data![index].deskripsiPengaduan!,
+                          text: snapshot.data?[index].deskripsiPengaduan
+                                  ?.toString() ??
+                              "",
                           fontSize: 10.sp),
                     ],
                   ).paddingSymmetric(
@@ -491,6 +530,7 @@ class HomepageView extends GetView<HomepageController> {
         (totalProcessesReport / totalReports) * 100;
     var totalProcessesReportPercentageText =
         '${totalProcessesReportPercentage.toStringAsFixed(0)}%';
+
     return Container(
       width: 1.sw,
       height: 0.2.sh,
@@ -517,7 +557,9 @@ class HomepageView extends GetView<HomepageController> {
                   SizedBox(
                     width: 0.6.sw,
                     child: LinearProgressIndicator(
-                      value: totalProcessesReportPercentage / 100,
+                      value: totalProcessesReportPercentage > 0
+                          ? totalProcessesReportPercentage / 100
+                          : 0,
                       backgroundColor: grey[300],
                       valueColor: AlwaysStoppedAnimation(Colors.orange),
                     ),
@@ -544,7 +586,9 @@ class HomepageView extends GetView<HomepageController> {
                 ),
                 child: Center(
                   child: TextMedium(
-                    text: totalProcessesReportPercentageText,
+                    text: totalProcessesReportPercentage > 0
+                        ? totalProcessesReportPercentageText
+                        : "0%",
                     fontSize: 14.sp,
                     textColour: white,
                   ),
@@ -566,7 +610,9 @@ class HomepageView extends GetView<HomepageController> {
                   SizedBox(
                     width: 0.6.sw,
                     child: LinearProgressIndicator(
-                      value: totalDoneReportsPercentage / 100,
+                      value: totalDoneReportsPercentage > 1
+                          ? totalDoneReportsPercentage / 100
+                          : 0,
                       backgroundColor: grey[300],
                       valueColor: AlwaysStoppedAnimation(Colors.blue),
                     ),
@@ -593,7 +639,9 @@ class HomepageView extends GetView<HomepageController> {
                 ),
                 child: Center(
                   child: TextBold(
-                    text: totalDoneReportsPercentageText,
+                    text: totalDoneReportsPercentage > 0
+                        ? totalDoneReportsPercentageText
+                        : "0%",
                     fontSize: 14.sp,
                     textColour: white,
                   ),
@@ -714,12 +762,12 @@ class HomepageView extends GetView<HomepageController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextMedium(
-                      text: controller.profileC.profile.data!.nama!,
+                      text: controller.profileC.profile.data?.nama ?? "",
                       fontSize: 20.sp,
                       textColour: white)
                   .paddingOnly(bottom: 5.h),
               TextMedium(
-                text: "Status : " + controller.profileC.profile.data!.status!,
+                text: "Status : ${controller.profileC.profile.data?.status}",
                 fontSize: 12.sp,
                 textColour: white,
               ),
@@ -732,9 +780,9 @@ class HomepageView extends GetView<HomepageController> {
               backgroundColor: white,
               child: CircleAvatar(
                 radius: 25,
-                backgroundImage:
-                    Image.network(controller.profileC.profile.data!.foto!)
-                        .image,
+                backgroundImage: Image.network(
+                        controller.profileC.profile.data?.foto.toString() ?? "")
+                    .image,
               ),
             ),
           ),

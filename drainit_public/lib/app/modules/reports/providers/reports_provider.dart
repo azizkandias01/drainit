@@ -12,7 +12,7 @@ class ReportsProvider extends GetConnect {
       },
     ).timeout(const Duration(seconds: 10));
     if (response.status.hasError) {
-      return Future.error(response.bodyString!);
+      return Future.error(response.statusCode.toString());
     } else {
       print("ok laporan banjir");
       return Report.fromJson(response.body as Map<String, dynamic>);
@@ -26,9 +26,10 @@ class ReportsProvider extends GetConnect {
       headers: {
         'Authorization': 'Bearer $auth',
       },
-    ).timeout(const Duration(seconds: 10));
+    ).timeout(const Duration(seconds: 20));
     if (response.status.hasError) {
-      return Future.error(response.statusText!);
+      print(response.bodyString.toString());
+      return Future.error(response.statusCode.toString());
     } else {
       return Report.fromJson(response.body as Map<String, dynamic>);
     }

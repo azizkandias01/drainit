@@ -12,8 +12,7 @@ class ProfileProvider extends GetConnect {
     if (response.statusCode == 200) {
       return ProfileResponse.fromJson(response.body as Map<String, dynamic>);
     } else {
-      print('Error: ${response.bodyString}');
-      return Future.error(response.statusText.toString());
+      return Future.error(response.statusCode.toString());
     }
   }
 }

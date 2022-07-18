@@ -61,6 +61,58 @@ Color getStatusColor(String status) {
   }
 }
 
+void showErrorSnackBar(String error) {
+  Get.snackbar(
+    'Error',
+    error,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.red,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
+  );
+}
+
+void showSuccessSnackBar(String body) {
+  Get.snackbar(
+    'Berhasil',
+    body,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.green,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
+  );
+}
+
+void showInfoSnackBar(String body) {
+  Get.snackbar(
+    'Info',
+    body,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.blue,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
+  );
+}
+
+void showWarningSnackBar(String body) {
+  Get.snackbar(
+    'Warning',
+    body,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.orange,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    snackStyle: SnackStyle.FLOATING,
+  );
+}
+
 class HeroPhotoViewRouteWrapper extends StatelessWidget {
   const HeroPhotoViewRouteWrapper({
     required this.imageProvider,

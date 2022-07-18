@@ -262,8 +262,7 @@ class ProcessedReportsView extends GetView<ProcessedReportsController> {
                                     ),
                                     child: Center(
                                       child: TextMedium(
-                                        text: controller
-                                            .list[index].statusPengaduan!,
+                                        text: controller.list[index].status!,
                                         fontSize: 7.sp,
                                         textColour: white,
                                       ),
@@ -272,7 +271,7 @@ class ProcessedReportsView extends GetView<ProcessedReportsController> {
                                 ],
                               ),
                               TextMedium(
-                                text: controller.list[index].tipePengaduan!,
+                                text: controller.list[index].status!,
                                 fontSize: 11.sp,
                                 textColour: Colors.grey[500],
                               ),

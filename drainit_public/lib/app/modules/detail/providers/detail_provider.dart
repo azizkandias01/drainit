@@ -12,6 +12,7 @@ class DetailProvider extends GetConnect {
       headers: headers,
     ).timeout(const Duration(seconds: 10));
     if (response.status.hasError) {
+      printError(info: response.bodyString.toString());
       return Future.error(response);
     } else {
       return Detail.fromJson(response.body as Map<String, dynamic>);

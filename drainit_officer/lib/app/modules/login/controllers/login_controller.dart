@@ -41,6 +41,8 @@ class LoginController extends GetxController with StateMixin {
         ),
         // box.write(Routes.TOKEN, resp.accessToken),
         box.write(Routes.TOKEN, resp.token),
+        box.write(Routes.EMAIL, email),
+        box.write(Routes.PASSWORD, password),
         Get.offAllNamed(Routes.HOMEPAGE, arguments: 'login')
       },
       //if error happens then catch the error and show to user

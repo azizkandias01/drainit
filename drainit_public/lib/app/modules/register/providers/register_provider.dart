@@ -8,7 +8,7 @@ class RegisterProvider extends GetConnect {
       data,
     );
     if (response.status.hasError) {
-      return Future.error(response.bodyString.toString());
+      return Future.error(response.statusCode.toString());
     } else {
       return 'success register';
     }

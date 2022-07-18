@@ -1,4 +1,6 @@
 import 'package:drainit_flutter/app/routes/app_pages.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -20,6 +22,10 @@ void main() async {
       ),
     );
   };
+  await Firebase.initializeApp();
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  final String? token = await FirebaseMessaging.instance.getToken();
+  print(token);
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

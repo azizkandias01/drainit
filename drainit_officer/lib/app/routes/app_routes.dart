@@ -15,11 +15,14 @@ abstract class Routes {
   static const DONE_REPORTS = _Paths.DONE_REPORTS;
   static const PROFILE = _Paths.PROFILE;
   static const TOKEN = _Paths.TOKEN;
+  static const EMAIL = "email";
+  static const PASSWORD = "password";
   static const DETAIL = _Paths.DETAIL;
   static const IMAGEURL = _Paths.IMAGEURL;
   static const MAPS = _Paths.MAPS;
   static const UPDATE_LAPORAN = _Paths.UPDATE_LAPORAN;
   static const HOMEPAGE = _Paths.HOMEPAGE;
+  static const EDIT_PASSWORD = _Paths.EDIT_PASSWORD;
 }
 
 abstract class _Paths {
@@ -29,17 +32,16 @@ abstract class _Paths {
   static const SPLASHSCREEN = '/splashscreen';
   static const BASEURL_USER =
       "https://king-prawn-app-hxran.ondigitalocean.app/";
-  static const BASEURL =
-      "https://drainit-backend-2w9s8.ondigitalocean.app/api/";
+  static const BASEURL = "https://drainit.me/api/";
   static const NEW_REPORTS = '/new-reports';
   static const PROCESSED_REPORTS = '/processed-reports';
   static const DONE_REPORTS = '/done-reports';
   static const PROFILE = '/profile';
   static const TOKEN = '/token';
   static const DETAIL = '/detail';
-  static const IMAGEURL =
-      "https://drainit-backend-2w9s8.ondigitalocean.app/storage/images/";
+  static const IMAGEURL = "https://drainit.me/storage/images/";
   static const MAPS = '/maps';
   static const UPDATE_LAPORAN = '/update-laporan';
   static const HOMEPAGE = '/homepage';
+  static const EDIT_PASSWORD = '/edit-password';
 }

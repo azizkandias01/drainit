@@ -1,8 +1,6 @@
-// ignore_for_file: avoid_dynamic_calls
-
-import 'package:drainit_flutter/app/modules/edit_password/providers/edit_password_provider.dart';
-import 'package:drainit_flutter/app/routes/app_pages.dart';
-import 'package:drainit_flutter/app/utils/Utils.dart';
+import 'package:drainit_petugas/app/modules/edit_password/providers/edit_password_provider.dart';
+import 'package:drainit_petugas/app/routes/app_pages.dart';
+import 'package:drainit_petugas/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -25,7 +23,6 @@ class EditPasswordController extends GetxController with StateMixin {
     String confirmPassword,
   ) {
     change(null, status: RxStatus.loading());
-
     final dataRequest = {
       'current_password': oldPassword,
       'new_password': newPassword,
@@ -40,7 +37,7 @@ class EditPasswordController extends GetxController with StateMixin {
       (value) {
         change(value, status: RxStatus.success());
         showSuccessSnackBar(
-          value,
+          "Berhasil Mengubah Password",
         );
       },
       onError: (error) {

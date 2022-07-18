@@ -163,7 +163,8 @@ class DetailView extends GetView<DetailController> {
                                         minScale: 0.5,
                                         imageProvider:
                                             CachedNetworkImageProvider(
-                                          controller.detail.value.foto!,
+                                          controller.detail.value.foto
+                                              .toString(),
                                         ),
                                       ),
                                     );
@@ -176,7 +177,8 @@ class DetailView extends GetView<DetailController> {
                                       tag: "image",
                                       child: Image(
                                         image: CachedNetworkImageProvider(
-                                          controller.detail.value.foto!,
+                                          controller.detail.value.foto
+                                              .toString(),
                                         ),
                                         errorBuilder:
                                             (context, error, stackTrace) {
@@ -210,14 +212,16 @@ class DetailView extends GetView<DetailController> {
                                       initialCameraPosition: CameraPosition(
                                         zoom: 15,
                                         target: controller.geoToLatlong(
-                                          controller.detail.value.geometry!,
+                                          controller.detail.value.geometry
+                                              .toString(),
                                         ),
                                       ),
                                       markers: <Marker>{
                                         Marker(
                                           markerId: const MarkerId("1"),
                                           position: controller.geoToLatlong(
-                                            controller.detail.value.geometry!,
+                                            controller.detail.value.geometry
+                                                .toString(),
                                           ),
                                         )
                                       },
@@ -471,7 +475,8 @@ class DetailView extends GetView<DetailController> {
                                         children: [
                                           TextBold(
                                             text: controller
-                                                .detail.value.namaPelapor!,
+                                                .detail.value.namaPelapor
+                                                .toString(),
                                             fontSize: 16.sp,
                                           ),
                                         ],

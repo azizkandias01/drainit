@@ -4,8 +4,8 @@ import '../modules/detail/bindings/detail_binding.dart';
 import '../modules/detail/views/detail_view.dart';
 import '../modules/done_reports/bindings/done_reports_binding.dart';
 import '../modules/done_reports/views/done_reports_view.dart';
-import '../modules/home/bindings/home_binding.dart';
-import '../modules/home/views/home_view.dart';
+import '../modules/edit_password/bindings/edit_password_binding.dart';
+import '../modules/edit_password/views/edit_password_view.dart';
 import '../modules/homepage/bindings/homepage_binding.dart';
 import '../modules/homepage/views/homepage_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -31,11 +31,6 @@ class AppPages {
   static const INITIAL = Routes.SPLASHSCREEN;
 
   static final routes = [
-    GetPage(
-      name: _Paths.HOME,
-      page: () => HomeView(),
-      binding: HomeBinding(),
-    ),
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginView(),
@@ -80,6 +75,11 @@ class AppPages {
       name: _Paths.HOMEPAGE,
       page: () => HomepageView(),
       binding: HomepageBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PASSWORD,
+      page: () => const EditPasswordView(),
+      binding: EditPasswordBinding(),
     ),
   ];
 }

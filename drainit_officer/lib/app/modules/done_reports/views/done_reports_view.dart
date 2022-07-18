@@ -260,8 +260,7 @@ class DoneReportsView extends GetView<DoneReportsController> {
                                     ),
                                     child: Center(
                                       child: TextMedium(
-                                        text: controller
-                                            .list[index].statusPengaduan!,
+                                        text: controller.list[index].status!,
                                         fontSize: 7.sp,
                                         textColour: white,
                                       ),
@@ -270,7 +269,7 @@ class DoneReportsView extends GetView<DoneReportsController> {
                                 ],
                               ),
                               TextMedium(
-                                text: controller.list[index].tipePengaduan!,
+                                text: controller.list[index].status!,
                                 fontSize: 11.sp,
                                 textColour: Colors.grey[500],
                               ),
@@ -439,11 +438,11 @@ class DoneReportsView extends GetView<DoneReportsController> {
                         Radius.circular(5.r),
                       ),
                       color: getStatusColor(
-                        controller.list[index].tipePengaduan!,
+                        controller.list[index].tipe!,
                       ),
                     ),
                     child: Text(
-                      controller.list[index].tipePengaduan!,
+                      controller.list[index].tipe!,
                       style: TextStyle(
                         color: Colors.white,
                       ),
