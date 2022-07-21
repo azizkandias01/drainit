@@ -109,6 +109,7 @@ class DetailView extends GetView<DetailController> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Container PublicCommunityReview() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
@@ -483,7 +484,7 @@ class DetailWidget extends StatelessWidget {
                           height: 117.h,
                         );
                       },
-                      image: CachedNetworkImageProvider(Routes.IMAGEURL +
+                      image: CachedNetworkImageProvider(
                           (controller.detail.foto ?? "defaultpengaduan.png")),
                     ),
                   ),

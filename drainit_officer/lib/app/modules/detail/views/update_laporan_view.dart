@@ -9,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../routes/app_pages.dart';
 import '../../../utils/text_default.dart';
 
 class UpdateLaporanView extends GetView<DetailController> {
@@ -178,8 +177,7 @@ class UpdateLaporanView extends GetView<DetailController> {
                             borderRadius: BorderRadius.circular(10.r),
                             child: Image(
                               image: CachedNetworkImageProvider(
-                                  Routes.IMAGEURL +
-                                      controller.listUpdate[i].foto!),
+                                  controller.listUpdate[i].foto!),
                             ),
                           ),
                         ),

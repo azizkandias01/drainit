@@ -87,135 +87,6 @@ class ProcessedReportsView extends GetView<ProcessedReportsController> {
                           fontSize: 16.sp,
                           textColour: Colors.black,
                         ),
-                        PopupMenuButton(
-                          icon: Icon(Icons.filter_list, color: black),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          onSelected: (value) {
-                            // if (value == "semua") {
-                            //   selectedFilter = "semua";
-                            //   controller.sortHistory(value.toString());
-                            // } else if (value == "terbaru") {
-                            //   selectedFilter = "terbaru";
-                            //
-                            //   controller.sortHistory(value.toString());
-                            // } else if (value == "terlama") {
-                            //   selectedFilter = "terlama";
-                            //
-                            //   controller.sortHistory(value.toString());
-                            // } else if (value == "status") {
-                            //   selectedFilter = "status";
-                            //
-                            //   controller.sortHistory(value.toString());
-                            // } else if (value == "jenis") {
-                            //   selectedFilter = "jenis";
-                            //   controller.sortHistory(value.toString());
-                            // }
-                          },
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: 'semua',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  //color: selectedFilter == "semua" ? green : white,
-                                ),
-                                child: Text(
-                                  'Semua',
-                                  style: TextStyle(
-                                    //color: selectedFilter == "semua" ? white : black,
-                                    fontSize: 10.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'terbaru',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  //color: selectedFilter == "terbaru" ? green : white,
-                                ),
-                                child: Text(
-                                  'Terbaru',
-                                  style: TextStyle(
-                                    //color: selectedFilter == "terbaru" ? white : black,
-                                    fontSize: 10.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'terlama',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  //color: selectedFilter == "terlama" ? green : white,
-                                ),
-                                child: Text(
-                                  'Terlama',
-                                  style: TextStyle(
-                                    //color: selectedFilter == "terlama" ? white : black,
-                                    fontSize: 10.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'status',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  //color: selectedFilter == "status" ? green : white,
-                                ),
-                                child: Text(
-                                  'Status',
-                                  style: TextStyle(
-                                    //color: selectedFilter == "status" ? white : black,
-                                    fontSize: 10.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'jenis',
-                              child: Container(
-                                height: 20.h,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.r, vertical: 5.r),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.r)),
-                                  // color: selectedFilter == "jenis" ? green : white,
-                                ),
-                                child: Text(
-                                  'Jenis',
-                                  style: TextStyle(
-                                    //color: selectedFilter == "jenis" ? white : black,
-                                    fontSize: 10.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ).paddingOnly(
@@ -278,15 +149,6 @@ class ProcessedReportsView extends GetView<ProcessedReportsController> {
                               20.verticalSpace,
                               Row(
                                 children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        const CachedNetworkImageProvider(
-                                      "https://i.pravatar.cc/300",
-                                    ),
-                                    backgroundColor: Colors.amber,
-                                    minRadius: 18.r,
-                                  ),
-                                  10.horizontalSpace,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -313,8 +175,7 @@ class ProcessedReportsView extends GetView<ProcessedReportsController> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(15.w),
                                 child: CachedNetworkImage(
-                                  imageUrl: Routes.IMAGEURL +
-                                      controller.list[index].foto!,
+                                  imageUrl: controller.list[index].foto!,
                                   fit: BoxFit.cover,
                                   width: 1.sw,
                                   height: 150.h,
@@ -356,8 +217,7 @@ class ProcessedReportsView extends GetView<ProcessedReportsController> {
                                           minScale: 0.5,
                                           imageProvider:
                                               CachedNetworkImageProvider(
-                                            Routes.IMAGEURL +
-                                                controller.list[index].foto!,
+                                            controller.list[index].foto!,
                                           ),
                                         ),
                                       );
