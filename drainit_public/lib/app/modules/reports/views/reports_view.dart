@@ -448,7 +448,11 @@ class ReportsView extends GetView<ReportsController> {
                   ).paddingAll(20.r),
                 ),
               ],
-            ).paddingOnly(left: 20.w, right: 20.w, bottom: 20.h),
+            ).paddingOnly(
+              left: 20.w,
+              right: 20.w,
+              bottom: 20.h,
+            ),
           ),
         ),
       ),
@@ -459,35 +463,57 @@ class ReportsView extends GetView<ReportsController> {
     return Padding(
       padding: EdgeInsets.only(left: 0.w, right: 0.w),
       child: controller.latlng.value == ''
-          ? ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(374.w, 50.h),
-                primary: controller.page.value == 1
-                    ? Colors.red
-                    : Colors.amberAccent,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.w),
-                ),
-              ),
-              onPressed: _selectPlace,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Pilih Lokasi Dari Peta',
-                    style: TextStyle(
-                      color: white,
-                      fontSize: 12.sp,
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(374.w, 50.h),
+                      primary: controller.page.value == 1
+                          ? Colors.red
+                          : Colors.amberAccent,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.w),
+                      ),
+                    ),
+                    onPressed: _selectPlace,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Pilih Lokasi Dari Peta',
+                          style: TextStyle(
+                            color: white,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: Colors.white,
+                          size: 14.w,
+                        ),
+                      ],
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    color: Colors.white,
-                    size: 14.w,
+                ),
+                10.horizontalSpace,
+                GestureDetector(
+                  onTap: () async {
+                    controller.latlng.value =
+                        await controller.getAddress(await getPosition());
+                    controller.geometry = await getPosition();
+                  },
+                  child: Icon(
+                    Icons.location_on,
+                    color: controller.page.value == 1
+                        ? Colors.red
+                        : Colors.amberAccent,
+                    size: 32.r,
                   ),
-                ],
-              ),
+                ),
+              ],
             )
           : ElevatedButton(
               style: ElevatedButton.styleFrom(

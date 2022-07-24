@@ -1,3 +1,4 @@
+import 'package:drainit_petugas/app/modules/maps/models/iot_model.dart';
 import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,18 @@ class DrainageMapProvider extends GetConnect {
             (e) => DrainageMap.fromJson(e as Map<String, dynamic>),
           )
           .toList();
+      return dataRaw;
+    }
+  }
+
+  Future loadIOT() async {
+    final response = await get(
+      '${Routes.BASEURL_SIPANSE}api',
+    );
+    if (response.status.hasError) {
+      return Future.error(response.statusText.toString());
+    } else {
+      final dataRaw = IOT.fromJson(response.body as Map<String, dynamic>);
       return dataRaw;
     }
   }

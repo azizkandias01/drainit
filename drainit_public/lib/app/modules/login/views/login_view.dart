@@ -30,181 +30,184 @@ class LoginView extends GetView<LoginController> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: SvgPicture.asset(
-                'assets/svg/ic_login2.svg',
-                height: ScreenUtil().setHeight(330),
-                fit: BoxFit.fitHeight,
-              ).paddingAll(10.r),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 20.w,
-                right: 20.w,
+      body: SafeArea(
+        top: false,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: SvgPicture.asset(
+                  'assets/svg/ic_login2.svg',
+                  height: ScreenUtil().setHeight(330),
+                  fit: BoxFit.fitHeight,
+                ).paddingAll(10.r),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextBold(text: "Masuk", fontSize: 24.sp),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextRegular(text: "Email", fontSize: 14.sp),
-                      SizedBox(height: ScreenUtil().setHeight(10)),
-                      RoundedInputField(
-                        key: const Key('emailFormField'),
-                        hintText: "example@gmail.com",
-                        textEditingController: controller.myControllerEmail,
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 20.w,
+                  right: 20.w,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextBold(text: "Masuk", fontSize: 24.sp),
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextRegular(text: "Email", fontSize: 14.sp),
+                        SizedBox(height: ScreenUtil().setHeight(10)),
+                        RoundedInputField(
+                          key: const Key('emailFormField'),
+                          hintText: "example@gmail.com",
+                          textEditingController: controller.myControllerEmail,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextRegular(text: "Password", fontSize: 14.sp),
+                        SizedBox(height: ScreenUtil().setHeight(10)),
+                        InputPassword(
+                          key: const Key('passwordFormField'),
+                          controller: controller,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(20)),
+                    controller.obx(
+                      (state) => RoundedButton(
+                        text: "Masuk",
+                        height: ScreenUtil().setHeight(50),
+                        borderRadius: 10.r,
+                        width: Get.width,
+                        textColor: Colors.black,
+                        press: () async {
+                          if (controller.myControllerEmail.text.isEmpty ||
+                              controller.myControllerPassword.text.isEmpty) {
+                            controller.loginInformationEmpty();
+                          } else {
+                            await controller.userLogin(
+                              controller.myControllerEmail.text,
+                              controller.myControllerPassword.text,
+                            );
+                          }
+                        },
                       ),
-                    ],
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextRegular(text: "Password", fontSize: 14.sp),
-                      SizedBox(height: ScreenUtil().setHeight(10)),
-                      InputPassword(
-                        key: const Key('passwordFormField'),
-                        controller: controller,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(20)),
-                  controller.obx(
-                    (state) => RoundedButton(
-                      text: "Masuk",
-                      height: ScreenUtil().setHeight(50),
-                      borderRadius: 10.r,
-                      width: Get.width,
-                      textColor: Colors.black,
-                      press: () async {
-                        if (controller.myControllerEmail.text.isEmpty ||
-                            controller.myControllerPassword.text.isEmpty) {
-                          controller.loginInformationEmpty();
-                        } else {
-                          await controller.userLogin(
-                            controller.myControllerEmail.text,
-                            controller.myControllerPassword.text,
-                          );
-                        }
-                      },
-                    ),
-                    onLoading: Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 20.r,
-                      ),
-                    ),
-                    onEmpty: RoundedButton(
-                      text: "Masuk",
-                      height: ScreenUtil().setHeight(50),
-                      borderRadius: 10.r,
-                      width: Get.width,
-                      textColor: Colors.black,
-                      press: () async {
-                        if (controller.myControllerEmail.text.isEmpty ||
-                            controller.myControllerPassword.text.isEmpty) {
-                          controller.loginInformationEmpty();
-                        } else {
-                          await controller.userLogin(
-                            controller.myControllerEmail.text,
-                            controller.myControllerPassword.text,
-                          );
-                        }
-                      },
-                    ),
-                    onError: (error) => RoundedButton(
-                      text: "Masuk",
-                      height: ScreenUtil().setHeight(50),
-                      borderRadius: 10.r,
-                      width: Get.width,
-                      textColor: Colors.black,
-                      press: () async {
-                        if (controller.myControllerEmail.text.isEmpty ||
-                            controller.myControllerPassword.text.isEmpty) {
-                          controller.loginInformationEmpty();
-                        } else {
-                          await controller.userLogin(
-                            controller.myControllerEmail.text,
-                            controller.myControllerPassword.text,
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  Center(
-                    child: TextRegular(
-                      text: "Atau",
-                      fontSize: 14.sp,
-                      textColour: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(10)),
-                  GestureDetector(
-                    onTap: () => {
-                      Get.toNamed(Routes.HOMEPAGE_ANONYMOUS),
-                    },
-                    child: Container(
-                      width: Get.width,
-                      height: ScreenUtil().setHeight(50),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.r),
-                        border: Border.all(
-                          color: primary,
-                          width: 1.w,
+                      onLoading: Center(
+                        child: CupertinoActivityIndicator(
+                          radius: 20.r,
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            CupertinoIcons.person,
-                            color: black,
-                          ),
-                          SizedBox(width: ScreenUtil().setWidth(10)),
-                          TextRegular(
-                            text: "Login tanpa akun",
-                            fontSize: 14.sp,
-                            textColour: black,
-                          ),
-                        ],
+                      onEmpty: RoundedButton(
+                        text: "Masuk",
+                        height: ScreenUtil().setHeight(50),
+                        borderRadius: 10.r,
+                        width: Get.width,
+                        textColor: Colors.black,
+                        press: () async {
+                          if (controller.myControllerEmail.text.isEmpty ||
+                              controller.myControllerPassword.text.isEmpty) {
+                            controller.loginInformationEmpty();
+                          } else {
+                            await controller.userLogin(
+                              controller.myControllerEmail.text,
+                              controller.myControllerPassword.text,
+                            );
+                          }
+                        },
+                      ),
+                      onError: (error) => RoundedButton(
+                        text: "Masuk",
+                        height: ScreenUtil().setHeight(50),
+                        borderRadius: 10.r,
+                        width: Get.width,
+                        textColor: Colors.black,
+                        press: () async {
+                          if (controller.myControllerEmail.text.isEmpty ||
+                              controller.myControllerPassword.text.isEmpty) {
+                            controller.loginInformationEmpty();
+                          } else {
+                            await controller.userLogin(
+                              controller.myControllerEmail.text,
+                              controller.myControllerPassword.text,
+                            );
+                          }
+                        },
                       ),
                     ),
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(20)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Belum Punya Akun?',
-                        style: TextStyle(
-                          fontSize: 14.sp,
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    Center(
+                      child: TextRegular(
+                        text: "Atau",
+                        fontSize: 14.sp,
+                        textColour: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(10)),
+                    GestureDetector(
+                      onTap: () => {
+                        Get.toNamed(Routes.HOMEPAGE_ANONYMOUS),
+                      },
+                      child: Container(
+                        width: Get.width,
+                        height: ScreenUtil().setHeight(50),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.r),
+                          border: Border.all(
+                            color: primary,
+                            width: 1.w,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              CupertinoIcons.person,
+                              color: black,
+                            ),
+                            SizedBox(width: ScreenUtil().setWidth(10)),
+                            TextRegular(
+                              text: "Login tanpa akun",
+                              fontSize: 14.sp,
+                              textColour: black,
+                            ),
+                          ],
                         ),
                       ),
-                      GestureDetector(
-                        key: const Key('register'),
-                        onTap: () => Get.toNamed(Routes.REGISTER),
-                        child: Text(
-                          ' Daftar Disini!',
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(20)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Belum Punya Akun?',
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: primary,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        GestureDetector(
+                          key: const Key('register'),
+                          onTap: () => Get.toNamed(Routes.REGISTER),
+                          child: Text(
+                            ' Daftar Disini!',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

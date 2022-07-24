@@ -18,33 +18,23 @@ class EditPasswordController extends GetxController with StateMixin {
   }
 
   void editPassword(
-    String oldPassword,
-    String newPassword,
-    String confirmPassword,
-  ) {
+      String oldPassword, String newPassword, String confirmPassword) {
     change(null, status: RxStatus.loading());
     final dataRequest = {
       'current_password': oldPassword,
       'new_password': newPassword,
-      'new_password_confirmation': confirmPassword,
+      'new_password_confirmation': confirmPassword
     };
     EditPasswordProvider()
-        .editPassword(
-      dataRequest,
-      box.read(Routes.TOKEN).toString(),
-    )
+        .editPassword(dataRequest, box.read(Routes.TOKEN).toString())
         .then(
       (value) {
         change(value, status: RxStatus.success());
-        showSuccessSnackBar(
-          "Berhasil Mengubah Password",
-        );
+        showSuccessSnackBar("Berhasil Mengubah Password");
       },
       onError: (error) {
         change(error, status: RxStatus.error());
-        showErrorSnackBar(
-          error.toString(),
-        );
+        showErrorSnackBar(error.toString());
       },
     );
   }

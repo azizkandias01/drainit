@@ -24,15 +24,13 @@ void main() async {
   };
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
-  final String? token = await FirebaseMessaging.instance.getToken();
-  print(token);
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(
     ScreenUtilInit(
       designSize: const Size(414, 896),
-      builder: (context) => GetMaterialApp(
+      builder: (context, widget) => GetMaterialApp(
         title: "Application",
         initialRoute:
             box.hasData(Routes.TOKEN) ? Routes.HOMEPAGE : Routes.LOGIN,

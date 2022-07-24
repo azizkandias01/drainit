@@ -18,7 +18,6 @@ class DoneReportsController extends GetxController with StateMixin {
     loadReports();
   }
 
-  ///load the history from api
   Future<void> loadReports() async {
     change(null, status: RxStatus.loading());
     await HomepageProvider().getLaporan(box.read(Routes.TOKEN)).then(

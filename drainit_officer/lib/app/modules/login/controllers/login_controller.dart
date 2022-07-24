@@ -26,12 +26,7 @@ class LoginController extends GetxController with StateMixin {
       'email': email,
       'password': password,
     };
-    //when user call this function, change the state to loading
-    change(
-      null,
-      status: RxStatus.loading(),
-    );
-    //call this function to check user login with given data
+    change(null, status: RxStatus.loading());
     LoginProvider().loginPetugas(dataLogin).then(
       (resp) => {
         //if the result is ok then change the status to success and move the page to home page
@@ -43,9 +38,9 @@ class LoginController extends GetxController with StateMixin {
         box.write(Routes.TOKEN, resp.token),
         box.write(Routes.EMAIL, email),
         box.write(Routes.PASSWORD, password),
+        box.write("IDPETUGAS", resp.idPetugas),
         Get.offAllNamed(Routes.HOMEPAGE, arguments: 'login')
       },
-      //if error happens then catch the error and show to user
       onError: (err) {
         Get.bottomSheet(
           Container(
@@ -76,14 +71,8 @@ class LoginController extends GetxController with StateMixin {
             ),
           ),
         );
-        change(
-          null,
-          status: RxStatus.error('Error occured : $err'),
-        );
+        change(null, status: RxStatus.error('Error occured : $err'));
       },
     );
   }
-
-  @override
-  void onClose() {}
 }

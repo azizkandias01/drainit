@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:drainit_petugas/app/modules/maps/models/drainage_map.dart';
 import 'package:drainit_petugas/app/modules/maps/models/drainage_model.dart';
 import 'package:drainit_petugas/app/modules/maps/models/flood_model.dart';
+import 'package:drainit_petugas/app/modules/maps/models/iot_model.dart';
 import 'package:drainit_petugas/app/modules/maps/providers/drainage_map_provider.dart';
 import 'package:drainit_petugas/app/modules/maps/providers/drainage_provider.dart';
 import 'package:drainit_petugas/app/modules/maps/providers/flood_provider.dart';
@@ -26,17 +27,13 @@ class MapsController extends GetxController {
   ///list of polylines that will render on maps
   Set<Polyline> polylines = <Polyline>{};
 
+  IOT iotMapPoints = IOT();
+
   ///list of markers that observable means the variable could change
   ///
   List<Marker> markers = <Marker>[].obs;
-  final floodIcon =
-      "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAC50lEQVR4nO2WTW9MURiAn/dMJzXT/gTVhY+FUZU2IpGSqQWJj2ChCxSJNqE+/oeP2CnRShArFkhLwsKICrVBW7UiqfoLTEN7z2vRmTtDOtO5DJHxPqvJzclzzn1z750HjP8byf/YNDzxWeGTQAb1gyO7Wl9FEW0aGmtDXI9Cp8AyQIFpgcycuIHnO1JvIvuc61UlXexT1cfgBp7tWjMWxdcxPN4uIj05X9PIzpZG+HEAWrReUW7GZlzfk67U53Li9K3JxiDpLwEHin0/oaA3EnE98Whb65fq+OR6Ih6crMiX8P0IB4t9IztbBMDlLyTivhH17YieBbII3XNJ/2Ljg4nlpeSbh96tDJLBKHAQyKKc88L6RNw3zvvcBkQuADMgh7OzbjR9b3JFKV/H/TergqR/GfrgfGmfHsnOutHFzjeX9C8QuoGsIGfEubasfm3Ir1lwwul7kyuCWHAXJAV8Qel3Krfr64N3ADPf6lIqvkvgOJBUeOsde55vb/lQ6sZEY3eA1bkb63debuV92bm6NajfV+yrC9zeJ7tT7yvwLXg+xO8D+hY7X6lH7M88ikl/Gdhf3lftV6W8r+QA8nQMj7cLchRIM/8xAvioqhnvYoNRP255X+5j2ZS7PC2QwbnBp9tTr3/Ft9D5XCx2NarPMIz/i+qWoHO9qGwBXQqgMO3gsVe5ErXcarAEI/1d/nFfxSVY7XL7+75Cqf56CcKln8tN0C5Uj1GFcvttXwXni1yCWx+ONczMykWQQ2XWeYFrS+L+dCWPom/wF1XpLuNThGuJOn/q3ynBobetIvSA7wRpzlmnBDIiOvB0x9qJxRzFbLw/uc75oEdEOoHm3DmnwGUIdGBkd8t4FJ+VoGEYxm9gKRxuaClsKVyYmqWwpXCIpbBhGEYNYykcbmgpbClcmJqlsKVwiKWwYRhGDWMpHG5oKWwpXJiapbClcIilsGEYRg1jKRxuaClsKVyYmqWwpXCIpbBR23wHb+8W37SzH6AAAAAASUVORK5CYII=";
   final selectedIndexFilter = 0.obs;
   final List<Filter> chipsList = [
-    Filter(
-      "Semua",
-      Icons.clear_all,
-    ),
     Filter(
       "Banjir",
       Icons.water,
@@ -57,6 +54,7 @@ class MapsController extends GetxController {
     loadDrainagePoint();
     loadFloodPoint();
     loadMapDrainage();
+    loadIOTPoint();
   }
 
   ///function for load flood points from API
@@ -64,6 +62,11 @@ class MapsController extends GetxController {
     final List<FloodModel> result =
         await FloodModelProvider().loadFloodPoint() as List<FloodModel>;
     floodPoint = result;
+  }
+
+  Future<void> loadIOTPoint() async {
+    final IOT result = await DrainageMapProvider().loadIOT() as IOT;
+    iotMapPoints = result;
   }
 
   ///function for load broken drainage points from API

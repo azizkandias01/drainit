@@ -7,4 +7,5 @@ final black = Colors.black;
 final grey = Colors.grey;
 final red = Colors.red;
 const primary = Color(0xFFFFD200);
-const orange = Color(0xFFFF9100);
+const orange = Color(0xFFEFB803);
+const blue = Color(0xFF00008C);

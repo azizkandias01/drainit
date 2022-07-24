@@ -34,6 +34,21 @@ class UpdateLaporanProvider extends GetConnect {
     }
   }
 
+  Future<String> doneLaporan(String id, String auth) async {
+    final response = await put(
+      '${Routes.BASEURL}pengaduan/done/$id',
+      null,
+      headers: {
+        'Authorization': 'Bearer $auth',
+      },
+    ).timeout(const Duration(seconds: 10));
+    if (response.status.hasError) {
+      return Future.error(response.statusCode.toString());
+    } else {
+      return 'Berhasil';
+    }
+  }
+
   Future<String> notificationUpdate(Map data, String auth) async {
     final response = await post(
       'https://onesignal.com/api/v1/notifications',

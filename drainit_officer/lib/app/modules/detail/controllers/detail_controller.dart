@@ -42,6 +42,38 @@ class DetailController extends GetxController with StateMixin {
   }
 
   // }
+
+  void doneLaporan(String idPengaduan) async {
+    change(null, status: RxStatus.loading());
+    await UpdateLaporanProvider()
+        .doneLaporan(idPengaduan, box.read(Routes.TOKEN))
+        .then(
+      (resp) {
+        getUpdateLaporan();
+        updateLaporanController.clear();
+        bytes64Image.value = '';
+        Get.dialog(
+          AlertDialog(
+            title: Text('Selesai'),
+            content: Text('Laporan berhasil ditandai selesai'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Get.back();
+                },
+              )
+            ],
+          ),
+        );
+      },
+      onError: (e) => change(
+        e,
+        status: RxStatus.error(),
+      ),
+    );
+  }
+
   void updateLaporan(
       String id, String judul, String deskripsi, String foto) async {
     change(

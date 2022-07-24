@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final loginProvider = LoginProvider();
   test('Login test with valid data', () async {
-    final loginData = {"email": "petugas@gmail.com", "password": "petugas"};
+    final loginData = {"email": "joko@gmail.com", "password": "joko"};
     final response = await loginProvider.loginPetugas(loginData);
-    // expect(response.user, isNotNull);
+    expect(response.token, isNotNull);
   });
   //test login with invalid data
   test('Login test with invalid data', () async {
@@ -25,7 +25,7 @@ void main() {
       };
       final response = await loginProvider.loginPetugas(dataLogin);
     } catch (e) {
-      expect(e.toString(), "302");
+      expect(e.toString(), "400");
     }
   });
 }

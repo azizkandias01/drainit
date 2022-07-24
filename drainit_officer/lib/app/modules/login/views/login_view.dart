@@ -1,4 +1,6 @@
+import 'package:drainit_petugas/app/utils/colors.dart';
 import 'package:drainit_petugas/app/utils/rounded_button.dart';
+import 'package:drainit_petugas/app/utils/text_default.dart';
 import 'package:drainit_petugas/app/utils/text_poppins.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,17 +21,32 @@ class LoginView extends GetView<LoginController> {
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: ScreenUtil().setHeight(80)),
-            Image.asset(
-              "assets/png/logo.png",
-              width: ScreenUtil().setWidth(126),
-              height: ScreenUtil().setHeight(172),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextBold(
+                  text: "Drain",
+                  textColour: blue,
+                  fontSize: 48.sp,
+                ),
+                TextBold(
+                  text: "It",
+                  textColour: orange,
+                  fontSize: 48.sp,
+                ),
+              ],
+            ),
+            TextMedium(
+              text: "Petugas",
+              fontSize: 18.sp,
             ),
             SizedBox(height: ScreenUtil().setHeight(57)),
-            TextPoppinsRegular(
-              text: "Login To Your Account",
-              fontSize: ScreenUtil().setSp(20),
+            TextMedium(
+              text: "Login untuk mengakses akun anda!",
+              fontSize: 18.sp,
+              textColour: black,
             ),
             SizedBox(height: ScreenUtil().setHeight(36)),
             Column(
@@ -46,7 +63,7 @@ class LoginView extends GetView<LoginController> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Colors.green,
+                          color: blue,
                         ),
                       ),
                       hintText: "Email",
@@ -81,7 +98,7 @@ class LoginView extends GetView<LoginController> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Colors.green,
+                          color: blue,
                         ),
                       ),
                       hintText: "Password",

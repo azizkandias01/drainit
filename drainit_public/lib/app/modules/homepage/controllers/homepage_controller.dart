@@ -9,6 +9,7 @@ import 'package:drainit_flutter/app/modules/homepage/providers/timeline_provider
 import 'package:drainit_flutter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,6 +54,8 @@ class HomepageController extends GetxController with StateMixin {
     //remove the splash screen
     FlutterNativeSplash.remove();
     change(null, status: RxStatus.empty());
+    final regId = await FirebaseMessaging.instance.getToken();
+    addDevice(regId ?? "");
     loadTimeline();
     loadAllTimeline();
     getPosition();
@@ -120,6 +123,15 @@ class HomepageController extends GetxController with StateMixin {
   Future<void> downvote(String idPengaduan) async {
     await TimelineProvider().deleteVote(
       idPengaduan,
+      box.read(Routes.TOKEN) as String,
+    );
+  }
+
+  Future<void> addDevice(String deviceId) async {
+    await TimelineProvider().addDevice(
+      {
+        "registration_id": deviceId,
+      },
       box.read(Routes.TOKEN) as String,
     );
   }

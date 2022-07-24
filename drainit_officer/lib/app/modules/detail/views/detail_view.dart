@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:drainit_petugas/app/utils/colors.dart';
 import 'package:drainit_petugas/app/utils/text_default.dart';
 import 'package:drainit_petugas/app/utils/text_poppins.dart';
@@ -112,7 +111,10 @@ class DetailView extends GetView<DetailController> {
   // ignore: non_constant_identifier_names
   Container PublicCommunityReview() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.w,
+        vertical: 10.h,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -147,7 +149,8 @@ class DetailView extends GetView<DetailController> {
           ),
           10.verticalSpace,
           Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            controller.detail.feedbackMasyarakat ??
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           ),
         ],
       ),
@@ -372,8 +375,8 @@ class DetailTab extends StatelessWidget {
                         () => HeroPhotoViewRouteWrapper(
                           maxScale: 3.0,
                           minScale: 0.5,
-                          imageProvider: CachedNetworkImageProvider(
-                            Routes.IMAGEURL + controller.detail.foto!,
+                          imageProvider: NetworkImage(
+                            controller.detail.foto ?? "",
                           ),
                         ),
                       );
@@ -386,7 +389,7 @@ class DetailTab extends StatelessWidget {
                         tag: "image",
                         child: Image(
                           image: CachedNetworkImageProvider(
-                            Routes.IMAGEURL + controller.detail.foto!,
+                            controller.detail.foto!,
                           ),
                           width: Get.width,
                           height: 200.w,

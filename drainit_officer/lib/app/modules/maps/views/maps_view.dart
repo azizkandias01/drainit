@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:d_chart/d_chart.dart';
+import 'package:drainit_petugas/app/routes/app_pages.dart';
 import 'package:drainit_petugas/app/utils/colors.dart';
 import 'package:drainit_petugas/app/utils/text_default.dart';
 import 'package:drainit_petugas/app/utils/utils.dart';
@@ -35,20 +37,31 @@ class MapsView extends GetView<MapsController> {
             text: controller.chipsList[i].label,
             fontSize: 10.sp,
             textColour:
-                controller.selectedIndexFilter.value == i ? Colors.white : grey,
+                controller.selectedIndexFilter.value == i ? Colors.black : grey,
           ),
           avatar: Icon(
             controller.chipsList[i].icon,
             size: 18.r,
             color:
-                controller.selectedIndexFilter.value == i ? Colors.white : grey,
+                controller.selectedIndexFilter.value == i ? Colors.black : grey,
           ),
           labelStyle: TextStyle(color: Colors.white),
           backgroundColor: Colors.white,
+          selectedColor: primary,
           selected: controller.selectedIndexFilter.value == i,
           onSelected: (bool value) {
             controller.selectedIndexFilter.value =
                 value ? i : controller.selectedIndexFilter.value;
+            if (controller.selectedIndexFilter.value == 0) {
+              controller.markers.clear();
+              loadFloodMarker(controller);
+            } else if (controller.selectedIndexFilter.value == 1) {
+              controller.markers.clear();
+              loadDrainageMarker(controller);
+            } else if (controller.selectedIndexFilter.value == 2) {
+              controller.markers.clear();
+              loadIOTMarker(controller);
+            }
           },
         ).paddingAll(5.r);
         chips.add(item);
@@ -62,7 +75,7 @@ class MapsView extends GetView<MapsController> {
           InfoWidget(),
         ],
         title: TextBold(
-          text: 'Peta Titik Banjir',
+          text: 'Peta Drainase',
           textColour: Colors.black,
           fontSize: 18.sp,
         ),
@@ -220,7 +233,7 @@ class MapsView extends GetView<MapsController> {
         Marker(
           markerId: MarkerId(item.id!),
           icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueOrange,
+            BitmapDescriptor.hueGreen,
           ),
           position: controller.geoToLatlong(item.geometry!),
           onTap: () {
@@ -233,7 +246,7 @@ class MapsView extends GetView<MapsController> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CachedNetworkImage(
-                        imageUrl: "" + item.foto!,
+                        imageUrl: Routes.IMAGEURL + item.foto!,
                         placeholder: (_, __) {
                           return const Center(
                               child: CircularProgressIndicator());
@@ -247,7 +260,144 @@ class MapsView extends GetView<MapsController> {
                       ),
                     ),
                     Text(item.namaJalan!),
-                    Text(item.keterangan!),
+                    Text(item.geometry!),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
+  }
+
+  void loadIOTMarker(MapsController controller) {
+    for (int i = 0; i < 2; i++) {
+      controller.markers.add(
+        Marker(
+          markerId: MarkerId(i.toString()),
+          icon: BitmapDescriptor.defaultMarkerWithHue(
+            BitmapDescriptor.hueOrange,
+          ),
+          position: i == 0
+              ? controller.iotMapPoints.coordinatTitikPcr
+              : controller.iotMapPoints.coordinatTitikWismaAtlet,
+          onTap: () {
+            List<Map<String, dynamic>> dataNodePcr = [];
+            List<Map<String, dynamic>> dataNodePcrDebit = [];
+            List<Map<String, dynamic>> dataNodeWismaAtlet = [];
+            List<Map<String, dynamic>> dataNodeWismaAtletDebit = [];
+            for (var item in controller.iotMapPoints.titikPcr!) {
+              dataNodePcr.add(
+                {
+                  "domain": item.id.toString(),
+                  "measure": item.tingginode1,
+                },
+              );
+              dataNodePcrDebit.add(
+                {
+                  "domain": item.id.toString(),
+                  "measure": item.debitnode1,
+                },
+              );
+            }
+            for (var item in controller.iotMapPoints.titikWismaAtlet!) {
+              dataNodeWismaAtlet.add(
+                {
+                  "domain": item.id.toString(),
+                  "measure": item.tingginode2,
+                },
+              );
+              dataNodeWismaAtletDebit.add(
+                {
+                  "domain": item.id.toString(),
+                  "measure": item.debitnode2,
+                },
+              );
+            }
+
+            showModalBottomSheet(
+              context: Get.context!,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Container(
+                height: .8.sh,
+                padding: EdgeInsets.all(10.r),
+                color: white,
+                child: Column(
+                  children: [
+                    20.verticalSpace,
+                    Text(
+                      i == 0 ? "Data Node PCR" : "Data Node Wisma Atlet",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: .3.sh,
+                      width: 1.sw,
+                      child: DChartBar(
+                        data: i == 0
+                            ? [
+                                {
+                                  'id': 'nodePcr',
+                                  'data': dataNodePcr,
+                                },
+                                {
+                                  'id': 'nodeWismaAtlet',
+                                  'data': dataNodePcrDebit,
+                                },
+                              ]
+                            : [
+                                {
+                                  'id': 'nodePcr',
+                                  'data': dataNodeWismaAtlet,
+                                },
+                                {
+                                  'id': 'nodeWismaAtlet',
+                                  'data': dataNodeWismaAtletDebit,
+                                },
+                              ],
+                        domainLabelPaddingToAxisLine: 16,
+                        axisLineTick: 2,
+                        axisLinePointTick: 2,
+                        axisLinePointWidth: 10,
+                        axisLineColor: Colors.green,
+                        measureLabelPaddingToAxisLine: 16,
+                        barColor: (barData, index, id) {
+                          if (id == 'nodePcr') {
+                            return Colors.green;
+                          } else if (id == 'debitPcr') {
+                            return Colors.red;
+                          } else if (id == 'nodeWismaAtlet') {
+                            return Colors.orange;
+                          } else {
+                            return Colors.blue;
+                          }
+                        },
+                        showBarValue: true,
+                      ),
+                    ),
+                    20.verticalSpace,
+                    Text(
+                      "Update Terakhir",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      i == 0
+                          ? controller.iotMapPoints.titikPcr!.last.tanggal1
+                              .toString()
+                          : controller
+                              .iotMapPoints.titikWismaAtlet!.last.tanggal2
+                              .toString(),
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),

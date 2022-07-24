@@ -314,8 +314,8 @@ class DetailView extends GetView<DetailController> {
                                     children: [
                                       TextBold(
                                         text: controller
-                                            .detail.value.namaPelapor
-                                            .toString(),
+                                                .detail.value.namaPelapor ??
+                                            "anonymous",
                                       ),
                                       const TextRegular(
                                         text: "Pelapor",
@@ -439,7 +439,8 @@ class DetailView extends GetView<DetailController> {
                                   ),
                                   10.verticalSpace,
                                   Text(
-                                    '${controller.detail.value.namaPelapor}',
+                                    controller.detail.value.namaPelapor ??
+                                        "anonymous",
                                   )
                                 ],
                               ).paddingAll(20.r),
@@ -475,8 +476,8 @@ class DetailView extends GetView<DetailController> {
                                         children: [
                                           TextBold(
                                             text: controller
-                                                .detail.value.namaPelapor
-                                                .toString(),
+                                                    .detail.value.namaPelapor ??
+                                                "anonymous",
                                             fontSize: 16.sp,
                                           ),
                                         ],
@@ -543,14 +544,6 @@ class DetailView extends GetView<DetailController> {
                                               ),
                                             ),
                                             5.verticalSpace,
-                                            Text(
-                                              "Update: ${controller.updateReport.value[i].judul}",
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                            5.verticalSpace,
                                             TextRegular(
                                               text:
                                                   "${controller.updateReport.value[i].deskripsi}",
@@ -562,7 +555,7 @@ class DetailView extends GetView<DetailController> {
                                       ),
                                       TextRegular(
                                         text:
-                                            "${controller.updateReport.value[i].waktu}",
+                                            "${controller.updateReport.value[i].createdAt}",
                                         fontSize: 11.sp,
                                         textColour: Colors.grey,
                                       ),
@@ -574,10 +567,14 @@ class DetailView extends GetView<DetailController> {
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10.r),
-                                          child: const Image(
-                                            image: CachedNetworkImageProvider(
-                                              "https://random.imagecdn.app/300/200",
+                                          child: Image(
+                                            image: NetworkImage(
+                                              controller.updateReport.value[i]
+                                                      .foto ??
+                                                  "",
                                             ),
+                                            errorBuilder: (_, __, ___) =>
+                                                const SizedBox(),
                                           ),
                                         ),
                                       ),

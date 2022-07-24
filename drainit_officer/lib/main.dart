@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -9,6 +11,8 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   await GetStorage.init();
+  await Firebase.initializeApp();
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
   GetStorage box = GetStorage();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

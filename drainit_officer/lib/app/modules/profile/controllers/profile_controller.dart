@@ -1,3 +1,4 @@
+import 'package:drainit_petugas/app/modules/homepage/providers/report_provider.dart';
 import 'package:drainit_petugas/app/modules/profile/models/profile_model.dart';
 import 'package:drainit_petugas/app/modules/profile/providers/profile_provider.dart';
 import 'package:drainit_petugas/app/routes/app_pages.dart';
@@ -15,6 +16,8 @@ class ProfileController extends GetxController with StateMixin {
   }
 
   void logoutAccount() {
+    HomepageProvider().deleteDevice(
+        box.read("deviceID").toString(), box.read(Routes.TOKEN) as String);
     box.remove(Routes.TOKEN);
     Get.offAllNamed(Routes.LOGIN);
   }

@@ -20,7 +20,7 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Peta titik',
+          'Peta Drainase',
           style: TextStyle(color: Colors.black),
         ),
         flexibleSpace: Container(
@@ -82,28 +82,6 @@ class FloodDrainageListView extends GetView<FloodDrainageListController> {
                 child: Text('Titik rusak'),
               ),
             ],
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.refresh,
-              color: black,
-            ),
-            onPressed: () {
-              Get.dialog(
-                Container(
-                  color: Colors.white,
-                  width: ScreenUtil().setWidth(100),
-                  height: ScreenUtil().setHeight(100),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              );
-              controller.loadDrainagePoint();
-              controller.loadFloodPoint();
-              controller.loadMapDrainage();
-              Get.back();
-            },
           ),
         ],
       ),

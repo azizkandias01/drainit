@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///controller for list of drainage, flood points and polylines for drainage line
-class FloodDrainageListController extends GetxController {
+class FloodDrainageListController extends GetxController with StateMixin {
   ///list of flood point
   List<FloodModel> floodPoint = <FloodModel>[];
 
@@ -31,7 +31,7 @@ class FloodDrainageListController extends GetxController {
   List<Marker> markers = <Marker>[].obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     loadDrainagePoint();
     loadFloodPoint();

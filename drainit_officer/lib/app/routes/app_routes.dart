@@ -10,6 +10,8 @@ abstract class Routes {
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const BASEURL = _Paths.BASEURL;
   static const BASEURL_USER = _Paths.BASEURL_USER;
+  static const BASEURL_SIPANSE =
+      "https://sipanse-api-ql6aq.ondigitalocean.app/";
   static const NEW_REPORTS = _Paths.NEW_REPORTS;
   static const PROCESSED_REPORTS = _Paths.PROCESSED_REPORTS;
   static const DONE_REPORTS = _Paths.DONE_REPORTS;

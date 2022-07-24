@@ -6,7 +6,7 @@ import '../models/drainage_model.dart';
 class DrainageProvider extends GetConnect {
   Future loadDrainagePoint() async {
     final response = await get(
-      '${Routes.BASEURL}titik_tersumbat',
+      '${Routes.BASEURL}titik_rusak',
     );
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());

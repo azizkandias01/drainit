@@ -34,4 +34,30 @@ class ReportsProvider extends GetConnect {
       return Report.fromJson(response.body as Map<String, dynamic>);
     }
   }
+
+  Future<Report> createFloodReportAnon(Map data) async {
+    final response = await post(
+      '${Routes.BASEURL_SYSTEM}pengaduan/anonim/banjir',
+      data,
+    ).timeout(const Duration(seconds: 10));
+    if (response.status.hasError) {
+      return Future.error(response.statusCode.toString());
+    } else {
+      print("ok laporan banjir");
+      return Report.fromJson(response.body as Map<String, dynamic>);
+    }
+  }
+
+  Future<Report> createBrokenDrainageReportAnon(Map data) async {
+    final response = await post(
+      '${Routes.BASEURL_SYSTEM}pengaduan/anonim/drainase_rusak',
+      data,
+    ).timeout(const Duration(seconds: 20));
+    if (response.status.hasError) {
+      print(response.bodyString.toString());
+      return Future.error(response.statusCode.toString());
+    } else {
+      return Report.fromJson(response.body as Map<String, dynamic>);
+    }
+  }
 }

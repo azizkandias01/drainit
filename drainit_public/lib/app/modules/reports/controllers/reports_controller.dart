@@ -2,6 +2,7 @@ import 'package:drainit_flutter/app/modules/reports/providers/reports_provider.d
 import 'package:drainit_flutter/app/routes/app_pages.dart';
 import 'package:drainit_flutter/app/utils/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,6 +14,7 @@ class ReportsController extends GetxController with StateMixin {
   late GetStorage box;
   LatLng geometry = const LatLng(0, 0);
   TextEditingController deskripsiController = TextEditingController();
+  final isAnonym = Get.arguments.toString() == Routes.HOMEPAGE_ANONYMOUS;
 
   RxString selectedImagePath = ''.obs;
   RxString selectedImageSize = ''.obs;
@@ -80,32 +82,81 @@ class ReportsController extends GetxController with StateMixin {
       status: RxStatus.loading(),
     );
     if (tipePengaduan == "Banjir") {
-      ReportsProvider()
-          .createFloodReport(reportData, box.read(Routes.TOKEN).toString())
-          .then(
-        (resp) => {
-          change(
-            resp,
-            status: RxStatus.success(),
-          ),
-          Get.offAllNamed(
-            Routes.DETAIL,
-            arguments: resp.data?.id.toString(),
-            parameters: {
-              'type': 'report',
-            },
-          ),
-          showSuccessSnackBar("Laporan berhasil dibuat!"),
-        },
-        onError: (err) {
-          change(
-            null,
-            status: RxStatus.error('Error occured : $err'),
-          );
-          showErrorSnackBar("Terjadi kesalahan pada server : $err");
-        },
-      );
+      if (isAnonym) {
+        ReportsProvider()
+            .createFloodReportAnon(
+          reportData,
+        )
+            .then(
+          (resp) => {
+            change(
+              resp,
+              status: RxStatus.success(),
+            ),
+            Get.back(),
+            showSuccessSnackBar("Laporan berhasil dibuat!"),
+          },
+          onError: (err) {
+            change(
+              null,
+              status: RxStatus.error('Error occured : $err'),
+            );
+            showErrorSnackBar("Terjadi kesalahan pada server : $err");
+          },
+        );
+      } else {
+        ReportsProvider()
+            .createFloodReport(reportData, box.read(Routes.TOKEN).toString())
+            .then(
+          (resp) => {
+            change(
+              resp,
+              status: RxStatus.success(),
+            ),
+            Get.offAllNamed(
+              Routes.DETAIL,
+              arguments: resp.data?.id.toString(),
+              parameters: {
+                'type': 'report',
+              },
+            ),
+            showSuccessSnackBar("Laporan berhasil dibuat!"),
+          },
+          onError: (err) {
+            change(
+              null,
+              status: RxStatus.error('Error occured : $err'),
+            );
+            showErrorSnackBar("Terjadi kesalahan pada server : $err");
+          },
+        );
+      }
     } else {
+      if (isAnonym) {
+        print("aanon broken");
+        ReportsProvider()
+            .createBrokenDrainageReportAnon(
+          reportData,
+        )
+            .then(
+          (resp) => {
+            change(
+              resp,
+              status: RxStatus.success(),
+            ),
+            Get.back(),
+            showSuccessSnackBar("Laporan berhasil dibuat!"),
+          },
+          onError: (err) {
+            change(
+              null,
+              status: RxStatus.error('Error occured : $err'),
+            );
+            print(err);
+            showErrorSnackBar("Terjadi kesalahan pada server : $err");
+          },
+        );
+      }
       ReportsProvider()
           .createBrokenDrainageReport(
         reportData,
@@ -136,5 +187,21 @@ class ReportsController extends GetxController with StateMixin {
         },
       );
     }
+  }
+
+  Future<String> getAddress(LatLng coordinate) async {
+    final List<Placemark> placemarks = await placemarkFromCoordinates(
+      coordinate.latitude,
+      coordinate.longitude,
+    );
+    final first = placemarks.first;
+    final locality = first.locality ?? '';
+    final administrativeArea = first.administrativeArea ?? '';
+    final subLocality = first.subLocality ?? '';
+    final subAdministrativeArea = first.subAdministrativeArea ?? '';
+    final street = first.street ?? '';
+    final addressLine =
+        '$street, $locality, $subLocality, $subAdministrativeArea, $administrativeArea';
+    return addressLine;
   }
 }

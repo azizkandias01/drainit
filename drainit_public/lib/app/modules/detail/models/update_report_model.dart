@@ -1,12 +1,12 @@
 class UpdateReport {
-
-  UpdateReport(
-      {this.id,
-      this.namaPetugas,
-      this.judul,
-      this.deskripsi,
-      this.foto,
-      this.waktu,});
+  UpdateReport({
+    this.id,
+    this.namaPetugas,
+    this.judul,
+    this.deskripsi,
+    this.foto,
+    this.waktu,
+  });
 
   UpdateReport.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -15,6 +15,8 @@ class UpdateReport {
     deskripsi = json['deskripsi'].toString();
     foto = json['foto'].toString();
     waktu = json['waktu'].toString();
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
   String? id;
   String? namaPetugas;
@@ -22,6 +24,8 @@ class UpdateReport {
   String? deskripsi;
   String? foto;
   String? waktu;
+  String? createdAt;
+  String? updatedAt;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drainit_petugas/app/modules/detail/controllers/detail_controller.dart';
+import 'package:drainit_petugas/app/utils/colors.dart';
 import 'package:drainit_petugas/app/utils/constant.dart';
 import 'package:drainit_petugas/app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -93,60 +94,85 @@ class UpdateLaporanView extends GetView<DetailController> {
                       ),
                   ],
                 ),
-                ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                Row(
+                  children: [
+                    controller.detail.status != done
+                        ? ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              backgroundColor: MaterialStateProperty.all(
+                                orange,
+                              ),
+                            ),
+                            onPressed: () {
+                              controller.doneLaporan(
+                                controller.detail.id!,
+                              );
+                              controller.onInit();
+                            },
+                            child: Text('Tandai Selesai'))
+                        : SizedBox(),
+                    10.horizontalSpace,
+                    ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          backgroundColor: MaterialStateProperty.all(
+                            Colors.green,
+                          ),
                         ),
-                      ),
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.green,
-                      ),
-                    ),
-                    onPressed: () {
-                      if (controller.detail.status == done) {
-                        Get.dialog(
-                          AlertDialog(
-                            title: Text('Laporan Sudah Selesai'),
-                            content: Text(
-                                'Laporan sudah selesai, tidak dapat diupdate'),
-                            actions: [
-                              FlatButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  Get.back();
-                                },
+                        onPressed: () {
+                          if (controller.detail.status == done) {
+                            Get.dialog(
+                              AlertDialog(
+                                title: Text('Laporan Sudah Selesai'),
+                                content: Text(
+                                    'Laporan sudah selesai, tidak dapat diupdate'),
+                                actions: [
+                                  FlatButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        );
-                      } else if (controller
-                          .updateLaporanController.text.isEmpty) {
-                        Get.dialog(
-                          AlertDialog(
-                            title: Text('Update Laporan'),
-                            content: Text('Laporan tidak boleh kosong'),
-                            actions: [
-                              FlatButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  Get.back();
-                                },
+                            );
+                          } else if (controller
+                              .updateLaporanController.text.isEmpty) {
+                            Get.dialog(
+                              AlertDialog(
+                                title: Text('Update Laporan'),
+                                content: Text('Laporan tidak boleh kosong'),
+                                actions: [
+                                  FlatButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        );
-                      } else {
-                        controller.updateLaporan(
-                            controller.detail.id!,
-                            "update",
-                            controller.updateLaporanController.text,
-                            controller.bytes64Image.value);
-                        controller.notifikasi();
-                      }
-                    },
-                    child: Text('Update')),
+                            );
+                          } else {
+                            controller.updateLaporan(
+                                controller.detail.id!,
+                                "update",
+                                controller.updateLaporanController.text,
+                                controller.bytes64Image.value);
+                            controller.notifikasi();
+                          }
+                        },
+                        child: Text('Update')),
+                  ],
+                ),
               ],
             ),
             20.verticalSpace,
@@ -171,14 +197,14 @@ class UpdateLaporanView extends GetView<DetailController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Visibility(
-                          visible: controller.listUpdate[i].foto != "tidak ada",
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.r),
-                            child: Image(
-                              image: CachedNetworkImageProvider(
-                                  controller.listUpdate[i].foto!),
-                            ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: Image(
+                            errorBuilder: (context, url, error) {
+                              return const SizedBox();
+                            },
+                            image: CachedNetworkImageProvider(
+                                controller.listUpdate[i].foto ?? ""),
                           ),
                         ),
                         10.verticalSpace,

@@ -73,4 +73,19 @@ class TimelineProvider extends GetConnect {
       return "success";
     }
   }
+
+  Future<String> addDevice(Map data, String bearer) async {
+    final headers = {'Authorization': 'Bearer $bearer'};
+    final response = await post(
+      '${Routes.BASEURL_SYSTEM}add-device/masyarakat',
+      data,
+      headers: headers,
+    ).timeout(const Duration(seconds: 10));
+
+    if (response.hasError) {
+      return Future.error(response.bodyString.toString());
+    } else {
+      return "success";
+    }
+  }
 }

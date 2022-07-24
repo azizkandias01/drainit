@@ -25,7 +25,7 @@ class HomepageAnonymousView extends GetView<HomepageAnonymousController> {
       appBar: buildAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
-          //controller.loadAllTimeline();
+          controller.loadAllTimeline();
         },
         child: ListView(
           children: [
@@ -201,7 +201,8 @@ class HomepageAnonymousView extends GetView<HomepageAnonymousController> {
         itemBuilder: (ctx, id) {
           return GestureDetector(
             onTap: () {
-              Get.toNamed(controller.dataButton[id].route);
+              Get.toNamed(controller.dataButton[id].route,
+                  arguments: Routes.HOMEPAGE_ANONYMOUS);
             },
             child: Container(
               height: 50.h,

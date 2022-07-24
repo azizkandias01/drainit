@@ -1,3 +1,4 @@
+import 'package:drainit_petugas/app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButtonWidget extends StatelessWidget {
@@ -21,16 +22,7 @@ class RoundedButtonWidget extends StatelessWidget {
             BoxShadow(
                 color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
           ],
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.0, 1.0],
-            colors: [
-              Colors.lightGreen[300]!,
-              Colors.green[600]!,
-            ],
-          ),
-          color: Colors.greenAccent,
+          color: blue,
           borderRadius: BorderRadius.circular(20),
         ),
         child: ElevatedButton(
@@ -41,11 +33,9 @@ class RoundedButtonWidget extends StatelessWidget {
               ),
             ),
             minimumSize: MaterialStateProperty.all(Size(width, 50)),
-            backgroundColor:
-            MaterialStateProperty.all(Colors.transparent),
+            backgroundColor: MaterialStateProperty.all(Colors.transparent),
             // elevation: MaterialStateProperty.all(3),
-            shadowColor:
-            MaterialStateProperty.all(Colors.transparent),
+            shadowColor: MaterialStateProperty.all(Colors.transparent),
           ),
           onPressed: () {
             onpressed();
