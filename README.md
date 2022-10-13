@@ -1,23 +1,3 @@
-# drainit
+<h1> DrainIT : Sistem Pelaporan Drainase Rusak dan Banjir serta Monitoring Tinggi Air (Final Project) </h1>
 
-drainit public
-
-#functionality done
-
-1. Login
-2. register
-3. report
-4. upload image
-5. select place from map
-6. history report
-7. profile
-
-
-#To Do
-1. detail report
-2. report updates
-3. notification
-4. map
-
-# UI
-
+Drainit merupakan sistem untuk melaporkan drainase rusak, banjir serta memonitor perkembangan dari proses perbaikan
